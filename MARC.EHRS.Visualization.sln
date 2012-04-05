@@ -1,0 +1,83 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Visualizer", "Visualizer", "{646E55E3-961F-4C8F-ADB3-43E299752AB8}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Server", "Server", "{AE3E3DA1-AD73-4D44-AE3D-64C61464F4BE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Client", "Client", "{8A9952C0-B0A2-4812-8266-F4C128E19098}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MARC.EHRS.VisualizationServer", "MARC.EHRS.Audit\MARC.EHRS.VisualizationServer.csproj", "{00A44E45-3F01-45D9-87DE-6AF6C083E392}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MARC.EHRS.Visualization.Core", "MARC.EHRS.Visualization.Core\MARC.EHRS.Visualization.Core.csproj", "{176C6009-3DCE-445D-A16F-E2E5837568D8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MARC.EHRS.VisualizationServer.Notifier", "MARC.EHRS.VisualizationServer.Notifier\MARC.EHRS.VisualizationServer.Notifier.csproj", "{3F0ACBE6-DDA5-4E14-BD1C-539E94DAF35C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MARC.EHRS.VisualizationServer.Syslog", "MARC.EHRS.VisualizationServer.Syslog\MARC.EHRS.VisualizationServer.Syslog.csproj", "{2F1F56D1-B6DE-4FE7-8C89-26A826E8F535}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MARC.EHRS.VisualizationClient", "MARC.HI.EHRS.VisualizationClient\MARC.EHRS.VisualizationClient.csproj", "{42B90327-5CBC-4744-8898-1AAB8D5046CE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{3D3A7A3D-0D62-4F4B-9D0C-93A17515C514}"
+	ProjectSection(SolutionItems) = preProject
+		ClientAccessPolicy.xml = ClientAccessPolicy.xml
+		install.iss = install.iss
+		Solution Items\MARC.HI.EHRS.SVC.Auditing.Atna.dll = Solution Items\MARC.HI.EHRS.SVC.Auditing.Atna.dll
+		Solution Items\MARC.HI.EHRS.SVC.Auditing.dll = Solution Items\MARC.HI.EHRS.SVC.Auditing.dll
+		Solution Items\MARC.HI.EHRS.SVC.Core.dll = Solution Items\MARC.HI.EHRS.SVC.Core.dll
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{00A44E45-3F01-45D9-87DE-6AF6C083E392}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{00A44E45-3F01-45D9-87DE-6AF6C083E392}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{00A44E45-3F01-45D9-87DE-6AF6C083E392}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{00A44E45-3F01-45D9-87DE-6AF6C083E392}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{00A44E45-3F01-45D9-87DE-6AF6C083E392}.Release|Any CPU.Build.0 = Release|Any CPU
+		{00A44E45-3F01-45D9-87DE-6AF6C083E392}.Release|x86.ActiveCfg = Release|Any CPU
+		{176C6009-3DCE-445D-A16F-E2E5837568D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{176C6009-3DCE-445D-A16F-E2E5837568D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{176C6009-3DCE-445D-A16F-E2E5837568D8}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{176C6009-3DCE-445D-A16F-E2E5837568D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{176C6009-3DCE-445D-A16F-E2E5837568D8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{176C6009-3DCE-445D-A16F-E2E5837568D8}.Release|x86.ActiveCfg = Release|Any CPU
+		{3F0ACBE6-DDA5-4E14-BD1C-539E94DAF35C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F0ACBE6-DDA5-4E14-BD1C-539E94DAF35C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F0ACBE6-DDA5-4E14-BD1C-539E94DAF35C}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{3F0ACBE6-DDA5-4E14-BD1C-539E94DAF35C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F0ACBE6-DDA5-4E14-BD1C-539E94DAF35C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3F0ACBE6-DDA5-4E14-BD1C-539E94DAF35C}.Release|x86.ActiveCfg = Release|Any CPU
+		{2F1F56D1-B6DE-4FE7-8C89-26A826E8F535}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2F1F56D1-B6DE-4FE7-8C89-26A826E8F535}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2F1F56D1-B6DE-4FE7-8C89-26A826E8F535}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{2F1F56D1-B6DE-4FE7-8C89-26A826E8F535}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2F1F56D1-B6DE-4FE7-8C89-26A826E8F535}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2F1F56D1-B6DE-4FE7-8C89-26A826E8F535}.Release|x86.ActiveCfg = Release|Any CPU
+		{42B90327-5CBC-4744-8898-1AAB8D5046CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{42B90327-5CBC-4744-8898-1AAB8D5046CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{42B90327-5CBC-4744-8898-1AAB8D5046CE}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{42B90327-5CBC-4744-8898-1AAB8D5046CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{42B90327-5CBC-4744-8898-1AAB8D5046CE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{42B90327-5CBC-4744-8898-1AAB8D5046CE}.Release|x86.ActiveCfg = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{AE3E3DA1-AD73-4D44-AE3D-64C61464F4BE} = {646E55E3-961F-4C8F-ADB3-43E299752AB8}
+		{8A9952C0-B0A2-4812-8266-F4C128E19098} = {646E55E3-961F-4C8F-ADB3-43E299752AB8}
+		{176C6009-3DCE-445D-A16F-E2E5837568D8} = {646E55E3-961F-4C8F-ADB3-43E299752AB8}
+		{00A44E45-3F01-45D9-87DE-6AF6C083E392} = {AE3E3DA1-AD73-4D44-AE3D-64C61464F4BE}
+		{3F0ACBE6-DDA5-4E14-BD1C-539E94DAF35C} = {AE3E3DA1-AD73-4D44-AE3D-64C61464F4BE}
+		{2F1F56D1-B6DE-4FE7-8C89-26A826E8F535} = {AE3E3DA1-AD73-4D44-AE3D-64C61464F4BE}
+		{42B90327-5CBC-4744-8898-1AAB8D5046CE} = {8A9952C0-B0A2-4812-8266-F4C128E19098}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		VisualSVNWorkingCopyRoot = .
+	EndGlobalSection
+EndGlobal
