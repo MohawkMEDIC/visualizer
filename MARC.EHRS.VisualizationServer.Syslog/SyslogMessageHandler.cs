@@ -97,7 +97,7 @@ namespace MARC.EHRS.VisualizationServer.Syslog
         /// <summary>
         /// Gets or sets the context that this handler runs within
         /// </summary>
-        public MARC.HI.EHRS.SVC.Core.HostContext Context
+        public IServiceProvider Context
         {
             get;
             set;
