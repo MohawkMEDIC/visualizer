@@ -3,8 +3,8 @@
 [Setup]
 AppId={{3BFA5A48-F91F-4db7-8405-AE431861D19F}
 AppName=MARC-HI Visualizer
-AppVerName=MARC-HI Visualizer v3.2
-OutputBaseFilename=visualizer-setup-3.2
+AppVerName=MARC-HI Visualizer v3.3
+OutputBaseFilename=visualizer-setup-3.3
 LicenseFile=.\License.rtf
 AppPublisher=Mohawk College of Applied Arts and Technology
 AppPublisherURL=http://te.marc-hi.ca
@@ -16,7 +16,7 @@ AllowNoIcons=yes
 OutputDir=.\dist
 Compression=lzma
 SolidCompression=yes
-AppCopyright=Copyright (C) 2009-2012, Mohawk College of Applied Arts and Technology
+AppCopyright=Copyright (C) 2009-2013, Mohawk College of Applied Arts and Technology
 RestartIfNeededByRun=yes
 WizardImageFile=.\install-logo.bmp
 [Files]
