@@ -74,7 +74,9 @@ namespace MARC.EHRS.VisualizationClient.Silverlight.Config
         /// </summary>
         internal object CreateControl()
         {
-            return XamlReader.Load(m_controlSource);
+            if(m_controlSource != null)
+                return XamlReader.Load(m_controlSource);
+            return new TextBlock() { Text = "Error" };
         }
     }
 }

@@ -500,6 +500,11 @@ namespace MARC.EHRS.VisualizationClient.Silverlight
             sbHideHelp.Begin();
         }
 
+        private void UserControl_Unloaded(object sender, RoutedEventArgs e)
+        {
+            this.m_visClient.Dispose();
+        }
+
         
     }
 }

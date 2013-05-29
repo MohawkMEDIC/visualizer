@@ -8,13 +8,14 @@ using System.Xml.Serialization;
 using MARC.EHRS.Visualization.Core;
 using System.IO;
 using System.Windows.Threading;
+using System.Threading;
 
 namespace MARC.EHRS.VisualizationClient
 {
     /// <summary>
     /// Represents a client connection to the visualizer
     /// </summary>
-    public class VisualizerClient
+    public class VisualizerClient : IDisposable
     {
 
         /// <summary>
@@ -23,6 +24,16 @@ namespace MARC.EHRS.VisualizationClient
         private VisualizerClient()
         {
         }
+
+        /// <summary>
+        /// Parse queue
+        /// </summary>
+        private Queue<String> m_parseQueue = new Queue<String>();
+
+        /// <summary>
+        /// Sync root
+        /// </summary>
+        private Object m_syncRoot = new object();
 
         // The client connection
         private Socket m_clientConnection;
@@ -41,6 +52,11 @@ namespace MARC.EHRS.VisualizationClient
         public EndPoint ServerEndpoint { get; private set; }
 
         /// <summary>
+        /// Queue reader thread
+        /// </summary>
+        private Thread m_queueReaderThread;
+ 
+        /// <summary>
         /// Returns true if the client is currently connected to a visualizer
         /// </summary>
         public bool IsConnected
@@ -53,6 +69,58 @@ namespace MARC.EHRS.VisualizationClient
         }
 
         /// <summary>
+        /// Queue reader
+        /// </summary>
+        private void QueueReader()
+        {
+
+            try
+            {
+                while (true)
+                {
+                    lock (this.m_syncRoot)
+                        Monitor.Wait(this.m_syncRoot);
+
+                    string packetData = string.Empty;
+                    lock (this.m_syncRoot)
+                        packetData = this.m_parseQueue.Dequeue();
+                    List<String> packets = new List<string>();
+                    try
+                    {
+                        
+                        while (packetData.Length > 0)
+                        {
+                            int sPacket = packetData.IndexOf("<?xml"),
+                                ePacket = packetData.IndexOf("<?xml", sPacket + 1);
+                            // Substring packet
+                            if (ePacket == -1)
+                            {
+                                packets.Add(packetData.Substring(sPacket));
+                                packetData = String.Empty;
+                            }
+                            else
+                            {
+                                packets.Add(packetData.Substring(sPacket, ePacket - sPacket));
+                                packetData = packetData.Remove(sPacket, ePacket - sPacket);
+                            }
+
+                        }
+
+                        foreach (var pkt in packets)
+                        {
+                            var sr = new StringReader(pkt);
+                            var eventData = this.m_visualizationSerializer.Deserialize(sr) as VisualizationEvent;
+                            if (eventData != null && EventReceived != null)
+                                this.m_dispatcher.BeginInvoke(EventReceived, new object[] { this, new VisualizationEventArgs() { Event = eventData } });
+                        }
+                    }
+                    catch { }
+                }
+            }
+            catch { }
+        }
+
+        /// <summary>
         /// Create a visualizer client
         /// </summary>
         public static VisualizerClient CreateClient(EndPoint serverEndpoint, Dispatcher owner)
@@ -60,6 +128,8 @@ namespace MARC.EHRS.VisualizationClient
             VisualizerClient retVal = new VisualizerClient();
             retVal.ServerEndpoint = serverEndpoint;
             retVal.m_dispatcher = owner;
+            retVal.m_queueReaderThread = new Thread(retVal.QueueReader);
+            retVal.m_queueReaderThread.Start();
 
             return retVal;
         }
@@ -120,10 +190,13 @@ namespace MARC.EHRS.VisualizationClient
             try
             {
                 string packetData = Encoding.UTF8.GetString(e.Buffer, e.Offset, e.BytesTransferred);
-                sr = new StringReader(packetData);
-                var eventData = this.m_visualizationSerializer.Deserialize(sr) as VisualizationEvent;
-                if (eventData != null && EventReceived != null)
-                    this.m_dispatcher.BeginInvoke(EventReceived, new object[] { this, new VisualizationEventArgs() { Event = eventData } });
+                System.Diagnostics.Debug.WriteLine(packetData);
+                lock (this.m_syncRoot)
+                {
+                    this.m_parseQueue.Enqueue(packetData);
+                    Monitor.Pulse(this.m_syncRoot);
+                }
+
             }
             catch (Exception ex)
             {
@@ -155,5 +228,17 @@ namespace MARC.EHRS.VisualizationClient
         /// </summary>
         public event EventHandler<VisualizationEventArgs> EventReceived;
 
+
+        #region IDisposable Members
+
+        /// <summary>
+        /// Dispose the thread
+        /// </summary>
+        public void Dispose()
+        {
+            this.m_queueReaderThread.Abort();
+        }
+
+        #endregion
     }
 }

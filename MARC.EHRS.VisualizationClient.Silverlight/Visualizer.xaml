@@ -6,7 +6,7 @@
     mc:Ignorable="d"
     d:DesignHeight="600" d:DesignWidth="800"
              xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"
-             xmlns:control="clr-namespace:MARC.EHRS.Silverlight;assembly=MARC.EHRS.Silverlight">
+             xmlns:control="clr-namespace:MARC.EHRS.Silverlight;assembly=MARC.EHRS.Silverlight" Unloaded="UserControl_Unloaded">
     <UserControl.Resources>
         <Storyboard x:Name="sbShowHelp" Storyboard.TargetName="AboutGrid">
             <DoubleAnimation Storyboard.TargetProperty="(content:PopperMenu.RenderTransform).(TranslateTransform.Y)" To="0" Duration="0:0:00.5"/>
