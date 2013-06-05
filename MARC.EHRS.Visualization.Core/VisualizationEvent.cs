@@ -40,7 +40,7 @@ namespace MARC.EHRS.Visualization.Core
         /// The sequence of the log item
         /// </summary>
         [XmlAttribute("sequence")]
-        public long Sequence { get; set; }
+        public decimal Sequence { get; set; }
 
         /// <summary>
         /// Gets or sets a custom representation of the image

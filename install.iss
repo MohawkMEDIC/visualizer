@@ -38,7 +38,7 @@ Source: .\MARC.EHRS.VisualizationClient.Silverlight\Bin\Debug\System.Xml.Seriali
 Source: .\MARC.EHRS.VisualizationClient.Silverlight.Test\ClientBin\*.png; DestDir: {app}\web\ClientBin; Components: web
 Source: .\MARC.EHRS.VisualizationClient.Silverlight.Test\default.html; DestDir: {app}\web; Components: web
 Source: .\*.*; Excludes: "*.dll,*.xml,*.pdb,*.obj,*.exe,*.suo,*.iss"; Flags: recursesubdirs; DestDir: {app}\src; Components: src
-Source: .\netfx\dotNetFx35setup.exe; DestDir: {tmp} ; Flags: dontcopy
+Source: .\netfx\dotNetFx40_Full_setup.exe; DestDir: {tmp} ; Flags: dontcopy
 Source: .\License.rtf; DestDir: {app} ; Flags: dontcopy
 
 [Icons]
@@ -49,22 +49,22 @@ Name: {group}\License; FileName: {app}\License.rtf
 Name: {group}\Support Site; FileName: http://te.marc-hi.ca
 
 [UninstallRun]
-Filename: "{dotnet20}\installutil.exe"; Parameters: "/uninstall ""{app}\MARC.EHRS.VisualizationServer.exe"""; Components: srv; StatusMsg: "Uninstalling Visualization Service..."; Flags: runhidden
-Filename: "{dotnet20}\ngen.exe"; Parameters: "uninstall ""{app}\MARC.EHRS.Visualization.Core.dll"" /nologo /silent" ; Components:srv; StatusMsg: "Removing Native Assemblies"; Flags:runhidden
-Filename: "{dotnet20}\ngen.exe"; Parameters: "uninstall ""{app}\MARC.EHRS.VisualizationServer.exe"" /nologo /silent" ; Components:srv; StatusMsg: "Removing Native Assemblies"; Flags:runhidden
-Filename: "{dotnet20}\ngen.exe"; Parameters: "uninstall ""{app}\MARC.EHRS.VisualizationServer.Notifier.dll"" /nologo /silent" ; Components:srv; StatusMsg: "Removing Native Assemblies"; Flags:runhidden
-Filename: "{dotnet20}\ngen.exe"; Parameters: "uninstall ""{app}\MARC.EHRS.VisualizationServer.Syslog.dll"" /nologo /silent" ; Components:srv; StatusMsg: "Removing Native Assemblies"; Flags:runhidden
-Filename: "{dotnet20}\ngen.exe"; Parameters: "uninstall ""{app}\MARC.HI.EHRS.SVC.Auditing.Atna.dll"" /nologo /silent" ; Components:srv; StatusMsg: "Removing Native Assemblies"; Flags:runhidden
-Filename: "{dotnet20}\ngen.exe"; Parameters: "uninstall ""{app}\MARC.HI.EHRS.SVC.Core.dll"" /nologo /silent" ; Components:srv; StatusMsg: "Removing Native Assemblies"; Flags:runhidden
+Filename: "{dotnet40}\installutil.exe"; Parameters: "/uninstall ""{app}\MARC.EHRS.VisualizationServer.exe"""; Components: srv; StatusMsg: "Uninstalling Visualization Service..."; Flags: runhidden
+Filename: "{dotnet40}\ngen.exe"; Parameters: "uninstall ""{app}\MARC.EHRS.Visualization.Core.dll"" /nologo /silent" ; Components:srv; StatusMsg: "Removing Native Assemblies"; Flags:runhidden
+Filename: "{dotnet40}\ngen.exe"; Parameters: "uninstall ""{app}\MARC.EHRS.VisualizationServer.exe"" /nologo /silent" ; Components:srv; StatusMsg: "Removing Native Assemblies"; Flags:runhidden
+Filename: "{dotnet40}\ngen.exe"; Parameters: "uninstall ""{app}\MARC.EHRS.VisualizationServer.Notifier.dll"" /nologo /silent" ; Components:srv; StatusMsg: "Removing Native Assemblies"; Flags:runhidden
+Filename: "{dotnet40}\ngen.exe"; Parameters: "uninstall ""{app}\MARC.EHRS.VisualizationServer.Syslog.dll"" /nologo /silent" ; Components:srv; StatusMsg: "Removing Native Assemblies"; Flags:runhidden
+Filename: "{dotnet40}\ngen.exe"; Parameters: "uninstall ""{app}\MARC.HI.EHRS.SVC.Auditing.Atna.dll"" /nologo /silent" ; Components:srv; StatusMsg: "Removing Native Assemblies"; Flags:runhidden
+Filename: "{dotnet40}\ngen.exe"; Parameters: "uninstall ""{app}\MARC.HI.EHRS.SVC.Core.dll"" /nologo /silent" ; Components:srv; StatusMsg: "Removing Native Assemblies"; Flags:runhidden
 
 [Run]
-Filename: "{dotnet20}\ngen.exe"; Parameters: "install ""{app}\MARC.EHRS.Visualization.Core.dll"" /nologo /silent" ; Components:srv; StatusMsg: "Generating Native Assemblies"; Flags:runhidden
-Filename: "{dotnet20}\ngen.exe"; Parameters: "install ""{app}\MARC.EHRS.VisualizationServer.exe"" /nologo /silent" ; Components:srv; StatusMsg: "Generating Native Assemblies"; Flags:runhidden
-Filename: "{dotnet20}\ngen.exe"; Parameters: "install ""{app}\MARC.EHRS.VisualizationServer.Notifier.dll"" /nologo /silent" ; Components:srv; StatusMsg: "Generating Native Assemblies"; Flags:runhidden
-Filename: "{dotnet20}\ngen.exe"; Parameters: "install ""{app}\MARC.EHRS.VisualizationServer.Syslog.dll"" /nologo /silent" ; Components:srv; StatusMsg: "Generating Native Assemblies"; Flags:runhidden
-Filename: "{dotnet20}\ngen.exe"; Parameters: "install ""{app}\MARC.HI.EHRS.SVC.Auditing.Atna.dll"" /nologo /silent" ; Components:srv; StatusMsg: "Generating Native Assemblies"; Flags:runhidden
-Filename: "{dotnet20}\ngen.exe"; Parameters: "install ""{app}\MARC.HI.EHRS.SVC.Core.dll"" /nologo /silent" ; Components:srv; StatusMsg: "Generating Native Assemblies"; Flags:runhidden
-Filename: "{dotnet20}\installutil.exe"; Parameters: """{app}\MARC.EHRS.VisualizationServer.exe"""; Components: srv; StatusMsg: "Installing Visualization Service..."; Flags: runhidden
+Filename: "{dotnet40}\ngen.exe"; Parameters: "install ""{app}\MARC.EHRS.Visualization.Core.dll"" /nologo /silent" ; Components:srv; StatusMsg: "Generating Native Assemblies"; Flags:runhidden
+Filename: "{dotnet40}\ngen.exe"; Parameters: "install ""{app}\MARC.EHRS.VisualizationServer.exe"" /nologo /silent" ; Components:srv; StatusMsg: "Generating Native Assemblies"; Flags:runhidden
+Filename: "{dotnet40}\ngen.exe"; Parameters: "install ""{app}\MARC.EHRS.VisualizationServer.Notifier.dll"" /nologo /silent" ; Components:srv; StatusMsg: "Generating Native Assemblies"; Flags:runhidden
+Filename: "{dotnet40}\ngen.exe"; Parameters: "install ""{app}\MARC.EHRS.VisualizationServer.Syslog.dll"" /nologo /silent" ; Components:srv; StatusMsg: "Generating Native Assemblies"; Flags:runhidden
+Filename: "{dotnet40}\ngen.exe"; Parameters: "install ""{app}\MARC.HI.EHRS.SVC.Auditing.Atna.dll"" /nologo /silent" ; Components:srv; StatusMsg: "Generating Native Assemblies"; Flags:runhidden
+Filename: "{dotnet40}\ngen.exe"; Parameters: "install ""{app}\MARC.HI.EHRS.SVC.Core.dll"" /nologo /silent" ; Components:srv; StatusMsg: "Generating Native Assemblies"; Flags:runhidden
+Filename: "{dotnet40}\installutil.exe"; Parameters: """{app}\MARC.EHRS.VisualizationServer.exe"""; Components: srv; StatusMsg: "Installing Visualization Service..."; Flags: runhidden
 
 [Types]
 Name: full; Description: Complete Installation
@@ -85,7 +85,7 @@ var
 
 
 const
-  dotnetRedistURL = '{tmp}\dotNetFx35setup.exe';
+  dotnetRedistURL = '{tmp}\dotNetFx40_Full_setup.exe';
   // local system for testing...
   // dotnetRedistURL = 'http://192.168.1.1/dotnetfx.exe';
 
@@ -94,14 +94,14 @@ begin
   Result := true;
   dotNetNeeded := false;
 
-  if (not DirExists(ExpandConstant('{dotnet20}'))) then begin
+  if (not DirExists(ExpandConstant('{win}\Microsoft.NET\Framework\v4.0.30319'))) then begin
     dotNetNeeded := true;
     if (not IsAdminLoggedOn()) then begin
-      MsgBox('Visualizer needs the Microsoft .NET Framework 3.5 to be installed by an Administrator', mbInformation, MB_OK);
+      MsgBox('Visualizer needs the Microsoft .NET Framework 4.0 to be installed by an Administrator', mbInformation, MB_OK);
       Result := false;
     end else begin
-      memoDependenciesNeeded := memoDependenciesNeeded + '      .NET Framework 3.5' #13;
-      dotnetRedistPath := ExpandConstant('{tmp}\dotNetFx35setup.exe');
+      memoDependenciesNeeded := memoDependenciesNeeded + '      .NET Framework 4.0' #13;
+      dotnetRedistPath := ExpandConstant('{tmp}\dotNetFx40_Full_setup.exe');
 
     end;
   end;
@@ -131,7 +131,7 @@ begin
         end;
       end else begin
         // handle failure if necessary; ResultCode contains the error code
-          Result := '.NET Framework 3.5 is Required';
+          Result := '.NET Framework 4.0 is Required';
       end;
     end;
 end;
