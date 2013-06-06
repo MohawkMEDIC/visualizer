@@ -59,6 +59,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="MARC.Everest">
+      <HintPath>..\Solution Items\MARC.Everest.dll</HintPath>
+    </Reference>
     <Reference Include="MARC.HI.EHRS.SVC.Auditing">
       <HintPath>..\Solution Items\MARC.HI.EHRS.SVC.Auditing.dll</HintPath>
     </Reference>
@@ -85,9 +88,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApplicationContext.cs" />
     <Compile Include="Configuration\ConfigurationHandler.cs" />
+    <Compile Include="Configuration\EndpointConfiguration.cs" />
+    <Compile Include="Configuration\VisualizerConfigurationSection.cs" />
+    <Compile Include="ListenerThread.cs" />
+    <Compile Include="ISyslogMessageHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SyslogMessage.cs" />
+    <Compile Include="Exceptions\SyslogMessageException.cs" />
     <Compile Include="SyslogMessageHandler.cs" />
+    <Compile Include="TransportProtocol\ITransportProtocol.cs" />
+    <Compile Include="TransportProtocol\UdpTransport.cs" />
+    <Compile Include="TransportProtocol\STcpTransport.cs" />
+    <Compile Include="TransportProtocol\TcpTransport.cs" />
+    <Compile Include="TransportProtocol\TransportUtil.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MARC.EHRS.Visualization.Core\MARC.EHRS.Visualization.Core.csproj">

@@ -17,100 +17,66 @@ namespace MARC.EHRS.VisualizationServer.Syslog.Configuration
         #region IConfigurationSectionHandler Members
 
         /// <summary>
-        /// Binding configuration
-        /// </summary>
-        public BindingConfiguration[] Bindings { get; set; }
-
-        /// <summary>
-        /// Binding configuration for sockets
-        /// </summary>
-        public struct BindingConfiguration
-        {
-
-            /// <summary>
-            /// Gets or sets the port that syslog listens on
-            /// </summary>
-            public int BindPort { get; set; }
-
-            /// <summary>
-            /// Bind to address
-            /// </summary>
-            public IPAddress BindAddress { get; set; }
-
-            /// <summary>
-            /// Port to forward
-            /// </summary>
-            public int ForwardPort { get; set; }
-
-            /// <summary>
-            /// Forward to address
-            /// </summary>
-            public IPAddress ForwardAddress { get; set; }
-
-        }
-
-        /// <summary>
-        /// Gets or sets the maximum UDP size
-        /// </summary>
-        public int MaxUdpSize { get; private set; }
-
-
-        /// <summary>
         /// Create the configuration handler
         /// </summary>
         public object Create(object parent, object configContext, System.Xml.XmlNode section)
         {
 
-            var bindings = section.SelectNodes("//*[local-name() = 'binding']");
-            List<BindingConfiguration> configBind = new List<BindingConfiguration>(bindings.Count);
-            Trace.TraceInformation("Binding to '{0}' interfaces...", bindings.Count);
-            foreach (XmlElement binding in bindings)
-            {
-                BindingConfiguration bc = new BindingConfiguration();
+            VisualizerConfigurationSection retVal = new VisualizerConfigurationSection();
 
-                // Read the configuration section
-                if (binding.Attributes["port"] != null)
-                    bc.BindPort = Int32.Parse(binding.Attributes["port"].Value);
-                else
-                {
-                    Trace.TraceWarning("No port specified, assuming port 514");
-                    bc.BindPort = 514;
-                }
+            // Sections
+            var endpoints = section.SelectNodes("./*[local-name() = 'listener']");
+            if (endpoints.Count == 0)
+                throw new ConfigurationErrorsException("Cannot find any application endpoints for Syslog message processing", section);
+            foreach (XmlNode ep in endpoints)
+                retVal.Endpoints.Add(this.ProcessEndpointConfiguration(ep));
 
-                if (binding.Attributes["address"] != null)
-                    bc.BindAddress = IPAddress.Parse(binding.Attributes["address"].Value);
-                else
-                {
-                    Trace.TraceWarning("No address specified, binding to *");
-                    bc.BindAddress = IPAddress.Any;
-                }
+            return retVal;
+        }
 
-                // Read the configuration section
-                if (binding.Attributes["forwardPort"] != null)
-                    bc.ForwardPort = Int32.Parse(binding.Attributes["forwardPort"].Value);
-                else
-                    bc.ForwardPort = 514;
+        /// <summary>
+        /// Process endpoint configuration
+        /// </summary>
+        private EndpointConfiguration ProcessEndpointConfiguration(XmlNode ep)
+        {
+            // Prepare the EP
+            EndpointConfiguration config = new EndpointConfiguration();
 
-                if (binding.Attributes["forwardAddress"] != null)
-                    bc.ForwardAddress = IPAddress.Parse(binding.Attributes["forwardAddress"].Value);
-
-
-                configBind.Add(bc);
-            }
-
-
-
-            if (section.Attributes["maxMessageSize"] != null)
-                this.MaxUdpSize = Int32.Parse(section.Attributes["maxMessageSize"].Value);
+            // name & address are mandatory
+            if (ep.Attributes["name"] != null)
+                config.Name = ep.Attributes["name"].Value;
             else
+                throw new ConfigurationErrorsException("Must carry a name attribute", ep);
+
+            if (ep.Attributes["address"] != null)
+                config.Address = new Uri(ep.Attributes["address"].Value);
+            else
+                throw new ConfigurationErrorsException("Must carry an address attribute", ep);
+
+            // Handler
+            if (ep.Attributes["handler"] != null)
             {
-                Trace.TraceWarning("No max message size specified, assuming {0}", short.MaxValue);
-                this.MaxUdpSize = short.MaxValue;
+                Type handlerType = Type.GetType(ep.Attributes["handler"].Value);
+                if (handlerType == null)
+                    throw new ConfigurationErrorsException("Cannot find the specified type", ep.Attributes["handler"]);
+                config.Handler = handlerType;
+            }
+            else
+                throw new ConfigurationErrorsException("Must carry a handler attribute", ep);
+
+            // Now process the attributes if any
+            foreach (XmlNode att in ep.SelectNodes("./*[local-name() = 'attribute']"))
+            {
+                if (att.Attributes["name"] == null || att.Attributes["value"] == null)
+                    throw new ConfigurationErrorsException("Missing name and/or value on attribute", ep);
+                KeyValuePair<String, String> attValue = new KeyValuePair<string, string>(att.Attributes["name"].Value, att.Attributes["value"].Value);
             }
 
-            this.Bindings = configBind.ToArray();
+            // Now endpoints 
+            foreach (XmlNode fwd in ep.SelectNodes("./*[local-name() = 'forward']"))
+                config.Forward.Add(this.ProcessEndpointConfiguration(fwd));
 
-            return this;
+            return config;
         }
 
         #endregion

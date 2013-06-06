@@ -1,10 +1,10 @@
 ; MARC-HI Visualizer Version 3.0 Installation
 
 [Setup]
-AppId={{3BFA5A48-F91F-4db7-8405-AE431861D19F}
+AppId={{3BFA5A48-F91F-4db7-8405-AE431861D190}
 AppName=MARC-HI Visualizer
-AppVerName=MARC-HI Visualizer v3.3
-OutputBaseFilename=visualizer-setup-3.3
+AppVerName=MARC-HI Visualizer v4.0
+OutputBaseFilename=visualizer-setup-4.0
 LicenseFile=.\License.rtf
 AppPublisher=Mohawk College of Applied Arts and Technology
 AppPublisherURL=http://te.marc-hi.ca
