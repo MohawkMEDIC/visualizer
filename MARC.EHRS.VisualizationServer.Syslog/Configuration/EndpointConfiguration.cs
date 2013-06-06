@@ -26,6 +26,15 @@ namespace MARC.EHRS.VisualizationServer.Syslog.Configuration
     {
 
         /// <summary>
+        /// Creates a new endpoint configuration
+        /// </summary>
+        public EndpointConfiguration()
+        {
+            this.Actions = new List<Type>();
+            this.Forward = new List<EndpointConfiguration>();
+        }
+
+        /// <summary>
         /// The address to listen on
         /// </summary>
         public Uri Address { get; set; }
@@ -43,7 +52,7 @@ namespace MARC.EHRS.VisualizationServer.Syslog.Configuration
         /// <summary>
         /// Gets the handler of this endpoint
         /// </summary>
-        public Type Handler { get; set; }
+        public List<Type> Actions { get; private set; }
 
         /// <summary>
         /// The forwarding addresses

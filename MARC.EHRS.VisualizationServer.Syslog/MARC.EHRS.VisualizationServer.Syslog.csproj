@@ -93,7 +93,7 @@
     <Compile Include="Configuration\EndpointConfiguration.cs" />
     <Compile Include="Configuration\VisualizerConfigurationSection.cs" />
     <Compile Include="ListenerThread.cs" />
-    <Compile Include="ISyslogMessageHandler.cs" />
+    <Compile Include="ISyslogAction.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SyslogMessage.cs" />
     <Compile Include="Exceptions\SyslogMessageException.cs" />

@@ -18,7 +18,7 @@ namespace MARC.EHRS.VisualizationServer.Syslog
         private ITransportProtocol m_protocol;
 
         // The message handler
-        private ISyslogMessageHandler m_handler;
+        private List<ISyslogAction> m_action = new List<ISyslogAction>();
         
         // Endpoint configuration
         private EndpointConfiguration m_configuration;
@@ -29,9 +29,36 @@ namespace MARC.EHRS.VisualizationServer.Syslog
         public ListenerThread(EndpointConfiguration config)
         {
             this.m_protocol = TransportUtil.Current.CreateTransport(config.Address.Scheme);
-            this.m_handler = Activator.CreateInstance(config.Handler) as ISyslogMessageHandler;
-            this.m_handler.Context = ApplicationContext.CurrentContext;
+            this.m_protocol.MessageReceived += new EventHandler<SyslogMessageReceivedEventArgs>(m_protocol_MessageReceived);
+            this.m_protocol.InvalidMessageReceived += new EventHandler<SyslogMessageReceivedEventArgs>(m_protocol_InvalidMessageReceived);
+            foreach (var act in config.Actions)
+            {
+                var action = Activator.CreateInstance(act) as ISyslogAction;
+                if (action == null)
+                    throw new InvalidOperationException("Action does not implement ISyslogAction interface");
+                action.Context = ApplicationContext.CurrentContext;
+                this.m_action.Add(action);
+            }
+
             this.m_configuration = config;
+        }
+
+        /// <summary>
+        /// Invalid message is received
+        /// </summary>
+        void m_protocol_InvalidMessageReceived(object sender, SyslogMessageReceivedEventArgs e)
+        {
+            foreach (var act in this.m_action)
+                act.HandleInvalidMessage(sender, e);
+        }
+
+        /// <summary>
+        /// Message has been received
+        /// </summary>
+        void m_protocol_MessageReceived(object sender, SyslogMessageReceivedEventArgs e)
+        {
+            foreach (var act in this.m_action)
+                act.HandleMessageReceived(sender, e);
         }
 
         /// <summary>

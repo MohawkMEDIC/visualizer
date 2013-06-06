@@ -8,9 +8,9 @@ using MARC.HI.EHRS.SVC.Core.Services;
 namespace MARC.EHRS.VisualizationServer.Syslog
 {
     /// <summary>
-    /// Represents a class that can handle syslog messages
+    /// Represents a class that can handle syslog via a series of actions
     /// </summary>
-    public interface ISyslogMessageHandler : IUsesHostContext
+    public interface ISyslogAction : IUsesHostContext
     {
         /// <summary>
         /// Handle a message received event
