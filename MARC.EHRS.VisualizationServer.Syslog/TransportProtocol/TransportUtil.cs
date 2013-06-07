@@ -117,7 +117,7 @@ namespace MARC.EHRS.VisualizationServer.Syslog.TransportProtocol
             try
             {
                 KeyValuePair<EndpointConfiguration, byte[]> parms = (KeyValuePair<EndpointConfiguration, byte[]>)state;
-                Trace.TraceInformation("Forwarding to {0} : {1}...", parms.Key, Encoding.UTF8.GetString(parms.Value));
+                Trace.TraceInformation("Forwarding to {0} on {1}...", parms.Key.Name, parms.Key.Address);
                 var transport = CreateTransport(parms.Key.Address.Scheme);
                 transport.Forward(parms.Key, parms.Value);
             }

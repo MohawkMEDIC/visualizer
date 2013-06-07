@@ -76,6 +76,7 @@ namespace MARC.EHRS.Audit
                         Trace.TraceError("No message handler service started. Terminating program");
                     }
                 }
+                
             }
             catch(Exception e)
             {

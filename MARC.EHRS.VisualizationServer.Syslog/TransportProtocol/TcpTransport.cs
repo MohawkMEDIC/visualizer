@@ -103,6 +103,9 @@ namespace MARC.EHRS.VisualizationServer.Syslog.TransportProtocol
                 // Now read to a string
                 StringBuilder messageData = new StringBuilder();
                 byte[] buffer = new byte[1024];
+                DateTime st = DateTime.Now;
+                while (!stream.DataAvailable && DateTime.Now.Subtract(st) < this.m_configuration.Timeout) Thread.Sleep(50);
+
                 while (stream.DataAvailable)
                 {
                     int br = stream.Read(buffer, 0, 1024);

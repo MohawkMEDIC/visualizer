@@ -18,7 +18,7 @@ namespace MARC.EHRS.VisualizationServer.Syslog
         private ITransportProtocol m_protocol;
 
         // The message handler
-        private List<ISyslogAction> m_action = new List<ISyslogAction>();
+        private ISyslogAction m_action;
         
         // Endpoint configuration
         private EndpointConfiguration m_configuration;
@@ -28,19 +28,14 @@ namespace MARC.EHRS.VisualizationServer.Syslog
         /// </summary>
         public ListenerThread(EndpointConfiguration config)
         {
+            this.m_configuration = config;
             this.m_protocol = TransportUtil.Current.CreateTransport(config.Address.Scheme);
             this.m_protocol.MessageReceived += new EventHandler<SyslogMessageReceivedEventArgs>(m_protocol_MessageReceived);
             this.m_protocol.InvalidMessageReceived += new EventHandler<SyslogMessageReceivedEventArgs>(m_protocol_InvalidMessageReceived);
-            foreach (var act in config.Actions)
-            {
-                var action = Activator.CreateInstance(act) as ISyslogAction;
-                if (action == null)
-                    throw new InvalidOperationException("Action does not implement ISyslogAction interface");
-                action.Context = ApplicationContext.CurrentContext;
-                this.m_action.Add(action);
-            }
-
-            this.m_configuration = config;
+            this.m_action = Activator.CreateInstance(this.m_configuration.Action) as ISyslogAction;
+            if (this.m_action == null)
+                throw new InvalidOperationException("Action does not implement ISyslogAction interface");
+            this.m_action.Context = ApplicationContext.CurrentContext;
         }
 
         /// <summary>
@@ -48,8 +43,7 @@ namespace MARC.EHRS.VisualizationServer.Syslog
         /// </summary>
         void m_protocol_InvalidMessageReceived(object sender, SyslogMessageReceivedEventArgs e)
         {
-            foreach (var act in this.m_action)
-                act.HandleInvalidMessage(sender, e);
+            this.m_action.HandleInvalidMessage(sender, e);
         }
 
         /// <summary>
@@ -57,8 +51,7 @@ namespace MARC.EHRS.VisualizationServer.Syslog
         /// </summary>
         void m_protocol_MessageReceived(object sender, SyslogMessageReceivedEventArgs e)
         {
-            foreach (var act in this.m_action)
-                act.HandleMessageReceived(sender, e);
+            this.m_action.HandleMessageReceived(sender, e);
         }
 
         /// <summary>

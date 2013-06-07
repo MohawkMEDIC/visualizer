@@ -206,11 +206,18 @@ namespace MARC.EHRS.VisualizationServer.Syslog.TransportProtocol
 
             while (m_run) // run the service
             {
-                var client = this.m_listener.AcceptTcpClient();
-                Thread clientThread = new Thread(OnReceiveMessage);
-                clientThread.IsBackground = true;
-                clientThread.Start(client);
-
+                try
+                {
+                    var client = this.m_listener.AcceptTcpClient();
+                    Thread clientThread = new Thread(OnReceiveMessage);
+                    clientThread.IsBackground = true;
+                    clientThread.Start(client);
+                }
+                catch (ThreadAbortException)
+                {
+                    throw;
+                }
+                catch { }
             }
         }
         
@@ -260,6 +267,11 @@ namespace MARC.EHRS.VisualizationServer.Syslog.TransportProtocol
                 // Now read to a string
                 StringBuilder messageData = new StringBuilder();
                 byte[] buffer = new byte[1024];
+
+                // Wait for data to become available
+                DateTime st = DateTime.Now;
+                while (!tcpStream.DataAvailable && DateTime.Now.Subtract(st) < this.m_endpointConfiguration.Timeout) Thread.Sleep(50);
+
                 while (tcpStream.DataAvailable)
                 {
                     int br = stream.Read(buffer, 0, 1024);

@@ -15,14 +15,5 @@ namespace MARC.EHRS.Visualization.Core.Services
         /// </summary>
         void Notify(VisualizationEvent evt);
 
-        /// <summary>
-        /// Start the notification service
-        /// </summary>
-        void Start();
-
-        /// <summary>
-        /// Stop the notification service
-        /// </summary>
-        void Stop();
     }
 }

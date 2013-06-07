@@ -82,11 +82,19 @@ namespace MARC.EHRS.VisualizationServer.Syslog.TransportProtocol
             // Run
             while (this.m_run)
             {
-                // Client
-                var client = this.m_udpSocket.Accept();
-                Thread clientThread = new Thread(OnReceiveMessage);
-                clientThread.IsBackground = true;
-                clientThread.Start(client);
+                try
+                {
+                    // Client
+                    var client = this.m_udpSocket.Accept();
+                    Thread clientThread = new Thread(OnReceiveMessage);
+                    clientThread.IsBackground = true;
+                    clientThread.Start(client);
+                }
+                catch (ThreadAbortException)
+                {
+                    throw;
+                }
+                catch { }
             }
         }
 

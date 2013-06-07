@@ -30,8 +30,8 @@ namespace MARC.EHRS.VisualizationServer.Syslog.Configuration
         /// </summary>
         public EndpointConfiguration()
         {
-            this.Actions = new List<Type>();
             this.Forward = new List<EndpointConfiguration>();
+            this.Timeout = new TimeSpan(0, 0, 10);
         }
 
         /// <summary>
@@ -45,6 +45,11 @@ namespace MARC.EHRS.VisualizationServer.Syslog.Configuration
         public string Name { get; set; }
 
         /// <summary>
+        /// Gets or sets the timeout
+        /// </summary>
+        public TimeSpan Timeout { get; set; }
+
+        /// <summary>
         /// Maximum message size
         /// </summary>
         public int MaxSize { get; set; }
@@ -52,7 +57,7 @@ namespace MARC.EHRS.VisualizationServer.Syslog.Configuration
         /// <summary>
         /// Gets the handler of this endpoint
         /// </summary>
-        public List<Type> Actions { get; private set; }
+        public Type Action { get; set; }
 
         /// <summary>
         /// The forwarding addresses

@@ -65,5 +65,17 @@ namespace MARC.EHRS.Visualization.Core
         /// </summary>
         [XmlAttribute("src")]
         public string SrcPort { get; set; }
+
+        /// <summary>
+        /// Correlation ID of the message (used to fetch against the visualization service if needed)
+        /// </summary>
+        [XmlAttribute("id")]
+        public String CorrelationId { get; set; }
+
+        /// <summary>
+        /// True if the message was invalid
+        /// </summary>
+        [XmlAttribute("err")]
+        public bool IsError { get; set; }
     }
 }

@@ -33,5 +33,10 @@ namespace MARC.EHRS.VisualizationServer.Syslog.Exceptions
         {
             this.FaultingMessage = faultingMessage;
         }
+
+        public SyslogMessageException(string message, SyslogMessage faultingMessage, Exception innerException) : base(message, innerException)
+        {
+            this.FaultingMessage = faultingMessage;
+        }
     }
 }

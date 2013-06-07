@@ -109,7 +109,7 @@ namespace MARC.EHRS.VisualizationServer.Notifier
         /// <param name="ar"></param>
         private void OnBeginAccept(IAsyncResult ar)
         {
-            TcpClient client = null; 
+            TcpClient client = null;
             try
             {
                 // Accept the connection
@@ -118,7 +118,7 @@ namespace MARC.EHRS.VisualizationServer.Notifier
                 byte[] receiveBuffer = new byte[m_policyString.Length];
 
                 int receivedBytes = 0;
-                while(receivedBytes < receiveBuffer.Length)
+                while (receivedBytes < receiveBuffer.Length)
                     receivedBytes += client.Client.Receive(receiveBuffer);
                 string receiveString = Encoding.UTF8.GetString(receiveBuffer);
                 if (StringComparer.InvariantCulture.Compare(receiveString, m_policyString) != 0)
@@ -126,7 +126,9 @@ namespace MARC.EHRS.VisualizationServer.Notifier
                 // Send policy file
                 client.Client.Send(m_policy);
             }
-            catch(Exception e)
+            catch (ObjectDisposedException)
+            { }
+            catch (Exception e)
             {
                 Trace.TraceError(e.ToString());
             }
