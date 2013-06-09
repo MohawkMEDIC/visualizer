@@ -1,0 +1,32 @@
+﻿<UserControl
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	mc:Ignorable="d"
+	x:Name="UserControl">
+	<UserControl.Resources>
+		<Storyboard x:Key="*">
+			<ColorAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="p6RAD" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
+				<SplineColorKeyFrame KeyTime="00:00:00.1000000" Value="#FFE25022"/>
+				<SplineColorKeyFrame KeyTime="00:00:00.5000000" Value="#FFFFFFFF"/>
+			</ColorAnimationUsingKeyFrames>
+		</Storyboard>	
+	</UserControl.Resources>
+
+	<Grid x:Name="LayoutRoot">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Viewbox>
+            <Canvas Width="140" Height="120">
+                <Path Stretch="Fill" Fill="#FF363896" Data="M 407.137,518.41L 414.428,512.194L 421.531,518.41L 417.98,518.41L 417.98,539.724L 421.531,539.724L 414.428,546.828L 407.137,539.724L 410.876,539.724L 410.876,518.41L 407.137,518.41 Z " Canvas.Left="31.173" x:Name="p1RAD"/>
+                <Path Stretch="Fill" StrokeThickness="2.66667" StrokeMiterLimit="2.75" Stroke="#FF373896" Fill="#FFFFFFFF" Data="M 459.153,601.772C 459.153,607.48 454.782,612.151 449.439,612.151L 387.011,612.151C 381.668,612.151 377.297,607.48 377.297,601.772L 377.297,560.255C 377.297,554.546 381.668,549.875 387.011,549.875L 449.439,549.875C 454.782,549.875 459.153,554.546 459.153,560.255L 459.153,601.772 Z "  Canvas.Top="36.348" x:Name="p6RAD"/>
+                <Path Stretch="Fill" StrokeThickness="2.66667" StrokeMiterLimit="2.75" Stroke="#FF373896" Fill="#FFFFFFFF" Data="F1 M 458.168,589.526C 449.605,589.526 442.662,588.217 442.662,586.6L 442.662,616.104C 442.662,617.721 449.605,619.03 458.168,619.03C 466.731,619.03 473.673,617.721 473.673,616.104L 473.673,586.6C 473.673,588.217 466.731,589.526 458.168,589.526 Z " Canvas.Left="65.365" Canvas.Top="73.073" StrokeLineJoin="Round" x:Name="p2RAD"/>
+                <Path Stretch="Fill" StrokeThickness="2.66667" StrokeMiterLimit="2.75" Stroke="#FF373896" Fill="#FFFFFFFF" Data="F1 M 458.168,589.526C 466.731,589.526 473.673,588.217 473.673,586.6C 473.673,584.984 466.731,583.674 458.168,583.674C 449.605,583.674 442.662,584.984 442.662,586.6C 442.662,588.217 449.605,589.526 458.168,589.526 Z "  Canvas.Left="65.365" Canvas.Top="70.147" x:Name="p3RAD"/>
+                <Path Stretch="Fill" Fill="#FF1A396A" Data="M 507.673,609.287C 507.673,615.013 501.357,619.697 493.637,619.697L 491.464,619.697C 483.743,619.697 477.429,615.013 477.429,609.287L 477.429,586.72C 477.429,580.995 483.743,576.31 491.464,576.31L 493.637,576.31C 501.357,576.31 507.673,580.995 507.673,586.72L 507.673,609.287 Z " Canvas.Left="101.465" Canvas.Top="64.116" x:Name="p4RAD"/>
+                <Path Stretch="Fill" Fill="#FF1A396A" Data="M 505.366,566.488C 505.366,561.237 499.629,556.982 492.551,556.982C 485.474,556.982 479.737,561.237 479.737,566.488C 479.737,571.737 485.474,575.991 492.551,575.991C 499.629,575.991 505.366,571.737 505.366,566.488 Z " Canvas.Left="103.773" Canvas.Top="44.788" x:Name="p5RAD"/>
+            </Canvas>
+        </Viewbox>
+    </Grid>
+</UserControl>
