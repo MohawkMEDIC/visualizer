@@ -16,7 +16,455 @@
 		<Color x:Key="POSBlinkFill">#FF7576B3</Color>
         <Color x:Key="RegistriesBlinkFil">#FF53BBBD</Color>
         
-	       <Storyboard x:Key="*">
+        <!-- Mohawk HIAL -->
+        <Storyboard x:Key="1.3.6.1.4.1.21367.2010.3.1.200">
+            <ColorAnimationUsingKeyFrames BeginTime="00:00:00"
+                                          Storyboard.TargetName="path"
+                                          Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
+            	<SplineColorKeyFrame KeyTime="00:00:00.2000000"
+            		Value="#FFF2C976" />
+            	<SplineColorKeyFrame KeyTime="00:00:00.4000000"
+            		Value="#FFFFFFFF" />
+            </ColorAnimationUsingKeyFrames>
+            <ColorAnimationUsingKeyFrames BeginTime="00:00:00"
+                                          Storyboard.TargetName="path1"
+                                          Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
+                <SplineColorKeyFrame KeyTime="00:00:00.2000000"
+            		Value="#FFF5A2A4" />
+                <SplineColorKeyFrame KeyTime="00:00:00.4000000"
+                	Value="#FFFFFFFF" />
+            </ColorAnimationUsingKeyFrames>
+            <ColorAnimationUsingKeyFrames BeginTime="00:00:00"
+                                          Storyboard.TargetName="path6"
+                                          Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
+                <SplineColorKeyFrame KeyTime="00:00:00.2000000"
+            		Value="#FFF5A2A4" />
+                <SplineColorKeyFrame KeyTime="00:00:00.4000000"
+                	Value="#FFFFFFFF" />
+            </ColorAnimationUsingKeyFrames>
+            <ColorAnimationUsingKeyFrames BeginTime="00:00:00"
+                                          Storyboard.TargetName="path7"
+                                          Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
+                <SplineColorKeyFrame KeyTime="00:00:00.2000000"
+            		Value="#FFF2C976" />
+                <SplineColorKeyFrame KeyTime="00:00:00.4000000"
+                	Value="#FFFFFFFF" />
+            </ColorAnimationUsingKeyFrames>
+            <ColorAnimationUsingKeyFrames BeginTime="00:00:00"
+                                          Storyboard.TargetName="Longitudinal_Record_Services"
+                                          Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
+                <SplineColorKeyFrame KeyTime="00:00:00.4000000"
+            		Value="{StaticResource LRSBlinkFill}" />
+                <SplineColorKeyFrame KeyTime="00:00:00.6000000"
+                	Value="#FFFFFFFF" />
+            </ColorAnimationUsingKeyFrames>
+        </Storyboard>
+		<!-- Oracle HIAL -->
+		<Storyboard x:Key="1.3.6.1.4.1.21367.2010.3.1.220">
+            <ColorAnimationUsingKeyFrames BeginTime="00:00:00"
+                                          Storyboard.TargetName="path"
+                                          Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
+            	<SplineColorKeyFrame KeyTime="00:00:00.2000000"
+            		Value="#FFF2C976" />
+            	<SplineColorKeyFrame KeyTime="00:00:00.4000000"
+            		Value="#FFFFFFFF" />
+            </ColorAnimationUsingKeyFrames>
+            <ColorAnimationUsingKeyFrames BeginTime="00:00:00"
+                                          Storyboard.TargetName="path1"
+                                          Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
+                <SplineColorKeyFrame KeyTime="00:00:00.2000000"
+            		Value="#FFF5A2A4" />
+                <SplineColorKeyFrame KeyTime="00:00:00.4000000"
+                	Value="#FFFFFFFF" />
+            </ColorAnimationUsingKeyFrames>
+            <ColorAnimationUsingKeyFrames BeginTime="00:00:00"
+                                          Storyboard.TargetName="path6"
+                                          Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
+                <SplineColorKeyFrame KeyTime="00:00:00.2000000"
+            		Value="#FFF5A2A4" />
+                <SplineColorKeyFrame KeyTime="00:00:00.4000000"
+                	Value="#FFFFFFFF" />
+            </ColorAnimationUsingKeyFrames>
+            <ColorAnimationUsingKeyFrames BeginTime="00:00:00"
+                                          Storyboard.TargetName="path7"
+                                          Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
+                <SplineColorKeyFrame KeyTime="00:00:00.2000000"
+            		Value="#FFF2C976" />
+                <SplineColorKeyFrame KeyTime="00:00:00.4000000"
+                	Value="#FFFFFFFF" />
+            </ColorAnimationUsingKeyFrames>
+            <ColorAnimationUsingKeyFrames BeginTime="00:00:00"
+                                          Storyboard.TargetName="Longitudinal_Record_Services"
+                                          Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
+                <SplineColorKeyFrame KeyTime="00:00:00.4000000"
+            		Value="{StaticResource LRSBlinkFill}" />
+                <SplineColorKeyFrame KeyTime="00:00:00.6000000"
+                	Value="#FFFFFFFF" />
+            </ColorAnimationUsingKeyFrames>
+        </Storyboard>
+        <!-- Oracle SHR -->
+        <Storyboard x:Key="1.3.6.1.4.1.21367.2010.3.1.215">
+            <ColorAnimationUsingKeyFrames BeginTime="00:00:00"
+                                          Storyboard.TargetName="rectangle"
+                                          Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
+                <SplineColorKeyFrame KeyTime="00:00:00.2000000"
+                                     Value="#FFB86CF5" />
+                <SplineColorKeyFrame KeyTime="00:00:00.4000000"
+                                     Value="#FFFFFFFF" />
+            </ColorAnimationUsingKeyFrames>
+        	<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="canvas" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)">
+        		<SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="0.85"/>
+        		<SplineDoubleKeyFrame KeyTime="00:00:00.4000000" Value="1"/>
+        	</DoubleAnimationUsingKeyFrames>
+        	<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="canvas" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)">
+        		<SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="0.85"/>
+        		<SplineDoubleKeyFrame KeyTime="00:00:00.4000000" Value="1"/>
+        	</DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+        <!-- Terminology Services -->
+        <Storyboard x:Key="TerminologyServices">
+            <ColorAnimationUsingKeyFrames BeginTime="00:00:00"
+                                          Storyboard.TargetName="path14"
+                                          Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
+                <SplineColorKeyFrame KeyTime="00:00:00.2000000"
+                                     Value="#FFFB9698" />
+                <SplineColorKeyFrame KeyTime="00:00:00.4000000"
+                                     Value="#FFFFFFFF" />
+            </ColorAnimationUsingKeyFrames>
+            <ColorAnimationUsingKeyFrames BeginTime="00:00:00"
+                                          Storyboard.TargetName="path15"
+                                          Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
+                <SplineColorKeyFrame KeyTime="00:00:00.2000000"
+                                     Value="#FFFB9698" />
+                <SplineColorKeyFrame KeyTime="00:00:00.4000000"
+                                     Value="#FFFFFFFF" />
+            </ColorAnimationUsingKeyFrames>
+        	<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="canvas6" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)">
+        		<SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="0.85"/>
+        		<SplineDoubleKeyFrame KeyTime="00:00:00.4000000" Value="1"/>
+        	</DoubleAnimationUsingKeyFrames>
+        	<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="canvas6" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)">
+        		<SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="0.85"/>
+        		<SplineDoubleKeyFrame KeyTime="00:00:00.4000000" Value="1"/>
+        	</DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+        <!-- Intersystems XDS Registry -->
+        <Storyboard x:Key="1.3.6.1.4.1.21367.2010.3.1.250">
+            <ColorAnimationUsingKeyFrames BeginTime="00:00:00"
+                                          Storyboard.TargetName="path2"
+                                          Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
+                <SplineColorKeyFrame KeyTime="00:00:00.1000000"
+                                     Value="#FFFB9698" />
+                <SplineColorKeyFrame KeyTime="00:00:00.5000000"
+                                     Value="#FFFFFFFF" />
+            </ColorAnimationUsingKeyFrames>
+            <ColorAnimationUsingKeyFrames BeginTime="00:00:00"
+                                          Storyboard.TargetName="path3"
+                                          Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
+                <SplineColorKeyFrame KeyTime="00:00:00.2000000"
+                                     Value="#FFFB9698" />
+                <SplineColorKeyFrame KeyTime="00:00:00.4000000"
+                                     Value="#FFFFFFFF" />
+            </ColorAnimationUsingKeyFrames>
+        	<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="canvas4" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)">
+        		<SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="0.85"/>
+        		<SplineDoubleKeyFrame KeyTime="00:00:00.4000000" Value="1"/>
+        	</DoubleAnimationUsingKeyFrames>
+        	<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="canvas4" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)">
+        		<SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="0.85"/>
+        		<SplineDoubleKeyFrame KeyTime="00:00:00.4000000" Value="1"/>
+        	</DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+		<!-- Karos XDS Repository -->        
+        <Storyboard x:Key="1.3.6.1.4.1.21367.2010.3.1.240">
+        	<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="canvas3" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)">
+        		<SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="0.85"/>
+        		<SplineDoubleKeyFrame KeyTime="00:00:00.4000000" Value="1"/>
+        	</DoubleAnimationUsingKeyFrames>
+        	<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="canvas3" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)">
+        		<SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="0.85"/>
+        		<SplineDoubleKeyFrame KeyTime="00:00:00.4000000" Value="1"/>
+        	</DoubleAnimationUsingKeyFrames>
+        	<ColorAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="XDSRectangle" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
+        		<SplineColorKeyFrame KeyTime="00:00:00.2000000" Value="{StaticResource EHRDataBlinkFill}"/>
+        		<SplineColorKeyFrame KeyTime="00:00:00.4000000" Value="White"/>
+        	</ColorAnimationUsingKeyFrames>
+        </Storyboard>
+		<!-- eceptionist iScheduler -->
+        <Storyboard x:Key="1.3.6.1.4.1.21367.2010.3.1.450">
+        	<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="canvas5" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)">
+        		<SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="0.85"/>
+        		<SplineDoubleKeyFrame KeyTime="00:00:00.4000000" Value="1"/>
+        	</DoubleAnimationUsingKeyFrames>
+        	<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="canvas5" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)">
+        		<SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="0.85"/>
+        		<SplineDoubleKeyFrame KeyTime="00:00:00.4000000" Value="1"/>
+        	</DoubleAnimationUsingKeyFrames>
+        	<ColorAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="path8" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
+        		<SplineColorKeyFrame KeyTime="00:00:00.2000000" Value="{StaticResource POSBlinkFill}"/>
+        		<SplineColorKeyFrame KeyTime="00:00:00.4000000" Value="{StaticResource MainBackgroundColor}"/>
+        	</ColorAnimationUsingKeyFrames>
+        </Storyboard>
+		<!-- DeltaWare Drug Repository -->
+        <Storyboard x:Key="1.3.6.1.4.1.21367.2010.3.1.210">
+        	<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="canvas7" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)">
+        		<SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="0.85"/>
+        		<SplineDoubleKeyFrame KeyTime="00:00:00.4000000" Value="1"/>
+        	</DoubleAnimationUsingKeyFrames>
+        	<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="canvas7" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)">
+        		<SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="0.85"/>
+        		<SplineDoubleKeyFrame KeyTime="00:00:00.4000000" Value="1"/>
+        	</DoubleAnimationUsingKeyFrames>
+        	<ColorAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="rectangle6" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
+        		<SplineColorKeyFrame KeyTime="00:00:00.2000000" Value="{StaticResource EHRDataBlinkFill}"/>
+        		<SplineColorKeyFrame KeyTime="00:00:00.4000000" Value="White"/>
+        	</ColorAnimationUsingKeyFrames>
+        </Storyboard>
+		<!-- IBM Client Registry -->
+        <Storyboard x:Key="1.3.6.1.4.1.21367.2010.3.1.225">
+        	<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="canvas9" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)">
+        		<SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="0.85"/>
+        		<SplineDoubleKeyFrame KeyTime="00:00:00.4000000" Value="1"/>
+        	</DoubleAnimationUsingKeyFrames>
+        	<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="canvas9" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)">
+        		<SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="0.85"/>
+        		<SplineDoubleKeyFrame KeyTime="00:00:00.4000000" Value="1"/>
+        	</DoubleAnimationUsingKeyFrames>
+        	<ColorAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="rectangle2" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
+        		<SplineColorKeyFrame KeyTime="00:00:00.2000000" Value="{StaticResource RegistriesBlinkFil}"/>
+        		<SplineColorKeyFrame KeyTime="00:00:00.4000000" Value="White"/>
+        	</ColorAnimationUsingKeyFrames>
+        </Storyboard>
+		<!-- IBM Immunization Repository -->
+        <Storyboard x:Key="1.3.6.1.4.1.21367.2010.3.1.280">
+        	<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="canvas10" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)">
+        		<SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="0.85"/>
+        		<SplineDoubleKeyFrame KeyTime="00:00:00.4000000" Value="1"/>
+        	</DoubleAnimationUsingKeyFrames>
+        	<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="canvas10" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)">
+        		<SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="0.85"/>
+        		<SplineDoubleKeyFrame KeyTime="00:00:00.4000000" Value="1"/>
+        	</DoubleAnimationUsingKeyFrames>
+        	<ColorAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="XDSRectangle1" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
+        		<SplineColorKeyFrame KeyTime="00:00:00.2000000" Value="{StaticResource EHRDataBlinkFill}"/>
+        		<SplineColorKeyFrame KeyTime="00:00:00.4000000" Value="White"/>
+        	</ColorAnimationUsingKeyFrames>
+        </Storyboard>
+		<!-- Karos EMPI -->
+        <Storyboard x:Key="1.3.6.1.4.1.21367.2010.3.1.255">
+        	<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="canvas2" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)">
+        		<SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="0.85"/>
+        		<SplineDoubleKeyFrame KeyTime="00:00:00.4000000" Value="1"/>
+        	</DoubleAnimationUsingKeyFrames>
+        	<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="canvas2" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)">
+        		<SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="0.85"/>
+        		<SplineDoubleKeyFrame KeyTime="00:00:00.4000000" Value="1"/>
+        	</DoubleAnimationUsingKeyFrames>
+        	<ColorAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="rectangle5" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
+        		<SplineColorKeyFrame KeyTime="00:00:00.2000000" Value="{StaticResource RegistriesBlinkFil}"/>
+        		<SplineColorKeyFrame KeyTime="00:00:00.4000000" Value="White"/>
+        	</ColorAnimationUsingKeyFrames>
+        </Storyboard>
+		<!-- NexJ Provider Registry -->
+        <Storyboard x:Key="1.3.6.1.4.1.21367.2010.3.1.230">
+        	<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="canvas1" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)">
+        		<SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="0.85"/>
+        		<SplineDoubleKeyFrame KeyTime="00:00:00.4000000" Value="1"/>
+        	</DoubleAnimationUsingKeyFrames>
+        	<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="canvas1" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)">
+        		<SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="0.85"/>
+        		<SplineDoubleKeyFrame KeyTime="00:00:00.4000000" Value="1"/>
+        	</DoubleAnimationUsingKeyFrames>
+        	<ColorAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="rectangle3" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
+        		<SplineColorKeyFrame KeyTime="00:00:00.2000000" Value="{StaticResource RegistriesBlinkFil}"/>
+        		<SplineColorKeyFrame KeyTime="00:00:00.4000000" Value="White"/>
+        	</ColorAnimationUsingKeyFrames>
+        </Storyboard>
+		<!-- NexJ EMR -->
+        <Storyboard x:Key="1.3.6.1.4.1.21367.2010.3.1.410">
+        	<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="canvas11" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)">
+        		<SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="0.85"/>
+        		<SplineDoubleKeyFrame KeyTime="00:00:00.4000000" Value="1"/>
+        	</DoubleAnimationUsingKeyFrames>
+        	<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="canvas11" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)">
+        		<SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="0.85"/>
+        		<SplineDoubleKeyFrame KeyTime="00:00:00.4000000" Value="1"/>
+        	</DoubleAnimationUsingKeyFrames>
+        	<ColorAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="path9" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
+        		<SplineColorKeyFrame KeyTime="00:00:00.2000000" Value="{StaticResource POSBlinkFill}"/>
+        		<SplineColorKeyFrame KeyTime="00:00:00.4000000" Value="White"/>
+        	</ColorAnimationUsingKeyFrames>
+        </Storyboard>
+		<!-- NexJ PHP -->
+        <Storyboard x:Key="1.3.6.1.4.1.21367.2010.3.1.455">
+        	<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="canvas12" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)">
+        		<SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="0.85"/>
+        		<SplineDoubleKeyFrame KeyTime="00:00:00.4000000" Value="1"/>
+        	</DoubleAnimationUsingKeyFrames>
+        	<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="canvas12" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)">
+        		<SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="0.85"/>
+        		<SplineDoubleKeyFrame KeyTime="00:00:00.4000000" Value="1"/>
+        	</DoubleAnimationUsingKeyFrames>
+        	<ColorAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="path99" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
+        		<SplineColorKeyFrame KeyTime="00:00:00.2000000" Value="{StaticResource POSBlinkFill}"/>
+        		<SplineColorKeyFrame KeyTime="00:00:00.4000000" Value="White"/>
+        	</ColorAnimationUsingKeyFrames>
+        </Storyboard>
+		<!-- Nightingale EMR -->
+        <Storyboard x:Key="1.3.6.1.4.1.21367.2010.3.1.460">
+        	<ColorAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="path10" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
+        		<SplineColorKeyFrame KeyTime="00:00:00.2000000" Value="{StaticResource POSBlinkFill}"/>
+        		<SplineColorKeyFrame KeyTime="00:00:00.4000000" Value="White"/>
+        	</ColorAnimationUsingKeyFrames>
+        	<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="canvas13" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)">
+        		<SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="0.85"/>
+        		<SplineDoubleKeyFrame KeyTime="00:00:00.4000000" Value="1"/>
+        	</DoubleAnimationUsingKeyFrames>
+        	<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="canvas13" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)">
+        		<SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="0.85"/>
+        		<SplineDoubleKeyFrame KeyTime="00:00:00.4000000" Value="1"/>
+        	</DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+		<!-- Nightingale PHP -->
+        <Storyboard x:Key="1.3.6.1.4.1.21367.2010.3.1.460@php">
+        	<ColorAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="path11" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
+        		<SplineColorKeyFrame KeyTime="00:00:00.2000000" Value="{StaticResource POSBlinkFill}"/>
+        		<SplineColorKeyFrame KeyTime="00:00:00.4000000" Value="White"/>
+        	</ColorAnimationUsingKeyFrames>
+        	<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="canvas14" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)">
+        		<SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="0.85"/>
+        		<SplineDoubleKeyFrame KeyTime="00:00:00.4000000" Value="1"/>
+        	</DoubleAnimationUsingKeyFrames>
+        	<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="canvas14" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)">
+        		<SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="0.85"/>
+        		<SplineDoubleKeyFrame KeyTime="00:00:00.4000000" Value="1"/>
+        	</DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+		<!-- GE Clinical Document Viewer -->
+        <Storyboard x:Key="1.3.6.1.4.1.21367.2010.3.1.420">
+        	<ColorAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="path101" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
+        		<SplineColorKeyFrame KeyTime="00:00:00.2000000" Value="{StaticResource POSBlinkFill}"/>
+        		<SplineColorKeyFrame KeyTime="00:00:00.4000000" Value="White"/>
+        	</ColorAnimationUsingKeyFrames>
+        	<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="canvas15" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)">
+        		<SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="0.85"/>
+        		<SplineDoubleKeyFrame KeyTime="00:00:00.4000000" Value="1"/>
+        	</DoubleAnimationUsingKeyFrames>
+        	<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="canvas15" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)">
+        		<SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="0.85"/>
+        		<SplineDoubleKeyFrame KeyTime="00:00:00.4000000" Value="1"/>
+        	</DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+		<!-- Clarity Health Journal PHP + Glucometer -->
+        <Storyboard x:Key="1.3.6.1.4.1.21367.2010.3.1.405">
+        	<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="canvas16" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)">
+        		<SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="0.85"/>
+        		<SplineDoubleKeyFrame KeyTime="00:00:00.4000000" Value="1"/>
+        	</DoubleAnimationUsingKeyFrames>
+        	<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="canvas16" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)">
+        		<SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="0.85"/>
+        		<SplineDoubleKeyFrame KeyTime="00:00:00.4000000" Value="1"/>
+        	</DoubleAnimationUsingKeyFrames>
+        	<ColorAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="path12" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
+        		<SplineColorKeyFrame KeyTime="00:00:00.2000000" Value="{StaticResource POSBlinkFill}"/>
+        		<SplineColorKeyFrame KeyTime="00:00:00.4000000" Value="White"/>
+        	</ColorAnimationUsingKeyFrames>
+        </Storyboard>
+		<!-- Epic EMR -->
+        <Storyboard x:Key="1.3.6.1.4.1.21367.2010.3.1.400">
+        	<ColorAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="path4" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
+        		<SplineColorKeyFrame KeyTime="00:00:00.2000000" Value="{StaticResource POSBlinkFill}"/>
+        		<SplineColorKeyFrame KeyTime="00:00:00.4000000" Value="White"/>
+        	</ColorAnimationUsingKeyFrames>
+        	<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="canvas17" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)">
+        		<SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="0.85"/>
+        		<SplineDoubleKeyFrame KeyTime="00:00:00.4000000" Value="1"/>
+        	</DoubleAnimationUsingKeyFrames>
+        	<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="canvas17" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)">
+        		<SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="0.85"/>
+        		<SplineDoubleKeyFrame KeyTime="00:00:00.4000000" Value="1"/>
+        	</DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+		<!-- SecureKey Identity Provider -->
+        <Storyboard x:Key="securekey">
+        	<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="canvas18" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)">
+        		<SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="0.85"/>
+        		<SplineDoubleKeyFrame KeyTime="00:00:00.4000000" Value="1"/>
+        	</DoubleAnimationUsingKeyFrames>
+        	<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="canvas18" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)">
+        		<SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="0.85"/>
+        		<SplineDoubleKeyFrame KeyTime="00:00:00.4000000" Value="1"/>
+        	</DoubleAnimationUsingKeyFrames>
+        	<ColorAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="path13" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
+        		<SplineColorKeyFrame KeyTime="00:00:00.2000000" Value="{StaticResource POSBlinkFill}"/>
+        		<SplineColorKeyFrame KeyTime="00:00:00.4000000" Value="White"/>
+        	</ColorAnimationUsingKeyFrames>
+        </Storyboard>
+		<!-- Global Village Consulting iPad Immunization Manager -->
+        <Storyboard x:Key="1.3.6.1.4.1.21367.2010.3.1.470">
+        	<ColorAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="pathImageViewer" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
+        		<SplineColorKeyFrame KeyTime="00:00:00.2000000" Value="{StaticResource POSBlinkFill}"/>
+        		<SplineColorKeyFrame KeyTime="00:00:00.4000000" Value="White"/>
+        	</ColorAnimationUsingKeyFrames>
+        	<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="canvas19" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)">
+        		<SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="0.85"/>
+        		<SplineDoubleKeyFrame KeyTime="00:00:00.4000000" Value="1"/>
+        	</DoubleAnimationUsingKeyFrames>
+        	<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="canvas19" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)">
+        		<SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="0.85"/>
+        		<SplineDoubleKeyFrame KeyTime="00:00:00.4000000" Value="1"/>
+        	</DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+		<!-- GE XDS Registry -->
+        <Storyboard x:Key="1.3.6.1.4.1.21367.2010.3.1.275">
+        	<ColorAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="path17" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
+        		<SplineColorKeyFrame KeyTime="00:00:00.2000000" Value="{StaticResource LRSBlinkFill}"/>
+        		<SplineColorKeyFrame KeyTime="00:00:00.4000000" Value="White"/>
+        	</ColorAnimationUsingKeyFrames>
+        	<ColorAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="path18" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
+        		<SplineColorKeyFrame KeyTime="00:00:00.2000000" Value="{StaticResource LRSBlinkFill}"/>
+        		<SplineColorKeyFrame KeyTime="00:00:00.4000000" Value="White"/>
+        	</ColorAnimationUsingKeyFrames>
+        	<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="canvas20" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)">
+        		<SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="0.85"/>
+        		<SplineDoubleKeyFrame KeyTime="00:00:00.4000000" Value="1"/>
+        	</DoubleAnimationUsingKeyFrames>
+        	<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="canvas20" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)">
+        		<SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="0.85"/>
+        		<SplineDoubleKeyFrame KeyTime="00:00:00.4000000" Value="1"/>
+        	</DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+		<!-- IBM Immunization Repository -->
+        <Storyboard x:Key="1.3.6.1.4.1.21367.2010.3.1.475">
+        	<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="canvas10" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)">
+        		<SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="0.85"/>
+        		<SplineDoubleKeyFrame KeyTime="00:00:00.4000000" Value="1"/>
+        	</DoubleAnimationUsingKeyFrames>
+        	<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="canvas10" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)">
+        		<SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="0.9"/>
+        		<SplineDoubleKeyFrame KeyTime="00:00:00.4000000" Value="1"/>
+        	</DoubleAnimationUsingKeyFrames>
+        	<ColorAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="XDSRectangle1" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
+        		<SplineColorKeyFrame KeyTime="00:00:00.2000000" Value="{StaticResource EHRDataBlinkFill}"/>
+        		<SplineColorKeyFrame KeyTime="00:00:00.4000000" Value="White"/>
+        	</ColorAnimationUsingKeyFrames>
+        </Storyboard>
+		<!-- medplus PLIS -->
+        <Storyboard x:Key="medplus">
+        	<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="canvas8" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)">
+        		<SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="0.85"/>
+        		<SplineDoubleKeyFrame KeyTime="00:00:00.4000000" Value="1"/>
+        	</DoubleAnimationUsingKeyFrames>
+        	<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="canvas8" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)">
+        		<SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="0.85"/>
+        		<SplineDoubleKeyFrame KeyTime="00:00:00.4000000" Value="1"/>
+        	</DoubleAnimationUsingKeyFrames>
+        	<ColorAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="rectangle1" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
+        		<SplineColorKeyFrame KeyTime="00:00:00.2000000" Value="{StaticResource EHRDataBlinkFill}"/>
+        		<SplineColorKeyFrame KeyTime="00:00:00.4000000" Value="White"/>
+        	</ColorAnimationUsingKeyFrames>
+        </Storyboard>
+		       <Storyboard x:Key="*">
         	
         	<ColorAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="path23" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
         		<SplineColorKeyFrame KeyTime="00:00:00.2000000" Value="#FFF2C976"/>
@@ -26,299 +474,7 @@
         		<SplineColorKeyFrame KeyTime="00:00:00.2000000" Value="#FFF2C976"/>
         		<SplineColorKeyFrame KeyTime="00:00:00.4000000" Value="White"/>
         	</ColorAnimationUsingKeyFrames>
-            <!-- Mohawk HIAL -->
-                <ColorAnimationUsingKeyFrames BeginTime="00:00:01"
-                                          Storyboard.TargetName="path"
-                                          Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
-                    <SplineColorKeyFrame KeyTime="00:00:00.2000000"
-            		Value="#FFF2C976" />
-                    <SplineColorKeyFrame KeyTime="00:00:00.4000000"
-            		Value="#FFFFFFFF" />
-                </ColorAnimationUsingKeyFrames>
-                <ColorAnimationUsingKeyFrames BeginTime="00:00:01"
-                                          Storyboard.TargetName="path1"
-                                          Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
-                    <SplineColorKeyFrame KeyTime="00:00:00.2000000"
-            		Value="#FFF5A2A4" />
-                    <SplineColorKeyFrame KeyTime="00:00:00.4000000"
-                	Value="#FFFFFFFF" />
-                </ColorAnimationUsingKeyFrames>
-                <ColorAnimationUsingKeyFrames BeginTime="00:00:01"
-                                          Storyboard.TargetName="path6"
-                                          Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
-                    <SplineColorKeyFrame KeyTime="00:00:00.2000000"
-            		Value="#FFF5A2A4" />
-                    <SplineColorKeyFrame KeyTime="00:00:00.4000000"
-                	Value="#FFFFFFFF" />
-                </ColorAnimationUsingKeyFrames>
-                <ColorAnimationUsingKeyFrames BeginTime="00:00:02"
-                                          Storyboard.TargetName="path7"
-                                          Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
-                    <SplineColorKeyFrame KeyTime="00:00:00.2000000"
-            		Value="#FFF2C976" />
-                    <SplineColorKeyFrame KeyTime="00:00:00.4000000"
-                	Value="#FFFFFFFF" />
-                </ColorAnimationUsingKeyFrames>
-                <ColorAnimationUsingKeyFrames BeginTime="00:00:02"
-                                          Storyboard.TargetName="Longitudinal_Record_Services"
-                                          Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
-                    <SplineColorKeyFrame KeyTime="00:00:00.4000000"
-            		Value="{StaticResource LRSBlinkFill}" />
-                    <SplineColorKeyFrame KeyTime="00:00:00.6000000"
-                	Value="#FFFFFFFF" />
-                </ColorAnimationUsingKeyFrames>
-                <ColorAnimationUsingKeyFrames BeginTime="00:00:07"
-                                          Storyboard.TargetName="path14"
-                                          Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
-                    <SplineColorKeyFrame KeyTime="00:00:00.2000000"
-                                     Value="#FFFB9698" />
-                    <SplineColorKeyFrame KeyTime="00:00:00.4000000"
-                                     Value="#FFFFFFFF" />
-                </ColorAnimationUsingKeyFrames>
-                <ColorAnimationUsingKeyFrames BeginTime="00:00:07"
-                                          Storyboard.TargetName="path15"
-                                          Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
-                    <SplineColorKeyFrame KeyTime="00:00:00.2000000"
-                                     Value="#FFFB9698" />
-                    <SplineColorKeyFrame KeyTime="00:00:00.4000000"
-                                     Value="#FFFFFFFF" />
-                </ColorAnimationUsingKeyFrames>
-                <DoubleAnimationUsingKeyFrames BeginTime="00:00:08" Storyboard.TargetName="canvas6" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)">
-                    <SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="0.85"/>
-                    <SplineDoubleKeyFrame KeyTime="00:00:00.4000000" Value="1"/>
-                </DoubleAnimationUsingKeyFrames>
-                <DoubleAnimationUsingKeyFrames BeginTime="00:00:08" Storyboard.TargetName="canvas6" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)">
-                    <SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="0.85"/>
-                    <SplineDoubleKeyFrame KeyTime="00:00:00.4000000" Value="1"/>
-                </DoubleAnimationUsingKeyFrames>
-                <ColorAnimationUsingKeyFrames BeginTime="00:00:06" Storyboard.TargetName="XDSRectangle" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
-                    <SplineColorKeyFrame KeyTime="00:00:00.2000000" Value="{StaticResource EHRDataBlinkFill}"/>
-                    <SplineColorKeyFrame KeyTime="00:00:00.4000000" Value="White"/>
-                </ColorAnimationUsingKeyFrames>
-                <DoubleAnimationUsingKeyFrames BeginTime="00:00:06" Storyboard.TargetName="canvas5" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)">
-                    <SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="0.85"/>
-                    <SplineDoubleKeyFrame KeyTime="00:00:00.4000000" Value="1"/>
-                </DoubleAnimationUsingKeyFrames>
-                <DoubleAnimationUsingKeyFrames BeginTime="00:00:05" Storyboard.TargetName="canvas5" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)">
-                    <SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="0.85"/>
-                    <SplineDoubleKeyFrame KeyTime="00:00:00.4000000" Value="1"/>
-                </DoubleAnimationUsingKeyFrames>
-                <ColorAnimationUsingKeyFrames BeginTime="00:00:05" Storyboard.TargetName="path8" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
-                    <SplineColorKeyFrame KeyTime="00:00:00.2000000" Value="{StaticResource POSBlinkFill}"/>
-                    <SplineColorKeyFrame KeyTime="00:00:00.4000000" Value="{StaticResource MainBackgroundColor}"/>
-                </ColorAnimationUsingKeyFrames>
-                <DoubleAnimationUsingKeyFrames BeginTime="00:00:10" Storyboard.TargetName="canvas7" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)">
-                    <SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="0.85"/>
-                    <SplineDoubleKeyFrame KeyTime="00:00:00.4000000" Value="1"/>
-                </DoubleAnimationUsingKeyFrames>
-                <DoubleAnimationUsingKeyFrames BeginTime="00:00:11" Storyboard.TargetName="canvas7" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)">
-                    <SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="0.85"/>
-                    <SplineDoubleKeyFrame KeyTime="00:00:00.4000000" Value="1"/>
-                </DoubleAnimationUsingKeyFrames>
-                <ColorAnimationUsingKeyFrames BeginTime="00:00:10" Storyboard.TargetName="rectangle6" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
-                    <SplineColorKeyFrame KeyTime="00:00:00.2000000" Value="{StaticResource EHRDataBlinkFill}"/>
-                    <SplineColorKeyFrame KeyTime="00:00:00.4000000" Value="White"/>
-                </ColorAnimationUsingKeyFrames>
-                <DoubleAnimationUsingKeyFrames BeginTime="00:00:11" Storyboard.TargetName="canvas9" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)">
-                    <SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="0.85"/>
-                    <SplineDoubleKeyFrame KeyTime="00:00:00.4000000" Value="1"/>
-                </DoubleAnimationUsingKeyFrames>
-                <DoubleAnimationUsingKeyFrames BeginTime="00:00:10" Storyboard.TargetName="canvas9" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)">
-                    <SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="0.85"/>
-                    <SplineDoubleKeyFrame KeyTime="00:00:00.4000000" Value="1"/>
-                </DoubleAnimationUsingKeyFrames>
-                <ColorAnimationUsingKeyFrames BeginTime="00:00:11" Storyboard.TargetName="rectangle2" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
-                    <SplineColorKeyFrame KeyTime="00:00:00.2000000" Value="{StaticResource RegistriesBlinkFil}"/>
-                    <SplineColorKeyFrame KeyTime="00:00:00.4000000" Value="White"/>
-                </ColorAnimationUsingKeyFrames>
-                <DoubleAnimationUsingKeyFrames BeginTime="00:00:10" Storyboard.TargetName="canvas10" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)">
-                    <SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="0.85"/>
-                    <SplineDoubleKeyFrame KeyTime="00:00:00.4000000" Value="1"/>
-                </DoubleAnimationUsingKeyFrames>
-                <DoubleAnimationUsingKeyFrames BeginTime="00:00:10" Storyboard.TargetName="canvas10" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)">
-                    <SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="0.85"/>
-                    <SplineDoubleKeyFrame KeyTime="00:00:00.4000000" Value="1"/>
-                </DoubleAnimationUsingKeyFrames>
-                <ColorAnimationUsingKeyFrames BeginTime="00:00:11" Storyboard.TargetName="XDSRectangle1" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
-                    <SplineColorKeyFrame KeyTime="00:00:00.2000000" Value="{StaticResource EHRDataBlinkFill}"/>
-                    <SplineColorKeyFrame KeyTime="00:00:00.4000000" Value="White"/>
-                </ColorAnimationUsingKeyFrames>
-                <DoubleAnimationUsingKeyFrames BeginTime="00:00:12" Storyboard.TargetName="canvas2" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)">
-                    <SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="0.85"/>
-                    <SplineDoubleKeyFrame KeyTime="00:00:00.4000000" Value="1"/>
-                </DoubleAnimationUsingKeyFrames>
-                <DoubleAnimationUsingKeyFrames BeginTime="00:00:12" Storyboard.TargetName="canvas2" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)">
-                    <SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="0.85"/>
-                    <SplineDoubleKeyFrame KeyTime="00:00:00.4000000" Value="1"/>
-                </DoubleAnimationUsingKeyFrames>
-                <ColorAnimationUsingKeyFrames BeginTime="00:00:12" Storyboard.TargetName="rectangle5" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
-                    <SplineColorKeyFrame KeyTime="00:00:00.2000000" Value="{StaticResource RegistriesBlinkFil}"/>
-                    <SplineColorKeyFrame KeyTime="00:00:00.4000000" Value="White"/>
-                </ColorAnimationUsingKeyFrames>
-                <DoubleAnimationUsingKeyFrames BeginTime="00:00:11" Storyboard.TargetName="canvas1" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)">
-                    <SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="0.85"/>
-                    <SplineDoubleKeyFrame KeyTime="00:00:00.4000000" Value="1"/>
-                </DoubleAnimationUsingKeyFrames>
-                <DoubleAnimationUsingKeyFrames BeginTime="00:00:11" Storyboard.TargetName="canvas1" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)">
-                    <SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="0.85"/>
-                    <SplineDoubleKeyFrame KeyTime="00:00:00.4000000" Value="1"/>
-                </DoubleAnimationUsingKeyFrames>
-                <ColorAnimationUsingKeyFrames BeginTime="00:00:13" Storyboard.TargetName="rectangle3" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
-                    <SplineColorKeyFrame KeyTime="00:00:00.2000000" Value="{StaticResource RegistriesBlinkFil}"/>
-                    <SplineColorKeyFrame KeyTime="00:00:00.4000000" Value="White"/>
-                </ColorAnimationUsingKeyFrames>
-                <DoubleAnimationUsingKeyFrames BeginTime="00:00:13" Storyboard.TargetName="canvas11" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)">
-                    <SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="0.85"/>
-                    <SplineDoubleKeyFrame KeyTime="00:00:00.4000000" Value="1"/>
-                </DoubleAnimationUsingKeyFrames>
-                <DoubleAnimationUsingKeyFrames BeginTime="00:00:13" Storyboard.TargetName="canvas11" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)">
-                    <SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="0.85"/>
-                    <SplineDoubleKeyFrame KeyTime="00:00:00.4000000" Value="1"/>
-                </DoubleAnimationUsingKeyFrames>
-                <ColorAnimationUsingKeyFrames BeginTime="00:00:14" Storyboard.TargetName="path9" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
-                    <SplineColorKeyFrame KeyTime="00:00:00.2000000" Value="{StaticResource POSBlinkFill}"/>
-                    <SplineColorKeyFrame KeyTime="00:00:00.4000000" Value="White"/>
-                </ColorAnimationUsingKeyFrames>
-                <DoubleAnimationUsingKeyFrames BeginTime="00:00:14" Storyboard.TargetName="canvas12" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)">
-                    <SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="0.85"/>
-                    <SplineDoubleKeyFrame KeyTime="00:00:00.4000000" Value="1"/>
-                </DoubleAnimationUsingKeyFrames>
-                <DoubleAnimationUsingKeyFrames BeginTime="00:00:14" Storyboard.TargetName="canvas12" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)">
-                    <SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="0.85"/>
-                    <SplineDoubleKeyFrame KeyTime="00:00:00.4000000" Value="1"/>
-                </DoubleAnimationUsingKeyFrames>
-                <ColorAnimationUsingKeyFrames BeginTime="00:00:15" Storyboard.TargetName="path99" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
-                    <SplineColorKeyFrame KeyTime="00:00:00.2000000" Value="{StaticResource POSBlinkFill}"/>
-                    <SplineColorKeyFrame KeyTime="00:00:00.4000000" Value="White"/>
-                </ColorAnimationUsingKeyFrames>
-                <ColorAnimationUsingKeyFrames BeginTime="00:00:15" Storyboard.TargetName="path10" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
-                    <SplineColorKeyFrame KeyTime="00:00:00.2000000" Value="{StaticResource POSBlinkFill}"/>
-                    <SplineColorKeyFrame KeyTime="00:00:00.4000000" Value="White"/>
-                </ColorAnimationUsingKeyFrames>
-                <DoubleAnimationUsingKeyFrames BeginTime="00:00:16" Storyboard.TargetName="canvas13" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)">
-                    <SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="0.85"/>
-                    <SplineDoubleKeyFrame KeyTime="00:00:00.4000000" Value="1"/>
-                </DoubleAnimationUsingKeyFrames>
-                <DoubleAnimationUsingKeyFrames BeginTime="00:00:16" Storyboard.TargetName="canvas13" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)">
-                    <SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="0.85"/>
-                    <SplineDoubleKeyFrame KeyTime="00:00:00.4000000" Value="1"/>
-                </DoubleAnimationUsingKeyFrames>
-                <ColorAnimationUsingKeyFrames BeginTime="00:00:17" Storyboard.TargetName="path11" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
-                    <SplineColorKeyFrame KeyTime="00:00:00.2000000" Value="{StaticResource POSBlinkFill}"/>
-                    <SplineColorKeyFrame KeyTime="00:00:00.4000000" Value="White"/>
-                </ColorAnimationUsingKeyFrames>
-                <DoubleAnimationUsingKeyFrames BeginTime="00:00:17" Storyboard.TargetName="canvas14" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)">
-                    <SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="0.85"/>
-                    <SplineDoubleKeyFrame KeyTime="00:00:00.4000000" Value="1"/>
-                </DoubleAnimationUsingKeyFrames>
-                <DoubleAnimationUsingKeyFrames BeginTime="00:00:18" Storyboard.TargetName="canvas14" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)">
-                    <SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="0.85"/>
-                    <SplineDoubleKeyFrame KeyTime="00:00:00.4000000" Value="1"/>
-                </DoubleAnimationUsingKeyFrames>
-                <ColorAnimationUsingKeyFrames BeginTime="00:00:18" Storyboard.TargetName="path101" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
-                    <SplineColorKeyFrame KeyTime="00:00:00.2000000" Value="{StaticResource POSBlinkFill}"/>
-                    <SplineColorKeyFrame KeyTime="00:00:00.4000000" Value="White"/>
-                </ColorAnimationUsingKeyFrames>
-                <DoubleAnimationUsingKeyFrames BeginTime="00:00:19" Storyboard.TargetName="canvas15" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)">
-                    <SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="0.85"/>
-                    <SplineDoubleKeyFrame KeyTime="00:00:00.4000000" Value="1"/>
-                </DoubleAnimationUsingKeyFrames>
-                <DoubleAnimationUsingKeyFrames BeginTime="00:00:19" Storyboard.TargetName="canvas15" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)">
-                    <SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="0.85"/>
-                    <SplineDoubleKeyFrame KeyTime="00:00:00.4000000" Value="1"/>
-                </DoubleAnimationUsingKeyFrames>
-                <DoubleAnimationUsingKeyFrames BeginTime="00:00:17" Storyboard.TargetName="canvas16" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)">
-                    <SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="0.85"/>
-                    <SplineDoubleKeyFrame KeyTime="00:00:00.4000000" Value="1"/>
-                </DoubleAnimationUsingKeyFrames>
-                <DoubleAnimationUsingKeyFrames BeginTime="00:00:17" Storyboard.TargetName="canvas16" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)">
-                    <SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="0.85"/>
-                    <SplineDoubleKeyFrame KeyTime="00:00:00.4000000" Value="1"/>
-                </DoubleAnimationUsingKeyFrames>
-                <ColorAnimationUsingKeyFrames BeginTime="00:00:16" Storyboard.TargetName="path12" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
-                    <SplineColorKeyFrame KeyTime="00:00:00.2000000" Value="{StaticResource POSBlinkFill}"/>
-                    <SplineColorKeyFrame KeyTime="00:00:00.4000000" Value="White"/>
-                </ColorAnimationUsingKeyFrames>
-                <ColorAnimationUsingKeyFrames BeginTime="00:00:16" Storyboard.TargetName="path4" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
-                    <SplineColorKeyFrame KeyTime="00:00:00.2000000" Value="{StaticResource POSBlinkFill}"/>
-                    <SplineColorKeyFrame KeyTime="00:00:00.4000000" Value="White"/>
-                </ColorAnimationUsingKeyFrames>
-                <DoubleAnimationUsingKeyFrames BeginTime="00:00:16" Storyboard.TargetName="canvas17" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)">
-                    <SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="0.85"/>
-                    <SplineDoubleKeyFrame KeyTime="00:00:00.4000000" Value="1"/>
-                </DoubleAnimationUsingKeyFrames>
-                <DoubleAnimationUsingKeyFrames BeginTime="00:00:15" Storyboard.TargetName="canvas17" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)">
-                    <SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="0.85"/>
-                    <SplineDoubleKeyFrame KeyTime="00:00:00.4000000" Value="1"/>
-                </DoubleAnimationUsingKeyFrames>
-                <DoubleAnimationUsingKeyFrames BeginTime="00:00:15" Storyboard.TargetName="canvas18" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)">
-                    <SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="0.85"/>
-                    <SplineDoubleKeyFrame KeyTime="00:00:00.4000000" Value="1"/>
-                </DoubleAnimationUsingKeyFrames>
-                <DoubleAnimationUsingKeyFrames BeginTime="00:00:14" Storyboard.TargetName="canvas18" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)">
-                    <SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="0.85"/>
-                    <SplineDoubleKeyFrame KeyTime="00:00:00.4000000" Value="1"/>
-                </DoubleAnimationUsingKeyFrames>
-                <ColorAnimationUsingKeyFrames BeginTime="00:00:14" Storyboard.TargetName="path13" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
-                    <SplineColorKeyFrame KeyTime="00:00:00.2000000" Value="{StaticResource POSBlinkFill}"/>
-                    <SplineColorKeyFrame KeyTime="00:00:00.4000000" Value="White"/>
-                </ColorAnimationUsingKeyFrames>
-                <ColorAnimationUsingKeyFrames BeginTime="00:00:13" Storyboard.TargetName="pathImageViewer" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
-                    <SplineColorKeyFrame KeyTime="00:00:00.2000000" Value="{StaticResource POSBlinkFill}"/>
-                    <SplineColorKeyFrame KeyTime="00:00:00.4000000" Value="White"/>
-                </ColorAnimationUsingKeyFrames>
-                <DoubleAnimationUsingKeyFrames BeginTime="00:00:13" Storyboard.TargetName="canvas19" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)">
-                    <SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="0.85"/>
-                    <SplineDoubleKeyFrame KeyTime="00:00:00.4000000" Value="1"/>
-                </DoubleAnimationUsingKeyFrames>
-                <DoubleAnimationUsingKeyFrames BeginTime="00:00:12" Storyboard.TargetName="canvas19" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)">
-                    <SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="0.85"/>
-                    <SplineDoubleKeyFrame KeyTime="00:00:00.4000000" Value="1"/>
-                </DoubleAnimationUsingKeyFrames>
-                <ColorAnimationUsingKeyFrames BeginTime="00:00:12" Storyboard.TargetName="path17" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
-                    <SplineColorKeyFrame KeyTime="00:00:00.2000000" Value="{StaticResource LRSBlinkFill}"/>
-                    <SplineColorKeyFrame KeyTime="00:00:00.4000000" Value="White"/>
-                </ColorAnimationUsingKeyFrames>
-                <ColorAnimationUsingKeyFrames BeginTime="00:00:20" Storyboard.TargetName="path18" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
-                    <SplineColorKeyFrame KeyTime="00:00:00.2000000" Value="{StaticResource LRSBlinkFill}"/>
-                    <SplineColorKeyFrame KeyTime="00:00:00.4000000" Value="White"/>
-                </ColorAnimationUsingKeyFrames>
-                <DoubleAnimationUsingKeyFrames BeginTime="00:00:20" Storyboard.TargetName="canvas20" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)">
-                    <SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="0.85"/>
-                    <SplineDoubleKeyFrame KeyTime="00:00:00.4000000" Value="1"/>
-                </DoubleAnimationUsingKeyFrames>
-                <DoubleAnimationUsingKeyFrames BeginTime="00:00:21" Storyboard.TargetName="canvas20" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)">
-                    <SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="0.85"/>
-                    <SplineDoubleKeyFrame KeyTime="00:00:00.4000000" Value="1"/>
-                </DoubleAnimationUsingKeyFrames>
-                <DoubleAnimationUsingKeyFrames BeginTime="00:00:21" Storyboard.TargetName="canvas10" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)">
-                    <SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="0.85"/>
-                    <SplineDoubleKeyFrame KeyTime="00:00:00.4000000" Value="1"/>
-                </DoubleAnimationUsingKeyFrames>
-                <DoubleAnimationUsingKeyFrames BeginTime="00:00:22" Storyboard.TargetName="canvas10" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)">
-                    <SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="0.9"/>
-                    <SplineDoubleKeyFrame KeyTime="00:00:00.4000000" Value="1"/>
-                </DoubleAnimationUsingKeyFrames>
-                <ColorAnimationUsingKeyFrames BeginTime="00:00:22" Storyboard.TargetName="XDSRectangle1" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
-                    <SplineColorKeyFrame KeyTime="00:00:00.2000000" Value="{StaticResource EHRDataBlinkFill}"/>
-                    <SplineColorKeyFrame KeyTime="00:00:00.4000000" Value="White"/>
-                </ColorAnimationUsingKeyFrames>
-                <DoubleAnimationUsingKeyFrames BeginTime="00:00:23" Storyboard.TargetName="canvas8" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)">
-                    <SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="0.85"/>
-                    <SplineDoubleKeyFrame KeyTime="00:00:00.4000000" Value="1"/>
-                </DoubleAnimationUsingKeyFrames>
-                <DoubleAnimationUsingKeyFrames BeginTime="00:00:23" Storyboard.TargetName="canvas8" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)">
-                    <SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="0.85"/>
-                    <SplineDoubleKeyFrame KeyTime="00:00:00.4000000" Value="1"/>
-                </DoubleAnimationUsingKeyFrames>
-                <ColorAnimationUsingKeyFrames BeginTime="00:00:24" Storyboard.TargetName="rectangle1" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
-                    <SplineColorKeyFrame KeyTime="00:00:00.2000000" Value="{StaticResource EHRDataBlinkFill}"/>
-                    <SplineColorKeyFrame KeyTime="00:00:00.4000000" Value="White"/>
-                </ColorAnimationUsingKeyFrames>
-
         </Storyboard>
-
-
     </UserControl.Resources>
 
     <Viewbox HorizontalAlignment="Stretch"
