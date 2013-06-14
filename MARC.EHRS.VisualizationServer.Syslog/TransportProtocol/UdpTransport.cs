@@ -80,62 +80,53 @@ namespace MARC.EHRS.VisualizationServer.Syslog.TransportProtocol
             Trace.TraceInformation("UDP transport bound to {0}", endpoint);
 
             // Run
-            while (this.m_run)
-            {
-                try
-                {
-                    // Client
-                    var client = this.m_udpSocket.Accept();
-                    Thread clientThread = new Thread(OnReceiveMessage);
-                    clientThread.IsBackground = true;
-                    clientThread.Start(client);
-                }
-                catch (ThreadAbortException)
-                {
-                    throw;
-                }
-                catch { }
-            }
-        }
-
-        /// <summary>
-        /// Received a message
-        /// </summary>
-        protected void OnReceiveMessage(object client)
-        {
-            var udpSocket = client as Socket;
-            EndPoint remote_ep = new IPEndPoint(IPAddress.Any, 0);
-
             try
             {
-                Byte[] udpMessage = new Byte[this.m_configuration.MaxSize];
+                while (this.m_run)
+                {
+                    EndPoint remote_ep = new IPEndPoint(IPAddress.Any, 0);
 
-                //bytesReceived = udpSocket.Receive(udpMessage);
-                int bytesReceived = udpSocket.ReceiveFrom(udpMessage, ref remote_ep);
+                    try
+                    {
+                        Byte[] udpMessage = new Byte[this.m_configuration.MaxSize];
 
-                IPEndPoint ipep = (IPEndPoint)remote_ep;
-                IPAddress ipadd = ipep.Address;
+                        //bytesReceived = udpSocket.Receive(udpMessage);
+                        int bytesReceived = this.m_udpSocket.ReceiveFrom(udpMessage, ref remote_ep);
 
-                // Parse
-                String udpMessageStr = System.Text.Encoding.UTF8.GetString(udpMessage).TrimEnd('\0');
-                var message = SyslogMessage.Parse(udpMessageStr);
-                if (this.MessageReceived != null)
-                    this.MessageReceived.BeginInvoke(this, new SyslogMessageReceivedEventArgs(message, new Uri(String.Format("udp://{0}", remote_ep)), this.m_configuration.Address, DateTime.Now), null, null);
+                        IPEndPoint ipep = (IPEndPoint)remote_ep;
+                        IPAddress ipadd = ipep.Address;
 
-                // Forward
-                TransportUtil.Current.Forward(this.m_configuration.Forward, udpMessage);
-            }
-            catch (SyslogMessageException e)
-            {
-                if (this.InvalidMessageReceived != null)
-                    this.InvalidMessageReceived.BeginInvoke(this, new SyslogMessageReceivedEventArgs(e.FaultingMessage, new Uri(String.Format("udp://{0}", remote_ep)), this.m_configuration.Address, DateTime.Now), null, null);
-                Trace.TraceError(e.ToString());
+                        // Parse
+                        String udpMessageStr = System.Text.Encoding.UTF8.GetString(udpMessage).TrimEnd('\0');
+                        var message = SyslogMessage.Parse(udpMessageStr);
+                        if (this.MessageReceived != null)
+                            this.MessageReceived.BeginInvoke(this, new SyslogMessageReceivedEventArgs(message, new Uri(String.Format("udp://{0}", remote_ep)), this.m_configuration.Address, DateTime.Now), null, null);
+
+                        // Forward
+                        TransportUtil.Current.Forward(this.m_configuration.Forward, udpMessage);
+                    }
+                    catch (SyslogMessageException e)
+                    {
+                        if (this.InvalidMessageReceived != null)
+                            this.InvalidMessageReceived.BeginInvoke(this, new SyslogMessageReceivedEventArgs(e.FaultingMessage, new Uri(String.Format("udp://{0}", remote_ep)), this.m_configuration.Address, DateTime.Now), null, null);
+                        Trace.TraceError(e.ToString());
+                    }
+                    catch (Exception e)
+                    {
+                        if (this.InvalidMessageReceived != null)
+                            this.InvalidMessageReceived.BeginInvoke(this, new SyslogMessageReceivedEventArgs(new SyslogMessage(), new Uri(String.Format("udp://{0}", remote_ep)), this.m_configuration.Address, DateTime.Now), null, null);
+                        Trace.TraceError(e.ToString());
+                    }
+
+                }
             }
             finally
             {
-                udpSocket.Dispose();
+                this.m_udpSocket.Dispose();
             }
         }
+
+     
 
         /// <summary>
         /// Stop the process

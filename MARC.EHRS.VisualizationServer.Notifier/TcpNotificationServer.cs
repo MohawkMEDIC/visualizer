@@ -212,7 +212,8 @@ namespace MARC.EHRS.VisualizationServer.Notifier
         /// </summary>
         public bool Stop()
         {
-            this.m_policyServer.Stop();
+            if(this.m_policyServer != null)
+                this.m_policyServer.Stop();
             this.m_serverThread.Abort();
             return true;
         }

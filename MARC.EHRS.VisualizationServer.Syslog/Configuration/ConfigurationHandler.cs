@@ -62,6 +62,10 @@ namespace MARC.EHRS.VisualizationServer.Syslog.Configuration
                 config.Action = handlerType;
             }
 
+            if (ep.Attributes["maxSize"] != null)
+                config.MaxSize = Int32.Parse(ep.Attributes["maxSize"].Value);
+            else
+                config.MaxSize = 1024;
             // Now process the attributes if any
             foreach (XmlNode att in ep.SelectNodes("./*[local-name() = 'attribute']"))
             {

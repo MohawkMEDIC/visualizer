@@ -58,7 +58,7 @@ namespace MARC.EHRS.VisualizationServer.Syslog
         /// <summary>
         /// Gets or sets the process id
         /// </summary>
-        public decimal ProcessId { get; set; }
+        public String ProcessId { get; set; }
 
         /// <summary>
         /// The body of the syslog message
@@ -88,7 +88,7 @@ namespace MARC.EHRS.VisualizationServer.Syslog
                     retVal.Timestamp = DateTime.Parse(match.Groups[3].Value);
                     retVal.HostName = match.Groups[4].Value;
                     retVal.ProcessName = match.Groups[5].Value;
-                    retVal.ProcessId = Int32.Parse(match.Groups[6].Value);
+                    retVal.ProcessId = match.Groups[6].Value;
                     retVal.TypeId = match.Groups[7].Value;
                     retVal.Body = match.Groups[9].Value;
                 }

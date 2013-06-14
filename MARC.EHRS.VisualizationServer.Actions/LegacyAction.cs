@@ -47,7 +47,7 @@ namespace MARC.EHRS.VisualizationServer.Actions
             {
                 // Deserialize audit message.
                 XmlSerializer xmlSerializer = new XmlSerializer(typeof(AuditMessage));
-                StringReader strReader = new StringReader(payload);
+                StringReader strReader = new StringReader(payload.Substring(payload.IndexOf("<Audit")));
                 XmlTextReader xmlTextReader = new XmlTextReader(strReader);
                 AuditMessage auditMessage = (AuditMessage)xmlSerializer.Deserialize(xmlTextReader);
 

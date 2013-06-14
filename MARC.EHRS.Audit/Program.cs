@@ -106,7 +106,7 @@ namespace MARC.EHRS.Audit
 
             /// Try for an non-same number Version
             foreach (Assembly asm in AppDomain.CurrentDomain.GetAssemblies())
-                if (args.Name.Substring(0, args.Name.IndexOf(",")) == asm.GetName().Name)
+                if (args.Name.Contains(",") && args.Name.Substring(0, args.Name.IndexOf(",")) == asm.GetName().Name)
                     return asm;
 
             return null;
