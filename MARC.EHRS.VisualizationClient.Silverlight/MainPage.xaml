@@ -9,7 +9,7 @@
 
     <Grid x:Name="LayoutRoot" Background="White">
         <Grid.RowDefinitions>
-            <RowDefinition Height="96"/>
+            <RowDefinition Height="64"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -19,11 +19,17 @@
         </Grid.ColumnDefinitions>
         
 
-        <Canvas Grid.Row="0" Grid.ColumnSpan="3">
-                <Image Source="logo.png" Stretch="Uniform" Height="96"/>
-            <TextBlock Text="Visualizer 3.0" FontWeight="Bold" Canvas.Left="165" Canvas.Top="68" Foreground="CadetBlue" FontStyle="Italic" FontSize="15" />
-			</Canvas>
-        <Border CornerRadius="6" Grid.Row="1" Grid.ColumnSpan="3" BorderThickness="3">
+        <Grid Grid.Row="0" Grid.ColumnSpan="3">
+            <StackPanel Orientation="Horizontal" x:Name="SponsorLogos">
+            </StackPanel>
+            <TextBlock Text="Visualizer 4.0" FontWeight="Bold" Foreground="CadetBlue" FontStyle="Italic" FontSize="15" HorizontalAlignment="Right" VerticalAlignment="Bottom" />
+        </Grid>
+        <StackPanel HorizontalAlignment="Right" Opacity="0.75" VerticalAlignment="Bottom" Grid.Row="1" Grid.ColumnSpan="3">
+            <TextBlock Text="Powered By"/>
+            <Image Source="logo.jpg" Height="24"/>
+        </StackPanel>
+        
+        <!--<Border CornerRadius="6" Grid.Row="1" Grid.ColumnSpan="3" BorderThickness="3">
             <Border.BorderBrush>
                 <LinearGradientBrush StartPoint="0,1" EndPoint="0,0">
                     <LinearGradientBrush.GradientStops>
@@ -33,7 +39,7 @@
                 </LinearGradientBrush>
             </Border.BorderBrush>
 
-        </Border>
+        </Border>-->
         <control:Visualizer Grid.Row="1" Grid.ColumnSpan="3" x:Name="visContent" Loaded="visContent_Loaded" />
     </Grid>
 </UserControl>

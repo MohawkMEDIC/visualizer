@@ -12,6 +12,7 @@ using System.Windows.Shapes;
 using MARC.EHRS.VisualizationClient.Silverlight.Config;
 using System.Windows.Controls.Primitives;
 using MARC.EHRS.Visualization.Core;
+using System.Windows.Media.Imaging;
 
 namespace MARC.EHRS.VisualizationClient.Silverlight
 {
@@ -45,6 +46,15 @@ namespace MARC.EHRS.VisualizationClient.Silverlight
         void Configuration_LoadComplete(object sender, ConfigurationLoadedEventArgs e)
         {
             this.m_configuration = e.Configuration;
+
+            foreach (var splogo in this.m_configuration.Sponsors)
+                SponsorLogos.Children.Add(new Image()
+                {
+                    Source = new BitmapImage(new Uri(splogo)),
+                    Stretch = Stretch.UniformToFill, 
+                    MinHeight = 64
+                });
+
             this.visContent.Configuration = e.Configuration;
         }
 

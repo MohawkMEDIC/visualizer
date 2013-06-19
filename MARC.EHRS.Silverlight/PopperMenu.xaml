@@ -72,7 +72,7 @@
         <Border CornerRadius="12,12,0,0" BorderThickness="1">
             <Border.Background>
                 <LinearGradientBrush>
-                    <GradientStop Offset="0" Color="#33333333"/>
+                    <GradientStop Offset="0" Color="#33333399"/>
                     <GradientStop Offset="1" Color="#11333333"/>
                 </LinearGradientBrush>
             </Border.Background>

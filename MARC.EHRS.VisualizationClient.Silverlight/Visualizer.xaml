@@ -17,6 +17,9 @@
         <Storyboard x:Name="sbShowCaptureMenu" Storyboard.TargetName="CaptureMenu">
             <DoubleAnimation Storyboard.TargetProperty="(content:PopperMenu.RenderTransform).(TranslateTransform.Y)" To="0" Duration="0:0:00.25"/>
         </Storyboard>
+        <Storyboard x:Name="sbMouseHideCaptureMenu" Storyboard.TargetName="CaptureMenu">
+            <DoubleAnimation Storyboard.TargetProperty="(content:PopperMenu.RenderTransform).(TranslateTransform.Y)" To="45" Duration="0:0:00.25"/>
+        </Storyboard>
         <Storyboard x:Name="sbHideCaptureMenu" Storyboard.TargetName="CaptureMenu">
             <DoubleAnimation Storyboard.TargetProperty="(content:PopperMenu.RenderTransform).(TranslateTransform.Y)" To="80" Duration="0:0:00.25"/>
         </Storyboard>
@@ -112,9 +115,9 @@
         </Grid.Resources>
         <Grid Name="visualizerContent">
         </Grid>
-            <control:PopperMenu Name="CaptureMenu" VerticalAlignment="Bottom" HorizontalAlignment="Center" MenuItemClicked="PopperMenu_MenuItemClicked">
+            <control:PopperMenu Name="CaptureMenu" VerticalAlignment="Bottom" HorizontalAlignment="Center" MenuItemClicked="PopperMenu_MenuItemClicked" MouseEnter="CaptureMenu_MouseEnter" MouseLeave="CaptureMenu_MouseLeave">
             <control:PopperMenu.RenderTransform>
-                <TranslateTransform Y="0"/>
+                <TranslateTransform Y="45"/>
             </control:PopperMenu.RenderTransform>
                 <control:PopperMenu.MenuPanel>
                 <StackPanel Orientation="Horizontal">
