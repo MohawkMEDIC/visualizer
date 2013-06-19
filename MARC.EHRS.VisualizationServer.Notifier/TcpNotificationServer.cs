@@ -159,9 +159,13 @@ namespace MARC.EHRS.VisualizationServer.Notifier
             // enusre that all clients are broadcast a message
             var eventReceived = new EventHandler<VisualizationEventArgs>(delegate(object sender, VisualizationEventArgs evt)
             {
-                StreamWriter sw = new StreamWriter(tcpClient.GetStream());
-                this.m_eventSerializer.Serialize(sw, evt.Event);
-                sw.Flush();
+                try
+                {
+                    StreamWriter sw = new StreamWriter(tcpClient.GetStream());
+                    this.m_eventSerializer.Serialize(sw, evt.Event);
+                    sw.Flush();
+                }
+                catch { }
             });
 
             try

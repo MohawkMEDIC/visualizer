@@ -48,7 +48,9 @@ namespace MARC.EHRS.VisualizationServer.Actions
                 // Deserialize audit message.
                 XmlSerializer xmlSerializer = new XmlSerializer(typeof(AuditMessage));
                 StringReader strReader = new StringReader(payload.Substring(payload.IndexOf("<Audit")));
+                StringWriter strWriter = new StringWriter();
                 XmlTextReader xmlTextReader = new XmlTextReader(strReader);
+
                 AuditMessage auditMessage = (AuditMessage)xmlSerializer.Deserialize(xmlTextReader);
 
                 // Create a LogMessage equivalent.
@@ -99,12 +101,15 @@ namespace MARC.EHRS.VisualizationServer.Actions
             catch (Exception e)
             {
                 Trace.TraceError("{0} : {1}", e.Message, payload);
-                
+
                 logMessage = new VisualizationEvent()
                 {
                     IsError = true,
                     CorrelationId = evt.Message.CorrelationId.ToString(),
-                    Sequence = Interlocked.Increment(ref this.m_messageSequence)
+                    Sequence = Interlocked.Increment(ref this.m_messageSequence),
+                    MachineOID = evt.Message.ProcessName,
+                    IPAddress = evt.SolicitorEndpoint.Host,
+                    TimeStamp = DateTime.Now
                 };
             }
 

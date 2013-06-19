@@ -102,29 +102,59 @@ namespace MARC.EHRS.VisualizationServer.Syslog.TransportProtocol
 
                 // Now read to a string
                 StringBuilder messageData = new StringBuilder();
-                byte[] buffer = new byte[1024];
+                byte[] buffer = new byte[2048];
                 DateTime st = DateTime.Now;
                 while (!stream.DataAvailable && DateTime.Now.Subtract(st) < this.m_configuration.Timeout) Thread.Sleep(50);
 
-                while (stream.DataAvailable)
+                stream.ReadTimeout = 500;
+
+                bool read = true;
+                while (read && tcpClient.Connected)
                 {
-                    int br = stream.Read(buffer, 0, 1024);
-                    messageData.Append(Encoding.ASCII.GetString(buffer, 0, br));
+                    try
+                    {
+                        int br = stream.Read(buffer, 0, 2048);
+                        messageData.Append(Encoding.UTF8.GetString(buffer, 0, br));
+                    }
+                    catch(IOException) { }
+                    if (stream.DataAvailable)
+                        read = true;
+                    else
+                    {
+                        read = (!messageData.ToString().Contains("\r") && !messageData.ToString().Contains("\n"));
+                        if(!read)
+                            Trace.TraceInformation("Received partial message... Will wait for CR or LF...");
+                    }
                 }
 
-                var strMessage = messageData.ToString();
-                var message = SyslogMessage.Parse(strMessage);
-                var messageArgs = new SyslogMessageReceivedEventArgs(message, localEndpoint, remoteEndpoint, DateTime.Now);
+                var strMessage = messageData.ToString() + '\n';
+                string[] msgs = strMessage.Split('\n');
+                Trace.TraceInformation("Received {0} messages in TCP session", msgs.Length);
+                foreach (var msg in msgs)
+                {
+                    
+                    if (msg.Length == 0) continue; // no message 
 
-                this.FireMessageReceived(this, messageArgs);
+                    try
+                    {
+                        var message = SyslogMessage.Parse(msg);
+                        var messageArgs = new SyslogMessageReceivedEventArgs(message, remoteEndpoint, localEndpoint, DateTime.Now);
 
-                // Forward
-                TransportUtil.Current.Forward(this.m_configuration.Forward, Encoding.UTF8.GetBytes(strMessage));
-            }
-            catch (SyslogMessageException e)
-            {
-                this.FireInvalidMessageReceived(this, new SyslogMessageReceivedEventArgs(e.FaultingMessage, localEndpoint, remoteEndpoint, DateTime.Now));
-                Trace.TraceError(e.ToString());
+                        this.FireMessageReceived(this, messageArgs);
+
+                        // Forward
+                        TransportUtil.Current.Forward(this.m_configuration.Forward, Encoding.UTF8.GetBytes(msg));
+                    }
+                    catch (SyslogMessageException e)
+                    {
+                        this.FireInvalidMessageReceived(this, new SyslogMessageReceivedEventArgs(e.FaultingMessage, remoteEndpoint, localEndpoint, DateTime.Now));
+                        Trace.TraceError(e.ToString());
+                    }
+                    catch (Exception e)
+                    {
+                        Trace.TraceError(e.ToString());
+                    }
+                }
             }
             catch (Exception e)
             {
