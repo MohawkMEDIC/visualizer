@@ -505,6 +505,19 @@ namespace MARC.EHRS.VisualizationClient.Silverlight
             this.m_visClient.Dispose();
         }
 
+        private void CaptureMenu_MouseEnter(object sender, MouseEventArgs e)
+        {
+            if((PlaybackMenu.RenderTransform as TranslateTransform).Y == 80)
+                (this.Resources["sbShowCaptureMenu"] as Storyboard).Begin();
+        }
+
+        private void CaptureMenu_MouseLeave(object sender, MouseEventArgs e)
+        {
+            if ((PlaybackMenu.RenderTransform as TranslateTransform).Y == 80)
+                (this.Resources["sbMouseHideCaptureMenu"] as Storyboard).Begin();
+
+        }
+
         
     }
 }
