@@ -61,7 +61,6 @@ namespace MARC.EHRS.VisualizationServer.Actions
                     string sourceID = "";
 
                     sourceID = auditMessage.SourceIdentification[0].AuditEnterpriseSiteID;
-                    Trace.TraceInformation("Using enterprise site id: {0}", sourceID);
                     if (String.IsNullOrEmpty(sourceID))
                     {
                         sourceID = auditMessage.SourceIdentification[0].AuditSourceID;
@@ -69,6 +68,9 @@ namespace MARC.EHRS.VisualizationServer.Actions
                             sourceID = sourceID.Substring(0, sourceID.IndexOf("@"));
                         Trace.TraceInformation("Using audit source id: {0}", sourceID);
                     }
+                    else
+                        Trace.TraceInformation("Using enterprise site id: {0}", sourceID);
+
 
                     // Create the log message
                     logMessage = new VisualizationEvent()
@@ -95,6 +97,17 @@ namespace MARC.EHRS.VisualizationServer.Actions
                             logMessage.Name = data.Description;
                     }
 
+                }
+                else
+                {
+                    Trace.TraceWarning("Missing SourceIdentification, will use Syslog processName: {0}", evt.Message.ProcessName);
+                    // Create the log message
+                    logMessage = new VisualizationEvent()
+                    {
+                        MachineOID = evt.Message.ProcessName,
+                        CorrelationId = evt.Message.CorrelationId.ToString(),
+                        Sequence = Interlocked.Increment(ref this.m_messageSequence)
+                    };
                 }
 
             }
@@ -135,7 +148,7 @@ namespace MARC.EHRS.VisualizationServer.Actions
             // Notify received
             Trace.TraceInformation("Received message from {0} with correlation id {1}", e.SolicitorEndpoint, e.Message.CorrelationId);
             var evt = this.ConvertToVisualization(e);
-            if (e != null)
+            if (evt != null)
             {
                 INotificationService notif = Context.GetService(typeof(INotificationService)) as INotificationService;
                 if (notif == null)

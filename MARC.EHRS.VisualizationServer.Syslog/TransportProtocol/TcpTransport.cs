@@ -202,33 +202,32 @@ namespace MARC.EHRS.VisualizationServer.Syslog.TransportProtocol
             Uri localEndpoint = new Uri(String.Format("tcp://{0}:{1}", localEp.Address, localEp.Port));
             Uri remoteEndpoint = new Uri(String.Format("tcp://{0}:{1}", remoteEp.Address, remoteEp.Port));
 
-            // Process the message
-            string[] msgs = strMessage.Split('\n');
-            Trace.TraceInformation("Received {0} messages in TCP session", msgs.Length);
-            foreach (var msg in msgs)
+            // Get rid of length
+            Regex messageLengthMatch = new Regex(@"^(\d*)\s(.*)$");
+            var match = messageLengthMatch.Match(strMessage);
+            if (match.Success)
+                strMessage = match.Groups[2].Value;
+
+            if (strMessage.Length == 0) return; // no message 
+
+            try
             {
+                var message = SyslogMessage.Parse(strMessage);
+                var messageArgs = new SyslogMessageReceivedEventArgs(message, remoteEndpoint, localEndpoint, DateTime.Now);
 
-                if (msg.Length == 0) continue; // no message 
+                this.FireMessageReceived(this, messageArgs);
 
-                try
-                {
-                    var message = SyslogMessage.Parse(msg);
-                    var messageArgs = new SyslogMessageReceivedEventArgs(message, remoteEndpoint, localEndpoint, DateTime.Now);
-
-                    this.FireMessageReceived(this, messageArgs);
-
-                    // Forward
-                    TransportUtil.Current.Forward(this.m_configuration.Forward, Encoding.UTF8.GetBytes(msg));
-                }
-                catch (SyslogMessageException e)
-                {
-                    this.FireInvalidMessageReceived(this, new SyslogMessageReceivedEventArgs(e.FaultingMessage, remoteEndpoint, localEndpoint, DateTime.Now));
-                    Trace.TraceError(e.Message);
-                }
-                catch (Exception e)
-                {
-                    Trace.TraceError(e.ToString());
-                }
+                // Forward
+                TransportUtil.Current.Forward(this.m_configuration.Forward, Encoding.UTF8.GetBytes(strMessage));
+            }
+            catch (SyslogMessageException e)
+            {
+                this.FireInvalidMessageReceived(this, new SyslogMessageReceivedEventArgs(e.FaultingMessage, remoteEndpoint, localEndpoint, DateTime.Now));
+                Trace.TraceError(e.Message);
+            }
+            catch (Exception e)
+            {
+                Trace.TraceError(e.ToString());
             }
         }
 
