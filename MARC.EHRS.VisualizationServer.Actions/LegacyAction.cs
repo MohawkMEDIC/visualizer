@@ -100,8 +100,16 @@ namespace MARC.EHRS.VisualizationServer.Actions
             }
             catch (Exception e)
             {
-                Trace.TraceError("{0} : {1}", e.Message, payload);
+                StringBuilder exceptionBuilder = new StringBuilder(e.Message);
+                Exception ie = e.InnerException;
+                while (ie != null)
+                {
+                    exceptionBuilder.AppendFormat(" -> {0} ", ie.Message);
+                    ie = ie.InnerException;
+                }
 
+                Trace.TraceError("{0} : {1}", exceptionBuilder, payload);
+                
                 logMessage = new VisualizationEvent()
                 {
                     IsError = true,

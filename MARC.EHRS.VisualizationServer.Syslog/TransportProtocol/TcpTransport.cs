@@ -29,6 +29,7 @@ using System.IO;
 using System.ComponentModel;
 using MARC.EHRS.VisualizationServer.Syslog.Configuration;
 using MARC.EHRS.VisualizationServer.Syslog.Exceptions;
+using System.Text.RegularExpressions;
 
 namespace MARC.EHRS.VisualizationServer.Syslog.TransportProtocol
 {
@@ -79,6 +80,7 @@ namespace MARC.EHRS.VisualizationServer.Syslog.TransportProtocol
             {
                 // Client
                 TcpClient client = this.m_listener.AcceptTcpClient();
+                Trace.TraceInformation("Established syslog connection with {0}", client.Client.RemoteEndPoint);
                 Thread clientThread = new Thread(OnReceiveMessage);
                 clientThread.IsBackground = true;
                 clientThread.Start(client);
@@ -92,69 +94,92 @@ namespace MARC.EHRS.VisualizationServer.Syslog.TransportProtocol
         {
             TcpClient tcpClient = client as TcpClient;
             NetworkStream stream = tcpClient.GetStream();
-            var localEp = tcpClient.Client.LocalEndPoint as IPEndPoint;
-            var remoteEp = tcpClient.Client.RemoteEndPoint as IPEndPoint;
-            Uri localEndpoint = new Uri(String.Format("tcp://{0}:{1}", localEp.Address, localEp.Port));
-            Uri remoteEndpoint = new Uri(String.Format("tcp://{0}:{1}", remoteEp.Address, remoteEp.Port));
+            
 
+            // Now read to a string
+            StringBuilder messageData = new StringBuilder();
             try
             {
 
-                // Now read to a string
-                StringBuilder messageData = new StringBuilder();
-                byte[] buffer = new byte[2048];
-                DateTime st = DateTime.Now;
-                while (!stream.DataAvailable && DateTime.Now.Subtract(st) < this.m_configuration.Timeout) Thread.Sleep(50);
+                
+                byte[] buffer = new byte[512];
+                stream.ReadTimeout = 1500;
 
-                stream.ReadTimeout = 500;
+                Regex messageLengthMatch = new Regex(@"^(\d*)\s(.*)$");
 
-                bool read = true;
-                while (read && tcpClient.Connected)
+                while (tcpClient.Connected)
                 {
                     try
                     {
-                        int br = stream.Read(buffer, 0, 2048);
+                        DateTime st = DateTime.Now;
+                        while (!stream.DataAvailable && DateTime.Now.Subtract(st) < this.m_configuration.Timeout) Thread.Sleep(50);
+
+                        // Timeout?
+                        if (DateTime.Now.Subtract(st) > this.m_configuration.Timeout)
+                            throw new TimeoutException("Connection timed out!");
+
+                        int br = stream.Read(buffer, 0, 512);
                         messageData.Append(Encoding.UTF8.GetString(buffer, 0, br));
                     }
-                    catch(IOException) { }
-                    if (stream.DataAvailable)
-                        read = true;
-                    else
+                    catch (IOException) { Thread.Sleep(10); }
+
+                    // Check ... Does the message start with a size ?
+                    string currentMessageData = messageData.ToString();
+                    var match = messageLengthMatch.Match(currentMessageData);
+                    if (match.Success)
+                        while(true)
+                        {
+                            string msgLength = match.Groups[1].Value;
+                            int length = 0;
+                            if (Int32.TryParse(msgLength, out length) && match.Groups[2].Value.Length >= length) // Complete message!
+                            {
+
+                                var strMessage = match.Groups[2].Value.Substring(0, length);
+                                ProcessSyslogMessage(strMessage, tcpClient);
+                                if (match.Groups[2].Value.Length > length) // more message
+                                {
+                                    messageData = new StringBuilder(match.Groups[2].Value.Substring(length));
+                                    currentMessageData = messageData.ToString();
+                                    match = messageLengthMatch.Match(currentMessageData);
+                                }
+                                else
+                                {
+                                    messageData = new StringBuilder();
+                                    break;
+                                }
+                            }
+                            else
+                                break;
+                        } 
+                    else if (currentMessageData.Contains("\n")) // Separated by newline!
                     {
-                        read = (!messageData.ToString().Contains("\r") && !messageData.ToString().Contains("\n"));
-                        if(!read)
-                            Trace.TraceInformation("Received partial message... Will wait for CR or LF...");
+                        var strMessage = currentMessageData;
+
+                        if (!strMessage.EndsWith("\n")) // Not a full message
+                        {
+                            strMessage = strMessage.Substring(0, strMessage.LastIndexOf("\n") + 1);
+                            messageData = new StringBuilder(strMessage.Substring(strMessage.LastIndexOf("\n") + 1));
+                        }
+                        else
+                        {
+                            messageData = new StringBuilder();
+                            break;
+                        }
+
+                        ProcessSyslogMessage(strMessage, tcpClient);
                     }
+                   
+                    // else
                 }
 
-                var strMessage = messageData.ToString() + '\n';
-                string[] msgs = strMessage.Split('\n');
-                Trace.TraceInformation("Received {0} messages in TCP session", msgs.Length);
-                foreach (var msg in msgs)
-                {
-                    
-                    if (msg.Length == 0) continue; // no message 
 
-                    try
-                    {
-                        var message = SyslogMessage.Parse(msg);
-                        var messageArgs = new SyslogMessageReceivedEventArgs(message, remoteEndpoint, localEndpoint, DateTime.Now);
+            }
+            catch (TimeoutException e)
+            {
+                if(messageData.Length > 0)
+                    ProcessSyslogMessage(messageData.ToString(), tcpClient);
 
-                        this.FireMessageReceived(this, messageArgs);
-
-                        // Forward
-                        TransportUtil.Current.Forward(this.m_configuration.Forward, Encoding.UTF8.GetBytes(msg));
-                    }
-                    catch (SyslogMessageException e)
-                    {
-                        this.FireInvalidMessageReceived(this, new SyslogMessageReceivedEventArgs(e.FaultingMessage, remoteEndpoint, localEndpoint, DateTime.Now));
-                        Trace.TraceError(e.ToString());
-                    }
-                    catch (Exception e)
-                    {
-                        Trace.TraceError(e.ToString());
-                    }
-                }
+                Trace.TraceInformation("Client did not send data in specified amount of time!");
             }
             catch (Exception e)
             {
@@ -164,6 +189,46 @@ namespace MARC.EHRS.VisualizationServer.Syslog.TransportProtocol
             {
                 stream.Close();
                 tcpClient.Close();
+            }
+        }
+
+        /// <summary>
+        /// Process a syslog message
+        /// </summary>
+        private void ProcessSyslogMessage(string strMessage, TcpClient client)
+        {
+            var localEp = client.Client.LocalEndPoint as IPEndPoint;
+            var remoteEp = client.Client.RemoteEndPoint as IPEndPoint;
+            Uri localEndpoint = new Uri(String.Format("tcp://{0}:{1}", localEp.Address, localEp.Port));
+            Uri remoteEndpoint = new Uri(String.Format("tcp://{0}:{1}", remoteEp.Address, remoteEp.Port));
+
+            // Process the message
+            string[] msgs = strMessage.Split('\n');
+            Trace.TraceInformation("Received {0} messages in TCP session", msgs.Length);
+            foreach (var msg in msgs)
+            {
+
+                if (msg.Length == 0) continue; // no message 
+
+                try
+                {
+                    var message = SyslogMessage.Parse(msg);
+                    var messageArgs = new SyslogMessageReceivedEventArgs(message, remoteEndpoint, localEndpoint, DateTime.Now);
+
+                    this.FireMessageReceived(this, messageArgs);
+
+                    // Forward
+                    TransportUtil.Current.Forward(this.m_configuration.Forward, Encoding.UTF8.GetBytes(msg));
+                }
+                catch (SyslogMessageException e)
+                {
+                    this.FireInvalidMessageReceived(this, new SyslogMessageReceivedEventArgs(e.FaultingMessage, remoteEndpoint, localEndpoint, DateTime.Now));
+                    Trace.TraceError(e.Message);
+                }
+                catch (Exception e)
+                {
+                    Trace.TraceError(e.ToString());
+                }
             }
         }
 
