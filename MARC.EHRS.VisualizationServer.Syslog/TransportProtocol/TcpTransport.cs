@@ -98,6 +98,8 @@ namespace MARC.EHRS.VisualizationServer.Syslog.TransportProtocol
 
             // Now read to a string
             StringBuilder messageData = new StringBuilder();
+            int nSessionMessages = 0;
+
             try
             {
 
@@ -119,6 +121,7 @@ namespace MARC.EHRS.VisualizationServer.Syslog.TransportProtocol
                             throw new TimeoutException("Connection timed out!");
 
                         int br = stream.Read(buffer, 0, 512);
+                        nSessionMessages++;
                         messageData.Append(Encoding.UTF8.GetString(buffer, 0, br));
                     }
                     catch (IOException) { Thread.Sleep(10); }
@@ -176,10 +179,12 @@ namespace MARC.EHRS.VisualizationServer.Syslog.TransportProtocol
             }
             catch (TimeoutException e)
             {
-                if(messageData.Length > 0)
+
+                if (messageData.Length > 0)
                     ProcessSyslogMessage(messageData.ToString(), tcpClient);
 
-                Trace.TraceInformation("Client did not send data in specified amount of time!");
+                if(nSessionMessages == 0)
+                    Trace.TraceInformation("Client did not send data in specified amount of time!");
             }
             catch (Exception e)
             {

@@ -18,7 +18,7 @@ namespace MARC.EHRS.VisualizationServer.Syslog
         private ITransportProtocol m_protocol;
 
         // The message handler
-        private ISyslogAction m_action;
+        private List<ISyslogAction> m_action = new List<ISyslogAction>();
         
         // Endpoint configuration
         private EndpointConfiguration m_configuration;
@@ -32,10 +32,14 @@ namespace MARC.EHRS.VisualizationServer.Syslog
             this.m_protocol = TransportUtil.Current.CreateTransport(config.Address.Scheme);
             this.m_protocol.MessageReceived += new EventHandler<SyslogMessageReceivedEventArgs>(m_protocol_MessageReceived);
             this.m_protocol.InvalidMessageReceived += new EventHandler<SyslogMessageReceivedEventArgs>(m_protocol_InvalidMessageReceived);
-            this.m_action = Activator.CreateInstance(this.m_configuration.Action) as ISyslogAction;
-            if (this.m_action == null)
-                throw new InvalidOperationException("Action does not implement ISyslogAction interface");
-            this.m_action.Context = ApplicationContext.CurrentContext;
+            foreach (var act in this.m_configuration.Action)
+            {
+                var handler = Activator.CreateInstance(act) as ISyslogAction;
+                if (this.m_action == null)
+                    throw new InvalidOperationException("Action does not implement ISyslogAction interface");
+                handler.Context = ApplicationContext.CurrentContext;
+                this.m_action.Add(handler);
+            }
         }
 
         /// <summary>
@@ -43,7 +47,8 @@ namespace MARC.EHRS.VisualizationServer.Syslog
         /// </summary>
         void m_protocol_InvalidMessageReceived(object sender, SyslogMessageReceivedEventArgs e)
         {
-            this.m_action.HandleInvalidMessage(sender, e);
+            foreach(var act in this.m_action)
+                act.HandleInvalidMessage(sender, e);
         }
 
         /// <summary>
@@ -51,7 +56,8 @@ namespace MARC.EHRS.VisualizationServer.Syslog
         /// </summary>
         void m_protocol_MessageReceived(object sender, SyslogMessageReceivedEventArgs e)
         {
-            this.m_action.HandleMessageReceived(sender, e);
+            foreach(var act in this.m_action)
+                act.HandleMessageReceived(sender, e);
         }
 
         /// <summary>

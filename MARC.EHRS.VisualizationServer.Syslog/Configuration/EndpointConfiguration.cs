@@ -32,6 +32,7 @@ namespace MARC.EHRS.VisualizationServer.Syslog.Configuration
         {
             this.Forward = new List<EndpointConfiguration>();
             this.Timeout = new TimeSpan(0, 0, 10);
+            this.Action = new List<Type>();
         }
 
         /// <summary>
@@ -57,7 +58,7 @@ namespace MARC.EHRS.VisualizationServer.Syslog.Configuration
         /// <summary>
         /// Gets the handler of this endpoint
         /// </summary>
-        public Type Action { get; set; }
+        public List<Type> Action { get; set; }
 
         /// <summary>
         /// The forwarding addresses

@@ -54,12 +54,12 @@ namespace MARC.EHRS.VisualizationServer.Syslog.Configuration
                 throw new ConfigurationErrorsException("Must carry an address attribute", ep);
 
             // Handler
-            if (ep.Attributes["action"] != null)
+            foreach(XmlNode xmlEl in ep.SelectNodes("./*[local-name() = 'actions']/*[local-name() = 'add']"))
             {
-                Type handlerType = Type.GetType(ep.Attributes["action"].Value);
+                Type handlerType = Type.GetType(xmlEl.InnerText);
                 if (handlerType == null)
-                    throw new ConfigurationErrorsException("Cannot find the specified type", ep.Attributes["action"]);
-                config.Action = handlerType;
+                    throw new ConfigurationErrorsException("Cannot find the specified type", xmlEl);
+                config.Action.Add(handlerType);
             }
 
             if (ep.Attributes["maxSize"] != null)
