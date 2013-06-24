@@ -255,40 +255,21 @@ namespace MARC.EHRS.VisualizationServer.Syslog.TransportProtocol
             TcpClient tcpClient = client as TcpClient;
             NetworkStream tcpStream = tcpClient.GetStream();
             SslStream stream = new SslStream(tcpStream, false, new RemoteCertificateValidationCallback(RemoteCertificateValidation));
-            var localEp = tcpClient.Client.LocalEndPoint as IPEndPoint;
-            var remoteEp = tcpClient.Client.RemoteEndPoint as IPEndPoint;
-            Uri localEndpoint = new Uri(String.Format("stcp://{0}:{1}", localEp.Address, localEp.Port));
-            Uri remoteEndpoint = new Uri(String.Format("stcp://{0}:{1}", remoteEp.Address, remoteEp.Port));
 
             try
             {
                 stream.AuthenticateAsServer(this.m_configuration.ServerCertificate, this.m_configuration.EnableClientCertNegotiation, System.Security.Authentication.SslProtocols.Tls, true);
-
-                // Now read to a string
-                StringBuilder messageData = new StringBuilder();
-                byte[] buffer = new byte[1024];
-
-                // Wait for data to become available
-                DateTime st = DateTime.Now;
-                while (!tcpStream.DataAvailable && DateTime.Now.Subtract(st) < this.m_endpointConfiguration.Timeout) Thread.Sleep(50);
-
-                while (tcpStream.DataAvailable)
-                {
-                    int br = stream.Read(buffer, 0, 1024);
-                    messageData.Append(Encoding.ASCII.GetString(buffer, 0, br));
-                }
-
-                var strMessage = messageData.ToString();
-                var message = SyslogMessage.Parse(strMessage);
-                var messageArgs = new SyslogMessageReceivedEventArgs(message, localEndpoint, remoteEndpoint, DateTime.Now);
-
-                this.FireMessageReceived(this, messageArgs);
-
-                // Forward
-                TransportUtil.Current.Forward(this.m_endpointConfiguration.Forward, Encoding.UTF8.GetBytes(strMessage));
+                stream.ReadTimeout = (int)this.m_endpointConfiguration.Timeout.TotalMilliseconds;
+                this.ProcessSession(tcpClient, stream);
             }
             catch (AuthenticationException e)
             {
+
+                var localEp = tcpClient.Client.LocalEndPoint as IPEndPoint;
+                var remoteEp = tcpClient.Client.RemoteEndPoint as IPEndPoint;
+                Uri localEndpoint = new Uri(String.Format("stcp://{0}:{1}", localEp.Address, localEp.Port));
+                Uri remoteEndpoint = new Uri(String.Format("stcp://{0}:{1}", remoteEp.Address, remoteEp.Port));
+
                 // Trace authentication error
                 AuditData ad = new AuditData(
                     DateTime.Now,
@@ -325,11 +306,6 @@ namespace MARC.EHRS.VisualizationServer.Syslog.TransportProtocol
                 var auditService = ApplicationContext.CurrentContext.GetService(typeof(IAuditorService)) as IAuditorService;
                 if (auditService != null)
                     auditService.SendAudit(ad);
-                Trace.TraceError(e.ToString());
-            }
-            catch (SyslogMessageException e)
-            {
-                this.FireInvalidMessageReceived(this, new SyslogMessageReceivedEventArgs(e.FaultingMessage, remoteEndpoint, localEndpoint, DateTime.Now));
                 Trace.TraceError(e.ToString());
             }
             catch (Exception e)

@@ -98,7 +98,7 @@ namespace MARC.EHRS.VisualizationServer.Syslog.TransportProtocol
 
                         // Parse
                         String udpMessageStr = System.Text.Encoding.UTF8.GetString(udpMessage).TrimEnd('\0');
-                        var message = SyslogMessage.Parse(udpMessageStr);
+                        var message = SyslogMessage.Parse(udpMessageStr, Guid.NewGuid());
                         if (this.MessageReceived != null)
                             this.MessageReceived.BeginInvoke(this, new SyslogMessageReceivedEventArgs(message, new Uri(String.Format("udp://{0}", remote_ep)), this.m_configuration.Address, DateTime.Now), null, null);
 

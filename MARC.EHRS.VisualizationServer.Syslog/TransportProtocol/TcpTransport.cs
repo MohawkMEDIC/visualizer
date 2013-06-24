@@ -94,18 +94,37 @@ namespace MARC.EHRS.VisualizationServer.Syslog.TransportProtocol
         {
             TcpClient tcpClient = client as TcpClient;
             NetworkStream stream = tcpClient.GetStream();
-            
+            try
+            {
+                stream.ReadTimeout = (int)this.m_configuration.Timeout.TotalMilliseconds;
+                this.ProcessSession(tcpClient, stream);
+            }
+            catch (Exception e)
+            {
+                Trace.TraceError(e.ToString());
+            }
+            finally
+            {
+                stream.Close();
+                tcpClient.Close();
+            }
+        }
 
+        /// <summary>
+        /// Process a TCP session
+        /// </summary>
+        protected void ProcessSession(TcpClient tcpClient, Stream stream)
+        {
             // Now read to a string
             StringBuilder messageData = new StringBuilder();
             int nSessionMessages = 0;
-
+            Guid sessionId = Guid.NewGuid();
+            
             try
             {
 
                 
                 byte[] buffer = new byte[512];
-                stream.ReadTimeout = 1500;
 
                 Regex messageLengthMatch = new Regex(@"^(\d*)\s(.*)$");
 
@@ -113,13 +132,6 @@ namespace MARC.EHRS.VisualizationServer.Syslog.TransportProtocol
                 {
                     try
                     {
-                        DateTime st = DateTime.Now;
-                        while (!stream.DataAvailable && DateTime.Now.Subtract(st) < this.m_configuration.Timeout) Thread.Sleep(50);
-
-                        // Timeout?
-                        if (DateTime.Now.Subtract(st) > this.m_configuration.Timeout)
-                            throw new TimeoutException("Connection timed out!");
-
                         int br = stream.Read(buffer, 0, 512);
                         nSessionMessages++;
                         messageData.Append(Encoding.UTF8.GetString(buffer, 0, br));
@@ -138,7 +150,7 @@ namespace MARC.EHRS.VisualizationServer.Syslog.TransportProtocol
                             {
 
                                 var strMessage = match.Groups[2].Value.Substring(0, length);
-                                ProcessSyslogMessage(strMessage, tcpClient);
+                                ProcessSyslogMessage(strMessage, tcpClient, sessionId);
                                 if (match.Groups[2].Value.Length > length) // more message
                                 {
                                     messageData = new StringBuilder(match.Groups[2].Value.Substring(length));
@@ -169,7 +181,7 @@ namespace MARC.EHRS.VisualizationServer.Syslog.TransportProtocol
                             break;
                         }
 
-                        ProcessSyslogMessage(strMessage, tcpClient);
+                        ProcessSyslogMessage(strMessage, tcpClient, sessionId);
                     }
                    
                     // else
@@ -181,7 +193,7 @@ namespace MARC.EHRS.VisualizationServer.Syslog.TransportProtocol
             {
 
                 if (messageData.Length > 0)
-                    ProcessSyslogMessage(messageData.ToString(), tcpClient);
+                    ProcessSyslogMessage(messageData.ToString(), tcpClient, sessionId);
 
                 if(nSessionMessages == 0)
                     Trace.TraceInformation("Client did not send data in specified amount of time!");
@@ -190,17 +202,13 @@ namespace MARC.EHRS.VisualizationServer.Syslog.TransportProtocol
             {
                 Trace.TraceError(e.ToString());
             }
-            finally
-            {
-                stream.Close();
-                tcpClient.Close();
-            }
+
         }
 
         /// <summary>
         /// Process a syslog message
         /// </summary>
-        private void ProcessSyslogMessage(string strMessage, TcpClient client)
+        private void ProcessSyslogMessage(string strMessage, TcpClient client, Guid sessionId)
         {
             var localEp = client.Client.LocalEndPoint as IPEndPoint;
             var remoteEp = client.Client.RemoteEndPoint as IPEndPoint;
@@ -217,7 +225,7 @@ namespace MARC.EHRS.VisualizationServer.Syslog.TransportProtocol
 
             try
             {
-                var message = SyslogMessage.Parse(strMessage);
+                var message = SyslogMessage.Parse(strMessage, sessionId);
                 var messageArgs = new SyslogMessageReceivedEventArgs(message, remoteEndpoint, localEndpoint, DateTime.Now);
 
                 this.FireMessageReceived(this, messageArgs);

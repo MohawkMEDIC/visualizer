@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{94D4786D-38CC-4893-B74A-1FF23D580958}</ProjectGuid>
+    <ProjectGuid>{B0A77269-1AD7-422C-A88C-B85512655A06}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MARC.EHRS.VisualizationServer.Actions</RootNamespace>
-    <AssemblyName>MARC.EHRS.VisualizationServer.Actions</AssemblyName>
+    <RootNamespace>MARC.EHRS.VisualizationServer.Actions.Persistence</RootNamespace>
+    <AssemblyName>MARC.EHRS.VisualizationServer.Actions.Persistence</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -17,7 +17,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\bin\Debug\</OutputPath>
+    <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -31,14 +31,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="MARC.HI.EHRS.SVC.Auditing.Atna">
-      <HintPath>..\Solution Items\MARC.HI.EHRS.SVC.Auditing.Atna.dll</HintPath>
-    </Reference>
-    <Reference Include="MARC.HI.EHRS.SVC.Core">
-      <HintPath>..\Solution Items\MARC.HI.EHRS.SVC.Core.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
-    <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -47,10 +40,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Configuration\LogActionConfiguration.cs" />
-    <Compile Include="Configuration\LogActionConfigurationSectionHandler.cs" />
-    <Compile Include="NotifyAction.cs" />
-    <Compile Include="LogAction.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -63,6 +52,12 @@
       <Name>MARC.EHRS.VisualizationServer.Syslog</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="SQL\PSQL9\AR_DDL.sql" />
+    <Content Include="SQL\PSQL9\AR_DDL_CLEAN.SQL" />
+    <Content Include="SQL\PSQL9\AR_FX.sql" />
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

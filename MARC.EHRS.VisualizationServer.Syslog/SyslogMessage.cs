@@ -21,6 +21,11 @@ namespace MARC.EHRS.VisualizationServer.Syslog
         }
 
         /// <summary>
+        /// Gets or sets the session identifier for the message
+        /// </summary>
+        public Guid SessionId { get; private set; }
+
+        /// <summary>
         /// Gets the unique identifier that can be used to correlate this message
         /// </summary>
         public Guid CorrelationId { get; private set; }
@@ -66,12 +71,19 @@ namespace MARC.EHRS.VisualizationServer.Syslog
         public string Body { get; set; }
 
         /// <summary>
+        /// The original message
+        /// </summary>
+        public string Original { get; set; }
+
+        /// <summary>
         /// Parse the syslog message
         /// </summary>
-        public static SyslogMessage Parse(String message)
+        public static SyslogMessage Parse(String message, Guid sessionId)
         {
             SyslogMessage retVal = new SyslogMessage();
 
+            retVal.SessionId = sessionId;
+            retVal.Original = message;
             // Process the message... First remove newlines
             message = message.Replace("\r\n", "");
             // Now regex

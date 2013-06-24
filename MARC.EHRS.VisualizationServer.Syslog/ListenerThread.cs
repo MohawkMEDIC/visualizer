@@ -5,6 +5,8 @@ using System.Text;
 using MARC.EHRS.VisualizationServer.Syslog.TransportProtocol;
 using MARC.EHRS.VisualizationServer.Syslog.Configuration;
 using System.Threading;
+using MARC.HI.EHRS.SVC.Core.Services;
+using System.IO;
 
 namespace MARC.EHRS.VisualizationServer.Syslog
 {
@@ -47,6 +49,11 @@ namespace MARC.EHRS.VisualizationServer.Syslog
         /// </summary>
         void m_protocol_InvalidMessageReceived(object sender, SyslogMessageReceivedEventArgs e)
         {
+
+            // Store
+            PersistMessageEvent(e);
+
+            // Perform actions
             foreach(var act in this.m_action)
                 act.HandleInvalidMessage(sender, e);
         }
@@ -56,9 +63,35 @@ namespace MARC.EHRS.VisualizationServer.Syslog
         /// </summary>
         void m_protocol_MessageReceived(object sender, SyslogMessageReceivedEventArgs e)
         {
+            // Store
+            PersistMessageEvent(e);
+
+            // Perform actions
             foreach(var act in this.m_action)
                 act.HandleMessageReceived(sender, e);
         }
+
+        /// <summary>
+        /// Persist message events
+        /// </summary>
+        private void PersistMessageEvent(SyslogMessageReceivedEventArgs e)
+        {
+            IMessagePersistenceService msgPersistence = ApplicationContext.CurrentContext.GetService(typeof(IMessagePersistenceService)) as IMessagePersistenceService;
+
+            if (msgPersistence == null) return; // no persistence service so exit
+            
+            // Write the message to a stream
+            using (MemoryStream ms = new MemoryStream())
+            {
+                byte[] data = Encoding.UTF8.GetBytes(e.Message.Original);
+                ms.Write(data, 0, data.Length);
+                ms.Seek(0, SeekOrigin.Begin);
+
+                // Now persist
+                msgPersistence.PersistMessage(e.Message.CorrelationId.ToString(), ms);
+            }
+        }
+
 
         /// <summary>
         /// Run the service

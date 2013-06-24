@@ -21,7 +21,7 @@ namespace MARC.EHRS.VisualizationServer.Actions
     /// Represents a syslog action
     /// </summary>
     /// <remarks>Action that will forward audits to clients</remarks>
-    public class LegacyAction : ISyslogAction
+    public class NotifyAction : ISyslogAction
     {
         #region ISyslogAction Members
 

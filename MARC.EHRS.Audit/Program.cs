@@ -11,6 +11,7 @@ using System.Runtime.InteropServices;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Xml.Serialization;
+using System.Security.Cryptography.X509Certificates;
 
 namespace MARC.EHRS.Audit
 {
@@ -76,7 +77,7 @@ namespace MARC.EHRS.Audit
                         Trace.TraceError("No message handler service started. Terminating program");
                     }
                 }
-                
+
             }
             catch(Exception e)
             {
