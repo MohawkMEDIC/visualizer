@@ -87,7 +87,7 @@ namespace MARC.EHRS.VisualizationServer.Syslog
             // Process the message... First remove newlines
             message = message.Replace("\r\n", "");
             // Now regex
-            Regex re = new Regex(@"^\<(\d+)\>(\d+)\s([\dTZ\:\.\-]*)\s([\w\.\-\@]*)\s([\w\-\.\@]*)\s([\d\-\@]*)\s([\w\+\-\.\@]*)\s([\w\+\-\.\@]*)(.*)$");
+            Regex re = new Regex(@"^\<(\d+)\>(\d+)\s([\dTZ\:\.\-\+]*)\s([\w\.\-\@]*)\s([\w\-\.\@]*)\s([\d\-\@]*)\s([\w\+\-\.\@]*)\s([\w\+\-\.\@]*)(.*)$");
             Match match = re.Match(message);
 
             if (match.Success)
