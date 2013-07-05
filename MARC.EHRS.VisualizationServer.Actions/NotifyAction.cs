@@ -68,6 +68,11 @@ namespace MARC.EHRS.VisualizationServer.Actions
                             sourceID = sourceID.Substring(0, sourceID.IndexOf("@"));
                         Trace.TraceInformation("Using audit source id: {0}", sourceID);
                     }
+                    else if (!String.IsNullOrEmpty(auditMessage.SourceIdentification[0].AuditSourceID))
+                    {
+                        sourceID = auditMessage.SourceIdentification[0].AuditSourceID + "^" + sourceID;
+                        Trace.TraceInformation("Using audit source id and enterprise site id: {0}", sourceID);
+                    }
                     else
                         Trace.TraceInformation("Using enterprise site id: {0}", sourceID);
 
@@ -171,6 +176,18 @@ namespace MARC.EHRS.VisualizationServer.Actions
 
             // Notify received
             Trace.TraceInformation("Received invalid message from {0} (Invalid Header) : {1}", e.SolicitorEndpoint, e.Message.Body);
+            INotificationService notif = Context.GetService(typeof(INotificationService)) as INotificationService;
+            var evt = new VisualizationEvent()
+            {
+                CorrelationId = e.Message.CorrelationId.ToString(),
+                MachineOID = e.Message.ProcessName ?? e.SolicitorEndpoint.Host,
+                SrcPort = e.SolicitorEndpoint.Port.ToString(),
+                IPAddress = e.SolicitorEndpoint.Host
+            };
+            if (notif == null)
+                Trace.TraceError("Cannot find a registered broadcaster");
+            else
+                notif.Notify(evt);
         }
 
         /// <summary>

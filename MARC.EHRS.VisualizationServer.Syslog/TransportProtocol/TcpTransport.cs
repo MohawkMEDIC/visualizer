@@ -136,7 +136,9 @@ namespace MARC.EHRS.VisualizationServer.Syslog.TransportProtocol
                         nSessionMessages++;
                         messageData.Append(Encoding.UTF8.GetString(buffer, 0, br));
                     }
-                    catch (IOException) { Thread.Sleep(10); }
+                    catch (IOException e) {
+                        break;
+                    }
 
                     // Check ... Does the message start with a size ?
                     string currentMessageData = messageData.ToString();
@@ -178,7 +180,6 @@ namespace MARC.EHRS.VisualizationServer.Syslog.TransportProtocol
                         else
                         {
                             messageData = new StringBuilder();
-                            break;
                         }
 
                         ProcessSyslogMessage(strMessage, tcpClient, sessionId);
@@ -187,16 +188,14 @@ namespace MARC.EHRS.VisualizationServer.Syslog.TransportProtocol
                     // else
                 }
 
-
-            }
-            catch (TimeoutException e)
-            {
-
                 if (messageData.Length > 0)
                     ProcessSyslogMessage(messageData.ToString(), tcpClient, sessionId);
 
-                if(nSessionMessages == 0)
+                if (nSessionMessages == 0)
                     Trace.TraceInformation("Client did not send data in specified amount of time!");
+                else
+                    Trace.TraceInformation("Finished syslog connection with {0}", tcpClient.Client.RemoteEndPoint);
+                
             }
             catch (Exception e)
             {
