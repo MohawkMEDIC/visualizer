@@ -78,6 +78,12 @@ namespace MARC.EHRS.VisualizationServer.Syslog.Configuration
             foreach (XmlNode fwd in ep.SelectNodes("./*[local-name() = 'forward']"))
                 config.Forward.Add(this.ProcessEndpointConfiguration(fwd));
 
+            // Process timeout
+            if (ep.Attributes["sessionTimeout"] != null)
+                config.Timeout = TimeSpan.Parse(ep.Attributes["sessionTimeout"].Value);
+
+            if (ep.Attributes["readTimeout"] != null)
+                config.ReadTimeout = TimeSpan.Parse(ep.Attributes["readTimeout"].Value);
             return config;
         }
 

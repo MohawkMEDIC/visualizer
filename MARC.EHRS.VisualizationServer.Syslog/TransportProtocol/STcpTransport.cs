@@ -259,7 +259,7 @@ namespace MARC.EHRS.VisualizationServer.Syslog.TransportProtocol
             try
             {
                 stream.AuthenticateAsServer(this.m_configuration.ServerCertificate, this.m_configuration.EnableClientCertNegotiation, System.Security.Authentication.SslProtocols.Tls, true);
-                stream.ReadTimeout = (int)this.m_endpointConfiguration.Timeout.TotalMilliseconds;
+                stream.ReadTimeout = (int)this.m_endpointConfiguration.ReadTimeout.TotalMilliseconds;
                 this.ProcessSession(tcpClient, stream);
             }
             catch (AuthenticationException e)

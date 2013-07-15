@@ -96,7 +96,7 @@ namespace MARC.EHRS.VisualizationServer.Syslog.TransportProtocol
             NetworkStream stream = tcpClient.GetStream();
             try
             {
-                stream.ReadTimeout = (int)this.m_configuration.Timeout.TotalMilliseconds;
+                stream.ReadTimeout = (int)this.m_configuration.ReadTimeout.TotalMilliseconds;
                 this.ProcessSession(tcpClient, stream);
             }
             catch (Exception e)
@@ -119,32 +119,42 @@ namespace MARC.EHRS.VisualizationServer.Syslog.TransportProtocol
             StringBuilder messageData = new StringBuilder();
             int nSessionMessages = 0;
             Guid sessionId = Guid.NewGuid();
-            
+
             try
             {
 
-                
+
                 byte[] buffer = new byte[512];
 
                 Regex messageLengthMatch = new Regex(@"^(\d*)\s(.*)$");
+                DateTime startConnection = DateTime.Now;
 
                 while (tcpClient.Connected)
                 {
                     try
                     {
+                        if (DateTime.Now.Subtract(startConnection) > this.m_configuration.Timeout)
+                            throw new TimeoutException();
+
                         int br = stream.Read(buffer, 0, 512);
                         nSessionMessages++;
                         messageData.Append(Encoding.UTF8.GetString(buffer, 0, br));
                     }
-                    catch (IOException e) {
-                        break;
+                    catch (TimeoutException e)
+                    {
+                        Trace.TraceError("{0} : Timeout occurred! Killing connection", tcpClient.Client.RemoteEndPoint);
+                        throw;
+                    }
+                    catch (IOException)
+                    {
+                        Trace.TraceWarning("{0} : No data received on connection waiting {1} more seconds", tcpClient.Client.RemoteEndPoint, this.m_configuration.Timeout.Subtract(DateTime.Now.Subtract(startConnection)).TotalSeconds);
                     }
 
                     // Check ... Does the message start with a size ?
                     string currentMessageData = messageData.ToString();
                     var match = messageLengthMatch.Match(currentMessageData);
                     if (match.Success)
-                        while(true)
+                        while (true)
                         {
                             string msgLength = match.Groups[1].Value;
                             int length = 0;
@@ -167,7 +177,7 @@ namespace MARC.EHRS.VisualizationServer.Syslog.TransportProtocol
                             }
                             else
                                 break;
-                        } 
+                        }
                     else if (currentMessageData.Contains("\n")) // Separated by newline!
                     {
                         var strMessage = currentMessageData;
@@ -184,22 +194,25 @@ namespace MARC.EHRS.VisualizationServer.Syslog.TransportProtocol
 
                         ProcessSyslogMessage(strMessage, tcpClient, sessionId);
                     }
-                   
+
                     // else
                 }
 
-                if (messageData.Length > 0)
-                    ProcessSyslogMessage(messageData.ToString(), tcpClient, sessionId);
 
-                if (nSessionMessages == 0)
-                    Trace.TraceInformation("Client did not send data in specified amount of time!");
-                else
-                    Trace.TraceInformation("Finished syslog connection with {0}", tcpClient.Client.RemoteEndPoint);
-                
             }
             catch (Exception e)
             {
                 Trace.TraceError(e.ToString());
+            }
+            finally
+            {
+                if (messageData.Length > 0)
+                    ProcessSyslogMessage(messageData.ToString(), tcpClient, sessionId);
+
+                if (nSessionMessages == 0)
+                    Trace.TraceInformation("{0} : Client did not send data in specified amount of time!", tcpClient.Client.RemoteEndPoint);
+                else
+                    Trace.TraceInformation("Finished syslog connection with {0}", tcpClient.Client.RemoteEndPoint);
             }
 
         }

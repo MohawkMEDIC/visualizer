@@ -173,7 +173,7 @@ namespace MARC.EHRS.VisualizationServer.Notifier
                 
                 notification.EventReceived += eventReceived;
                 while (tcpClient.Connected)
-                    Thread.Sleep(10);
+                    Thread.Sleep(50);
             }
             catch (ThreadAbortException)
             { }

@@ -31,7 +31,8 @@ namespace MARC.EHRS.VisualizationServer.Syslog.Configuration
         public EndpointConfiguration()
         {
             this.Forward = new List<EndpointConfiguration>();
-            this.Timeout = new TimeSpan(0, 0, 10);
+            this.Timeout = new TimeSpan(0, 0, 5);
+            this.ReadTimeout = new TimeSpan(0, 0, 0, 0, 250);
             this.Action = new List<Type>();
         }
 
@@ -49,6 +50,11 @@ namespace MARC.EHRS.VisualizationServer.Syslog.Configuration
         /// Gets or sets the timeout
         /// </summary>
         public TimeSpan Timeout { get; set; }
+
+        /// <summary>
+        /// Read timeout
+        /// </summary>
+        public TimeSpan ReadTimeout { get; set; }
 
         /// <summary>
         /// Maximum message size
