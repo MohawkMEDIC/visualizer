@@ -15,6 +15,8 @@ namespace MARC.EHRS.Visualizer.Client.Silverlight.Client
     /// </summary>
     public abstract class RestClientBase
     {
+
+
         /// <summary>
         /// Gets or sets the base url of the restful audit repository service
         /// </summary>
@@ -25,22 +27,62 @@ namespace MARC.EHRS.Visualizer.Client.Silverlight.Client
         /// </summary>
         public X509Certificate ClientCredential { get; set; }
 
+
+        /// <summary>
+        /// Post a raw stream
+        /// </summary>
+        protected void PostRawAsync(Uri uri, String mimeType, Stream data, EventHandler<ClientResponseReceivedEventArgs<String>> callback)
+        {
+            WebClient client = new WebClient();
+            try
+            {
+                client.Headers[HttpRequestHeader.ContentType] = "application/xaml+xml";
+                client.OpenWriteCompleted += delegate(object sender, OpenWriteCompletedEventArgs result)
+                {
+                    try
+                    {
+                        using (Stream s = result.Result)
+                        {
+                            byte[] buffer = new byte[1024];
+                            int br = 1024;
+                            while(br == 1024)
+                            {
+                                br = data.Read(buffer, 0, 1024);
+                                s.Write(buffer, 0, br);
+                            }
+
+                            // Raise an event
+                            callback(this, new ClientResponseReceivedEventArgs<String>("Ok"));
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        Debug.WriteLine(e.ToString());
+                        callback(this, new ClientResponseReceivedEventArgs<String>(e.Message));
+                    }
+                };
+                client.OpenWriteAsync(uri, "POST");
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.ToString());
+                callback(this, new ClientResponseReceivedEventArgs<String>(e.Message));
+            }
+        }
+
         /// <summary>
         /// Get a resource from the specified Uri
         /// </summary>
         protected void GetResourceAsync<T>(Uri uri, EventHandler<ClientResponseReceivedEventArgs<T>> callback) where T : new()
         {
-            HttpWebRequest request = HttpWebRequest.Create(uri) as HttpWebRequest;
+            WebClient client = new WebClient();
             try
             {
-                request.Method = "GET";
-                request.UserAgent = "x-visualizer-arclient";
-                request.BeginGetResponse((AsyncCallback)delegate(IAsyncResult asyncResult)
+                client.OpenReadCompleted += delegate(object sender, OpenReadCompletedEventArgs result)
                 {
                     try
                     {
-                        var response = request.EndGetResponse(asyncResult);
-                        using (Stream s = response.GetResponseStream())
+                        using (Stream s = result.Result)
                         {
                             T retVal = default(T);
 
@@ -57,8 +99,9 @@ namespace MARC.EHRS.Visualizer.Client.Silverlight.Client
                         Debug.WriteLine(e.ToString());
                         callback(this, new ClientResponseReceivedEventArgs<T>(default(T)));
                     }
-
-                }, null);
+                };
+                client.OpenReadAsync(new Uri(String.Format("{0}{1}_format=text/xml", uri, !String.IsNullOrEmpty(uri.Query) ? "&" : "?")));
+                
             }
             catch (Exception e)
             {
@@ -72,27 +115,26 @@ namespace MARC.EHRS.Visualizer.Client.Silverlight.Client
         /// </summary>
         protected void GetRawAsync(Uri uri, EventHandler<ClientResponseReceivedEventArgs<Stream>> callback)
         {
-            HttpWebRequest request = HttpWebRequest.Create(uri) as HttpWebRequest;
+            WebClient client = new WebClient();
             try
             {
-                request.Method = "GET";
-                request.UserAgent = "x-visualizer-arclient";
-                request.BeginGetResponse((AsyncCallback)delegate(IAsyncResult asyncResult)
+                
+                client.OpenReadCompleted += delegate(object sender, OpenReadCompletedEventArgs result)
                 {
                     try
                     {
-                        var response = request.EndGetResponse(asyncResult);
-                        using (Stream s = response.GetResponseStream())
+                        using (Stream s = result.Result)
                         {
                             MemoryStream retVal = new MemoryStream();
 
                             int br = 0;
                             byte[] buffer = new byte[1024];
-                            while (s.Position < response.ContentLength)
+                            while (s.Position < result.Result.Length)
                             {
                                 br = s.Read(buffer, 0, 1024);
                                 retVal.Write(buffer, 0, br);
                             }
+                            retVal.Seek(0, SeekOrigin.Begin);
                             // Callback
                             callback(this, new ClientResponseReceivedEventArgs<Stream>(retVal));
                         }
@@ -102,8 +144,9 @@ namespace MARC.EHRS.Visualizer.Client.Silverlight.Client
                         Debug.WriteLine(e.ToString());
                         callback(this, new ClientResponseReceivedEventArgs<Stream>(null));
                     }
+                };
+                client.OpenReadAsync(new Uri(String.Format("{0}{1}_format=application/xaml+xml", uri, !String.IsNullOrEmpty(uri.Query) ? "&" : "?")));
 
-                }, null);
             }
             catch (Exception e)
             {

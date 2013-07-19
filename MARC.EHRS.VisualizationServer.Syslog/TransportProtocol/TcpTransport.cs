@@ -148,7 +148,7 @@ namespace MARC.EHRS.VisualizationServer.Syslog.TransportProtocol
                     }
                     catch (IOException)
                     {
-                        Trace.TraceWarning("{0} : No data received on connection waiting {1} more seconds", tcpClient.Client.RemoteEndPoint, this.m_configuration.Timeout.Subtract(DateTime.Now.Subtract(startConnection)).TotalSeconds);
+                        Trace.TraceWarning("{0} : No data received on connection", tcpClient.Client.RemoteEndPoint, this.m_configuration.Timeout.Subtract(DateTime.Now.Subtract(startConnection)).TotalSeconds);
                     }
 
                     // Check ... Does the message start with a size ?

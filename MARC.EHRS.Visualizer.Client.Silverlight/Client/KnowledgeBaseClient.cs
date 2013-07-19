@@ -23,7 +23,12 @@ namespace MARC.EHRS.Visualizer.Client.Silverlight.Client
         /// <summary>
         /// Fired when the KB article collection is completed
         /// </summary>
-        public event EventHandler<ClientResponseReceivedEventArgs<TextElement>> GetKbArticleCompleted;
+        public event EventHandler<ClientResponseReceivedEventArgs<String>> GetKbArticleCompleted;
+
+        /// <summary>
+        /// Fired when the KB article collection is completed
+        /// </summary>
+        public event EventHandler<ClientResponseReceivedEventArgs<String>> PostKbArticleCompleted;
 
         /// <summary>
         /// Get a knowledgebase article 
@@ -33,6 +38,7 @@ namespace MARC.EHRS.Visualizer.Client.Silverlight.Client
         /// stored in ~/KBART and relies on a knowledge base provider</remarks>
         public void GetKbArticleAsync(String kbid)
         {
+            
             Uri requestUri = new Uri(String.Format("{0}/kb/{1}", this.BaseUri, kbid));
             this.GetRawAsync(requestUri, delegate(object sender, ClientResponseReceivedEventArgs<Stream> e)
             {
@@ -42,14 +48,30 @@ namespace MARC.EHRS.Visualizer.Client.Silverlight.Client
                     try
                     {
                         StreamReader rdr = new StreamReader(e.Result);
-                        TextElement data = XamlReader.Load(rdr.ReadToEnd()) as TextElement;
-                        this.GetKbArticleCompleted(this, new ClientResponseReceivedEventArgs<TextElement>(data));
+                        this.GetKbArticleCompleted(this, new ClientResponseReceivedEventArgs<String>(rdr.ReadToEnd()));
+                        
                     }
                     catch (Exception ex)
                     {
                         Debug.WriteLine(ex.ToString());
+                        this.GetKbArticleCompleted(this, new ClientResponseReceivedEventArgs<String>(null));
                     }
                 }
+            });
+        }
+
+        /// <summary>
+        /// Post a Knowledgebase article
+        /// </summary>
+        public void PostKbArticle(String kbid, String xaml)
+        {
+            Uri requestUri = new Uri(String.Format("{0}/kb/{1}", this.BaseUri, kbid));
+            // Write data to a stream
+            MemoryStream data = new MemoryStream(System.Text.Encoding.UTF8.GetBytes(xaml));
+            this.PostRawAsync(requestUri, "application/xaml+xml", data, delegate(object sender, ClientResponseReceivedEventArgs<String> e)
+            {
+                if (this.PostKbArticleCompleted != null)
+                    this.PostKbArticleCompleted(this, e);
             });
         }
 
