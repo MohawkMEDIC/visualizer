@@ -9,7 +9,7 @@ namespace MARC.EHRS.Visualization.Core.Services
     /// <summary>
     /// Audit policy enforcement
     /// </summary>
-    interface IAuditPolicyEnforcement
+    public interface IAuditPolicyEnforcement
     {
 
         /// <summary>

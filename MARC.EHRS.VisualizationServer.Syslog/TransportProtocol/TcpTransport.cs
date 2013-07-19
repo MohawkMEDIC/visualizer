@@ -30,6 +30,7 @@ using System.ComponentModel;
 using MARC.EHRS.VisualizationServer.Syslog.Configuration;
 using MARC.EHRS.VisualizationServer.Syslog.Exceptions;
 using System.Text.RegularExpressions;
+using System.Net.Security;
 
 namespace MARC.EHRS.VisualizationServer.Syslog.TransportProtocol
 {
@@ -162,7 +163,7 @@ namespace MARC.EHRS.VisualizationServer.Syslog.TransportProtocol
                             {
 
                                 var strMessage = match.Groups[2].Value.Substring(0, length);
-                                ProcessSyslogMessage(strMessage, tcpClient, sessionId);
+                                ProcessSyslogMessage(strMessage, tcpClient, stream, sessionId);
                                 if (match.Groups[2].Value.Length > length) // more message
                                 {
                                     messageData = new StringBuilder(match.Groups[2].Value.Substring(length));
@@ -192,7 +193,7 @@ namespace MARC.EHRS.VisualizationServer.Syslog.TransportProtocol
                             messageData = new StringBuilder();
                         }
 
-                        ProcessSyslogMessage(strMessage, tcpClient, sessionId);
+                        ProcessSyslogMessage(strMessage, tcpClient, stream, sessionId);
                     }
 
                     // else
@@ -207,7 +208,7 @@ namespace MARC.EHRS.VisualizationServer.Syslog.TransportProtocol
             finally
             {
                 if (messageData.Length > 0)
-                    ProcessSyslogMessage(messageData.ToString(), tcpClient, sessionId);
+                    ProcessSyslogMessage(messageData.ToString(), tcpClient, stream, sessionId);
 
                 if (nSessionMessages == 0)
                     Trace.TraceInformation("{0} : Client did not send data in specified amount of time!", tcpClient.Client.RemoteEndPoint);
@@ -220,7 +221,7 @@ namespace MARC.EHRS.VisualizationServer.Syslog.TransportProtocol
         /// <summary>
         /// Process a syslog message
         /// </summary>
-        private void ProcessSyslogMessage(string strMessage, TcpClient client, Guid sessionId)
+        private void ProcessSyslogMessage(string strMessage, TcpClient client, Stream sourceStream, Guid sessionId)
         {
             var localEp = client.Client.LocalEndPoint as IPEndPoint;
             var remoteEp = client.Client.RemoteEndPoint as IPEndPoint;
@@ -238,7 +239,11 @@ namespace MARC.EHRS.VisualizationServer.Syslog.TransportProtocol
             try
             {
                 var message = SyslogMessage.Parse(strMessage, sessionId);
-                var messageArgs = new SyslogMessageReceivedEventArgs(message, remoteEndpoint, localEndpoint, DateTime.Now);
+                SyslogMessageReceivedEventArgs messageArgs = null;
+                if (sourceStream is SslStream)
+                    messageArgs = new AuthenticatedSyslogMessageReceivedEventArgs(message, remoteEndpoint, localEndpoint, DateTime.Now, (sourceStream as SslStream).RemoteCertificate);
+                else
+                    messageArgs = new SyslogMessageReceivedEventArgs(message, remoteEndpoint, localEndpoint, DateTime.Now);
 
                 this.FireMessageReceived(this, messageArgs);
 

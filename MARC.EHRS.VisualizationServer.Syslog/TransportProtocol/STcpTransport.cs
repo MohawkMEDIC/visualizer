@@ -228,7 +228,6 @@ namespace MARC.EHRS.VisualizationServer.Syslog.TransportProtocol
         {
 
             // First Validate the chain
-            
             if (certificate == null || chain == null)
                 return !this.m_configuration.EnableClientCertNegotiation;
             else

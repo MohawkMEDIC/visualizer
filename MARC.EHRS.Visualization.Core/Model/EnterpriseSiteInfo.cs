@@ -27,9 +27,9 @@ namespace MARC.EHRS.Visualization.Core.Model
         public StatusType Status { get; set; }
 
         /// <summary>
-        /// Gets or sets the configured nodes which are permitted to use the site
+        /// Gets or sets the configured sources which are permitted to use the site
         /// </summary>
-        public List<NodeInfo> Nodes { get; set; }
+        public List<EnterpriseSourceInfo> Sources { get; set; }
 
     }
 }

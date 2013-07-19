@@ -31,6 +31,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="MARC.Everest, Version=1.5.0.0, Culture=neutral, PublicKeyToken=ba5b2480018546af, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Solution Items\MARC.Everest.dll</HintPath>
+    </Reference>
     <Reference Include="MARC.HI.EHRS.SVC.Auditing.Atna">
       <HintPath>..\Solution Items\MARC.HI.EHRS.SVC.Auditing.Atna.dll</HintPath>
     </Reference>
@@ -47,11 +51,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AuditEventPersistenceAction.cs" />
     <Compile Include="Configuration\LogActionConfiguration.cs" />
     <Compile Include="Configuration\LogActionConfigurationSectionHandler.cs" />
+    <Compile Include="MessagePersistenceAction.cs" />
+    <Compile Include="MessageUtil.cs" />
     <Compile Include="NotifyAction.cs" />
     <Compile Include="LogAction.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ResultDetails\Rfc3881ParseResultDetail.cs" />
+    <Compile Include="ResultDetails\SyslogHeaderResultDetail.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MARC.EHRS.Visualization.Core\MARC.EHRS.Visualization.Core.csproj">

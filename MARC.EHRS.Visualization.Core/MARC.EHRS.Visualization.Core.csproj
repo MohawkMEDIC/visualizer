@@ -103,6 +103,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\IAuditPolicyEnforcement.cs" />
     <Compile Include="Services\IAudtPersistenceService.cs" />
+    <Compile Include="Services\INodeInfoLookupService.cs" />
     <Compile Include="Services\INotificationService.cs" />
     <Compile Include="VisualizationEvent.cs" />
     <Compile Include="VisualizationEventArgs.cs" />

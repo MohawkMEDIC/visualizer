@@ -45,16 +45,13 @@ namespace MARC.EHRS.VisualizationServer.Actions
 
             try
             {
-                // Deserialize audit message.
-                XmlSerializer xmlSerializer = new XmlSerializer(typeof(AuditMessage));
-                StringReader strReader = new StringReader(payload.Substring(payload.IndexOf("<Audit")));
-                StringWriter strWriter = new StringWriter();
-                XmlTextReader xmlTextReader = new XmlTextReader(strReader);
-
-                AuditMessage auditMessage = (AuditMessage)xmlSerializer.Deserialize(xmlTextReader);
+                var parseResult = MessageUtil.ParseAudit(evt.Message);
+                var auditMessage = parseResult.Message;
 
                 // Create a LogMessage equivalent.
-                if (auditMessage != null && auditMessage.SourceIdentification.Count > 0)
+                if (parseResult.Outcome != Everest.Connectors.ResultCode.Accepted)
+                    throw new InvalidOperationException("Cannot continue : Audit message is invalid");
+                else if (auditMessage != null && auditMessage.SourceIdentification.Count > 0)
                 {
                     // Use the Enterprise site ID as the audit source ID.
                     // If not available, use the usual audit source ID.

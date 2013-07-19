@@ -23,6 +23,7 @@ using System.Linq;
 using System.Text;
 using System.Net;
 using MARC.EHRS.VisualizationServer.Syslog.Configuration;
+using System.Security.Cryptography.X509Certificates;
 
 namespace MARC.EHRS.VisualizationServer.Syslog.TransportProtocol
 {
@@ -65,6 +66,27 @@ namespace MARC.EHRS.VisualizationServer.Syslog.TransportProtocol
         public DateTime Timestamp { get; private set; }
     }
 
+    /// <summary>
+    /// Identifies a syslog message event that occurred on a secure channel
+    /// </summary>
+    public class AuthenticatedSyslogMessageReceivedEventArgs : SyslogMessageReceivedEventArgs
+    {
+
+        /// <summary>
+        /// Creates a new instance of the AuthenticatedSyslogMessageReceivedEventArgs
+        /// </summary>
+        public AuthenticatedSyslogMessageReceivedEventArgs(SyslogMessage message, Uri solicitorEp, Uri receiveEp, DateTime timestamp, X509Certificate remoteCertificate) :
+            base(message, solicitorEp, receiveEp, timestamp)
+        {
+            this.RemoteCertificate = remoteCertificate;
+        }
+
+        /// <summary>
+        /// Gets the chain used to authenticate the client
+        /// </summary>
+        public X509Certificate RemoteCertificate { get; private set; }
+
+    }
     /// <summary>
     /// Transport protocol
     /// </summary>
