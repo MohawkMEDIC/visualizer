@@ -58,6 +58,8 @@
   <ItemGroup>
     <Compile Include="Client\AuditRepositoryClient.cs" />
     <Compile Include="Client\ClientResponseReceivedEventArgs.cs" />
+    <Compile Include="Client\KnowledgeBaseClient.cs" />
+    <Compile Include="Client\RestClientBase.cs" />
     <Compile Include="Client\XmlElement.cs" />
     <Compile Include="Contract\Visualizer\VisualizationCollection.cs" />
     <Compile Include="Client\VisualizationEventArgs.cs" />
