@@ -7,6 +7,7 @@ using System.IO;
 using System.Diagnostics;
 using System.Security.Cryptography.X509Certificates;
 using System.Xml.Serialization;
+using System.Xml;
 
 namespace MARC.EHRS.Visualizer.Client.Silverlight.Client
 {
@@ -50,10 +51,49 @@ namespace MARC.EHRS.Visualizer.Client.Silverlight.Client
                                 br = data.Read(buffer, 0, 1024);
                                 s.Write(buffer, 0, br);
                             }
-
-                            // Raise an event
-                            callback(this, new ClientResponseReceivedEventArgs<String>("Ok"));
                         }
+                        // Raise an event
+                        callback(this, new ClientResponseReceivedEventArgs<String>("Ok"));
+
+                    }
+                    catch (Exception e)
+                    {
+                        Debug.WriteLine(e.ToString());
+                        callback(this, new ClientResponseReceivedEventArgs<String>(e.Message));
+                    }
+                };
+                client.OpenWriteAsync(uri, "POST");
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.ToString());
+                callback(this, new ClientResponseReceivedEventArgs<String>(e.Message));
+            }
+        }
+
+        /// <summary>
+        /// Post a raw stream
+        /// </summary>
+        protected void PostAsync<T>(Uri uri, String mimeType, T data, EventHandler<ClientResponseReceivedEventArgs<String>> callback)
+        {
+            WebClient client = new WebClient();
+            try
+            {
+                client.Headers[HttpRequestHeader.ContentType] = mimeType;
+                client.OpenWriteCompleted += delegate(object sender, OpenWriteCompletedEventArgs result)
+                {
+                    try
+                    {
+                        using (Stream s = result.Result)
+                        {
+                            XmlSerializer xsz = new XmlSerializer(typeof(T));
+                            XmlWriter w = XmlWriter.Create(s, new XmlWriterSettings() { Indent = false });
+                            xsz.Serialize(w, data);
+                            w.Flush();
+                            s.Flush();
+                        }
+                        // Raise an event
+                        callback(this, new ClientResponseReceivedEventArgs<String>("Ok"));
                     }
                     catch (Exception e)
                     {
