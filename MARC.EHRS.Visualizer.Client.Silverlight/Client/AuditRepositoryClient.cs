@@ -31,25 +31,6 @@ namespace MARC.EHRS.Visualizer.Client.Silverlight.Client
         {
         }
 
-       
-        /// <summary>
-        /// Fired when the GetRawAuditMessage method is completed
-        /// </summary>
-        public event EventHandler<ClientResponseReceivedEventArgs<Stream>> GetRawAuditMessageCompleted;
-
-        /// <summary>
-        /// Get a raw audit as received from the system
-        /// </summary>
-        public void GetRawAuditMessageAsync(Guid correlationId)
-        {
-            Uri requestUri = new Uri(String.Format("{0}/message/{1}", this.BaseUri, correlationId));
-            this.GetRawAsync(requestUri, delegate(object sender, ClientResponseReceivedEventArgs<Stream> e)
-            {
-                if (this.GetRawAuditMessageCompleted != null)
-                    this.GetRawAuditMessageCompleted(this, e);
-            });
-        }
-
         /// <summary>
         /// Fired when the GetRawAuditMessage method is completed
         /// </summary>
@@ -58,7 +39,7 @@ namespace MARC.EHRS.Visualizer.Client.Silverlight.Client
         /// <summary>
         /// Get the interpreted audit message from the system
         /// </summary>
-        public void GetAuditMessageAsync(Guid correlationId)
+        public void GetAuditMessageAsync(String correlationId)
         {
             Uri requestUri = new Uri(String.Format("{0}/audit/{1}", this.BaseUri, correlationId));
             this.GetResourceAsync<AuditMessage>(requestUri, delegate(object sender, ClientResponseReceivedEventArgs<AuditMessage> e)

@@ -63,8 +63,6 @@ namespace MARC.EHRS.VisualizationServer.Syslog
         /// </summary>
         void m_protocol_MessageReceived(object sender, SyslogMessageReceivedEventArgs e)
         {
-            // Store
-            PersistMessageEvent(e);
 
             // Perform actions
             foreach(var act in this.m_action)
