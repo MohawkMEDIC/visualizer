@@ -102,6 +102,14 @@ namespace MARC.EHRS.VisualizationServer.KnowledgeBase
             try
             {
 
+                if (data.LocalName.ToLower() == "binary")
+                {
+                    byte[] rawData = Convert.FromBase64String(data.InnerText);
+                    XmlDocument parseDocument = new XmlDocument();
+                    parseDocument.LoadXml(System.Text.Encoding.UTF8.GetString(rawData));
+                    data = parseDocument.DocumentElement;
+                }
+
                 long dataLength = WebOperationContext.Current.IncomingRequest.ContentLength;
 
                 if (!KnowledgeBaseListener.Configuration.AllowPost)
