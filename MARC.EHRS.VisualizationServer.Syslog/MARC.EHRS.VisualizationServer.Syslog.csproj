@@ -59,6 +59,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AtnaApi, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Solution Items\AtnaApi.dll</HintPath>
+    </Reference>
     <Reference Include="MARC.Everest">
       <HintPath>..\Solution Items\MARC.Everest.dll</HintPath>
     </Reference>

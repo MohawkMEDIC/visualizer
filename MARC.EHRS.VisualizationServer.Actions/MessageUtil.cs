@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using MARC.HI.EHRS.SVC.Auditing.Atna.Format;
+using AtnaApi.Model;
 using MARC.EHRS.VisualizationServer.Syslog.TransportProtocol;
 using System.Xml.Serialization;
 using System.IO;

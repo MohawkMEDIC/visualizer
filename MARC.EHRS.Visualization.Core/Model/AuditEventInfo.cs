@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using MARC.HI.EHRS.SVC.Core.DataTypes;
-using MARC.HI.EHRS.SVC.Auditing.Atna.Format;
+using AtnaApi.Model;
 
 namespace MARC.EHRS.Visualization.Core.Model
 {
