@@ -11,7 +11,7 @@ using MARC.EHRS.Visualization.Core;
 using System.Xml.Serialization;
 using System.IO;
 using System.Xml;
-using MARC.HI.EHRS.SVC.Auditing.Atna.Format;
+using AtnaApi.Model;
 using System.Globalization;
 using MARC.EHRS.Visualization.Core.Services;
 using MARC.EHRS.VisualizationServer.Syslog.Configuration;

@@ -59,6 +59,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AtnaApi">
+      <HintPath>..\Solution Items\AtnaApi.dll</HintPath>
+    </Reference>
     <Reference Include="MARC.HI.EHRS.SVC.Auditing">
       <HintPath>..\Solution Items\MARC.HI.EHRS.SVC.Auditing.dll</HintPath>
     </Reference>
