@@ -59,5 +59,11 @@ namespace MARC.EHRS.Visualization.Core
         /// </summary>
         [XmlAttribute("eventType")]
         public string EventType { get; set; }
+
+        /// <summary>
+        /// IP address
+        /// </summary>
+        [XmlElement("ip")]
+        public string Ip { get; set; }
     }
 }

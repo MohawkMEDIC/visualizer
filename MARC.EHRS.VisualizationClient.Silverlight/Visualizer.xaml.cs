@@ -215,6 +215,14 @@ namespace MARC.EHRS.VisualizationClient.Silverlight
                         sb = m_currentDiagram.Resources[evt.MachineOID + "^" + (evt.EventType ?? "")];
                     if (sb == null) // machine?
                         sb = m_currentDiagram.Resources[evt.MachineOID];
+                    if (sb == null) // ip?
+                    {
+                        Uri ipad = null;
+                        if (Uri.TryCreate(evt.Ip, UriKind.Absolute, out ipad))
+                            sb = m_currentDiagram.Resources[ipad.Host];
+                        else
+                            sb = m_currentDiagram.Resources[evt.Ip];
+                    }
 
                     if (sb != null && sb is Storyboard)
                         (sb as Storyboard).Begin();
