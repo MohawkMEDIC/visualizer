@@ -72,7 +72,6 @@
     <Content Include="Config\Visualizer.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="default.aspx" />
     <Content Include="default.html" />
     <Content Include="Silverlight.js" />
     <Content Include="Web.config" />

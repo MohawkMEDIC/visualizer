@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿<UserControl
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -959,4 +960,981 @@
 			</Grid>
 			
 	</Viewbox>
+=======
+﻿<UserControl
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	mc:Ignorable="d"
+	x:Name="UserControl" Height="Auto" Width="Auto" d:DesignWidth="1221" d:DesignHeight="838">
+	<UserControl.Resources>
+		<ResourceDictionary>
+			<!-- Fill Colors -->
+			<Color x:Key="ATNAFill">#FFC06725</Color>
+			<Color x:Key="PIXFill">#FF304000</Color>
+			<Color x:Key="XCAFill">#FF548000</Color>
+			<Color x:Key="RegistryFill">#FFEECC73</Color>
+			<Color x:Key="RepositoryFill">#FF109B9E</Color>
+			<Color x:Key="POSBlinkFill">#FF8081C3</Color>
+		
+			
+			<!-- Infrastructure Triggers -->
+			<!-- Community A -->
+			<!-- PIX -->
+			<Storyboard x:Key="CommA_PIX">
+				<ColorAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="rectPIX_A" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
+					<SplineColorKeyFrame KeyTime="00:00:00.2000000" Value="{StaticResource PIXFill}"/>
+					<SplineColorKeyFrame KeyTime="00:00:00.4000000" Value="White"/>
+				</ColorAnimationUsingKeyFrames>
+				<ColorAnimationUsingKeyFrames BeginTime="00:00:00.2000000" Storyboard.TargetName="rectATNA_A" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
+					<SplineColorKeyFrame KeyTime="00:00:00.2000000" Value="{StaticResource ATNAFill}"/>
+					<SplineColorKeyFrame KeyTime="00:00:00.4000000" Value="White"/>
+				</ColorAnimationUsingKeyFrames>
+			</Storyboard>
+			
+			<!-- XDS Registry -->
+			<Storyboard x:Key="CommA_XDSReg">
+				<ColorAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="rectXDSReg_A" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
+					<SplineColorKeyFrame KeyTime="00:00:00.2000000" Value="{StaticResource RegistryFill}"/>
+					<SplineColorKeyFrame KeyTime="00:00:00.4000000" Value="White"/>
+				</ColorAnimationUsingKeyFrames>
+				<ColorAnimationUsingKeyFrames BeginTime="00:00:00.2000000" Storyboard.TargetName="rectATNA_A" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
+					<SplineColorKeyFrame KeyTime="00:00:00.2000000" Value="{StaticResource ATNAFill}"/>
+					<SplineColorKeyFrame KeyTime="00:00:00.4000000" Value="White"/>
+				</ColorAnimationUsingKeyFrames>
+			</Storyboard>
+			
+			<!-- XDS Repository -->
+			<Storyboard x:Key="CommAXDSRep">
+				<ColorAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="rectXDSRep_A" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
+					<SplineColorKeyFrame KeyTime="00:00:00.2000000" Value="{StaticResource RepositoryFill}"/>
+					<SplineColorKeyFrame KeyTime="00:00:00.4000000" Value="White"/>
+				</ColorAnimationUsingKeyFrames>
+				<ColorAnimationUsingKeyFrames BeginTime="00:00:00.2000000" Storyboard.TargetName="rectATNA_A" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
+					<SplineColorKeyFrame KeyTime="00:00:00.2000000" Value="{StaticResource ATNAFill}"/>
+					<SplineColorKeyFrame KeyTime="00:00:00.4000000" Value="White"/>
+				</ColorAnimationUsingKeyFrames>
+				<DoubleAnimation Duration="0:0:0.6" To="32.016" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)" Storyboard.TargetName="jA" d:IsOptimized="True"/>
+				<DoubleAnimation Duration="0:0:0.6" To="90" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.Rotation)" Storyboard.TargetName="path" d:IsOptimized="True"/>
+				<DoubleAnimation Duration="0:0:0.6" To="1.627" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateX)" Storyboard.TargetName="path" d:IsOptimized="True"/>
+				<DoubleAnimation Duration="0:0:0.6" To="-5.959" Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateY)" Storyboard.TargetName="path" d:IsOptimized="True"/>
+			</Storyboard>
+			
+			<!-- XCA -->
+			<Storyboard x:Key="CommAXCA">
+				<ColorAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="rectXCA_A" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
+					<SplineColorKeyFrame KeyTime="00:00:00.2000000" Value="{StaticResource XCAFill}"/>
+					<SplineColorKeyFrame KeyTime="00:00:00.4000000" Value="White"/>
+				</ColorAnimationUsingKeyFrames>
+				<ColorAnimationUsingKeyFrames BeginTime="00:00:00.2000000" Storyboard.TargetName="rectATNA_A" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
+					<SplineColorKeyFrame KeyTime="00:00:00.2000000" Value="{StaticResource ATNAFill}"/>
+					<SplineColorKeyFrame KeyTime="00:00:00.4000000" Value="White"/>
+				</ColorAnimationUsingKeyFrames>
+			</Storyboard>
+			
+			<!-- Community B -->
+			<!-- PIX -->
+			<Storyboard x:Key="CommBPIX">
+				<ColorAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="rectPIX_B" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
+					<SplineColorKeyFrame KeyTime="00:00:00.2000000" Value="{StaticResource PIXFill}"/>
+					<SplineColorKeyFrame KeyTime="00:00:00.4000000" Value="White"/>
+				</ColorAnimationUsingKeyFrames>
+				<ColorAnimationUsingKeyFrames BeginTime="00:00:00.2000000" Storyboard.TargetName="rectATNA_B" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
+					<SplineColorKeyFrame KeyTime="00:00:00.2000000" Value="{StaticResource ATNAFill}"/>
+					<SplineColorKeyFrame KeyTime="00:00:00.4000000" Value="White"/>
+				</ColorAnimationUsingKeyFrames>
+			</Storyboard>
+			
+			<!-- XDS Registry -->
+			<Storyboard x:Key="ischic.gotdns.com:HIC:HSREGISTRY">
+				<ColorAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="rectXDSReg_B" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
+					<SplineColorKeyFrame KeyTime="00:00:00.2000000" Value="{StaticResource RegistryFill}"/>
+					<SplineColorKeyFrame KeyTime="00:00:00.4000000" Value="White"/>
+				</ColorAnimationUsingKeyFrames>
+				<ColorAnimationUsingKeyFrames BeginTime="00:00:00.2000000" Storyboard.TargetName="rectATNA_B" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
+					<SplineColorKeyFrame KeyTime="00:00:00.2000000" Value="{StaticResource ATNAFill}"/>
+					<SplineColorKeyFrame KeyTime="00:00:00.4000000" Value="White"/>
+				</ColorAnimationUsingKeyFrames>
+			</Storyboard>
+			
+			<!-- XDS Repository -->
+			<Storyboard x:Key="CommB_XDSRep">
+				<ColorAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="rectXDSRep_B" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
+					<SplineColorKeyFrame KeyTime="00:00:00.2000000" Value="{StaticResource RepositoryFill}"/>
+					<SplineColorKeyFrame KeyTime="00:00:00.4000000" Value="White"/>
+				</ColorAnimationUsingKeyFrames>
+				<ColorAnimationUsingKeyFrames BeginTime="00:00:00.2000000" Storyboard.TargetName="rectATNA_B" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
+					<SplineColorKeyFrame KeyTime="00:00:00.2000000" Value="{StaticResource ATNAFill}"/>
+					<SplineColorKeyFrame KeyTime="00:00:00.4000000" Value="White"/>
+				</ColorAnimationUsingKeyFrames>
+			</Storyboard>
+			
+			<!-- XCA -->
+			<Storyboard x:Key="CommB_XCA">
+				<ColorAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="rectXCA_B" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
+					<SplineColorKeyFrame KeyTime="00:00:00.2000000" Value="{StaticResource XCAFill}"/>
+					<SplineColorKeyFrame KeyTime="00:00:00.4000000" Value="White"/>
+				</ColorAnimationUsingKeyFrames>
+				<ColorAnimationUsingKeyFrames BeginTime="00:00:00.2000000" Storyboard.TargetName="rectATNA_B" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
+					<SplineColorKeyFrame KeyTime="00:00:00.2000000" Value="{StaticResource ATNAFill}"/>
+					<SplineColorKeyFrame KeyTime="00:00:00.4000000" Value="White"/>
+				</ColorAnimationUsingKeyFrames>
+			</Storyboard>
+			
+			<!-- Actor Triggers -->
+			<!-- Community A -->
+			<!-- Lab -->
+			<Storyboard x:Key="RadLogixEnterprise">
+				<ColorAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="rectRadA" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
+					<SplineColorKeyFrame KeyTime="00:00:00.2000000" Value="{StaticResource POSBlinkFill}"/>
+					<SplineColorKeyFrame KeyTime="00:00:00.4000000" Value="White"/>
+				</ColorAnimationUsingKeyFrames>
+				<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="canvRadA" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)">
+					<SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="0.85"/>
+					<SplineDoubleKeyFrame KeyTime="00:00:00.4000000" Value="1"/>
+				</DoubleAnimationUsingKeyFrames>
+				<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="canvRadA" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)">
+					<SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="0.85"/>
+					<SplineDoubleKeyFrame KeyTime="00:00:00.4000000" Value="1"/>
+				</DoubleAnimationUsingKeyFrames>
+				<ColorAnimationUsingKeyFrames BeginTime="00:00:00.2000000" Storyboard.TargetName="rectATNA_A" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
+					<SplineColorKeyFrame KeyTime="00:00:00.2000000" Value="{StaticResource ATNAFill}"/>
+					<SplineColorKeyFrame KeyTime="00:00:00.4000000" Value="White"/>
+				</ColorAnimationUsingKeyFrames>
+				<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="PersonRadA" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)">
+					<SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="-9.324" KeySpline="0,0.61,0.4,1"/>
+					<SplineDoubleKeyFrame KeyTime="00:00:00.4000000" Value="0" KeySpline="0.59,0,1,0.42"/>
+					<SplineDoubleKeyFrame KeyTime="00:00:00.6000000" Value="-5.994" KeySpline="0,0.6,0.41,1"/>
+					<SplineDoubleKeyFrame KeyTime="00:00:00.8000000" Value="0" KeySpline="0.6,0,1,0.4"/>
+				</DoubleAnimationUsingKeyFrames>
+			</Storyboard>
+			
+			<!-- PCP -->
+			<Storyboard x:Key="CommA_Dermatology">
+				<ColorAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="rectDermA" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
+					<SplineColorKeyFrame KeyTime="00:00:00.2000000" Value="{StaticResource POSBlinkFill}"/>
+					<SplineColorKeyFrame KeyTime="00:00:00.4000000" Value="White"/>
+				</ColorAnimationUsingKeyFrames>
+				<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="canvDermA" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)">
+					<SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="0.85"/>
+					<SplineDoubleKeyFrame KeyTime="00:00:00.4000000" Value="1"/>
+				</DoubleAnimationUsingKeyFrames>
+				<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="canvDermA" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)">
+					<SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="0.85"/>
+					<SplineDoubleKeyFrame KeyTime="00:00:00.4000000" Value="1"/>
+				</DoubleAnimationUsingKeyFrames>
+				<ColorAnimationUsingKeyFrames BeginTime="00:00:00.2000000" Storyboard.TargetName="rectATNA_A" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
+					<SplineColorKeyFrame KeyTime="00:00:00.2000000" Value="{StaticResource ATNAFill}"/>
+					<SplineColorKeyFrame KeyTime="00:00:00.4000000" Value="White"/>
+				</ColorAnimationUsingKeyFrames>
+				<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="PersonDermA" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)">
+					<SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="-9.324" KeySpline="0,0.61,0.4,1"/>
+					<SplineDoubleKeyFrame KeyTime="00:00:00.4000000" Value="0" KeySpline="0.59,0,1,0.42"/>
+					<SplineDoubleKeyFrame KeyTime="00:00:00.6000000" Value="-5.994" KeySpline="0,0.6,0.41,1"/>
+					<SplineDoubleKeyFrame KeyTime="00:00:00.8000000" Value="0" KeySpline="0.6,0,1,0.4"/>
+				</DoubleAnimationUsingKeyFrames>
+			</Storyboard>
+			
+			<!-- Image Center -->
+			<Storyboard x:Key="CommA_Img">
+				<ColorAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="rectCareMgrA" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
+					<SplineColorKeyFrame KeyTime="00:00:00.2000000" Value="{StaticResource POSBlinkFill}"/>
+					<SplineColorKeyFrame KeyTime="00:00:00.4000000" Value="White"/>
+				</ColorAnimationUsingKeyFrames>
+				<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="canvCareMgrA" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)">
+					<SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="0.85"/>
+					<SplineDoubleKeyFrame KeyTime="00:00:00.4000000" Value="1"/>
+				</DoubleAnimationUsingKeyFrames>
+				<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="canvCareMgrA" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)">
+					<SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="0.85"/>
+					<SplineDoubleKeyFrame KeyTime="00:00:00.4000000" Value="1"/>
+				</DoubleAnimationUsingKeyFrames>
+				<ColorAnimationUsingKeyFrames BeginTime="00:00:00.2000000" Storyboard.TargetName="rectATNA_A" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
+					<SplineColorKeyFrame KeyTime="00:00:00.2000000" Value="{StaticResource ATNAFill}"/>
+					<SplineColorKeyFrame KeyTime="00:00:00.4000000" Value="White"/>
+				</ColorAnimationUsingKeyFrames>
+				<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="PersonCareMgrA" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)">
+					<SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="-9.324" KeySpline="0,0.61,0.4,1"/>
+					<SplineDoubleKeyFrame KeyTime="00:00:00.4000000" Value="0" KeySpline="0.59,0,1,0.42"/>
+					<SplineDoubleKeyFrame KeyTime="00:00:00.6000000" Value="-5.994" KeySpline="0,0.6,0.41,1"/>
+					<SplineDoubleKeyFrame KeyTime="00:00:00.8000000" Value="0" KeySpline="0.6,0,1,0.4"/>
+				</DoubleAnimationUsingKeyFrames>				
+			</Storyboard>
+			
+			<!-- Viewer -->
+			<Storyboard x:Key="CommA_Viewer">
+				<ColorAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="rectViewerA" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
+					<SplineColorKeyFrame KeyTime="00:00:00.2000000" Value="{StaticResource POSBlinkFill}"/>
+					<SplineColorKeyFrame KeyTime="00:00:00.4000000" Value="White"/>
+				</ColorAnimationUsingKeyFrames>
+				<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="canvViewerA" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)">
+					<SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="0.85"/>
+					<SplineDoubleKeyFrame KeyTime="00:00:00.4000000" Value="1"/>
+				</DoubleAnimationUsingKeyFrames>
+				<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="canvViewerA" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)">
+					<SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="0.85"/>
+					<SplineDoubleKeyFrame KeyTime="00:00:00.4000000" Value="1"/>
+				</DoubleAnimationUsingKeyFrames>
+				<ColorAnimationUsingKeyFrames BeginTime="00:00:00.2000000" Storyboard.TargetName="rectATNA_A" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
+					<SplineColorKeyFrame KeyTime="00:00:00.2000000" Value="{StaticResource ATNAFill}"/>
+					<SplineColorKeyFrame KeyTime="00:00:00.4000000" Value="White"/>
+				</ColorAnimationUsingKeyFrames>
+				<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="PersonViewerA" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)">
+					<SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="-9.324" KeySpline="0,0.61,0.4,1"/>
+					<SplineDoubleKeyFrame KeyTime="00:00:00.4000000" Value="0" KeySpline="0.59,0,1,0.42"/>
+					<SplineDoubleKeyFrame KeyTime="00:00:00.6000000" Value="-5.994" KeySpline="0,0.6,0.41,1"/>
+					<SplineDoubleKeyFrame KeyTime="00:00:00.8000000" Value="0" KeySpline="0.6,0,1,0.4"/>
+				</DoubleAnimationUsingKeyFrames>
+			</Storyboard>
+			
+			<!-- Comm A GP -->
+			<Storyboard x:Key="Telhealth">
+				<ColorAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="rectGPA" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
+					<SplineColorKeyFrame KeyTime="00:00:00.2000000" Value="{StaticResource POSBlinkFill}"/>
+					<SplineColorKeyFrame KeyTime="00:00:00.4000000" Value="White"/>
+				</ColorAnimationUsingKeyFrames>
+				<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="canvGPA" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)">
+					<SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="0.85"/>
+					<SplineDoubleKeyFrame KeyTime="00:00:00.4000000" Value="1"/>
+				</DoubleAnimationUsingKeyFrames>
+				<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="canvGPA" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)">
+					<SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="0.85"/>
+					<SplineDoubleKeyFrame KeyTime="00:00:00.4000000" Value="1"/>
+				</DoubleAnimationUsingKeyFrames>
+				<ColorAnimationUsingKeyFrames BeginTime="00:00:00.2000000" Storyboard.TargetName="rectATNA_A" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
+					<SplineColorKeyFrame KeyTime="00:00:00.2000000" Value="{StaticResource ATNAFill}"/>
+					<SplineColorKeyFrame KeyTime="00:00:00.4000000" Value="White"/>
+				</ColorAnimationUsingKeyFrames>
+				<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="PersonGPA" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)">
+					<SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="-9.324" KeySpline="0,0.61,0.4,1"/>
+					<SplineDoubleKeyFrame KeyTime="00:00:00.4000000" Value="0" KeySpline="0.59,0,1,0.42"/>
+					<SplineDoubleKeyFrame KeyTime="00:00:00.6000000" Value="-5.994" KeySpline="0,0.6,0.41,1"/>
+					<SplineDoubleKeyFrame KeyTime="00:00:00.8000000" Value="0" KeySpline="0.6,0,1,0.4"/>
+				</DoubleAnimationUsingKeyFrames>
+			</Storyboard>
+			
+			<!-- Comm A Phone -->
+			<Storyboard x:Key="CommA_iPhone">
+				<ColorAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="rectiPhoneA" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
+					<SplineColorKeyFrame KeyTime="00:00:00.2000000" Value="{StaticResource POSBlinkFill}"/>
+					<SplineColorKeyFrame KeyTime="00:00:00.4000000" Value="White"/>
+				</ColorAnimationUsingKeyFrames>
+				<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="canviPhoneA" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)">
+					<SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="0.85"/>
+					<SplineDoubleKeyFrame KeyTime="00:00:00.4000000" Value="1"/>
+				</DoubleAnimationUsingKeyFrames>
+				<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="canviPhoneA" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)">
+					<SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="0.85"/>
+					<SplineDoubleKeyFrame KeyTime="00:00:00.4000000" Value="1"/>
+				</DoubleAnimationUsingKeyFrames>
+				<ColorAnimationUsingKeyFrames BeginTime="00:00:00.2000000" Storyboard.TargetName="rectATNA_A" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
+					<SplineColorKeyFrame KeyTime="00:00:00.2000000" Value="{StaticResource ATNAFill}"/>
+					<SplineColorKeyFrame KeyTime="00:00:00.4000000" Value="White"/>
+				</ColorAnimationUsingKeyFrames>
+				<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="PersoniPhoneA" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)">
+					<SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="-9.324" KeySpline="0,0.61,0.4,1"/>
+					<SplineDoubleKeyFrame KeyTime="00:00:00.4000000" Value="0" KeySpline="0.59,0,1,0.42"/>
+					<SplineDoubleKeyFrame KeyTime="00:00:00.6000000" Value="-5.994" KeySpline="0,0.6,0.41,1"/>
+					<SplineDoubleKeyFrame KeyTime="00:00:00.8000000" Value="0" KeySpline="0.6,0,1,0.4"/>
+				</DoubleAnimationUsingKeyFrames>
+				<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="cphone" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(RotateTransform.Angle)">
+					<SplineDoubleKeyFrame KeyTime="00:00:00.1000000" Value="-9.324" KeySpline="0,0.61,0.4,1"/>
+					<SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="0" KeySpline="0.59,0,1,0.42"/>
+				</DoubleAnimationUsingKeyFrames>
+				<DoubleAnimationUsingKeyFrames BeginTime="00:00:00.3" Storyboard.TargetName="cphone" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[1].(RotateTransform.Angle)">
+					<SplineDoubleKeyFrame KeyTime="00:00:00.1000000" Value="9.324" KeySpline="0,0.61,0.4,1"/>
+					<SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="0" KeySpline="0.59,0,1,0.42"/>
+				</DoubleAnimationUsingKeyFrames>
+			</Storyboard>
+			
+			<!-- Community B -->
+			<!-- PACS -->
+			<Storyboard x:Key="CommB_Pacs">
+				<ColorAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="rectPacsB" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
+					<SplineColorKeyFrame KeyTime="00:00:00.2000000" Value="{StaticResource POSBlinkFill}"/>
+					<SplineColorKeyFrame KeyTime="00:00:00.4000000" Value="White"/>
+				</ColorAnimationUsingKeyFrames>
+				<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="canvPacsB" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)">
+					<SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="0.85"/>
+					<SplineDoubleKeyFrame KeyTime="00:00:00.4000000" Value="1"/>
+				</DoubleAnimationUsingKeyFrames>
+				<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="canvPacsB" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)">
+					<SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="0.85"/>
+					<SplineDoubleKeyFrame KeyTime="00:00:00.4000000" Value="1"/>
+				</DoubleAnimationUsingKeyFrames>
+				<ColorAnimationUsingKeyFrames BeginTime="00:00:00.2000000" Storyboard.TargetName="rectATNA_B" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
+					<SplineColorKeyFrame KeyTime="00:00:00.2000000" Value="{StaticResource ATNAFill}"/>
+					<SplineColorKeyFrame KeyTime="00:00:00.4000000" Value="White"/>
+				</ColorAnimationUsingKeyFrames>
+				<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="PersonPacsB" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)">
+					<SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="-9.324" KeySpline="0,0.61,0.4,1"/>
+					<SplineDoubleKeyFrame KeyTime="00:00:00.4000000" Value="0" KeySpline="0.59,0,1,0.42"/>
+					<SplineDoubleKeyFrame KeyTime="00:00:00.6000000" Value="-5.994" KeySpline="0,0.6,0.41,1"/>
+					<SplineDoubleKeyFrame KeyTime="00:00:00.8000000" Value="0" KeySpline="0.6,0,1,0.4"/>
+				</DoubleAnimationUsingKeyFrames>
+				
+			</Storyboard>
+
+			<!-- Emergency -->
+			<Storyboard x:Key="CommB_Emerg">
+				<ColorAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="rectEmergB" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
+					<SplineColorKeyFrame KeyTime="00:00:00.2000000" Value="{StaticResource POSBlinkFill}"/>
+					<SplineColorKeyFrame KeyTime="00:00:00.4000000" Value="White"/>
+				</ColorAnimationUsingKeyFrames>
+				<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="canvEmergB" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)">
+					<SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="0.85"/>
+					<SplineDoubleKeyFrame KeyTime="00:00:00.4000000" Value="1"/>
+				</DoubleAnimationUsingKeyFrames>
+				<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="canvEmergB" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)">
+					<SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="0.85"/>
+					<SplineDoubleKeyFrame KeyTime="00:00:00.4000000" Value="1"/>
+				</DoubleAnimationUsingKeyFrames>
+				<ColorAnimationUsingKeyFrames BeginTime="00:00:00.2000000" Storyboard.TargetName="rectATNA_B" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
+					<SplineColorKeyFrame KeyTime="00:00:00.2000000" Value="{StaticResource ATNAFill}"/>
+					<SplineColorKeyFrame KeyTime="00:00:00.4000000" Value="White"/>
+				</ColorAnimationUsingKeyFrames>
+				<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="PersonEmergB" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)">
+					<SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="-9.324" KeySpline="0,0.61,0.4,1"/>
+					<SplineDoubleKeyFrame KeyTime="00:00:00.4000000" Value="0" KeySpline="0.59,0,1,0.42"/>
+					<SplineDoubleKeyFrame KeyTime="00:00:00.6000000" Value="-5.994" KeySpline="0,0.6,0.41,1"/>
+					<SplineDoubleKeyFrame KeyTime="00:00:00.8000000" Value="0" KeySpline="0.6,0,1,0.4"/>
+				</DoubleAnimationUsingKeyFrames>
+				
+			</Storyboard>
+
+			<!-- Viewer -->
+			<Storyboard x:Key="CommB_Viewer">
+				<ColorAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="rectViewerB" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
+					<SplineColorKeyFrame KeyTime="00:00:00.2000000" Value="{StaticResource POSBlinkFill}"/>
+					<SplineColorKeyFrame KeyTime="00:00:00.4000000" Value="White"/>
+				</ColorAnimationUsingKeyFrames>
+				<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="canvViewerB" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)">
+					<SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="0.85"/>
+					<SplineDoubleKeyFrame KeyTime="00:00:00.4000000" Value="1"/>
+				</DoubleAnimationUsingKeyFrames>
+				<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="canvViewerB" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)">
+					<SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="0.85"/>
+					<SplineDoubleKeyFrame KeyTime="00:00:00.4000000" Value="1"/>
+				</DoubleAnimationUsingKeyFrames>
+				<ColorAnimationUsingKeyFrames BeginTime="00:00:00.2000000" Storyboard.TargetName="rectATNA_B" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)">
+					<SplineColorKeyFrame KeyTime="00:00:00.2000000" Value="{StaticResource ATNAFill}"/>
+					<SplineColorKeyFrame KeyTime="00:00:00.4000000" Value="White"/>
+				</ColorAnimationUsingKeyFrames>
+				<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="PersonViewerB" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)">
+					<SplineDoubleKeyFrame KeyTime="00:00:00.2000000" Value="-9.324" KeySpline="0,0.61,0.4,1"/>
+					<SplineDoubleKeyFrame KeyTime="00:00:00.4000000" Value="0" KeySpline="0.59,0,1,0.42"/>
+					<SplineDoubleKeyFrame KeyTime="00:00:00.6000000" Value="-5.994" KeySpline="0,0.6,0.41,1"/>
+					<SplineDoubleKeyFrame KeyTime="00:00:00.8000000" Value="0" KeySpline="0.6,0,1,0.4"/>
+				</DoubleAnimationUsingKeyFrames>
+				
+			</Storyboard>
+			
+			<!-- End Animations -->
+			
+		</ResourceDictionary>
+	</UserControl.Resources>
+	<UserControl.Triggers>
+	</UserControl.Triggers>
+
+	<Viewbox Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Stretch" Width="Auto" Height="Auto" Margin="4">
+		<Grid x:Name="LayoutRoot">
+			<Viewbox x:Name="jB" VerticalAlignment="Stretch" Margin="253.819,-58.486,7.56,-79.588" Opacity="0.15" d:IsHidden="True" Height="Auto">
+				<Canvas Width="357.18" Height="354.823" Opacity="0">
+					<Path Stretch="Fill" Stroke="Black" Data="M573.12719,299.47051 C583.14668,283.99465 571.66667,289.99943 596.16667,276.16638 596.16667,266.80686 604.67589,271.30537 607.16667,263.83304 607.83333,263.83304 614.83333,257.83303 615.5,257.83303 621.98857,238.36734 631.30178,246.56576 652.5,239.49969 666.28901,234.90335 665.59082,227.69573 680.30944,225.59485 709,221.49968 701,213.99967 738.45367,207.55762 738.12034,207.22429 778.33333,201.833 778,201.49967 797.35577,200.03657 836.35286,178.46757&#xd;&#xa;858,176.49965 870.5446,175.35923 882.8642,174.96877 896,178.00011 906.48046,180.41868 912.4285,190.15469 923.5,191.99994 923.5,192.66661 951.5,213.83327 951.5,214.49994 958.5,248.99995 983.94858,224.32948 995.08827,265.17502 999.43632,281.11788 1010.0738,291.70643 1011.5366,307.79686 1013.2219,326.33535 1016.4101,336.2689 1016.4101,352.85423 1017.0768,352.85423 1023.0538,372.94739 1023.7205,372.94739 1024.1372,375.03089&#xd;&#xa;1023.7205,382.08064 1031.0309,389.38724 1024.9389,423.17395 1058.597,391.78656 1061.4907,402.78267 1064.328,413.56452 1058,439.98772 1058,452.49997 1058,474.33555 1062.5002,485.49997 1073.5,499.16664 1078.2203,505.03129 1080.4997,523.85844 1080.4997,534.49998 1080.4997,545.57888 1079.3913,551.64818 1076.8328,562.16665 1073.8328,574.49998 1067.4998,601.16665 1057.2196,615.15674 1057.2196,615.8234 1053,622.33333 1053,623&#xd;&#xa;1040.7242,627.09192 1025.2851,654.05998 1015,666 1000.4998,682.83333 991.16646,696.83333 970,710 957.49981,724.83333 935.49982,741.50035 918.49983,752.50035 906.31965,760.38166 908.4058,763.94989 894.16651,767.83334 883.27319,770.80424 860.23925,773.31246 852.83319,758.50036 841.66223,756.26616 836.8332,759.83371 825.83321,749.16704 816.96068,747.68829 815.47991,744.61288 807.83322,739.8337 801.75767,736.03648 796.63657,734.90109&#xd;&#xa;792,729 784.79773,719.83347 771.44711,709.24388 760,703 750.79062,697.9767 741.3053,699.13883 736.16658,687.83366 732.52003,679.81125 726.1604,680.28947 719.16659,673.83365 710.44748,665.78524 705.49993,667.16698 701.49993,652.83363 700.83326,652.83363 692.66667,644 692,644 688.83327,639.50029 681.86832,620.9658 679.84221,614.21209 675.61819,600.13204 637.79005,535.86226 646.18218,526.8034 657.56733,514.51375&#xd;&#xa;662.63288,496.17792 664.13295,481.67768" Width="330.851" Height="354.278" StrokeThickness="2" Canvas.Top="-0.455" Canvas.Left="18.329">
+						<Path.Fill>
+							<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+								<GradientStop Color="White" Offset="0"/>
+								<GradientStop Color="#FF887777" Offset="1"/>
+							</LinearGradientBrush>
+						</Path.Fill>
+					</Path>
+					<TextBlock TextWrapping="Wrap" Foreground="#FF000000" FontSize="13.333" Width="235.214" Height="25" TextAlignment="Center" Canvas.Left="78.64" d:LayoutOverrides="Margin" Canvas.Top="275.737" Text="Eastern Territory Health"/>
+
+				</Canvas>
+			</Viewbox>
+			<Viewbox x:Name="jC" HorizontalAlignment="Right" Width="Auto" Opacity="1" Grid.Row="0" VerticalAlignment="Stretch" Height="Auto">		
+				<Canvas Width="336" Height="320">
+					<Ellipse Height="307" Canvas.Left="29" Canvas.Top="8" Width="307" Opacity="0.745">
+						<Ellipse.Fill>
+							<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+								<GradientStop Color="White" Offset="0"/>
+								<GradientStop Color="#FF4F60BD" Offset="1"/>
+							</LinearGradientBrush>
+						</Ellipse.Fill>
+					</Ellipse>
+					<Path Stretch="Fill" Width="329" Data="M13.175882,37.187565 C28.557674,18.757624 16.183938,25.271778 50.306035,23.479113 77.01026,22.076151 86.357977,10.06971 107.46437,5.4112144 131.19752,0.17294442 182.30326,2.6518171 203.06306,1.0854698 213.78119,0.27677596 244.58993,5.3841671 253.4797,8.9159588 265.85115,13.830984 272.58152,7.9451258 280.82825,17.46963 288.2601,26.052994 278.50524,34.921044 287.37455,44.763707 293.96255,52.074695 308.21304,48.157658 308.21304,61.081791 308.21304,76.825906 309.68352,100.37969&#xa;314.42085,116.0637 316.57833,123.20655 308.23859,132.17402 318.41129,136.46022 332.76463,142.50788 326.59193,143.49584 324.71837,158.38263 323.55422,167.63268 320.44886,176.00319 319.16923,185.32361 318.30051,191.65094 319.51685,201.16698 316.39588,207.36658 315.7794,207.36658 315.16291,207.36658 314.54644,207.36658 312.04736,217.29507 307.13602,218.40199 290.29533,222.86237 281.75854,220.03609 256.5454,231.42336 243.5993,229.58704 226.71704,227.1924&#xa;193.78707,236.20707 180.20277,233.59205 180.81925,233.38795 143.22312,232.0325 143.83959,231.8284 139.96936,230.54706 131.88968,216.64612 128.55727,215.7635 128.55727,215.3553 107.33179,193.38157 107.33179,192.97337 102.87946,191.99068 97.037379,183.18365 94.21894,181.20924 M13.341391,37.684264 C11.111011,39.399935 0.67069888,53.010776 1.0695319,57.397926 1.3737882,60.744734 2.7008191,63.75417 4.1632217,66.678965 6.816301,71.985107 9.0038922,77.606084 12.118424,82.589319 14.038986,85.662208 15.449616,88.315119 16.096025,91.870358 16.763759,95.542886 16.384746,99.707797 15.654069,103.36117 13.874129,112.26084 15.233262,114.95772 16.979936,123.69107 17.274573,123.69107 17.56921,123.69107 17.863848,123.69107 18.921369,128.97865 22.600894,138.71751&#xa;31.564474,138.71751 32.954162,142.19172 40.578486,145.30943 44.823144,147.5566 49.241828,149.89589 52.451365,154.76078 53.662257,160.81522 55.522514,161.43531 56.663513,163.28882 58.52377,163.9089 58.52377,164.20354 58.52377,164.49818 58.52377,164.79281 61.206681,164.79281 65.331485,166.91472 68.246795,167.88649 71.97289,169.12852 71.209125,176.88641 75.656834,176.56871 82.693706,176.06608 88.48488,185.65623 94.384673,181.37498" Stroke="Black" StrokeDashArray="0 5 0" StrokeThickness="2" Height="235" Canvas.Left="-1.957" Opacity="0" Canvas.Top="4.036" UseLayoutRounding="False">
+						<Path.Fill>
+							<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+								<GradientStop Color="White" Offset="0"/>
+								<GradientStop Color="#FF9BA6B3" Offset="1"/>
+							</LinearGradientBrush>
+						</Path.Fill>
+					</Path>
+					<TextBlock TextWrapping="Wrap" Foreground="#FF000000" FontSize="13.333" Width="236" Height="16" TextAlignment="Center" Canvas.Left="66" Text="Eastern Hospital Network" d:LayoutOverrides="Margin" RenderTransformOrigin="0.5,0.5" Canvas.Top="46"/>
+					<Viewbox HorizontalAlignment="Left" x:Name="PIXPDQb" Width="60.948" Canvas.Top="124" Canvas.Left="247" Height="44.596">
+						<Canvas Width="105.704" Height="77.675">
+							<Path Width="29.619" Height="33.97" Canvas.Left="76.174" Canvas.Top="22.667" Stretch="Fill" StrokeThickness="2.66667" StrokeStartLineCap="Square" StrokeEndLineCap="Square" StrokeMiterLimit="2.75" Stroke="#FF30338C" Data="F1 M 18.8083,19.5685C 11.3663,19.5685 5.33335,18.5035 5.33335,17.1884L 5.33335,46.1105C 5.33335,47.4268 11.3663,48.4917 18.8083,48.4917C 26.2503,48.4917 32.2855,47.4268 32.2855,46.1105L 32.2855,17.1884C 32.2855,18.5035 26.2503,19.5685 18.8083,19.5685 Z " Fill="#FFFFFFFF" StrokeLineJoin="Round"/>
+							<Path Width="29.619" Height="7.427" Canvas.Left="76.174" Canvas.Top="20.287" Stretch="Fill" StrokeThickness="2.66667" StrokeStartLineCap="Square" StrokeEndLineCap="Square" StrokeMiterLimit="2.75" Stroke="#FF30338C" Data="F1 M 18.8083,19.5685C 26.2503,19.5685 32.2855,18.5035 32.2855,17.1884C 32.2855,15.8743 26.2503,14.8082 18.8083,14.8082C 11.3663,14.8082 5.33335,15.8743 5.33335,17.1884C 5.33335,18.5035 11.3663,19.5685 18.8083,19.5685 Z " Fill="#FFFFFFFF"/>
+							<Rectangle Width="88.653" Height="77.632" Canvas.Left="0.063" Stretch="Fill" StrokeThickness="2.66667" StrokeStartLineCap="Square" StrokeEndLineCap="Square" StrokeMiterLimit="2.75" Stroke="#FF30338C" Fill="#FFFFFFFF" x:Name="rectPIX_B" Canvas.Top="-0.063"/>
+							<TextBlock Width="61.408" Height="32.174" FontSize="13.333" Text="PIX" TextWrapping="Wrap" Canvas.Left="14" Canvas.Top="36" TextAlignment="Center"/>
+							<Image Width="72.048" Height="19.495" Canvas.Left="10" Canvas.Top="10" Source="http://www.grapevine.ie/images/logo_Intersystems.png" Stretch="UniformToFill" Opacity="0"/>
+						</Canvas>
+					</Viewbox>
+					<Viewbox x:Name="XDSRegb" Canvas.Left="165" Canvas.Top="124" Height="44.692" Width="61.372" RenderTransformOrigin="0.498,0.495">
+						<Canvas Width="110.236" Height="79.839" HorizontalAlignment="Stretch">
+							<Path Width="34.827" Height="40.02" Canvas.Top="31.556" Stretch="Fill" StrokeThickness="2.66667" StrokeStartLineCap="Square" StrokeEndLineCap="Square" StrokeMiterLimit="2.75" Stroke="#FFEEB111" Data="F1 M 98.3132,39.7078C 89.4332,39.7078 82.2332,38.4371 82.2332,36.8678L 82.2332,71.3798C 82.2332,72.9491 89.4332,74.2211 98.3132,74.2211C 107.193,74.2211 114.393,72.9491 114.393,71.3798L 114.393,36.8678C 114.393,38.4371 107.193,39.7078 98.3132,39.7078 Z " Fill="#FFFFFFFF" StrokeLineJoin="Round" Canvas.Left="0.034"/>
+							<Path Width="34.827" Height="8.347" Canvas.Top="28.716" Stretch="Fill" StrokeThickness="2.66667" StrokeStartLineCap="Square" StrokeEndLineCap="Square" StrokeMiterLimit="2.75" Stroke="#FFEEB111" Data="F1 M 98.3132,39.7078C 107.193,39.7078 114.393,38.4371 114.393,36.8678C 114.393,35.2997 107.193,34.0278 98.3132,34.0278C 89.4332,34.0278 82.2332,35.2997 82.2332,36.8678C 82.2332,38.4371 89.4332,39.7078 98.3132,39.7078 Z " Fill="#FFFFFFFF" Canvas.Left="0.034"/>
+							<Rectangle Width="89.111" Height="79.777" Canvas.Left="21.134" Canvas.Top="0.022" Stretch="Fill" StrokeThickness="2.66667" StrokeStartLineCap="Square" StrokeEndLineCap="Square" StrokeMiterLimit="2.75" Stroke="#FFEEB111" Fill="#FFFFFFFF" x:Name="rectXDSReg_B"/>
+							<TextBlock Width="66" Height="53.268" FontSize="13.333" TextWrapping="Wrap" Canvas.Left="35" Canvas.Top="37" Text="XDS Registry" TextAlignment="Center"/>
+							<Image Width="72.048" Height="19.495" Canvas.Left="30" Canvas.Top="10" Source="http://www.grapevine.ie/images/logo_Intersystems.png" Stretch="UniformToFill" Opacity="0"/>
+
+						</Canvas>
+					</Viewbox>
+					<Viewbox HorizontalAlignment="Left" x:Name="XDSRepb" Width="61.908" Height="45" VerticalAlignment="Bottom" Canvas.Left="80" Canvas.Top="124">
+						<Canvas Width="111.258" Height="80.358">
+							<Path Width="34.827" Height="40.268" Canvas.Left="0.043" Canvas.Top="31.812" Stretch="Fill" StrokeThickness="2.66667" StrokeStartLineCap="Square" StrokeEndLineCap="Square" StrokeMiterLimit="2.75" Stroke="#FFB32D33" Data="F1 M 98.3132,39.7078C 89.4332,39.7078 82.2332,38.4371 82.2332,36.8678L 82.2332,71.3798C 82.2332,72.9491 89.4332,74.2211 98.3132,74.2211C 107.193,74.2211 114.393,72.9491 114.393,71.3798L 114.393,36.8678C 114.393,38.4371 107.193,39.7078 98.3132,39.7078 Z " Fill="#FFFFFFFF" StrokeLineJoin="Round"/>
+							<Path Width="34.827" Height="8.398" Canvas.Left="0.043" Canvas.Top="28.955" Stretch="Fill" StrokeThickness="2.66667" StrokeStartLineCap="Square" StrokeEndLineCap="Square" StrokeMiterLimit="2.75" Stroke="#FFB32D33" Data="F1 M 98.3132,39.7078C 107.193,39.7078 114.393,38.4371 114.393,36.8678C 114.393,35.2997 107.193,34.0278 98.3132,34.0278C 89.4332,34.0278 82.2332,35.2997 82.2332,36.8678C 82.2332,38.4371 89.4332,39.7078 98.3132,39.7078 Z " Fill="#FFFFFFFF"/>
+							<Rectangle Width="89.111" Height="80.273" Canvas.Left="22.143" Canvas.Top="0.082" Stretch="Fill" StrokeThickness="2.66667" StrokeStartLineCap="Square" StrokeEndLineCap="Square" StrokeMiterLimit="2.75" Stroke="#FFB32D33" Fill="#FFFFFFFF" x:Name="rectXDSRep_B"/>
+							<TextBlock Width="82" Height="43.98" FontSize="13.333" TextWrapping="Wrap" Canvas.Left="27" Canvas.Top="37" Text="XDS Repository" TextAlignment="Center"/>
+							<Image Width="72.048" Height="19.495" Canvas.Left="30" Canvas.Top="9" Source="http://www.grapevine.ie/images/logo_Intersystems.png" Stretch="UniformToFill" Opacity="0"/>
+						</Canvas>
+					</Viewbox>
+					<Viewbox x:Name="XCAb" Width="67.058" Canvas.Left="68" Height="44.692" Canvas.Top="66">
+						<Canvas Width="119.727" Height="80.107">
+							<Rectangle Width="89.111" Height="79.777" Canvas.Left="30.616" Stretch="Fill" StrokeThickness="2.66667" StrokeStartLineCap="Square" StrokeEndLineCap="Square" StrokeMiterLimit="2.75" Stroke="#FF546886" Fill="#FFFFFFFF" x:Name="rectXCA_B" Canvas.Top="0.33"/>
+							<TextBlock Width="63.467" Height="32.713" FontSize="13.333" TextWrapping="Wrap" Canvas.Left="43" Canvas.Top="49" Text="XCA" TextAlignment="Center"/>
+							<Path Width="14.2" Height="2.667" Fill="#FFFFFFFF" Stretch="Fill" Stroke="#FF546886" StrokeEndLineCap="Square" StrokeMiterLimit="2.75" StrokeStartLineCap="Square" StrokeThickness="2.66667" Canvas.Left="16.468" Canvas.Top="38.56" Data="M92.981293,40.095928 L111.59033,40.095928"/>
+							<Ellipse Width="14.585" Height="14.585" Fill="#FFFFFFFF" Stroke="#FF546886" StrokeEndLineCap="Square" StrokeMiterLimit="2.75" StrokeStartLineCap="Square" StrokeThickness="2.66667" Canvas.Top="32.6" Canvas.Left="4.509"/>
+							<Image Width="72.048" Height="19.495" Canvas.Left="38" Canvas.Top="10" Source="http://www.grapevine.ie/images/logo_Intersystems.png" Stretch="UniformToFill" Opacity="0" />
+						</Canvas>
+					</Viewbox>
+					<Viewbox x:Name="ATNAb" VerticalAlignment="Bottom" Height="39.977" Width="217.009" Canvas.Left="80" Canvas.Top="177">
+						<Canvas Width="459.657" Height="87.7773">
+							<Rectangle Width="407.995" Height="47.736" Canvas.Left="28.831" Canvas.Top="36.041" Stretch="Fill" StrokeThickness="2.66667" StrokeStartLineCap="Square" StrokeEndLineCap="Square" StrokeMiterLimit="2.75" Stroke="#FFC05000" Fill="#FFFFFFFF" x:Name="rectATNA_B"/>
+							<TextBlock Width="253.14" Height="Auto" FontSize="13.333" TextWrapping="Wrap" Canvas.Left="113.622" Canvas.Top="48.492" Text="ATNA - Audit Trail Repository" TextAlignment="Center"/>
+						</Canvas>
+					</Viewbox>
+					<Path Fill="#FFC00000" Stretch="Fill" Width="75" Height="42" RenderTransformOrigin="0.465664141577984,0.458127447459526" Canvas.Left="191.17" Canvas.Top="81.119" Data="M37.623545,-3.1075142E-13 L44.726185,8.1391879 41.175369,8.1391879 41.175369,30.981668 95.58432,30.981668 95.54348,27.662688 95.719345,27.564439 105.44944,34.853913 95.719345,41.955426 95.674355,38.29886 34.071721,38.442002 34.071721,8.1391879 34.07223,8.286274 30.332895,8.1391879 z" UseLayoutRounding="False">
+						<Path.RenderTransform>
+							<TransformGroup>
+								<ScaleTransform/>
+								<SkewTransform/>
+								<RotateTransform Angle="180"/>
+								<TranslateTransform X="-50.02895051531317"/>
+							</TransformGroup>
+						</Path.RenderTransform>
+					</Path>
+					<Path Stretch="Fill" Fill="#FFAE5F0F" Data="M417.98,537.67385 L417.98,544.10836 421.531,544.10836 414.428,546.828 407.137,544.10836 410.876,544.10836 410.876,537.67385 z" Width="14" Height="19" Canvas.Left="116.483" Canvas.Top="173.075" UseLayoutRounding="False"/>
+					<Path Stretch="Fill" Fill="#FFC00000" Data="M407.137,515.85511 L414.428,512.194 421.531,515.85511 417.98,515.85511 417.98,518.53883 410.876,518.5954 410.876,516.10455 407.23527,515.92128 z" Width="14" Height="17" RenderTransformOrigin="0.5,0.5" Canvas.Left="228.294" Canvas.Top="122.053" UseLayoutRounding="False">
+						<Path.RenderTransform>
+							<TransformGroup>
+								<ScaleTransform ScaleX="1" ScaleY="1"/>
+								<SkewTransform AngleX="0" AngleY="0"/>
+								<RotateTransform Angle="-90"/>
+								<TranslateTransform X="0.86949999999999594" Y="16.120499999999993"/>
+							</TransformGroup>
+						</Path.RenderTransform>
+					</Path>
+					<Path Stretch="Fill" Fill="#FFAE5F0F" Data="M414.428,532.16886 L421.531,534.93659 417.98,534.93659 417.98,538.41048 421.531,538.41048 414.428,541.13012 407.137,538.41048 410.876,538.41048 410.876,534.93659 407.23527,535.00276 z" Width="14" Height="22" Canvas.Left="158.17" Canvas.Top="142.052" RenderTransformOrigin="0.5,0.5" UseLayoutRounding="False">
+						<Path.RenderTransform>
+							<TransformGroup>
+								<ScaleTransform ScaleX="1" ScaleY="1"/>
+								<SkewTransform AngleX="0" AngleY="0"/>
+								<RotateTransform Angle="180"/>
+								<TranslateTransform X="28.537999999999997" Y="28.538000000000004"/>
+							</TransformGroup>
+						</Path.RenderTransform>
+					</Path>
+					<Path Stretch="Fill" Fill="#FFAE5F0F" Data="M417.98,538.06678 L417.98,544.10836 421.531,544.10836 414.428,546.828 407.137,544.10836 410.876,544.10836 410.876,538.06678 z" Width="14" Height="18.849" Canvas.Left="258.621" Canvas.Top="173" UseLayoutRounding="False"/>
+					<Path Stretch="Fill" Fill="#FFC00000" Data="M407.137,515.85511 L414.428,512.194 421.531,515.85511 417.98,515.85511 417.98,518.53883 410.876,518.5954 410.876,515.85511 407.23527,515.92128 z" Width="14" Height="17" RenderTransformOrigin="0.5,0.5" Canvas.Left="147.343" Canvas.Top="122.034" UseLayoutRounding="False">
+						<Path.RenderTransform>
+							<TransformGroup>
+								<ScaleTransform ScaleX="1" ScaleY="1"/>
+								<SkewTransform AngleX="0" AngleY="0"/>
+								<RotateTransform Angle="90"/>
+								<TranslateTransform X="0.86949999999999594" Y="16.1205"/>
+							</TransformGroup>
+						</Path.RenderTransform>
+					</Path>
+					<Viewbox Margin="0" VerticalAlignment="Bottom" Width="230" Height="59" x:Name="CreatorsB" RenderTransformOrigin="0.511,0.531" Canvas.Left="72" Canvas.Top="217">
+						<Canvas Width="242" Height="67.948">
+							<Path Width="230.648" Height="1" Fill="#FF808080" Stretch="Fill" Stroke="#FF808080" Data="M4.1871796,73.135665 L254.77646,73.135665" Canvas.Left="5.352" Canvas.Top="1.136"/>
+							<Viewbox x:Name="PacsB" HorizontalAlignment="Left" VerticalAlignment="Top" Height="66" Canvas.Left="34.732" Canvas.Top="2.6" Width="63">
+								<Canvas Width="132" Height="124.157">
+									<Path Stretch="Fill" Fill="#FF363896" Data="M 407.137,518.41L 414.428,512.194L 421.531,518.41L 417.98,518.41L 417.98,539.724L 421.531,539.724L 414.428,546.828L 407.137,539.724L 410.876,539.724L 410.876,518.41L 407.137,518.41 Z " Width="14.393" Height="39.242" Canvas.Left="35.298" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+									<Path Stretch="Fill" StrokeThickness="2.66667" StrokeMiterLimit="2.75" Stroke="#FF373896" Fill="#FFFFFFFF" Data="F1 M 458.168,589.526C 449.605,589.526 442.662,588.217 442.662,586.6L 442.662,616.104C 442.662,617.721 449.605,619.03 458.168,619.03C 466.731,619.03 473.673,617.721 473.673,616.104L 473.673,586.6C 473.673,588.217 466.731,589.526 458.168,589.526 Z " Width="33.677" Height="40.754" Canvas.Left="61.664" Canvas.Top="81.984" StrokeLineJoin="Round"/>
+									<Path Stretch="Fill" StrokeThickness="2.66667" StrokeMiterLimit="2.75" Stroke="#FF373896" Fill="#FFFFFFFF" Data="F1 M 458.168,589.526C 466.731,589.526 473.673,588.217 473.673,586.6C 473.673,584.984 466.731,583.674 458.168,583.674C 449.605,583.674 442.662,584.984 442.662,586.6C 442.662,588.217 449.605,589.526 458.168,589.526 Z " Width="33.677" Height="8.519" Canvas.Left="61.664" Canvas.Top="79.215"/>
+									<Canvas x:Name="canvPacsB" Width="84.523" Height="73.699" Canvas.Top="41.598" RenderTransformOrigin="0.5,0.5">
+										<Canvas.RenderTransform>
+											<TransformGroup>
+												<ScaleTransform/>
+												<SkewTransform/>
+												<RotateTransform/>
+												<TranslateTransform/>
+											</TransformGroup>
+										</Canvas.RenderTransform>
+										<Path Stretch="Fill" StrokeThickness="2.66667" StrokeMiterLimit="2.75" Stroke="#FF373896" Fill="#FFFFFFFF" Data="M 459.153,601.772C 459.153,607.48 454.782,612.151 449.439,612.151L 387.011,612.151C 381.668,612.151 377.297,607.48 377.297,601.772L 377.297,560.255C 377.297,554.546 381.668,549.875 387.011,549.875L 449.439,549.875C 454.782,549.875 459.153,554.546 459.153,560.255L 459.153,601.772 Z " Width="84.523" Height="73.699" x:Name="rectPacsB" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+										<TextBlock Width="113.451" Canvas.Top="46" LineStackingStrategy="BlockLineHeight" TextAlignment="Center" TextWrapping="Wrap" Text="RIS/PACS" Canvas.Left="-15" FontSize="13.333"/>
+										<Image Width="84.523" Height="31" Canvas.Top="8" Source="http://upload.wikimedia.org/wikipedia/en/thumb/f/ff/General_Electric_logo.svg/500px-General_Electric_logo.svg.png" Opacity="0"/>
+									</Canvas>
+									<Viewbox Width="40" Height="80" x:Name="PersonPacsB" Canvas.Left="129.49" Canvas.Top="50.102">
+										<Viewbox.RenderTransform>
+											<TransformGroup>
+												<ScaleTransform ScaleX="-1" ScaleY="1"/>
+												<SkewTransform AngleX="0" AngleY="0"/>
+												<RotateTransform Angle="0"/>
+												<TranslateTransform/>
+											</TransformGroup>
+										</Viewbox.RenderTransform>
+										<Canvas HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="40" Height="80">
+											<Path Stretch="Fill" Fill="#FF1A396A" Data="M 507.673,609.287C 507.673,615.013 501.357,619.697 493.637,619.697L 491.464,619.697C 483.743,619.697 477.429,615.013 477.429,609.287L 477.429,586.72C 477.429,580.995 483.743,576.31 491.464,576.31L 493.637,576.31C 501.357,576.31 507.673,580.995 507.673,586.72L 507.673,609.287 Z " Width="30.244" Height="49.841" Canvas.Top="23"/>
+											<Path Stretch="Fill" Fill="#FF1A396A" Data="M 505.366,566.488C 505.366,561.237 499.629,556.982 492.551,556.982C 485.474,556.982 479.737,561.237 479.737,566.488C 479.737,571.737 485.474,575.991 492.551,575.991C 499.629,575.991 505.366,571.737 505.366,566.488 Z " Width="25.629" Height="21.544" Canvas.Left="3" />
+										</Canvas>
+									</Viewbox>
+								</Canvas>
+							</Viewbox>
+							<Viewbox x:Name="EmergB" HorizontalAlignment="Left" VerticalAlignment="Top" Height="66" Canvas.Left="109.436" Canvas.Top="2.6" Width="63">
+								<Canvas Width="132" Height="124.157">
+									<Path Stretch="Fill" Fill="#FF363896" Data="M 407.137,518.41L 414.428,512.194L 421.531,518.41L 417.98,518.41L 417.98,539.724L 421.531,539.724L 414.428,546.828L 407.137,539.724L 410.876,539.724L 410.876,518.41L 407.137,518.41 Z " Width="14.393" Height="39.242" Canvas.Left="35.298" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+									<Path Stretch="Fill" StrokeThickness="2.66667" StrokeMiterLimit="2.75" Stroke="#FF373896" Fill="#FFFFFFFF" Data="F1 M 458.168,589.526C 449.605,589.526 442.662,588.217 442.662,586.6L 442.662,616.104C 442.662,617.721 449.605,619.03 458.168,619.03C 466.731,619.03 473.673,617.721 473.673,616.104L 473.673,586.6C 473.673,588.217 466.731,589.526 458.168,589.526 Z " Width="33.677" Height="40.754" Canvas.Left="61.664" Canvas.Top="81.984" StrokeLineJoin="Round"/>
+									<Path Stretch="Fill" StrokeThickness="2.66667" StrokeMiterLimit="2.75" Stroke="#FF373896" Fill="#FFFFFFFF" Data="F1 M 458.168,589.526C 466.731,589.526 473.673,588.217 473.673,586.6C 473.673,584.984 466.731,583.674 458.168,583.674C 449.605,583.674 442.662,584.984 442.662,586.6C 442.662,588.217 449.605,589.526 458.168,589.526 Z " Width="33.677" Height="8.519" Canvas.Left="61.664" Canvas.Top="79.215"/>
+									<Canvas x:Name="canvEmergB" Width="84.523" Height="73.699" Canvas.Top="41.598" RenderTransformOrigin="0.5,0.5">
+										<Canvas.RenderTransform>
+											<TransformGroup>
+												<ScaleTransform/>
+												<SkewTransform/>
+												<RotateTransform/>
+												<TranslateTransform/>
+											</TransformGroup>
+										</Canvas.RenderTransform>
+										<Path Stretch="Fill" StrokeThickness="2.66667" StrokeMiterLimit="2.75" Stroke="#FF373896" Fill="#FFFFFFFF" Data="M 459.153,601.772C 459.153,607.48 454.782,612.151 449.439,612.151L 387.011,612.151C 381.668,612.151 377.297,607.48 377.297,601.772L 377.297,560.255C 377.297,554.546 381.668,549.875 387.011,549.875L 449.439,549.875C 454.782,549.875 459.153,554.546 459.153,560.255L 459.153,601.772 Z " Width="84.523" Height="73.699" x:Name="rectEmergB" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+										<TextBlock Width="113.451" Canvas.Top="46" LineStackingStrategy="BlockLineHeight" TextAlignment="Center" TextWrapping="Wrap" Text="Emergency" Canvas.Left="-15" FontSize="13.333"/>
+										<Image Width="84.523" Height="15" Canvas.Top="18.402"/>
+									</Canvas>
+									<Viewbox Width="40" Height="80" x:Name="PersonEmergB" Canvas.Left="129.49" Canvas.Top="50.102">
+										<Viewbox.RenderTransform>
+											<TransformGroup>
+												<ScaleTransform ScaleX="-1" ScaleY="1"/>
+												<SkewTransform AngleX="0" AngleY="0"/>
+												<RotateTransform Angle="0"/>
+												<TranslateTransform/>
+											</TransformGroup>
+										</Viewbox.RenderTransform>
+										<Canvas HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="40" Height="80">
+											<Path Stretch="Fill" Fill="#FF1A396A" Data="M 507.673,609.287C 507.673,615.013 501.357,619.697 493.637,619.697L 491.464,619.697C 483.743,619.697 477.429,615.013 477.429,609.287L 477.429,586.72C 477.429,580.995 483.743,576.31 491.464,576.31L 493.637,576.31C 501.357,576.31 507.673,580.995 507.673,586.72L 507.673,609.287 Z " Width="30.244" Height="49.841" Canvas.Top="23"/>
+											<Path Stretch="Fill" Fill="#FF1A396A" Data="M 505.366,566.488C 505.366,561.237 499.629,556.982 492.551,556.982C 485.474,556.982 479.737,561.237 479.737,566.488C 479.737,571.737 485.474,575.991 492.551,575.991C 499.629,575.991 505.366,571.737 505.366,566.488 Z " Width="25.629" Height="21.544" Canvas.Left="3" />
+										</Canvas>
+									</Viewbox>
+								</Canvas>
+							</Viewbox>
+							<Viewbox x:Name="ViewerB" HorizontalAlignment="Left" VerticalAlignment="Top" Height="66" Canvas.Left="179.75" Canvas.Top="2.6" Width="63">
+								<Canvas Width="132" Height="124.157">
+									<Path Stretch="Fill" Fill="#FF363896" Data="M 407.137,518.41L 414.428,512.194L 421.531,518.41L 417.98,518.41L 417.98,539.724L 421.531,539.724L 414.428,546.828L 407.137,539.724L 410.876,539.724L 410.876,518.41L 407.137,518.41 Z " Width="14.393" Height="39.242" Canvas.Left="22.798" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+									<Canvas x:Name="canvViewerB" Width="84.523" Height="73.699" Canvas.Top="41.598" RenderTransformOrigin="0.5,0.5">
+										<Canvas.RenderTransform>
+											<TransformGroup>
+												<ScaleTransform/>
+												<SkewTransform/>
+												<RotateTransform/>
+												<TranslateTransform/>
+											</TransformGroup>
+										</Canvas.RenderTransform>
+										<Path Stretch="Fill" StrokeThickness="2.66667" StrokeMiterLimit="2.75" Stroke="#FF373896" Fill="#FFFFFFFF" Data="M 459.153,601.772C 459.153,607.48 454.782,612.151 449.439,612.151L 387.011,612.151C 381.668,612.151 377.297,607.48 377.297,601.772L 377.297,560.255C 377.297,554.546 381.668,549.875 387.011,549.875L 449.439,549.875C 454.782,549.875 459.153,554.546 459.153,560.255L 459.153,601.772 Z " Width="84.523" Height="73.699" x:Name="rectViewerB" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="6.004"/>
+										<TextBlock Width="84.523" Canvas.Top="46" FontSize="13.333" LineStackingStrategy="BlockLineHeight" TextAlignment="Center" TextWrapping="Wrap" Canvas.Left="6" Text="Viewer"/>
+										<Image Width="84.523" Height="15" Canvas.Top="18.402" Canvas.Left="-3.996"/>
+									</Canvas>
+									<Viewbox Width="40" Height="80" x:Name="PersonViewerB" Canvas.Left="124.981" Canvas.Top="50.102">
+										<Viewbox.RenderTransform>
+											<TransformGroup>
+												<ScaleTransform ScaleX="-1" ScaleY="1"/>
+												<SkewTransform AngleX="0" AngleY="0"/>
+												<RotateTransform Angle="0"/>
+												<TranslateTransform/>
+											</TransformGroup>
+										</Viewbox.RenderTransform>
+										<Canvas HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="40" Height="80">
+											<Path Stretch="Fill" Fill="#FF1A396A" Data="M 507.673,609.287C 507.673,615.013 501.357,619.697 493.637,619.697L 491.464,619.697C 483.743,619.697 477.429,615.013 477.429,609.287L 477.429,586.72C 477.429,580.995 483.743,576.31 491.464,576.31L 493.637,576.31C 501.357,576.31 507.673,580.995 507.673,586.72L 507.673,609.287 Z " Width="30.244" Height="49.841" Canvas.Top="23"/>
+											<Path Stretch="Fill" Fill="#FF1A396A" Data="M 505.366,566.488C 505.366,561.237 499.629,556.982 492.551,556.982C 485.474,556.982 479.737,561.237 479.737,566.488C 479.737,571.737 485.474,575.991 492.551,575.991C 499.629,575.991 505.366,571.737 505.366,566.488 Z " Width="25.629" Height="21.544" Canvas.Left="3" />
+										</Canvas>
+									</Viewbox>
+								</Canvas>
+							</Viewbox>
+						</Canvas>
+					</Viewbox>
+				</Canvas>
+			</Viewbox>
+			<Viewbox x:Name="jA" HorizontalAlignment="Left" VerticalAlignment="Stretch" Height="Auto" Opacity="1" Width="334">
+				<Canvas Width="336.355" Height="320">
+
+					<Ellipse Height="307" Canvas.Left="29" Canvas.Top="8" Width="307" Opacity="0.745">
+						<Ellipse.Fill>
+							<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+								<GradientStop Color="White" Offset="0"/>
+								<GradientStop Color="#FF4FBD60" Offset="1"/>
+							</LinearGradientBrush>
+						</Ellipse.Fill>
+					</Ellipse>
+
+					<Path HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="Fill" Stroke="Black" Data="M67.500787,78.500328 C95.873228,78.500328 117.29648,74.499934 145.50115,74.499934 158.14674,74.499934 172.62155,74.53698 185.50114,78.499937 198.50114,82.499941 199.76569,80.588126 211.50114,84.499943 211.50114,85.166609 224.50079,92.833662 224.50079,93.500328 232.2032,96.067798 232.77804,97.407909 241.50079,94.500328 241.50079,80.819386 243.50113,68.499929 250.50113,54.499916 265.50113,53.499915 257.12566,38.958387 270.50113,34.499898 270.50113,33.833232 288.50112,24.166555&#xa;288.50112,23.499889 303.0227,18.659363 306.51005,13.346721 321.50111,14.499881 334.50111,15.499882 355.67987,10.946602 370.50079,6.5003283 386.54491,1.6870916 404.4416,-1.9901481 420.50079,10.500328 429.43399,17.448378 436.1333,35.662876 438.50079,47.500328 441.42087,48.473691 459.37626,58.98952 461.50079,61.500328 467.36355,68.429047 473.62523,78.374398 478.50079,86.500328 477.83412,86.833662 480.59088,88.475524 479.92422,88.808857 487.19803,96.082666&#xa;493.50108,92.49995 505.50107,95.499952 506.74234,101.7063 511.50079,111.67414 511.50079,118.50033 517.13713,114.74277 518.50079,118.99774 518.50079,134.50033 518.50079,142.9284 522.25432,150.23973 519.50079,158.50033 515.08945,171.73434 522.3251,193.08817 507.50079,200.50033 501.40643,230.97211 491.02252,263.85106 461.50079,285.50033 456.0169,289.52184 449.27344,298.60149 443.38862,303.64562 435.99534,309.98272 423.50109,305.50014 418.38862,314.64562&#xa;410.65032,328.48833 401.51242,335.82978 384.50079,341.50033 384.50079,342.16699 384.50079,342.83366 384.50079,343.50033 376.0502,346.88056 369.5011,358.50018 359.50079,362.50033 359.50079,370.82185 353.82425,368.85339 350.50079,375.50033 350.50079,374.83366 356.50111,372.16686 356.50111,371.5002 345.78427,382.21703 334.98137,400.00421 317.50079,403.50033 314.05066,410.40058 292.53849,411.76277 282.50079,414.50033 267.32871,418.63817 256.66401,425.50023&#xa;238.50113,425.50023 223.46072,425.50023 210.19962,423.50033 195.50079,423.50033 184.47809,423.50033 160.50115,427.50041 151.50115,418.50079 141.25559,418.50079 134.72053,419.90691 124.50079,416.50033 114.72901,413.24307 106.88502,410.13087 97.500787,404.50033 84.73746,396.84233 64.706236,379.34142 50.500787,376.50033 48.749963,367.74621 34.221673,354.73277 30.500787,344.50033 25.386853,330.43701 21.50118,324.08291 21.50118,308.50055 20.834514,309.16722&#xa;20.825579,305.12865 20.158913,305.79532 29.501179,283.50049 13.00954,277.03108 8.5011832,260.50044 4.4549199,245.66414 7.5007869,232.20522 7.5007869,215.50033 7.5007869,198.48564 3.5007869,184.53216 3.5007869,167.50033 3.5007869,147.93981 3.3245207,138.02894 9.0007899,121.00013 14.001182,127.00014 17.089669,85.015794 26.500787,78.500328 42.751176,67.249927 56.365337,77.54728 74.500787,79.500328" Width="307.91" Height="252.32" Canvas.Left="28.499" Canvas.Top="24.011" StrokeThickness="2" Opacity="0">
+						<Path.Fill>
+							<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+								<GradientStop Color="White" Offset="0"/>
+								<GradientStop Color="#FF6E8251" Offset="1"/>
+							</LinearGradientBrush>
+						</Path.Fill>
+					</Path>
+					<TextBlock Height="16" Text="Southern Healthcare Region" TextWrapping="Wrap" Foreground="#FF000000" FontSize="13.333" Width="217" TextAlignment="Center" Canvas.Top="46" Canvas.Left="72"/>
+					<Viewbox HorizontalAlignment="Stretch" x:Name="PIXPDQa" Width="60" Canvas.Top="124" Canvas.Left="39" Height="46">
+						<Canvas Width="103.261" Height="77.658">
+							<Path Width="29.619" Height="33.97" Canvas.Top="22.731" Stretch="Fill" StrokeThickness="2.66667" StrokeStartLineCap="Square" StrokeEndLineCap="Square" StrokeMiterLimit="2.75" Stroke="#FF30338C" Data="F1 M 18.8083,19.5685C 11.3663,19.5685 5.33335,18.5035 5.33335,17.1884L 5.33335,46.1105C 5.33335,47.4268 11.3663,48.4917 18.8083,48.4917C 26.2503,48.4917 32.2855,47.4268 32.2855,46.1105L 32.2855,17.1884C 32.2855,18.5035 26.2503,19.5685 18.8083,19.5685 Z " Fill="#FFFFFFFF" StrokeLineJoin="Round" Canvas.Left="0.771"/>
+							<Path Width="29.619" Height="7.427" Canvas.Top="20.351" Stretch="Fill" StrokeThickness="2.66667" StrokeStartLineCap="Square" StrokeEndLineCap="Square" StrokeMiterLimit="2.75" Stroke="#FF30338C" Data="F1 M 18.8083,19.5685C 26.2503,19.5685 32.2855,18.5035 32.2855,17.1884C 32.2855,15.8743 26.2503,14.8082 18.8083,14.8082C 11.3663,14.8082 5.33335,15.8743 5.33335,17.1884C 5.33335,18.5035 11.3663,19.5685 18.8083,19.5685 Z " Fill="#FFFFFFFF" Canvas.Left="0.771"/>
+							<Rectangle Width="88.653" Height="77.632" Canvas.Left="14.785" Stretch="Fill" StrokeThickness="2.66667" StrokeStartLineCap="Square" StrokeEndLineCap="Square" StrokeMiterLimit="2.75" Stroke="#FF30338C" Fill="#FFFFFFFF" x:Name="rectPIX_A" Canvas.Top="-0.124"/>
+							<TextBlock Width="72.048" Height="33.441" FontSize="13.333" TextWrapping="Wrap" Canvas.Left="22" Canvas.Top="46" TextAlignment="Center" Text="PIX"/>
+							<Image Width="72.048" Height="29" Canvas.Left="24" Canvas.Top="5" Source="http://upload.wikimedia.org/wikipedia/en/thumb/f/ff/General_Electric_logo.svg/500px-General_Electric_logo.svg.png" Opacity="0"/>
+						</Canvas>
+					</Viewbox>			
+					<Viewbox x:Name="XDSRega" Canvas.Left="114" Canvas.Top="124" Height="46" Width="63.55" RenderTransformOrigin="0.569,0.039">
+						<Canvas Width="113.413" Height="81" HorizontalAlignment="Stretch">
+							<Path Width="34.827" Height="40.02" Canvas.Left="78.169" Canvas.Top="31.389" Stretch="Fill" StrokeThickness="2.66667" StrokeStartLineCap="Square" StrokeEndLineCap="Square" StrokeMiterLimit="2.75" Stroke="#FFEEB111" Data="F1 M 98.3132,39.7078C 89.4332,39.7078 82.2332,38.4371 82.2332,36.8678L 82.2332,71.3798C 82.2332,72.9491 89.4332,74.2211 98.3132,74.2211C 107.193,74.2211 114.393,72.9491 114.393,71.3798L 114.393,36.8678C 114.393,38.4371 107.193,39.7078 98.3132,39.7078 Z " Fill="#FFFFFFFF" StrokeLineJoin="Round"/>
+							<Path Width="34.827" Height="8.347" Canvas.Left="78.169" Canvas.Top="28.549" Stretch="Fill" StrokeThickness="2.66667" StrokeStartLineCap="Square" StrokeEndLineCap="Square" StrokeMiterLimit="2.75" Stroke="#FFEEB111" Data="F1 M 98.3132,39.7078C 107.193,39.7078 114.393,38.4371 114.393,36.8678C 114.393,35.2997 107.193,34.0278 98.3132,34.0278C 89.4332,34.0278 82.2332,35.2997 82.2332,36.8678C 82.2332,38.4371 89.4332,39.7078 98.3132,39.7078 Z " Fill="#FFFFFFFF"/>
+							<Rectangle Width="89.111" Height="79.777" Canvas.Left="1.269" Canvas.Top="-0.145" Stretch="Fill" StrokeThickness="2.66667" StrokeStartLineCap="Square" StrokeEndLineCap="Square" StrokeMiterLimit="2.75" Stroke="#FFEEB111" Fill="#FFFFFFFF" x:Name="rectXDSReg_A"/>
+							<TextBlock Width="73" Height="41" FontSize="13.333" TextWrapping="Wrap" Canvas.Left="10" Canvas.Top="36" Text="XDS Registry" TextAlignment="Center"/>
+							<Image Width="72.048" Height="29" Canvas.Left="9" Canvas.Top="5" Source="http://upload.wikimedia.org/wikipedia/en/thumb/f/ff/General_Electric_logo.svg/500px-General_Electric_logo.svg.png" Opacity="0"/>
+						</Canvas>
+					</Viewbox>		
+					<Viewbox HorizontalAlignment="Left" x:Name="XDSRepa" Width="62.08" Height="46" VerticalAlignment="Bottom" Canvas.Left="191" Canvas.Top="124">
+						<Canvas Width="111.151" Height="82">
+							<Path Width="34.827" Height="40.02" Canvas.Top="31.826" Stretch="Fill" StrokeThickness="2.66667" StrokeStartLineCap="Square" StrokeEndLineCap="Square" StrokeMiterLimit="2.75" Stroke="#FFB32D33" Data="F1 M 98.3132,39.7078C 89.4332,39.7078 82.2332,38.4371 82.2332,36.8678L 82.2332,71.3798C 82.2332,72.9491 89.4332,74.2211 98.3132,74.2211C 107.193,74.2211 114.393,72.9491 114.393,71.3798L 114.393,36.8678C 114.393,38.4371 107.193,39.7078 98.3132,39.7078 Z " Fill="#FFFFFFFF" StrokeLineJoin="Round"/>
+							<Path Width="34.827" Height="8.347" Canvas.Top="28.986" Stretch="Fill" StrokeThickness="2.66667" StrokeStartLineCap="Square" StrokeEndLineCap="Square" StrokeMiterLimit="2.75" Stroke="#FFB32D33" Data="F1 M 98.3132,39.7078C 107.193,39.7078 114.393,38.4371 114.393,36.8678C 114.393,35.2997 107.193,34.0278 98.3132,34.0278C 89.4332,34.0278 82.2332,35.2997 82.2332,36.8678C 82.2332,38.4371 89.4332,39.7078 98.3132,39.7078 Z " Fill="#FFFFFFFF"/>
+							<Rectangle Width="89.111" Height="79.777" Canvas.Left="22.1" Canvas.Top="0.292" Stretch="Fill" StrokeThickness="2.66667" StrokeStartLineCap="Square" StrokeEndLineCap="Square" StrokeMiterLimit="2.75" Stroke="#FFB32D33" Fill="#FFFFFFFF" x:Name="rectXDSRep_A"/>
+							<TextBlock Width="84" Height="36" FontSize="13.333" TextWrapping="Wrap" Canvas.Left="24" Canvas.Top="36" Text="XDS Repository" TextAlignment="Center"/>
+							<Image Width="72.048" Height="29" Canvas.Left="31" Canvas.Top="5" Source="http://upload.wikimedia.org/wikipedia/en/thumb/f/ff/General_Electric_logo.svg/500px-General_Electric_logo.svg.png" Opacity="0"/>
+						</Canvas>
+					</Viewbox>	
+					<Viewbox x:Name="XCAa" Canvas.Left="242" Canvas.Top="66" Width="65.466" Height="44.591">
+						<Canvas Width="117.588" Height="80.506">
+							<Rectangle Width="89.111" Height="80.506" Stretch="Fill" StrokeThickness="2.66667" StrokeStartLineCap="Square" StrokeEndLineCap="Square" StrokeMiterLimit="2.75" Stroke="#FF546886" Fill="#FFFFFFFF" x:Name="rectXCA_A"/>
+							<TextBlock Width="62.8" Height="33.19" FontSize="13.333" TextWrapping="Wrap" Canvas.Left="13" Canvas.Top="48" Text="XCA" TextAlignment="Center"/>
+							<Path Width="14.3" Height="2.691" Fill="#FFFFFFFF" Stretch="Fill" Stroke="#FF546886" StrokeEndLineCap="Square" StrokeMiterLimit="2.75" StrokeStartLineCap="Square" StrokeThickness="2.66667" Canvas.Left="89.111" Canvas.Top="38.97" Data="M92.981293,40.095928 L111.59033,40.095928"/>
+							<Ellipse Width="14.585" Height="14.719" Fill="#FFFFFFFF" Stroke="#FF546886" StrokeEndLineCap="Square" StrokeMiterLimit="2.75" StrokeStartLineCap="Square" StrokeThickness="2.66667" Canvas.Left="100.854" Canvas.Top="32.619"/>
+							<Image Width="72.048" Height="29" Canvas.Left="8" Canvas.Top="8" Source="http://upload.wikimedia.org/wikipedia/en/thumb/f/ff/General_Electric_logo.svg/500px-General_Electric_logo.svg.png" Opacity="0"/>
+						</Canvas>
+					</Viewbox>	
+					<Viewbox x:Name="ATNAa" VerticalAlignment="Bottom" Height="39.977" Width="217.008" Canvas.Left="72" Canvas.Top="176">
+						<Canvas Width="459.657" Height="87.7773">
+							<Rectangle Width="453.657" Height="47.736" Canvas.Left="6" Canvas.Top="37" Stretch="Fill" StrokeThickness="2.66667" StrokeStartLineCap="Square" StrokeEndLineCap="Square" StrokeMiterLimit="2.75" Stroke="#FFC05000" Fill="#FFFFFFFF" x:Name="rectATNA_A"/>
+							<TextBlock Width="264.341" Height="Auto" FontSize="13.333" TextWrapping="Wrap" Canvas.Left="98.888" Canvas.Top="51.163" Text="ATNA - Audit Trail Repository" TextAlignment="Center"/>
+						</Canvas>
+					</Viewbox>
+					<Path Stretch="Fill" Fill="#FFAE5F0F" Data="M417.98,537.67385 L417.98,544.10836 421.531,544.10836 414.428,546.828 407.137,544.10836 410.876,544.10836 410.876,537.67385 z" Width="14" Height="19" Canvas.Left="217.333" Canvas.Top="174.265" UseLayoutRounding="False"/>
+					<Path Stretch="Fill" Fill="#FFC00000" Data="M407.137,515.85511 L414.428,512.194 421.531,515.85511 417.98,515.85511 417.98,517.45247 410.876,517.50904 410.876,515.85511 407.23527,515.92128 z" Width="14" Height="14" RenderTransformOrigin="0.5,0.5" Canvas.Left="82.148" Canvas.Top="111.081" UseLayoutRounding="False">
+						<Path.RenderTransform>
+							<TransformGroup>
+								<ScaleTransform ScaleX="-1" ScaleY="1"/>
+								<SkewTransform AngleX="0" AngleY="0"/>
+								<RotateTransform Angle="90"/>
+								<TranslateTransform X="17.455" Y="17.455"/>
+							</TransformGroup>
+						</Path.RenderTransform>
+					</Path>
+					<Path Stretch="Fill" Fill="#FFAE5F0F" Data="M417.98,538.28669 L417.98,544.10836 421.531,544.10836 414.428,546.828 407.137,544.10836 410.876,544.10836 410.876,538.28669 z" Width="14" Height="19" Canvas.Left="84.561" Canvas.Top="174.297" UseLayoutRounding="False"/>
+					<Path Stretch="Fill" Fill="#FFAE5F0F" Data="M417.98,511.42213 L417.98,544.10836 421.531,544.10836 414.428,546.828 407.137,544.10836 410.876,544.10836 410.876,511.42213 z" Width="14" Height="77" Canvas.Left="260.93" Canvas.Top="112.874" UseLayoutRounding="False"/>
+					<Path Stretch="Fill" Fill="#FFC00000" Data="M407.137,515.85511 L414.428,512.194 421.531,515.85511 417.98,515.85511 417.98,524.24147 410.876,524.29804 410.876,515.85511 407.23527,515.92128 z" Width="14" Height="32" RenderTransformOrigin="0.5,0.5" Canvas.Left="150.638" Canvas.Top="110.024" UseLayoutRounding="False">
+						<Path.RenderTransform>
+							<TransformGroup>
+								<ScaleTransform ScaleX="-1" ScaleY="1"/>
+								<SkewTransform AngleX="0" AngleY="0"/>
+								<RotateTransform Angle="270"/>
+								<TranslateTransform X="26.368" Y="8.5419999999999945"/>
+							</TransformGroup>
+						</Path.RenderTransform>
+					</Path>
+					<Path Stretch="Fill" Fill="#FFAE5F0F" Data="M414.428,532.16886 L421.531,534.93659 417.98,534.93659 417.98,538.41048 421.531,538.41048 414.428,541.13012 407.137,538.41048 410.876,538.41048 410.876,534.93659 407.23527,535.00276 z" Width="14" Height="21" Canvas.Left="107.254" Canvas.Top="143.502" RenderTransformOrigin="0.5,0.5" UseLayoutRounding="False">
+						<Path.RenderTransform>
+							<TransformGroup>
+								<ScaleTransform ScaleX="1" ScaleY="1"/>
+								<SkewTransform AngleX="0" AngleY="0"/>
+								<RotateTransform Angle="180"/>
+								<TranslateTransform X="28.537999999999997" Y="28.538000000000004"/>
+							</TransformGroup>
+						</Path.RenderTransform>
+					</Path>
+					<Path Fill="#FFC00000" Stretch="Fill" Width="42" Height="105" RenderTransformOrigin="0.828140247745849,0.04651843955535" Canvas.Left="185.981" Canvas.Top="61.209" Data="M34.778944,0 L41.882921,9.613274 38.635554,9.6527314 38.441554,101.45475 8.1390457,101.45475 8.28615,105.09568 8.1390457,105.19395 0,97.902562 8.1390457,90.799183 8.1390457,94.350369 30.981246,94.350369 31.319025,9.741631 27.585202,9.7869992 27.486923,9.613274 z" UseLayoutRounding="False">
+						<Path.RenderTransform>
+							<TransformGroup>
+								<ScaleTransform ScaleX="-1" ScaleY="1"/>
+								<SkewTransform AngleX="0" AngleY="0"/>
+								<RotateTransform Angle="450"/>
+								<TranslateTransform X="15.3705" Y="19.539499999999993"/>
+							</TransformGroup>
+						</Path.RenderTransform>
+					</Path>
+					<Viewbox Margin="0" VerticalAlignment="Bottom" Width="322" Height="59" x:Name="CreatorsA" RenderTransformOrigin="0.511,0.531" Canvas.Left="14" Canvas.Top="217">
+						<Canvas Width="373" Height="67">
+							<Path Width="328.648" Height="1" Fill="#FF808080" Stretch="Fill" Stroke="#FF808080" Data="M4.1871796,73.135665 L254.77646,73.135665" Canvas.Left="36.352" Canvas.Top="1.136" UseLayoutRounding="False"/>
+							<Viewbox x:Name="RadA" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="6.379" Canvas.Top="4.636" Height="66" Width="63">
+								<Canvas Width="132.577" Height="124.157">
+									<Path Stretch="Fill" Fill="#FF363896" Data="M407.137,518.41 L414.428,512.194 421.531,518.41 417.98,518.41 417.98,546.60283 410.876,546.60283 410.876,518.41 407.137,518.41 z" Width="14.393" Height="38.176" Canvas.Left="59.423" Canvas.Top="1.142"/>
+									<Viewbox Width="40" Height="80" x:Name="PersonRadA" Canvas.Left="131.465" Canvas.Top="50.913">
+										<Viewbox.RenderTransform>
+											<TransformGroup>
+												<ScaleTransform ScaleX="-1" ScaleY="1"/>
+												<SkewTransform AngleX="0" AngleY="0"/>
+												<RotateTransform Angle="0"/>
+												<TranslateTransform/>
+											</TransformGroup>
+										</Viewbox.RenderTransform>
+										<Canvas HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="40" Height="80">
+											<Path Stretch="Fill" Fill="#FF1A396A" Data="M 507.673,609.287C 507.673,615.013 501.357,619.697 493.637,619.697L 491.464,619.697C 483.743,619.697 477.429,615.013 477.429,609.287L 477.429,586.72C 477.429,580.995 483.743,576.31 491.464,576.31L 493.637,576.31C 501.357,576.31 507.673,580.995 507.673,586.72L 507.673,609.287 Z " Width="30.244" Height="49.841" Canvas.Top="23"/>
+											<Path Stretch="Fill" Fill="#FF1A396A" Data="M 505.366,566.488C 505.366,561.237 499.629,556.982 492.551,556.982C 485.474,556.982 479.737,561.237 479.737,566.488C 479.737,571.737 485.474,575.991 492.551,575.991C 499.629,575.991 505.366,571.737 505.366,566.488 Z " Width="25.629" Height="21.544" Canvas.Left="3" />
+										</Canvas>
+									</Viewbox>
+									<Canvas x:Name="canvRadA" Width="99.042" Height="81.822" Canvas.Top="41.598" RenderTransformOrigin="0.5,0.5">
+										<Canvas.RenderTransform>
+											<TransformGroup>
+												<ScaleTransform/>
+												<SkewTransform/>
+												<RotateTransform/>
+												<TranslateTransform/>
+											</TransformGroup>
+										</Canvas.RenderTransform>
+										<Path Stretch="Fill" StrokeThickness="2.66667" StrokeMiterLimit="2.75" Stroke="#FF373896" Fill="#FFFFFFFF" Data="F1 M 458.168,589.526C 449.605,589.526 442.662,588.217 442.662,586.6L 442.662,616.104C 442.662,617.721 449.605,619.03 458.168,619.03C 466.731,619.03 473.673,617.721 473.673,616.104L 473.673,586.6C 473.673,588.217 466.731,589.526 458.168,589.526 Z " Width="33.677" Height="40.754" Canvas.Left="65.365" Canvas.Top="41.068" StrokeLineJoin="Round"/>
+										<Path Stretch="Fill" StrokeThickness="2.66667" StrokeMiterLimit="2.75" Stroke="#FF373896" Fill="#FFFFFFFF" Data="F1 M 458.168,589.526C 466.731,589.526 473.673,588.217 473.673,586.6C 473.673,584.984 466.731,583.674 458.168,583.674C 449.605,583.674 442.662,584.984 442.662,586.6C 442.662,588.217 449.605,589.526 458.168,589.526 Z " Width="33.677" Height="8.519" Canvas.Left="65.365" Canvas.Top="38.299"/>
+										<Path Stretch="Fill" StrokeThickness="2.66667" StrokeMiterLimit="2.75" Stroke="#FF373896" Fill="#FFFFFFFF" Data="M 459.153,601.772C 459.153,607.48 454.782,612.151 449.439,612.151L 387.011,612.151C 381.668,612.151 377.297,607.48 377.297,601.772L 377.297,560.255C 377.297,554.546 381.668,549.875 387.011,549.875L 449.439,549.875C 454.782,549.875 459.153,554.546 459.153,560.255L 459.153,601.772 Z " Width="84.523" Height="73.699" x:Name="rectRadA"/>
+										<Image Width="84.523" Height="17" Canvas.Top="19.402"/>
+										<TextBlock Width="78.523" Canvas.Top="46" FontSize="13.333" LineStackingStrategy="BlockLineHeight" TextAlignment="Center" TextWrapping="Wrap" Text="Radiology" Canvas.Left="1"/>
+									</Canvas>
+								</Canvas>
+							</Viewbox>
+							<Viewbox x:Name="DermA" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="70.376" Canvas.Top="4.636" Height="66" Width="63">
+								<Canvas Width="132.577" Height="124.157">
+									<Path Stretch="Fill" Fill="#FF363896" Data="M 407.137,518.41L 414.428,512.194L 421.531,518.41L 417.98,518.41L 417.98,539.724L 421.531,539.724L 414.428,546.828L 407.137,539.724L 410.876,539.724L 410.876,518.41L 407.137,518.41 Z " Width="14.393" Height="39.242" Canvas.Left="34.923"/>
+									<Canvas x:Name="canvDermA" Width="99.042" Height="81.822" Canvas.Top="41.598" RenderTransformOrigin="0.5,0.5">
+										<Canvas.RenderTransform>
+											<TransformGroup>
+												<ScaleTransform/>
+												<SkewTransform/>
+												<RotateTransform/>
+												<TranslateTransform/>
+											</TransformGroup>
+										</Canvas.RenderTransform>
+										<Path Stretch="Fill" StrokeThickness="2.66667" StrokeMiterLimit="2.75" Stroke="#FF373896" Fill="#FFFFFFFF" Data="F1 M 458.168,589.526C 449.605,589.526 442.662,588.217 442.662,586.6L 442.662,616.104C 442.662,617.721 449.605,619.03 458.168,619.03C 466.731,619.03 473.673,617.721 473.673,616.104L 473.673,586.6C 473.673,588.217 466.731,589.526 458.168,589.526 Z " Width="33.677" Height="40.754" Canvas.Left="65.365" Canvas.Top="41.068" StrokeLineJoin="Round"/>
+										<Path Stretch="Fill" StrokeThickness="2.66667" StrokeMiterLimit="2.75" Stroke="#FF373896" Fill="#FFFFFFFF" Data="F1 M 458.168,589.526C 466.731,589.526 473.673,588.217 473.673,586.6C 473.673,584.984 466.731,583.674 458.168,583.674C 449.605,583.674 442.662,584.984 442.662,586.6C 442.662,588.217 449.605,589.526 458.168,589.526 Z " Width="33.677" Height="8.519" Canvas.Left="65.365" Canvas.Top="38.299"/>
+										<Path Stretch="Fill" StrokeThickness="2.66667" StrokeMiterLimit="2.75" Stroke="#FF373896" Fill="#FFFFFFFF" Data="M 459.153,601.772C 459.153,607.48 454.782,612.151 449.439,612.151L 387.011,612.151C 381.668,612.151 377.297,607.48 377.297,601.772L 377.297,560.255C 377.297,554.546 381.668,549.875 387.011,549.875L 449.439,549.875C 454.782,549.875 459.153,554.546 459.153,560.255L 459.153,601.772 Z " Width="84.523" Height="73.699" x:Name="rectDermA"/>
+										<Image Width="84.523" Height="17" Canvas.Top="19.402"/>
+										<TextBlock Width="77.857" Canvas.Top="49" FontSize="12" LineStackingStrategy="BlockLineHeight" TextAlignment="Center" Text="Dermatology" Canvas.Left="2"/>
+									</Canvas>
+									<Viewbox Width="40" Height="80" x:Name="PersonDermA" Canvas.Left="131.465" Canvas.Top="50.913">
+										<Viewbox.RenderTransform>
+											<TransformGroup>
+												<ScaleTransform ScaleX="-1" ScaleY="1"/>
+												<SkewTransform AngleX="0" AngleY="0"/>
+												<RotateTransform Angle="0"/>
+												<TranslateTransform/>
+											</TransformGroup>
+										</Viewbox.RenderTransform>
+										<Canvas HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="40" Height="80">
+											<Path Stretch="Fill" Fill="#FF1A396A" Data="M 507.673,609.287C 507.673,615.013 501.357,619.697 493.637,619.697L 491.464,619.697C 483.743,619.697 477.429,615.013 477.429,609.287L 477.429,586.72C 477.429,580.995 483.743,576.31 491.464,576.31L 493.637,576.31C 501.357,576.31 507.673,580.995 507.673,586.72L 507.673,609.287 Z " Width="30.244" Height="49.841" Canvas.Top="23"/>
+											<Path Stretch="Fill" Fill="#FF1A396A" Data="M 505.366,566.488C 505.366,561.237 499.629,556.982 492.551,556.982C 485.474,556.982 479.737,561.237 479.737,566.488C 479.737,571.737 485.474,575.991 492.551,575.991C 499.629,575.991 505.366,571.737 505.366,566.488 Z " Width="25.629" Height="21.544" Canvas.Left="3" />
+										</Canvas>
+									</Viewbox>
+								</Canvas>
+							</Viewbox>
+							<Viewbox x:Name="CareMgrA" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="134.737" Canvas.Top="4.636" Height="66" Width="63">
+								<Canvas Height="124" Width="132">
+									<Path Stretch="Fill" Fill="#FF363896" Data="M 407.137,518.41L 414.428,512.194L 421.531,518.41L 417.98,518.41L 417.98,539.724L 421.531,539.724L 414.428,546.828L 407.137,539.724L 410.876,539.724L 410.876,518.41L 407.137,518.41 Z " Width="14.393" Height="39.242" Canvas.Left="35.298" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+									<Canvas x:Name="canvCareMgrA" Width="84.523" Height="73.699" Canvas.Top="41.598" RenderTransformOrigin="0.5,0.5">
+										<Canvas.RenderTransform>
+											<TransformGroup>
+												<ScaleTransform/>
+												<SkewTransform/>
+												<RotateTransform/>
+												<TranslateTransform/>
+											</TransformGroup>
+										</Canvas.RenderTransform>
+										<Path Stretch="Fill" StrokeThickness="2.66667" StrokeMiterLimit="2.75" Stroke="#FF373896" Fill="#FFFFFFFF" Data="F1 M 458.168,589.526C 449.605,589.526 442.662,588.217 442.662,586.6L 442.662,616.104C 442.662,617.721 449.605,619.03 458.168,619.03C 466.731,619.03 473.673,617.721 473.673,616.104L 473.673,586.6C 473.673,588.217 466.731,589.526 458.168,589.526 Z " Width="33.677" Height="40.754" Canvas.Left="60.468" Canvas.Top="40.171" StrokeLineJoin="Round"/>
+										<Path Stretch="Fill" StrokeThickness="2.66667" StrokeMiterLimit="2.75" Stroke="#FF373896" Fill="#FFFFFFFF" Data="F1 M 458.168,589.526C 466.731,589.526 473.673,588.217 473.673,586.6C 473.673,584.984 466.731,583.674 458.168,583.674C 449.605,583.674 442.662,584.984 442.662,586.6C 442.662,588.217 449.605,589.526 458.168,589.526 Z " Width="33.677" Height="8.519" Canvas.Left="60.468" Canvas.Top="37.402"/>
+										<Path Stretch="Fill" StrokeThickness="2.66667" StrokeMiterLimit="2.75" Stroke="#FF373896" Fill="#FFFFFFFF" Data="M 459.153,601.772C 459.153,607.48 454.782,612.151 449.439,612.151L 387.011,612.151C 381.668,612.151 377.297,607.48 377.297,601.772L 377.297,560.255C 377.297,554.546 381.668,549.875 387.011,549.875L 449.439,549.875C 454.782,549.875 459.153,554.546 459.153,560.255L 459.153,601.772 Z " Width="84.523" Height="73.699" x:Name="rectCareMgrA" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+										<TextBlock Width="81" Canvas.Top="48" FontSize="13.333" LineStackingStrategy="BlockLineHeight" TextAlignment="Center" TextWrapping="Wrap" Text="Care Plan" Height="19"/>
+										<Image Source="http://www.thecaremanager.net/images/gifs/dca_logo.gif" Stretch="Uniform" Width="84.523" Height="25" Canvas.Top="8"/>
+									</Canvas>
+									<Viewbox Width="40" Height="80" x:Name="PersonCareMgrA" Canvas.Left="131.465" Canvas.Top="50.913">
+										<Viewbox.RenderTransform>
+											<TransformGroup>
+												<ScaleTransform ScaleX="-1" ScaleY="1"/>
+												<SkewTransform AngleX="0" AngleY="0"/>
+												<RotateTransform Angle="0"/>
+												<TranslateTransform/>
+											</TransformGroup>
+										</Viewbox.RenderTransform>
+										<Canvas HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="40" Height="80">
+											<Path Stretch="Fill" Fill="#FF1A396A" Data="M 507.673,609.287C 507.673,615.013 501.357,619.697 493.637,619.697L 491.464,619.697C 483.743,619.697 477.429,615.013 477.429,609.287L 477.429,586.72C 477.429,580.995 483.743,576.31 491.464,576.31L 493.637,576.31C 501.357,576.31 507.673,580.995 507.673,586.72L 507.673,609.287 Z " Width="30.244" Height="49.841" Canvas.Top="23"/>
+											<Path Stretch="Fill" Fill="#FF1A396A" Data="M 505.366,566.488C 505.366,561.237 499.629,556.982 492.551,556.982C 485.474,556.982 479.737,561.237 479.737,566.488C 479.737,571.737 485.474,575.991 492.551,575.991C 499.629,575.991 505.366,571.737 505.366,566.488 Z " Width="25.629" Height="21.544" Canvas.Left="3" />
+										</Canvas>
+									</Viewbox>
+								</Canvas>
+							</Viewbox>
+							<Viewbox x:Name="ViewerA" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="195.723" Canvas.Top="4.636" Height="66" Width="63">
+								<Canvas Width="132" Height="124.157">
+									<Path Stretch="Fill" Fill="#FF363896" Data="M 407.137,518.41L 414.428,512.194L 421.531,518.41L 417.98,518.41L 417.98,539.724L 421.531,539.724L 414.428,546.828L 407.137,539.724L 410.876,539.724L 410.876,518.41L 407.137,518.41 Z " Width="14" Height="39" Canvas.Left="45.298" HorizontalAlignment="Left" VerticalAlignment="Top" UseLayoutRounding="False"/>
+									<Canvas x:Name="canvViewerA" Width="84.523" Height="73.699" Canvas.Top="41.598" RenderTransformOrigin="0.5,0.5">
+										<Canvas.RenderTransform>
+											<TransformGroup>
+												<ScaleTransform/>
+												<SkewTransform/>
+												<RotateTransform/>
+												<TranslateTransform/>
+											</TransformGroup>
+										</Canvas.RenderTransform>
+										<Path Stretch="Fill" StrokeThickness="2.66667" StrokeMiterLimit="2.75" Stroke="#FF373896" Fill="#FFFFFFFF" Data="M 459.153,601.772C 459.153,607.48 454.782,612.151 449.439,612.151L 387.011,612.151C 381.668,612.151 377.297,607.48 377.297,601.772L 377.297,560.255C 377.297,554.546 381.668,549.875 387.011,549.875L 449.439,549.875C 454.782,549.875 459.153,554.546 459.153,560.255L 459.153,601.772 Z " Width="84.523" Height="73.699" x:Name="rectViewerA" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="6.004"/>
+										<TextBlock Width="84.523" Canvas.Top="46" FontSize="13.333" LineStackingStrategy="BlockLineHeight" TextAlignment="Center" TextWrapping="Wrap" Canvas.Left="6" Text="Viewer"/>
+										<Image Width="84.523" Height="31" Canvas.Top="8" Source="http://upload.wikimedia.org/wikipedia/en/thumb/f/ff/General_Electric_logo.svg/500px-General_Electric_logo.svg.png" Canvas.Left="6" Opacity="0"/>
+									</Canvas>
+									<Viewbox Width="40" Height="80" x:Name="PersonViewerA" Canvas.Left="124.981" Canvas.Top="50.102">
+										<Viewbox.RenderTransform>
+											<TransformGroup>
+												<ScaleTransform ScaleX="-1" ScaleY="1"/>
+												<SkewTransform AngleX="0" AngleY="0"/>
+												<RotateTransform Angle="0"/>
+												<TranslateTransform/>
+											</TransformGroup>
+										</Viewbox.RenderTransform>
+										<Canvas HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="40" Height="80">
+											<Path Stretch="Fill" Fill="#FF1A396A" Data="M 507.673,609.287C 507.673,615.013 501.357,619.697 493.637,619.697L 491.464,619.697C 483.743,619.697 477.429,615.013 477.429,609.287L 477.429,586.72C 477.429,580.995 483.743,576.31 491.464,576.31L 493.637,576.31C 501.357,576.31 507.673,580.995 507.673,586.72L 507.673,609.287 Z " Width="30.244" Height="49.841" Canvas.Top="23"/>
+											<Path Stretch="Fill" Fill="#FF1A396A" Data="M 505.366,566.488C 505.366,561.237 499.629,556.982 492.551,556.982C 485.474,556.982 479.737,561.237 479.737,566.488C 479.737,571.737 485.474,575.991 492.551,575.991C 499.629,575.991 505.366,571.737 505.366,566.488 Z " Width="25.629" Height="21.544" Canvas.Left="3" />
+										</Canvas>
+									</Viewbox>
+								</Canvas>
+							</Viewbox>
+							<Viewbox x:Name="GPA" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="258" Canvas.Top="4" Height="66" Width="63">
+								<Canvas Width="132.577" Height="124.157">
+									<Path Stretch="Fill" Fill="#FF363896" Data="M407.137,518.41 L414.428,512.194 421.531,518.41 417.98,518.41 417.98,546.60283 410.876,546.60283 410.876,518.41 407.137,518.41 z" Width="14" Height="38" Canvas.Left="35.62" Canvas.Top="1.23" UseLayoutRounding="False"/>
+									<Viewbox Width="40" Height="80" x:Name="PersonGPA" Canvas.Left="131.465" Canvas.Top="50.913">
+										<Viewbox.RenderTransform>
+											<TransformGroup>
+												<ScaleTransform ScaleX="-1" ScaleY="1"/>
+												<SkewTransform AngleX="0" AngleY="0"/>
+												<RotateTransform Angle="0"/>
+												<TranslateTransform/>
+											</TransformGroup>
+										</Viewbox.RenderTransform>
+										<Canvas HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="40" Height="80">
+											<Path Stretch="Fill" Fill="#FF1A396A" Data="M 507.673,609.287C 507.673,615.013 501.357,619.697 493.637,619.697L 491.464,619.697C 483.743,619.697 477.429,615.013 477.429,609.287L 477.429,586.72C 477.429,580.995 483.743,576.31 491.464,576.31L 493.637,576.31C 501.357,576.31 507.673,580.995 507.673,586.72L 507.673,609.287 Z " Width="30.244" Height="49.841" Canvas.Top="23"/>
+											<Path Stretch="Fill" Fill="#FF1A396A" Data="M 505.366,566.488C 505.366,561.237 499.629,556.982 492.551,556.982C 485.474,556.982 479.737,561.237 479.737,566.488C 479.737,571.737 485.474,575.991 492.551,575.991C 499.629,575.991 505.366,571.737 505.366,566.488 Z " Width="25.629" Height="21.544" Canvas.Left="3" />
+										</Canvas>
+									</Viewbox>
+									<Canvas x:Name="canvGPA" Width="99.042" Height="81.822" Canvas.Top="41.598" RenderTransformOrigin="0.5,0.5">
+										<Canvas.RenderTransform>
+											<TransformGroup>
+												<ScaleTransform/>
+												<SkewTransform/>
+												<RotateTransform/>
+												<TranslateTransform/>
+											</TransformGroup>
+										</Canvas.RenderTransform>
+										<Path Stretch="Fill" StrokeThickness="2.66667" StrokeMiterLimit="2.75" Stroke="#FF373896" Fill="#FFFFFFFF" Data="F1 M 458.168,589.526C 449.605,589.526 442.662,588.217 442.662,586.6L 442.662,616.104C 442.662,617.721 449.605,619.03 458.168,619.03C 466.731,619.03 473.673,617.721 473.673,616.104L 473.673,586.6C 473.673,588.217 466.731,589.526 458.168,589.526 Z " Width="33.677" Height="40.754" Canvas.Left="65.365" Canvas.Top="41.068" StrokeLineJoin="Round"/>
+										<Path Stretch="Fill" StrokeThickness="2.66667" StrokeMiterLimit="2.75" Stroke="#FF373896" Fill="#FFFFFFFF" Data="F1 M 458.168,589.526C 466.731,589.526 473.673,588.217 473.673,586.6C 473.673,584.984 466.731,583.674 458.168,583.674C 449.605,583.674 442.662,584.984 442.662,586.6C 442.662,588.217 449.605,589.526 458.168,589.526 Z " Width="33.677" Height="8.519" Canvas.Left="65.365" Canvas.Top="38.299"/>
+										<Path Stretch="Fill" StrokeThickness="2.66667" StrokeMiterLimit="2.75" Stroke="#FF373896" Fill="#FFFFFFFF" Data="M 459.153,601.772C 459.153,607.48 454.782,612.151 449.439,612.151L 387.011,612.151C 381.668,612.151 377.297,607.48 377.297,601.772L 377.297,560.255C 377.297,554.546 381.668,549.875 387.011,549.875L 449.439,549.875C 454.782,549.875 459.153,554.546 459.153,560.255L 459.153,601.772 Z " Width="84.523" Height="73.699" x:Name="rectGPA"/>
+										<Image Opacity="0" Source="http://www.htrsolutions.com.au/wp-content/themes/PerfectBiz/images/HTR%20Logo%20260x152.jpg" Width="84.523" Height="34" Canvas.Top="8" Stretch="Uniform"/>
+										<TextBlock Width="78.523" Canvas.Top="46" FontSize="13.333" LineStackingStrategy="BlockLineHeight" TextAlignment="Center" TextWrapping="Wrap" Text="Oncologist" Canvas.Left="2"/>
+									</Canvas>
+								</Canvas>
+							</Viewbox>
+							<Viewbox x:Name="iPhoneA" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="323" Canvas.Top="5" Height="66" Width="63">
+								<Canvas Width="132.577" Height="124.157">
+									<Path Stretch="Fill" Fill="#FF363896" Data="M407.137,518.41 L414.428,512.194 421.531,518.41 417.98,518.41 417.98,546.60283 410.876,546.60283 410.876,518.41 407.137,518.41 z" Width="14" Height="38" Canvas.Left="23.62" Canvas.Top="1.23" UseLayoutRounding="False"/>
+									<Viewbox Width="40" Height="80" x:Name="PersoniPhoneA" Canvas.Left="131.465" Canvas.Top="50.913">
+										<Viewbox.RenderTransform>
+											<TransformGroup>
+												<ScaleTransform ScaleX="-1" ScaleY="1"/>
+												<SkewTransform AngleX="0" AngleY="0"/>
+												<RotateTransform Angle="0"/>
+												<TranslateTransform/>
+											</TransformGroup>
+										</Viewbox.RenderTransform>
+										<Canvas HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="40" Height="80">
+											<Path Stretch="Fill" Fill="#FF1A396A" Data="M 507.673,609.287C 507.673,615.013 501.357,619.697 493.637,619.697L 491.464,619.697C 483.743,619.697 477.429,615.013 477.429,609.287L 477.429,586.72C 477.429,580.995 483.743,576.31 491.464,576.31L 493.637,576.31C 501.357,576.31 507.673,580.995 507.673,586.72L 507.673,609.287 Z " Width="30.244" Height="49.841" Canvas.Top="23"/>
+											<Path Stretch="Fill" Fill="#FF1A396A" Data="M 505.366,566.488C 505.366,561.237 499.629,556.982 492.551,556.982C 485.474,556.982 479.737,561.237 479.737,566.488C 479.737,571.737 485.474,575.991 492.551,575.991C 499.629,575.991 505.366,571.737 505.366,566.488 Z " Width="25.629" Height="21.544" Canvas.Left="3" />
+										</Canvas>
+									</Viewbox>
+									<Canvas x:Name="canviPhoneA" Width="99.042" Height="81.822" Canvas.Top="41.598" RenderTransformOrigin="0.5,0.5">
+										<Canvas.RenderTransform>
+											<TransformGroup>
+												<ScaleTransform/>
+												<SkewTransform/>
+												<RotateTransform/>
+												<TranslateTransform/>
+											</TransformGroup>
+										</Canvas.RenderTransform>
+										<Path Stretch="Fill" StrokeThickness="2.66667" StrokeMiterLimit="2.75" Stroke="#FF373896" Fill="#FFFFFFFF" Data="M 459.153,601.772C 459.153,607.48 454.782,612.151 449.439,612.151L 387.011,612.151C 381.668,612.151 377.297,607.48 377.297,601.772L 377.297,560.255C 377.297,554.546 381.668,549.875 387.011,549.875L 449.439,549.875C 454.782,549.875 459.153,554.546 459.153,560.255L 459.153,601.772 Z " Width="84.523" Height="73.699" x:Name="rectiPhoneA"/>
+										<Path x:Name="cphone" Data="M2,14.083 L25.5,14.083 L25.5,42.254001 L2,42.254001 z M21.894,13.5 L21.894,2.0000002 M8.167,24.465002 L8.167,21.417006 M13.518999,38.494002 L13.518999,35.446007 M18.583998,33.683002 L18.583998,30.636007 M13.518999,33.683002 L13.518999,30.636007 M8.167,33.683002 L8.167,30.636007 M18.583998,29.108002 L18.583998,26.061007 M13.518999,29.108002 L13.518999,26.061007 M18.583998,24.465002 L18.583998,21.417006 M8.1670058,29.107995 L8.1670058,26.060999 M13.519002,24.465002 L13.519002,21.417006" Fill="White" Height="44.254" Stretch="Fill" Stroke="#FF373896" StrokeThickness="4" StrokeMiterLimit="2.75" Width="27.5" Canvas.Left="69.356" Canvas.Top="32.877" UseLayoutRounding="False" >
+											<Path.RenderTransform>
+												<TransformGroup>
+													<RotateTransform Angle="0" CenterX="0" CenterY="44"/>
+													<RotateTransform Angle="0" CenterX="27" CenterY="44"/>
+												</TransformGroup>
+											</Path.RenderTransform>
+										</Path>
+										<Image Width="84.523" Height="34" Canvas.Top="8" Source="http://www.himss.org/vendorlogos/Mach7.gif" Stretch="UniformToFill"/>
+										<TextBlock Width="78.523" Canvas.Top="47" FontSize="13.333" LineStackingStrategy="BlockLineHeight" TextAlignment="Center" TextWrapping="Wrap" Text="Phone"/>
+									</Canvas>
+								</Canvas>
+							</Viewbox>
+							<Viewbox x:Name="GPA_Copy" HorizontalAlignment="Left" VerticalAlignment="Top" Canvas.Left="258" Canvas.Top="5" Height="66" Width="63">
+								<Canvas Width="132.577" Height="124.157">
+									<Path Stretch="Fill" Fill="#FF363896" Data="M407.137,518.41 L414.428,512.194 421.531,518.41 417.98,518.41 417.98,546.60283 410.876,546.60283 410.876,518.41 407.137,518.41 z" Width="14" Height="38" Canvas.Left="35.62" Canvas.Top="1.23" UseLayoutRounding="False"/>
+									<Viewbox Width="40" Height="80" x:Name="PersonGPA1" Canvas.Left="131.465" Canvas.Top="50.913">
+										<Viewbox.RenderTransform>
+											<TransformGroup>
+												<ScaleTransform ScaleX="-1" ScaleY="1"/>
+												<SkewTransform AngleX="0" AngleY="0"/>
+												<RotateTransform Angle="0"/>
+												<TranslateTransform/>
+											</TransformGroup>
+										</Viewbox.RenderTransform>
+										<Canvas HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="40" Height="80">
+											<Path Stretch="Fill" Fill="#FF1A396A" Data="M 507.673,609.287C 507.673,615.013 501.357,619.697 493.637,619.697L 491.464,619.697C 483.743,619.697 477.429,615.013 477.429,609.287L 477.429,586.72C 477.429,580.995 483.743,576.31 491.464,576.31L 493.637,576.31C 501.357,576.31 507.673,580.995 507.673,586.72L 507.673,609.287 Z " Width="30.244" Height="49.841" Canvas.Top="23"/>
+											<Path Stretch="Fill" Fill="#FF1A396A" Data="M 505.366,566.488C 505.366,561.237 499.629,556.982 492.551,556.982C 485.474,556.982 479.737,561.237 479.737,566.488C 479.737,571.737 485.474,575.991 492.551,575.991C 499.629,575.991 505.366,571.737 505.366,566.488 Z " Width="25.629" Height="21.544" Canvas.Left="3" />
+										</Canvas>
+									</Viewbox>
+									<Canvas x:Name="canvGPA1" Width="99.042" Height="81.822" Canvas.Top="41.598" RenderTransformOrigin="0.5,0.5">
+										<Canvas.RenderTransform>
+											<TransformGroup>
+												<ScaleTransform/>
+												<SkewTransform/>
+												<RotateTransform/>
+												<TranslateTransform/>
+											</TransformGroup>
+										</Canvas.RenderTransform>
+										<Path Stretch="Fill" StrokeThickness="2.66667" StrokeMiterLimit="2.75" Stroke="#FF373896" Fill="#FFFFFFFF" Data="F1 M 458.168,589.526C 449.605,589.526 442.662,588.217 442.662,586.6L 442.662,616.104C 442.662,617.721 449.605,619.03 458.168,619.03C 466.731,619.03 473.673,617.721 473.673,616.104L 473.673,586.6C 473.673,588.217 466.731,589.526 458.168,589.526 Z " Width="33.677" Height="40.754" Canvas.Left="65.365" Canvas.Top="41.068" StrokeLineJoin="Round"/>
+										<Path Stretch="Fill" StrokeThickness="2.66667" StrokeMiterLimit="2.75" Stroke="#FF373896" Fill="#FFFFFFFF" Data="F1 M 458.168,589.526C 466.731,589.526 473.673,588.217 473.673,586.6C 473.673,584.984 466.731,583.674 458.168,583.674C 449.605,583.674 442.662,584.984 442.662,586.6C 442.662,588.217 449.605,589.526 458.168,589.526 Z " Width="33.677" Height="8.519" Canvas.Left="65.365" Canvas.Top="38.299"/>
+										<Path Stretch="Fill" StrokeThickness="2.66667" StrokeMiterLimit="2.75" Stroke="#FF373896" Fill="#FFFFFFFF" Data="M 459.153,601.772C 459.153,607.48 454.782,612.151 449.439,612.151L 387.011,612.151C 381.668,612.151 377.297,607.48 377.297,601.772L 377.297,560.255C 377.297,554.546 381.668,549.875 387.011,549.875L 449.439,549.875C 454.782,549.875 459.153,554.546 459.153,560.255L 459.153,601.772 Z " Width="84.523" Height="73.699" x:Name="rectGPA1"/>
+										<Image Opacity="0" Source="http://www.htrsolutions.com.au/wp-content/themes/PerfectBiz/images/HTR%20Logo%20260x152.jpg" Width="84.523" Height="34" Canvas.Top="8" Stretch="Uniform"/>
+										<TextBlock Width="78.523" Canvas.Top="46" FontSize="13.333" LineStackingStrategy="BlockLineHeight" TextAlignment="Center" TextWrapping="Wrap" Text="Oncologist" Canvas.Left="2"/>
+									</Canvas>
+								</Canvas>
+							</Viewbox>
+						</Canvas>
+					</Viewbox>
+
+				</Canvas>
+			</Viewbox>
+			<Path x:Name="path" Stretch="Fill" Data="M416.23788,500.22809 L425.48878,505.46955 421.93778,505.46955 421.93778,523.05369 425.48878,523.05369 416.23788,528.57672 407.137,523.05369 410.876,523.05369 410.876,505.46955 407.23527,505.53572 z" RenderTransformOrigin="0.5,0.5" Margin="0,60.22,280.32,0" VerticalAlignment="Top" Height="42.2" UseLayoutRounding="False" HorizontalAlignment="Right" Width="22" d:LayoutOverrides="HorizontalAlignment, VerticalAlignment">
+				<Path.Fill>
+					<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+						<GradientStop Color="#FFD200B0" Offset="0"/>
+						<GradientStop Color="#FFBD4FBA" Offset="1"/>
+					</LinearGradientBrush>
+				</Path.Fill>
+				<Path.RenderTransform>
+					<CompositeTransform Rotation="90" SkewX="0" SkewY="0" ScaleY="1" ScaleX="1" TranslateX="1.6269999999999953" TranslateY="5.5850000000000009"/>
+				</Path.RenderTransform>
+			</Path>
+			<TextBlock Text="Cancer Care Scenario" TextAlignment="Center" Foreground="#FF000000" FontSize="29.333" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="-30"/>
+			<Image Source="http://wiki.ihe.net/images/0/02/IHE_LOGO_Thumb.jpg" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="44.995" />
+			</Grid>
+			
+	</Viewbox>
+>>>>>>> 51f2ed1... Updated User Interface for the Silverlight client
 </UserControl>

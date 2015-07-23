@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0"?>
 <configuration xmlns:xaml="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
   <!--<diagram src="http://localhost/visualizer/sample.xaml" name="Sample Scaling"/>-->
-  <diagram src="http://localhost:55555/Config/SimpleSurfaceDemo.xaml" name="Canadian Infrastructure"/>
-  <server address="142.222.45.74" port="4530" name="Local Test Server" imageSrc="http://localhost:55555/Assets/development.png"/>
+  <diagram src="http://localhost:55555/Config/EHR_Infostructure.xaml" name="Canadian Infrastructure"/>
+  <server address="127.0.0.1" port="4530" name="Local Test Server" imageSrc="http://localhost:55555/Assets/development.png"/>
   <!--<server address="ngs.marc-hi.ca" port="4350" name="MARC-HI Environment" imageSrc="http://localhost:55555/Assets/server.png"/>-->
   <!-- Items Prefixed with XAML Are "About" -->
   <xaml:Paragraph>

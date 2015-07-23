@@ -1,6 +1,6 @@
 ﻿<Application xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
-             x:Class="MARC.EHRS.VisualizationClient.Silverlight.App"
+             x:Class="MARC.EHRS.Visualization.Client.Silverlight.UI.App"
             xmlns:sdk="http://schemas.microsoft.com/winfx/2006/xaml/presentation/sdk"  >
     <Application.Resources>
         <Style x:Key="ToggleButtonStyle" TargetType="ToggleButton">

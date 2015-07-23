@@ -8,7 +8,7 @@ using System.Windows.Media.Imaging;
 using System.Net;
 using System.Windows.Threading;
 using System.Text.RegularExpressions;
-using MARC.EHRS.VisualizationClient;
+using MARC.EHRS.Visualization.Client.Silverlight.UI.Core;
 
 namespace MARC.EHRS.Visualization.Client.Silverlight.UI.Config
 {

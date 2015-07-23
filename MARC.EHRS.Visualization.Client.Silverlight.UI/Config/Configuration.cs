@@ -35,6 +35,12 @@ namespace MARC.EHRS.Visualization.Client.Silverlight.UI.Config
         public List<Server> Servers { get; set; }
 
         /// <summary>
+        /// Sponsors
+        /// </summary>
+        [XmlElement("sponsor")]
+        public List<String> Sponsors { get; set; }
+
+        /// <summary>
         /// About
         /// </summary>
         [XmlAnyElement()]

@@ -10,7 +10,7 @@ using System.IO;
 using System.Windows.Threading;
 using System.Threading;
 
-namespace MARC.EHRS.VisualizationClient
+namespace MARC.EHRS.Visualization.Client.Silverlight.UI.Core
 {
     /// <summary>
     /// Represents a client connection to the visualizer
