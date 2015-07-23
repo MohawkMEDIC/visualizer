@@ -1,0 +1,7 @@
+C:\Users\fyfej\Documents\git\medicvisualizer\MARC.HI.EHRS.Visualization.Server\obj\Debug\MARC.EHRS.Visualization.Server.csprojResolveAssemblyReference.cache
+C:\Users\fyfej\Documents\git\medicvisualizer\bin\Debug\ClientAccessPolicy.xml
+C:\Users\fyfej\Documents\git\medicvisualizer\bin\Debug\MARC.EHRS.VisualizationServer.exe.config
+C:\Users\fyfej\Documents\git\medicvisualizer\bin\Debug\MARC.EHRS.VisualizationServer.exe
+C:\Users\fyfej\Documents\git\medicvisualizer\bin\Debug\MARC.EHRS.VisualizationServer.pdb
+C:\Users\fyfej\Documents\git\medicvisualizer\MARC.HI.EHRS.Visualization.Server\obj\Debug\MARC.EHRS.VisualizationServer.exe
+C:\Users\fyfej\Documents\git\medicvisualizer\MARC.HI.EHRS.Visualization.Server\obj\Debug\MARC.EHRS.VisualizationServer.pdb

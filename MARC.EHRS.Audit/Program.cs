@@ -23,7 +23,7 @@ namespace MARC.EHRS.Audit
         /// </summary>
         static void Main(string[] args)
         {
-            if (args.Length > 0 && args[0] == "c")
+            if (args.Length > 0 && args[0] == "--console")
                 Console();
             else
             {

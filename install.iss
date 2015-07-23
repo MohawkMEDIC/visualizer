@@ -1,4 +1,4 @@
-; MARC-HI Visualizer Version 3.0 Installation
+; MARC-HI Visualizer Version 4.0 Installation
 
 [Setup]
 AppId={{3BFA5A48-F91F-4db7-8405-AE431861D190}
@@ -16,18 +16,22 @@ AllowNoIcons=yes
 OutputDir=.\dist
 Compression=lzma
 SolidCompression=yes
-AppCopyright=Copyright (C) 2009-2013, Mohawk College of Applied Arts and Technology
+AppCopyright=Copyright (C) 2009-2015, Mohawk College of Applied Arts and Technology
 RestartIfNeededByRun=yes
 WizardImageFile=.\install-logo.bmp
 [Files]
 Source: .\bin\Debug\ClientAccessPolicy.xml; DestDir: {app}; Flags: ignoreversion; Components: srv
 Source: .\bin\Debug\MARC.EHRS.Visualization.Core.dll; DestDir: {app}; Flags: ignoreversion; Components: srv
-Source: .\bin\Debug\MARC.EHRS.VisualizationServer.exe; DestDir: {app}; Flags: restartreplace ignoreversion; Components: srv
-Source: .\bin\Debug\MARC.EHRS.VisualizationServer.exe.config; DestDir: {app}; Flags: ignoreversion; Components: srv
+Source: .\bin\Debug\VisualizerServer.exe; DestDir: {app}; Flags: restartreplace ignoreversion; Components: srv
+Source: .\bin\Debug\VisualizerServer.exe.config; DestDir: {app}; Flags: ignoreversion; Components: srv
 Source: .\bin\Debug\MARC.EHRS.VisualizationServer.Notifier.dll; DestDir: {app}; Flags: ignoreversion; Components: srv
 Source: .\bin\Debug\MARC.EHRS.VisualizationServer.Syslog.dll; DestDir: {app}; Flags: ignoreversion; Components: srv
 Source: .\bin\Debug\MARC.HI.EHRS.SVC.Auditing.Atna.dll; DestDir: {app}; Flags: ignoreversion; Components: srv
+Source: .\bin\Debug\MARC.HI.EHRS.SVC.Auditing.dll; DestDir: {app}; Flags: ignoreversion; Components: srv
 Source: .\bin\Debug\MARC.HI.EHRS.SVC.Core.dll; DestDir: {app}; Flags: ignoreversion; Components: srv
+Source: .\bin\Debug\MARC.HI.EHRS.SVC.Messaging.Multi.dll; DestDir: {app}; Flags: ignoreversion; Components: srv
+Source: .\bin\Debug\MARC.EHRS.VisualizationServer.Actions.dll; DestDir: {app}; Flags: ignoreversion; Components: srv
+
 Source: .\MARC.EHRS.VisualizationClient.Silverlight\Bin\Debug\MARC.EHRS.VisualizationClient.Silverlight.xap; DestDir: {app}\web\ClientBin; Components: web
 Source: .\MARC.EHRS.VisualizationClient.Silverlight\Bin\Debug\MARC.EHRS.Silverlight.dll; DestDir: {app}\web\ClientBin; Components: web
 Source: .\MARC.EHRS.VisualizationClient.Silverlight\Bin\Debug\MARC.EHRS.VisualizationClient.Silverlight.dll; DestDir: {app}\web\ClientBin; Components: web
@@ -37,7 +41,7 @@ Source: .\MARC.EHRS.VisualizationClient.Silverlight\Bin\Debug\System.Xml.Linq.dl
 Source: .\MARC.EHRS.VisualizationClient.Silverlight\Bin\Debug\System.Xml.Serialization.dll; DestDir: {app}\web\ClientBin; Components: web
 Source: .\MARC.EHRS.VisualizationClient.Silverlight.Test\ClientBin\*.png; DestDir: {app}\web\ClientBin; Components: web
 Source: .\MARC.EHRS.VisualizationClient.Silverlight.Test\default.html; DestDir: {app}\web; Components: web
-Source: .\*.*; Excludes: "*.dll,*.xml,*.pdb,*.obj,*.exe,*.suo,*.iss"; Flags: recursesubdirs; DestDir: {app}\src; Components: src
+Source: .\*.*; Excludes: "*.dll,*.xml,*.pdb,*.obj,*.exe,*.suo,*.iss; *.png;"; Flags: recursesubdirs; DestDir: {app}\src; Components: src
 Source: .\netfx\dotNetFx40_Full_setup.exe; DestDir: {tmp} ; Flags: dontcopy
 Source: .\License.rtf; DestDir: {app} ; Flags: dontcopy
 

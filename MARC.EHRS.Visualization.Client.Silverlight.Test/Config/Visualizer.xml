@@ -1,0 +1,43 @@
+﻿<?xml version="1.0"?>
+<configuration xmlns:xaml="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+  <!--<diagram src="http://localhost/visualizer/sample.xaml" name="Sample Scaling"/>-->
+  <diagram src="http://localhost:55555/Config/SimpleSurfaceDemo.xaml" name="Canadian Infrastructure"/>
+  <server address="142.222.45.74" port="4530" name="Local Test Server" imageSrc="http://localhost:55555/Assets/development.png"/>
+  <!--<server address="ngs.marc-hi.ca" port="4350" name="MARC-HI Environment" imageSrc="http://localhost:55555/Assets/server.png"/>-->
+  <!-- Items Prefixed with XAML Are "About" -->
+  <xaml:Paragraph>
+    <xaml:Run>Copyright (C) 2008-2011, Mohawk College of Applied Arts and Technology</xaml:Run>
+    <xaml:LineBreak/>
+    <xaml:Run>Portions Copyright (c) 2005 David Vignoni</xaml:Run>
+    <xaml:LineBreak/>
+    <xaml:LineBreak/>
+    <xaml:Run>This software developed by the staff and students of the</xaml:Run>
+    <xaml:Hyperlink NavigateUri="http://marc.mohawkcollege.ca">Mohawk Applied Research Centre in Health Informatics</xaml:Hyperlink>
+    <xaml:LineBreak/>
+  </xaml:Paragraph>
+  <xaml:Paragraph>
+    <xaml:Run>This software uses icons from the Nuvola Icon set created by </xaml:Run>
+    <xaml:Hyperlink NavigateUri="http://www.icon-king.com/projects/nuvola/">David Vignoni</xaml:Hyperlink>
+    <xaml:LineBreak/>
+  </xaml:Paragraph>
+  <xaml:Paragraph FontSize="14" FontWeight="Bold">License</xaml:Paragraph>
+  <xaml:Paragraph>
+    <xaml:Run>This software is licensed under the terms of the </xaml:Run>
+    <xaml:Hyperlink NavigateUri="http://te.marc-hi.ca/license.aspx?project=6a768794ffdf45ca8b87ddb664ab37eb">Apache 2.0 License</xaml:Hyperlink>
+    <xaml:Run>
+      . The Nuvola Icon set is licensed under the
+    </xaml:Run><xaml:Hyperlink NavigateUri="http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html">GNU Lesser General Public License</xaml:Hyperlink>
+    <xaml:LineBreak/>
+  </xaml:Paragraph>
+  <xaml:Paragraph FontSize="14" FontWeight="Bold">The Visualizer Architecture</xaml:Paragraph>
+  <xaml:Paragraph>
+    <xaml:Run>The MARC-HI Visualizer architecture has changed in order to allow it to function in a more flexible manner. The visualizer is now distributed as a Microsoft Silverlight 
+    application which can be run from any web browser. The Silverlight application is permitted to connect to a host known as the "Visualizer Host" or "Infrastructure". Once connected
+  the Visualizer Host Service on the infrastructure side will push infrastructure notifications to the client. This architecture is outlined in the following diagram:</xaml:Run>
+    <xaml:InlineUIContainer>
+      <xaml:Image HorizontalAlignment="Left" Margin="2"
+         Stretch="None" Source="http://te.marc-hi.ca/projects/Visualizer/architecture.png" UseLayoutRounding="True" />
+    </xaml:InlineUIContainer>
+  </xaml:Paragraph>
+</configuration>
+ 
