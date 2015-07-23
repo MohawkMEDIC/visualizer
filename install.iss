@@ -36,6 +36,7 @@ Source: .\Solution Items\Mono.Security.dll; DestDir: {app}; Flags: ignoreversion
 Source: .\Solution Items\MARC.HI.EHRS.SVC.Core.Timer.dll; DestDir: {app}; Flags: ignoreversion; Components: srv
 Source: .\Solution Items\MARC.HI.EHRS.SVC.Messaging.Persistence.Data.dll; DestDir: {app}; Flags: ignoreversion; Components: srv
 Source: .\Solution Items\MARC.HI.EHRS.SVC.Terminology.dll; DestDir: {app}; Flags: ignoreversion; Components: srv
+Source: .\Solution Items\MARC.Everest.dll; DestDir: {app}; Flags: ignoreversion; Components: srv
 
 Source: .\MARC.EHRS.Visualization.Client.Silverlight.UI\Bin\Debug\MARC.EHRS.VisualizationClient.Silverlight.xap; DestDir: {app}\web\ClientBin; Components: web
 Source: .\MARC.EHRS.Visualization.Client.Silverlight.Test\ClientBin\*.png; DestDir: {app}\web\ClientBin; Components: web
@@ -53,6 +54,10 @@ Name: {group}\Support Site; FileName: http://te.marc-hi.ca
 
 [UninstallRun]
 Filename: "{dotnet40}\installutil.exe"; Parameters: "/uninstall ""{app}\MARC.EHRS.VisualizationServer.exe"""; Components: srv; StatusMsg: "Uninstalling Visualization Service..."; Flags: runhidden
+Filename: "{dotnet40}\ngen.exe"; Parameters: "uninstall ""{app}\MARC.HI.EHRS.SVC.Core.Timer.dll"""; Components: srv; StatusMsg: "Uninstalling Visualization Service..."; Flags: runhidden
+Filename: "{dotnet40}\ngen.exe"; Parameters: "uninstall ""{app}\MARC.HI.EHRS.SVC.Messaging.Persistence.Data.dll"""; Components: srv; StatusMsg: "Uninstalling Visualization Service..."; Flags: runhidden
+Filename: "{dotnet40}\ngen.exe"; Parameters: "uninstall ""{app}\MARC.HI.EHRS.SVC.Terminology.dll"""; Components: srv; StatusMsg: "Uninstalling Visualization Service..."; Flags: runhidden
+Filename: "{dotnet40}\ngen.exe"; Parameters: "uninstall ""{app}\MARC.Everest.dll"""; Components: srv; StatusMsg: "Uninstalling Visualization Service..."; Flags: runhidden
 Filename: "{dotnet40}\ngen.exe"; Parameters: "uninstall ""{app}\MARC.EHRS.Visualization.Core.dll"" /nologo /silent" ; Components:srv; StatusMsg: "Removing Native Assemblies"; Flags:runhidden
 Filename: "{dotnet40}\ngen.exe"; Parameters: "uninstall ""{app}\MARC.EHRS.VisualizationServer.exe"" /nologo /silent" ; Components:srv; StatusMsg: "Removing Native Assemblies"; Flags:runhidden
 Filename: "{dotnet40}\ngen.exe"; Parameters: "uninstall ""{app}\MARC.EHRS.VisualizationServer.Notifier.dll"" /nologo /silent" ; Components:srv; StatusMsg: "Removing Native Assemblies"; Flags:runhidden
@@ -61,6 +66,10 @@ Filename: "{dotnet40}\ngen.exe"; Parameters: "uninstall ""{app}\MARC.HI.EHRS.SVC
 Filename: "{dotnet40}\ngen.exe"; Parameters: "uninstall ""{app}\MARC.HI.EHRS.SVC.Core.dll"" /nologo /silent" ; Components:srv; StatusMsg: "Removing Native Assemblies"; Flags:runhidden
 
 [Run]
+Filename: "{dotnet40}\ngen.exe"; Parameters: "install ""{app}\MARC.HI.EHRS.SVC.Core.Timer.dll"""; Components: srv; StatusMsg: "Uninstalling Visualization Service..."; Flags: runhidden
+Filename: "{dotnet40}\ngen.exe"; Parameters: "install ""{app}\MARC.HI.EHRS.SVC.Messaging.Persistence.Data.dll"""; Components: srv; StatusMsg: "Uninstalling Visualization Service..."; Flags: runhidden
+Filename: "{dotnet40}\ngen.exe"; Parameters: "install ""{app}\MARC.HI.EHRS.SVC.Terminology.dll"""; Components: srv; StatusMsg: "Uninstalling Visualization Service..."; Flags: runhidden
+Filename: "{dotnet40}\ngen.exe"; Parameters: "install ""{app}\MARC.Everest.dll"""; Components: srv; StatusMsg: "Uninstalling Visualization Service..."; Flags: runhidden
 Filename: "{dotnet40}\ngen.exe"; Parameters: "install ""{app}\MARC.EHRS.Visualization.Core.dll"" /nologo /silent" ; Components:srv; StatusMsg: "Generating Native Assemblies"; Flags:runhidden
 Filename: "{dotnet40}\ngen.exe"; Parameters: "install ""{app}\MARC.EHRS.VisualizationServer.exe"" /nologo /silent" ; Components:srv; StatusMsg: "Generating Native Assemblies"; Flags:runhidden
 Filename: "{dotnet40}\ngen.exe"; Parameters: "install ""{app}\MARC.EHRS.VisualizationServer.Notifier.dll"" /nologo /silent" ; Components:srv; StatusMsg: "Generating Native Assemblies"; Flags:runhidden
