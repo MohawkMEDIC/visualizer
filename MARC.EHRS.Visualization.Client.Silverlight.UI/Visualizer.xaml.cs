@@ -277,7 +277,7 @@ namespace MARC.EHRS.Visualization.Client.Silverlight.UI
         /// </summary>
         private void RewindPlayback()
         {
-            if (m_currentCapture != null)
+            if (m_currentCapture != null && this.m_currentCapture.Events.Count > 0)
                 m_playbackDate = m_currentCapture.Events[0].CapturedAt.Subtract(new TimeSpan(0, 0, 0, 0, 200));
         }
 

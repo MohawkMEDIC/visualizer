@@ -31,17 +31,16 @@ Source: .\bin\Debug\MARC.HI.EHRS.SVC.Auditing.dll; DestDir: {app}; Flags: ignore
 Source: .\bin\Debug\MARC.HI.EHRS.SVC.Core.dll; DestDir: {app}; Flags: ignoreversion; Components: srv
 Source: .\bin\Debug\MARC.HI.EHRS.SVC.Messaging.Multi.dll; DestDir: {app}; Flags: ignoreversion; Components: srv
 Source: .\bin\Debug\MARC.EHRS.VisualizationServer.Actions.dll; DestDir: {app}; Flags: ignoreversion; Components: srv
+Source: .\Solution Items\Npgsql.dll; DestDir: {app}; Flags: ignoreversion; Components: srv
+Source: .\Solution Items\Mono.Security.dll; DestDir: {app}; Flags: ignoreversion; Components: srv
+Source: .\Solution Items\MARC.HI.EHRS.SVC.Core.Timer.dll; DestDir: {app}; Flags: ignoreversion; Components: srv
+Source: .\Solution Items\MARC.HI.EHRS.SVC.Messaging.Persistence.Data.dll; DestDir: {app}; Flags: ignoreversion; Components: srv
+Source: .\Solution Items\MARC.HI.EHRS.SVC.Terminology.dll; DestDir: {app}; Flags: ignoreversion; Components: srv
 
-Source: .\MARC.EHRS.VisualizationClient.Silverlight\Bin\Debug\MARC.EHRS.VisualizationClient.Silverlight.xap; DestDir: {app}\web\ClientBin; Components: web
-Source: .\MARC.EHRS.VisualizationClient.Silverlight\Bin\Debug\MARC.EHRS.Silverlight.dll; DestDir: {app}\web\ClientBin; Components: web
-Source: .\MARC.EHRS.VisualizationClient.Silverlight\Bin\Debug\MARC.EHRS.VisualizationClient.Silverlight.dll; DestDir: {app}\web\ClientBin; Components: web
-Source: .\MARC.EHRS.VisualizationClient.Silverlight\Bin\Debug\System.ComponentModel.DataAnnotations.dll; DestDir: {app}\web\ClientBin; Components: web
-Source: .\MARC.EHRS.VisualizationClient.Silverlight\Bin\Debug\System.Windows.Controls.Data.Input.dll; DestDir: {app}\web\ClientBin; Components: web
-Source: .\MARC.EHRS.VisualizationClient.Silverlight\Bin\Debug\System.Xml.Linq.dll; DestDir: {app}\web\ClientBin; Components: web
-Source: .\MARC.EHRS.VisualizationClient.Silverlight\Bin\Debug\System.Xml.Serialization.dll; DestDir: {app}\web\ClientBin; Components: web
-Source: .\MARC.EHRS.VisualizationClient.Silverlight.Test\ClientBin\*.png; DestDir: {app}\web\ClientBin; Components: web
-Source: .\MARC.EHRS.VisualizationClient.Silverlight.Test\default.html; DestDir: {app}\web; Components: web
-Source: .\*.*; Excludes: "*.dll,*.xml,*.pdb,*.obj,*.exe,*.suo,*.iss; *.png;"; Flags: recursesubdirs; DestDir: {app}\src; Components: src
+Source: .\MARC.EHRS.Visualization.Client.Silverlight.UI\Bin\Debug\MARC.EHRS.VisualizationClient.Silverlight.xap; DestDir: {app}\web\ClientBin; Components: web
+Source: .\MARC.EHRS.Visualization.Client.Silverlight.Test\ClientBin\*.png; DestDir: {app}\web\ClientBin; Components: web
+Source: .\MARC.EHRS.Visualization.Client.Silverlight.Test\default.html; DestDir: {app}\web; Components: web
+Source: .\*.*; Excludes: "*.dll,*.xml,*.pdb,*.obj,*.exe,*.suo,*.iss; *.7z"; Flags: recursesubdirs; DestDir: {app}\src; Components: src
 Source: .\netfx\dotNetFx40_Full_setup.exe; DestDir: {tmp} ; Flags: dontcopy
 Source: .\License.rtf; DestDir: {app} ; Flags: dontcopy
 

@@ -5,12 +5,13 @@ using System.Text;
 using console = System.Console;
 using System.Reflection;
 using System.Diagnostics;
+using MARC.HI.EHRS.SVC.Core;
+using MARC.HI.EHRS.SVC.Core.Services;
 using System.Runtime.InteropServices;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Xml.Serialization;
-using MARC.HI.EHRS.SVC.Core.Services;
-using MARC.HI.EHRS.SVC.Core;
+using System.Security.Cryptography.X509Certificates;
 
 namespace MARC.EHRS.Audit
 {
@@ -22,7 +23,7 @@ namespace MARC.EHRS.Audit
         /// </summary>
         static void Main(string[] args)
         {
-            if (args.Length > 0 && args[0] == "c")
+            if (args.Length > 0 && args[0] == "--console")
                 Console();
             else
             {
@@ -49,7 +50,6 @@ namespace MARC.EHRS.Audit
 
             // Start the message handler service
             IMessageHandlerService messageHandlerService = null;
-            
             try
             {
                 // Initialize 
@@ -77,6 +77,7 @@ namespace MARC.EHRS.Audit
                         Trace.TraceError("No message handler service started. Terminating program");
                     }
                 }
+
             }
             catch(Exception e)
             {
@@ -106,7 +107,7 @@ namespace MARC.EHRS.Audit
 
             /// Try for an non-same number Version
             foreach (Assembly asm in AppDomain.CurrentDomain.GetAssemblies())
-                if (args.Name.Substring(0, args.Name.IndexOf(",")) == asm.GetName().Name)
+                if (args.Name.Contains(",") && args.Name.Substring(0, args.Name.IndexOf(",")) == asm.GetName().Name)
                     return asm;
 
             return null;
