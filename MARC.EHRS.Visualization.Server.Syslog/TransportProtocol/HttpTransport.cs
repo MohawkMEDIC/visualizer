@@ -65,7 +65,8 @@ namespace MARC.EHRS.VisualizationServer.Syslog.TransportProtocol
             Trace.TraceInformation("Starting HTTP listener {0} on {1}...", bind.Name, bind.Address);
             if(!HttpListener.IsSupported)
                 throw new InvalidOperationException("Windows XP SP2 or Server 2003 is required to use the HttpListener class.");
-            this.m_server.Prefixes.Add(bind.Address.ToString());
+
+            this.m_server.Prefixes.Add(bind.Address.ToString().Replace("0.0.0.0","+"));
             this.m_server.Start();
 
             // Run
