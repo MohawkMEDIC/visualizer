@@ -100,8 +100,9 @@ namespace MARC.EHRS.VisualizationServer.Syslog.TransportProtocol
 
                         if (request.HttpMethod != "POST")
                             throw new InvalidOperationException("Invalid HTTP method. Expected POST");
-                        else if (request.ContentType != "application/ihe+rfc3881")
-                            throw new SyslogMessageException("Invalid content-type. Expected application/ihe+rfc3881", message);
+                        //else if (request.ContentType != "application/ihe+rfc3881" &&
+                        //    request.ContentType != "text/xml")
+                        //    throw new SyslogMessageException("Invalid content-type. Expected application/ihe+rfc3881", message);
 
                         message.TypeId = "IHE+RFC-3881";
 
@@ -159,6 +160,10 @@ namespace MARC.EHRS.VisualizationServer.Syslog.TransportProtocol
                     context.Response.Close();
 
                 }
+            }
+            catch(Exception e)
+            {
+                Trace.TraceError("FATAL: {0}", e.ToString());
             }
             finally
             {

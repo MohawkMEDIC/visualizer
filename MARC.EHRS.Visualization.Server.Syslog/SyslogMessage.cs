@@ -111,7 +111,7 @@ namespace MARC.EHRS.VisualizationServer.Syslog
             }
             else
             {
-                retVal.Body = message;
+                retVal.Body = message;  
                 throw new SyslogMessageException("Invalid message format", retVal);
             }
 

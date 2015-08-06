@@ -20,6 +20,7 @@ AppCopyright=Copyright (C) 2009-2015, Mohawk College of Applied Arts and Technol
 RestartIfNeededByRun=yes
 WizardImageFile=.\install-logo.bmp
 [Files]
+Source: .\bin\Debug\AtnaApi.dll; DestDir: {app}; Flags: ignoreversion; Components: srv
 Source: .\bin\Debug\ClientAccessPolicy.xml; DestDir: {app}; Flags: ignoreversion; Components: srv
 Source: .\bin\Debug\MARC.EHRS.Visualization.Core.dll; DestDir: {app}; Flags: ignoreversion; Components: srv
 Source: .\bin\Debug\VisualizerServer.exe; DestDir: {app}; Flags: restartreplace ignoreversion; Components: srv

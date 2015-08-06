@@ -10,6 +10,7 @@ using System.Xml;
 using MARC.Everest.Connectors;
 using MARC.EHRS.VisualizationServer.Syslog;
 using MARC.EHRS.VisualizationServer.Actions.ResultDetails;
+using System.Diagnostics;
 
 namespace MARC.EHRS.VisualizationServer.Actions
 {

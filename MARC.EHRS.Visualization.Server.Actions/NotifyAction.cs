@@ -50,7 +50,11 @@ namespace MARC.EHRS.VisualizationServer.Actions
 
                 // Create a LogMessage equivalent.
                 if (parseResult.Outcome != Everest.Connectors.ResultCode.Accepted)
+                {
+                    foreach (var itm in parseResult.Details)
+                        Trace.TraceError("{0} : {1}", itm.Type, itm.Message);
                     throw new InvalidOperationException("Cannot continue : Audit message is invalid");
+                }
                 else if (auditMessage != null && auditMessage.SourceIdentification.Count > 0)
                 {
                     // Use the Enterprise site ID as the audit source ID.
@@ -124,7 +128,7 @@ namespace MARC.EHRS.VisualizationServer.Actions
                 }
 
                 Trace.TraceError("{0} : {1}", exceptionBuilder, payload);
-                
+                Trace.TraceError(e.ToString());
                 logMessage = new VisualizationEvent()
                 {
                     IsError = true,
@@ -144,23 +148,29 @@ namespace MARC.EHRS.VisualizationServer.Actions
         /// </summary>
         public void HandleMessageReceived(object sender, Syslog.TransportProtocol.SyslogMessageReceivedEventArgs e)
         {
-            if (e == null || e.Message == null)
-                return; // no message
-
-            // Notify received
-            Trace.TraceInformation("Received message from {0} with correlation id {1}", e.SolicitorEndpoint, e.Message.CorrelationId);
-            var evt = this.ConvertToVisualization(e);
-            if (evt != null)
+            try
             {
-                INotificationService notif = Context.GetService(typeof(INotificationService)) as INotificationService;
-                if (notif == null)
-                    Trace.TraceError("Cannot find a registered broadcaster");
-                else
-                    notif.Notify(evt);
-            }
-            else
-                Trace.TraceError("Could not create visualization event");
+                if (e == null || e.Message == null)
+                    return; // no message
 
+                // Notify received
+                Trace.TraceInformation("Received message from {0} with correlation id {1}", e.SolicitorEndpoint, e.Message.CorrelationId);
+                var evt = this.ConvertToVisualization(e);
+                if (evt != null)
+                {
+                    INotificationService notif = Context.GetService(typeof(INotificationService)) as INotificationService;
+                    if (notif == null)
+                        Trace.TraceError("Cannot find a registered broadcaster");
+                    else
+                        notif.Notify(evt);
+                }
+                else
+                    Trace.TraceError("Could not create visualization event");
+            }
+            catch(Exception ex)
+            {
+                Trace.TraceError(ex.ToString());
+            }
         }
 
         /// <summary>
@@ -168,23 +178,30 @@ namespace MARC.EHRS.VisualizationServer.Actions
         /// </summary>
         public void HandleInvalidMessage(object sender, Syslog.TransportProtocol.SyslogMessageReceivedEventArgs e)
         {
-            if (e == null || e.Message == null)
-                return; // no message
-
-            // Notify received
-            Trace.TraceInformation("Received invalid message from {0} (Invalid Header) : {1}", e.SolicitorEndpoint, e.Message.Body);
-            INotificationService notif = Context.GetService(typeof(INotificationService)) as INotificationService;
-            var evt = new VisualizationEvent()
+            try
             {
-                CorrelationId = e.Message.CorrelationId.ToString(),
-                MachineOID = e.Message.ProcessName ?? e.SolicitorEndpoint.Host,
-                SrcPort = e.SolicitorEndpoint.Port.ToString(),
-                IPAddress = e.SolicitorEndpoint.Host
-            };
-            if (notif == null)
-                Trace.TraceError("Cannot find a registered broadcaster");
-            else
-                notif.Notify(evt);
+                if (e == null || e.Message == null)
+                    return; // no message
+
+                // Notify received
+                Trace.TraceInformation("Received invalid message from {0} (Invalid Header) : {1}", e.SolicitorEndpoint, e.Message.Body);
+                INotificationService notif = Context.GetService(typeof(INotificationService)) as INotificationService;
+                var evt = new VisualizationEvent()
+                {
+                    CorrelationId = e.Message.CorrelationId.ToString(),
+                    MachineOID = e.Message.ProcessName ?? e.SolicitorEndpoint.Host,
+                    SrcPort = e.SolicitorEndpoint.Port.ToString(),
+                    IPAddress = e.SolicitorEndpoint.Host
+                };
+                if (notif == null)
+                    Trace.TraceError("Cannot find a registered broadcaster");
+                else
+                    notif.Notify(evt);
+            }
+            catch (Exception ex)
+            {
+                Trace.TraceError(ex.ToString());
+            }
         }
 
         /// <summary>
