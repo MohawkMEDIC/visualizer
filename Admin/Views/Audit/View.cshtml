@@ -1,0 +1,509 @@
+﻿@model MYST.OpAdmin.Models.AuditViewModel
+
+<div id="view" class="container-fluid">
+    <div class="row">
+
+        <div class="col-md-12 col-xs-18">
+            <h3><a target="_self" href="@Url.Action("Index")#action=View&id=@Model.Id"
+                @foreach (var itm in Model.Audit.EventIdentification.EventType)
+                {
+                    <span>@itm.DisplayName (@itm.Code)</span>
+                }
+            </a>
+            </h3>
+            <small>Audited on @Model.Audit.EventIdentification.EventDateTime.ToString("dddd MMM dd, yyyy @ HH:mm:ss") . 
+            You can view <a href="javascript:" onclick="javascript:AuditTool.SetViewEx('@Url.Action("Search")', { 'Participant::RawUserId':'@Model.SourceUser.UserIdentifier.Replace("\\", "\\\\")', 'CreationTimestamp':'>@Model.DalModel.CreationTimestamp.Subtract(new TimeSpan(0, 2, 30))', '@Html.Raw("@CreationTimestamp")' : '<@Model.DalModel.CreationTimestamp.AddMinutes(2).AddSeconds(30)' });">Related Audits</a> (same user created within 5 minutes of this audit)</small>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            @Html.Raw(MYST.OpAdmin.UtilityFunctions.HtmlDisplayUtils.BuildAuditStatusColumnStyle(Model.DalModel))
+        </div>
+        <div class="col-md-4">
+            @if (Model.DalModel.IsAlert == true)
+            {
+                <span class="label label-danger" style="font-size: 14px; text-align: center; width: 100%; display: block">
+                    @Html.Raw(MYST.OpAdmin.UtilityFunctions.HtmlDisplayUtils.BuildAuditAlertColumnStyle(Model.DalModel))
+                    ALERT
+                    @Html.Raw(MYST.OpAdmin.UtilityFunctions.HtmlDisplayUtils.BuildAuditAlertColumnStyle(Model.DalModel))
+                </span>
+            }
+
+        </div>
+        <div class="col-md-4">
+            <div style="float: right">
+                @Html.Raw(MYST.OpAdmin.UtilityFunctions.HtmlDisplayUtils.BuildAuditColumnAction(Model.DalModel, false))
+            </div>
+            <div style="clear: both"></div>
+        </div>
+    </div>
+    <div class="row" style="border-bottom: solid 1px #aaa; border-top: solid 1px #aaa; padding-top: 4px; padding-bottom: 4px">
+        <div class="col-md-3" style="font-size: 1.2em;">
+            <strong>Operation:</strong>
+            @{
+                switch (Model.Audit.EventIdentification.ActionCode)
+                {
+                    case AtnaApi.Model.ActionType.Read:
+                <span class="label label-primary"><span class="glyphicon glyphicon-eye-open"></span>Read</span>
+                        break;
+                    case AtnaApi.Model.ActionType.Create:
+                <span class="label label-warning"><span class="glyphicon glyphicon-file"></span>@Model.Audit.EventIdentification.ActionCode</span>
+                <a href="~/Views/Home/">~/Views/Home/</a>
+                        break;
+                    case AtnaApi.Model.ActionType.Update:
+                <span class="label label-warning"><span class="glyphicon glyphicon-floppy-saved"></span>@Model.Audit.EventIdentification.ActionCode</span>
+                   
+                        break;
+                    case AtnaApi.Model.ActionType.Delete:
+                <span class="label label-warning"><span class="glyphicon glyphicon-trash"></span>@Model.Audit.EventIdentification.ActionCode</span>
+                        break;
+                    default:
+                <span class="label label-info"><span class="glyphicon glyphicon-cog"></span>@Model.Audit.EventIdentification.ActionCode</span>
+                        break;
+                }
+            }
+        </div>
+
+        <div class="col-md-4" style="font-size: 1.2em;">
+            <strong>Outcome:</strong>
+            @{
+                switch (Model.Audit.EventIdentification.EventOutcome)
+                {
+                    case AtnaApi.Model.OutcomeIndicator.Success:
+                <span class="label label-success"><span class="glyphicon glyphicon-ok-sign"></span>Success</span>
+                        break;
+                    case AtnaApi.Model.OutcomeIndicator.MinorFail:
+                <span class="label label-warning" data-toggle="tooltip" data-placement="left" data-original-title="An error occurred, however appropriate safety measures were taken"><span class="glyphicon glyphicon-info-sign"></span>Minor Failure</span>
+                        break;
+                    case AtnaApi.Model.OutcomeIndicator.SeriousFail:
+                <span class="label label-warning" data-toggle="tooltip" data-placement="left" data-original-title="An error occurred and action was taken, more investigation should be performed"><span class="glyphicon glyphicon-warning-sign"></span>Serious Failure</span>
+                        break;
+                    case AtnaApi.Model.OutcomeIndicator.EpicFail:
+                <span class="label label-danger" data-toggle="tooltip" data-placement="left" data-original-title="An error occurred and action was taken, however this represents a potential security and/or privacy breech"><span class="glyphicon glyphicon-exclamation-sign"></span>Major Failure</span>
+                        break;
+
+                    default:
+                <span class="label label-default">@Model.Audit.EventIdentification.ActionCode</span>
+                        break;
+                }
+            }
+        </div>
+        <div class="col-md-5" style="font-size: 1.2em;">
+            <strong>Event Type:</strong>
+            @{
+                switch (Model.Audit.EventIdentification.EventId.StrongCode)
+                {
+                    case AtnaApi.Model.EventIdentifierType.ApplicationActivity:
+                    case AtnaApi.Model.EventIdentifierType.NetowrkActivity:
+                <span class="label label-info" data-toggle="tooltip" data-placement="left" data-original-title="This event is generated as part of regularily occuring application function">@Html.Raw(Model.Audit.EventIdentification.EventId.DisplayName) (APP)</span>
+                        break;
+                    case AtnaApi.Model.EventIdentifierType.Disclosure:
+                    case AtnaApi.Model.EventIdentifierType.Export:
+                    case AtnaApi.Model.EventIdentifierType.Query:
+                <span class="label label-warning" data-toggle="tooltip" data-placement="left" data-original-title="This event id indicates that some data was obtained or sent to a remote host">@Html.Raw(Model.Audit.EventIdentification.EventId.DisplayName) (READ)</span>
+                        break;
+                    case AtnaApi.Model.EventIdentifierType.CareEpisode:
+                    case AtnaApi.Model.EventIdentifierType.CareProtocol:
+                    case AtnaApi.Model.EventIdentifierType.Import:
+                    case AtnaApi.Model.EventIdentifierType.MedicationEvent:
+                    case AtnaApi.Model.EventIdentifierType.OrderRecord:
+                    case AtnaApi.Model.EventIdentifierType.PatientRecord:
+                    case AtnaApi.Model.EventIdentifierType.ProcedureRecord:
+                    case AtnaApi.Model.EventIdentifierType.ProvisioningEvent:
+                    case AtnaApi.Model.EventIdentifierType.ResourceAssignment:
+                <span class="label label-danger" data-toggle="tooltip" data-placement="left" data-original-title="This event id indicates that some data was created, updated, deleted, or otherwise modified by a remote system">@Html.Raw(Model.Audit.EventIdentification.EventId.DisplayName) (WRITE)</span>
+                        break;
+                    case AtnaApi.Model.EventIdentifierType.UseOfRestrictedFunction:
+                    case AtnaApi.Model.EventIdentifierType.UserAuthentication:
+                <span class="label label-danger" data-toggle="tooltip" data-placement="left" data-original-title="This event id indicates that some use of a security function">@Html.Raw(Model.Audit.EventIdentification.EventId.DisplayName) (AUTHENTICATE)</span>
+                        break;
+
+
+
+                }
+            }
+
+        </div>
+    </div>
+
+    @if (Model.Audit.SourceIdentification != null)
+    {
+        <div class="row">
+            <div class="col-md-12 col-xs-18">
+                <h4>Sources (Generated By)</h4>
+            </div>
+        </div>
+        <div class="row">
+            <div style="margin: auto; width: 80%" class="well">
+                <div class="container-fluid">
+                    @foreach (var src in Model.Audit.SourceIdentification)
+                    {
+                        <div class="row">
+                            <h4><span class="glyphicon glyphicon-cog"></span>@src.AuditEnterpriseSiteID (@src.AuditSourceID)
+                            <small>
+                                @foreach (var t in src.AuditSourceTypeCode)
+                                {
+                                    <br />@t.DisplayName
+                                }
+                            </small>
+                            </h4>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    }
+    <div class="row">
+        <div class="col-md-12 col-xs-18">
+            <h4>Actors (Systems &amp; Users)</h4>
+        </div>
+    </div>
+    <div class="row">
+        <div style="margin: auto; width: 80%" class="well">
+            <div class="flow-layout">
+                <div class="row">
+                    <div class="col-md-3">
+                        <span class="glyphicon-large glyphicon-user glyphicon"></span>
+                        <small>
+                            <a href="javascript:" onclick="javascript:AuditTool.ShowAdvancedSearchView({ 'Participant::RawUserId' : '@Model.SourceUser.UserIdentifier' });">
+                            @if (Model.SourceUser.AspNetUserId == null)
+                            {
+                                @Model.SourceUser.UserIdentifier <em>(@Model.SourceUser.UserName)</em>
+                            }
+                            else
+                            {
+                                @Model.SourceUser.AspNetUserName <em>(@Model.SourceUser.AspNetUserFullName)</em>
+                            }
+                            </a>
+                            <br />
+                            <strong>Acting in role(s):</strong>
+                            @foreach (var rol in Model.SourceUser.ActorRoleCode)
+                            {
+                                <br />@rol.Code <span>(</span>@rol.DisplayName<span>)</span>
+                            }
+                        </small>
+                    </div>
+                    <div class="col-md-1">
+                        @switch (Model.Audit.EventIdentification.ActionCode)
+                        {
+                            case AtnaApi.Model.ActionType.Read:
+                            <span class="glyphicon glyphicon-arrow-left glyphicon-large"></span>
+                                break;
+                            case AtnaApi.Model.ActionType.Create:
+                            case AtnaApi.Model.ActionType.Update:
+                            case AtnaApi.Model.ActionType.Delete:
+                            <span class="glyphicon glyphicon-arrow-right glyphicon-large"></span>
+                                break;
+                            case AtnaApi.Model.ActionType.Execute:
+                            <span class="glyphicon glyphicon-retweet glyphicon-large"></span>
+                                break;
+                        }
+
+                    </div>
+                    <div class="col-md-3">
+                        <span class="glyphicon glyphicon-phone glyphicon-large"></span>
+
+                        <small>@Model.SourceSystem.UserIdentifier<br />
+                            <strong>Access Point:</strong><br />
+                            @Model.SourceSystem.NetworkAccessPointId<br />
+                            <strong>Acting in role(s):</strong>
+                            @foreach (var rol in Model.SourceSystem.ActorRoleCode)
+                            {
+                                <br />@rol.Code <span>(</span>@rol.DisplayName<span>)</span>
+                            }
+                        </small>
+
+                    </div>
+                    <div class="col-md-1">
+                        @switch (Model.Audit.EventIdentification.ActionCode)
+                        {
+                            case AtnaApi.Model.ActionType.Read:
+                            <span class="glyphicon glyphicon-arrow-left glyphicon-large"></span>
+                                break;
+                            case AtnaApi.Model.ActionType.Create:
+                            case AtnaApi.Model.ActionType.Update:
+                            case AtnaApi.Model.ActionType.Delete:
+                            <span class="glyphicon glyphicon-arrow-right glyphicon-large"></span>
+                                break;
+                            case AtnaApi.Model.ActionType.Execute:
+                            <span class="glyphicon glyphicon-retweet glyphicon-large"></span>
+                                break;
+                        }
+
+                        <small>(@Model.Audit.EventIdentification.ActionCode)</small>
+
+                    </div>
+                    <div class="col-md-1"></div>
+                    <div class="col-md-3">
+                        @switch (Model.Audit.EventIdentification.ActionCode)
+                        {
+                            case AtnaApi.Model.ActionType.Read:
+                            <span class="glyphicon glyphicon-cloud-download glyphicon-large"></span>
+                                break;
+                            case AtnaApi.Model.ActionType.Create:
+                            case AtnaApi.Model.ActionType.Update:
+                            case AtnaApi.Model.ActionType.Delete:
+                            <span class="glyphicon glyphicon-cloud-upload glyphicon-large"></span>
+                                break;
+                            default:
+                            <span class="glyphicon glyphicon-cloud glyphicon-large"></span>
+                                break;
+                        }
+
+                        <small>@Model.DestinationSystem.UserIdentifier (PU: @Model.DestinationSystem.UserName)<br />
+                            <strong>Access Point:</strong><br />
+                            @Model.DestinationSystem.NetworkAccessPointId
+                            <br />
+                            <strong>Acting in role(s):</strong>
+                            @foreach (var rol in Model.DestinationSystem.ActorRoleCode)
+                            {
+                                <br />@rol.Code <span>(</span>@rol.DisplayName<span>)</span>
+                            }
+                        </small>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 col-xs-18">
+            <h4>Audit Details</h4>
+            <div class="panel-group" id="detailAccordion">
+                @foreach (var ao in Model.Audit.AuditableObjects)
+                {
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">
+                                <a data-toggle="collapse" data-parent="detailAccordion" href="@String.Format("#collapse{0}", ao.GetHashCode())">
+                                    @if (ao.ObjectSpecChoice == AtnaApi.Model.ObjectDataChoiceType.ParticipantObjectName)
+                                    {
+                                        <span>@ao.ObjectSpec</span> <small>@ao.Type</small>
+                                    }
+                                    else if (ao.ObjectSpecChoice == AtnaApi.Model.ObjectDataChoiceType.ParticipantObjectQuery && ao.ObjectSpec != null)
+                                    {
+                                        <span>Query Executed </span><small>This object represents the query used to retrieve the object</small>
+                                    }
+                                    else
+                                    {
+                                        <span>Object</span> <small>@ao.Type</small>
+                                    }
+                                </a>
+                            </h3>
+                        </div>
+                        <div id="@String.Format("collapse{0}", ao.GetHashCode())" class="panel-body panel-collapse collapse">
+                            <div class="row" style="font-size: 1.2em">
+                                <div class="col-md-12">
+                                    <span class="label label-info">
+                                        @switch (ao.IDTypeCode.StrongCode)
+                                        {
+                                            case AtnaApi.Model.AuditableObjectIdType.AccountNumber:
+                                            case AtnaApi.Model.AuditableObjectIdType.EncounterNumber:
+                                            case AtnaApi.Model.AuditableObjectIdType.MedicalRecord:
+                                            case AtnaApi.Model.AuditableObjectIdType.SocialSecurityNumber:
+                                            <span class="glyphicon glyphicon-barcode"></span>
+                                                break;
+                                            case AtnaApi.Model.AuditableObjectIdType.EnrolleeNumber:
+                                            case AtnaApi.Model.AuditableObjectIdType.GuarantorNumber:
+                                            case AtnaApi.Model.AuditableObjectIdType.PatientNumber:
+                                            case AtnaApi.Model.AuditableObjectIdType.UserIdentifier:
+                                            <span class="glyphicon glyphicon-user"></span>
+                                                break;
+                                            case AtnaApi.Model.AuditableObjectIdType.ReportName:
+                                            case AtnaApi.Model.AuditableObjectIdType.ReportNumber:
+                                            <span class="glyphicon glyphicon-book"></span>
+                                                break;
+                                            case AtnaApi.Model.AuditableObjectIdType.Uri:
+                                            <span class="glyphicon glyphicon-globe"></span>
+                                       
+                                                break;
+
+                                        }
+
+                                        @ao.IDTypeCode.DisplayName</span>
+                                    @MYST.OpAdmin.UtilityFunctions.HtmlDisplayUtils.BuildItemLink(ao)
+                                </div>
+                            </div>
+                            <div class="row" style="font-size: 1.2em">
+                                <div class="col-md-4">
+                                    <strong>Object Type:</strong>
+                                    <span class="label label-primary">
+                                        @switch (ao.Type)
+                                        {
+                                            case AtnaApi.Model.AuditableObjectType.Person:
+                                            <span class="glyphicon glyphicon-user"></span>
+                                                break;
+                                            case AtnaApi.Model.AuditableObjectType.SystemObject:
+                                            <span class="glyphicon glyphicon-wrench"></span>
+                                                break;
+                                            case AtnaApi.Model.AuditableObjectType.Organization:
+                                            <span class="glyphicon glyphicon-globe"></span>
+                                                break;
+                                            case AtnaApi.Model.AuditableObjectType.Other:
+                                            <span class="glyphicon glyphicon-question-sign"></span>
+                                                break;
+
+                                        }
+
+                                        @ao.Type
+                                    </span>
+                                </div>
+                                <div class="col-md-3">
+                                    <strong>Lifecycle:</strong>
+                                    @switch (ao.LifecycleType)
+                                    {
+                                        case AtnaApi.Model.AuditableObjectLifecycle.Disclosure:
+                                        <span class="label label-warning">Disclosure</span>
+                                            break;
+                                        default:
+                                        <span class="label label-info">@ao.LifecycleType</span>
+                                            break;
+
+                                    }
+                                </div>
+                                <div class="col-md-4">
+                                    <strong>Role:</strong>
+                                    @switch (ao.Role)
+                                    {
+                                        case AtnaApi.Model.AuditableObjectRole.SecurityGranularityDefinition:
+                                        case AtnaApi.Model.AuditableObjectRole.SecurityGroup:
+                                        case AtnaApi.Model.AuditableObjectRole.SecurityResource:
+                                        case AtnaApi.Model.AuditableObjectRole.SecurityUser:
+                                        <span class="label label-danger" data-toggle="tooltip" data-placement="left" data-original-title="This object is related to application security"><span class="glyphicon glyphicon-lock"></span>@ao.Role</span>
+                                            break;
+                                        case AtnaApi.Model.AuditableObjectRole.Customer:
+                                        case AtnaApi.Model.AuditableObjectRole.Doctor:
+                                        case AtnaApi.Model.AuditableObjectRole.Guarantor:
+                                        case AtnaApi.Model.AuditableObjectRole.Patient:
+                                        case AtnaApi.Model.AuditableObjectRole.Provider:
+                                        case AtnaApi.Model.AuditableObjectRole.User:
+                                        <span class="label label-info" data-toggle="tooltip" data-placement="left" data-original-title="This object is represents a person"><span class="glyphicon glyphicon-user"></span>@ao.Role</span>
+                                            break;
+                                        case AtnaApi.Model.AuditableObjectRole.Location:
+                                        <span class="label label-info" data-toggle="tooltip" data-placement="left" data-original-title="This object is represents a physical location"><span class="glyphicon glyphicon-globe"></span>@ao.Role</span>
+                                            break;
+                                        case AtnaApi.Model.AuditableObjectRole.DataDestination:
+                                        case AtnaApi.Model.AuditableObjectRole.DataRepository:
+                                        case AtnaApi.Model.AuditableObjectRole.Table:
+                                        <span class="label label-info" data-toggle="tooltip" data-placement="left" data-original-title="This object is represents a data repository"><span class="glyphicon glyphicon-folder"></span>@ao.Role</span>
+                                            break;
+                                        case AtnaApi.Model.AuditableObjectRole.Job:
+                                        <span class="label label-info" data-toggle="tooltip" data-placement="left" data-original-title="This object is represents a job that the server executed"><span class="glyphicon glyphicon-retweet"></span>@ao.Role</span>
+                                            break;
+                                        case AtnaApi.Model.AuditableObjectRole.JobStream:
+                                        <span class="label label-info" data-toggle="tooltip" data-placement="left" data-original-title="This object is represents an export or attachment containing the results of an operation"><span class="glyphicon glyphicon-paperclip"></span>@ao.Role</span>
+                                            break;
+                                        case AtnaApi.Model.AuditableObjectRole.List:
+                                        case AtnaApi.Model.AuditableObjectRole.MasterFile:
+                                        <span class="label label-info" data-toggle="tooltip" data-placement="left" data-original-title="This object is represents a list of items"><span class="glyphicon glyphicon-list-alt"></span>@ao.Role</span>
+                                            break;
+                                        case AtnaApi.Model.AuditableObjectRole.Schedule:
+                                        <span class="label label-info" data-toggle="tooltip" data-placement="left" data-original-title="This object represents a schedule"><span class="glyphicon glyphicon-schedule">@ao.Role</span></span>
+                                            break;
+                                        case AtnaApi.Model.AuditableObjectRole.Query:
+                                        <span class="label label-info" data-toggle="tooltip" data-placement="left" data-original-title="This object is represents a search or inquiry"><span class="glyphicon glyphicon-search"></span>@ao.Role</span>
+                                            break;
+                                        default:
+                                        <span class="label label-info"><span class="glyphicon glyphicon-question-sign"></span>@ao.Role</span>
+                                            break;
+                                        @ao.Role
+                                    }
+                                </div>
+                            </div>
+                            @if (ao.ObjectSpecChoice == AtnaApi.Model.ObjectDataChoiceType.ParticipantObjectQuery && ao.ObjectSpec != null)
+                            {
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <h4>Request Query</h4>
+                                        @ao.ObjectSpec
+                                    </div>
+                                </div>
+                            }
+                            @if (ao.ObjectDetail != null && ao.ObjectDetail.Count > 0)
+                            {
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <h4>Object Detail</h4>
+                                        <div class="container-fluid">
+                                            @foreach (var dtl in ao.ObjectDetail)
+                                            {
+                                                <div class="row">
+                                                    <div class="col-md-12">@MYST.OpAdmin.UtilityFunctions.HtmlDisplayUtils.PrettyPrintTypeName(dtl.Type)</div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="container-fluid">
+
+                                                            <div class="tab-content">
+                                                                <div class="tab-pane active" id="@String.Format("htm{0}", dtl.GetHashCode())">
+                                                                    <div style="overflow: auto; padding: 2px" class="panel panel-default">
+                                                                        @MYST.OpAdmin.UtilityFunctions.HtmlDisplayUtils.PrettyPrint(dtl)
+                                                                    </div>
+                                                                </div>
+                                                                <div class="tab-pane" id="@String.Format("xml{0}", dtl.GetHashCode())">
+                                                                    <pre class="pre-scrollable" style="position: relative;">@MYST.OpAdmin.UtilityFunctions.HtmlDisplayUtils.PrettyPrintXml(dtl.Value)</pre>
+                                                                </div>
+                                                                <div class="tab-pane" id="@String.Format("hex{0}", dtl.GetHashCode())">
+                                                                    <pre class="pre-scrollable" style="position: relative;">@MYST.OpAdmin.UtilityFunctions.HtmlDisplayUtils.PrettyPrintBin(dtl.Value)</pre>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                        <ul class="nav nav-tabs" style="border-bottom: none; border-top: solid 1px #ddd">
+                                                            <li class="active"><a href="@String.Format("#htm{0}", dtl.GetHashCode())" data-toggle="tab">HTML</a></li>
+                                                            <li><a href="@String.Format("#xml{0}", dtl.GetHashCode())" data-toggle="tab">XML</a></li>
+                                                            <li><a href="@String.Format("#hex{0}", dtl.GetHashCode())" data-toggle="tab">RAW</a></li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+    @if (Model.Audit is MARC.EHRS.Visualization.Server.Persistence.Ado.ExtendedAuditMessage)
+    {
+        var extended = (Model.Audit as MARC.EHRS.Visualization.Server.Persistence.Ado.ExtendedAuditMessage).StatusHistory;
+        
+        <div class="row">
+            <div class="col-md-12 col-xs-18">
+                <h4>History (Revisions)</h4>
+                @{
+        var historyGrid = new WebGrid(source: extended, defaultSort: "EffectiveFrom");
+                }
+                @historyGrid.GetHtml(
+                tableStyle: "table table-striped",
+                columns: historyGrid.Columns(
+                    historyGrid.Column(
+                        header: " ",
+                        format: (x) => new HtmlString(x.Value.EffectiveTo != default(DateTime) ? "<span style=\"glyphicon glyphicon-asterisk\"></span>" : "")
+                    ),
+                    historyGrid.Column(
+                        header: "Date",
+                        columnName: "EffectiveFrom",
+                        format: (x) => String.Format("{0:ddd MMM dd, yyyy @ HH:mm:ss}", x.Value.EffectiveFrom)
+                       ),
+                     historyGrid.Column(
+                        header: "Status",
+                        columnName: "StatusCode"
+                       ),
+                     historyGrid.Column(
+                        header: "Alert",
+                        columnName: "IsAlert"
+                       ),
+                     historyGrid.Column(
+                        header: "Set By",
+                        columnName: "SetByUserId"
+                       )
+                   )
+                )
+            </div>
+        </div>
+    }
+</div>

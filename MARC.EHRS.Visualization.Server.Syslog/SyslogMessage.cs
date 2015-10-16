@@ -23,7 +23,7 @@ namespace MARC.EHRS.VisualizationServer.Syslog
         /// <summary>
         /// Gets or sets the session identifier for the message
         /// </summary>
-        public Guid SessionId { get; private set; }
+        public Guid SessionId { get; internal set; }
 
         /// <summary>
         /// Gets the unique identifier that can be used to correlate this message

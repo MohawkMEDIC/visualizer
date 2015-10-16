@@ -79,6 +79,7 @@
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.Data.Linq" />
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
@@ -90,23 +91,20 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Model\AuditErrorInfo.cs" />
-    <Compile Include="Model\AuditEventInfo.cs" />
     <Compile Include="Model\AuditMessageInfo.cs" />
-    <Compile Include="Model\AuditObjectInfo.cs" />
-    <Compile Include="Model\AuditParticipantInfo.cs" />
-    <Compile Include="Model\AuditSessionInfo.cs" />
-    <Compile Include="Model\AuditSourceInfo.cs" />
-    <Compile Include="Model\EnterpriseSiteInfo.cs" />
+    <Compile Include="Model\AuditStatusEntry.cs" />
+    <Compile Include="Model\ActorInfo.cs" />
     <Compile Include="Model\NodeInfo.cs" />
-    <Compile Include="Model\ObjectDetailType.cs" />
-    <Compile Include="Model\ProcessInfo.cs" />
-    <Compile Include="Model\EnterpriseSourceInfo.cs" />
     <Compile Include="Model\StatusType.cs" />
     <Compile Include="Model\StoredData.cs" />
-    <Compile Include="Model\VersionedData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
     <Compile Include="Services\IAuditPolicyEnforcement.cs" />
-    <Compile Include="Services\IAudtPersistenceService.cs" />
+    <Compile Include="Services\IAuditPersistenceService.cs" />
     <Compile Include="Services\INodeInfoLookupService.cs" />
     <Compile Include="Services\INotificationService.cs" />
     <Compile Include="VisualizationEvent.cs" />
@@ -128,6 +126,16 @@
       <ProductName>Windows Installer 3.1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

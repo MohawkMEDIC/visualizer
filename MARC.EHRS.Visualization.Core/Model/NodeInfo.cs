@@ -8,7 +8,7 @@ namespace MARC.EHRS.Visualization.Core.Model
     /// <summary>
     /// Represents a node on the network
     /// </summary>
-    public class NodeInfo : VersionedData
+    public class NodeInfo : StoredData
     {
 
         /// <summary>
@@ -36,10 +36,6 @@ namespace MARC.EHRS.Visualization.Core.Model
         /// </summary>
         public StatusType Status { get; set; }
 
-        /// <summary>
-        /// Gets or sets the list of registered processes for the node
-        /// </summary>
-        public List<ProcessInfo> Processes { get; set; }
 
     }
 }

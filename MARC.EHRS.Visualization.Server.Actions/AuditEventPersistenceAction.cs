@@ -43,70 +43,131 @@ namespace MARC.EHRS.VisualizationServer.Actions
         /// </summary>
         private void HoldAuditMessage(AuditMessageInfo ami, String reason)
         {
-            ami.Status = StatusType.Held;
+            ami.Status.EffectiveTo = DateTime.Now;
+            ami.StatusHistory.Add(new AuditStatusEntry()
+            {
+                EffectiveFrom = DateTime.Now,
+                StatusCode = StatusType.Held,
+                SetByUserId = WindowsIdentity.GetCurrent().Name
+            });
             ami.Errors.Add(new AuditErrorInfo() {
                 Message = reason
             });
         }
 
-        /// <summary>
-        /// Principal
-        /// </summary>
-        private byte[] SerializePrincipal(WindowsIdentity principal)
-        {
-            using(MemoryStream ms = new MemoryStream())
-            {
-                BinaryFormatter bf = new BinaryFormatter();
-                bf.Serialize(ms, principal);
-                ms.Seek(0, SeekOrigin.Begin);
-
-                // Read
-                byte[] retVal = new byte[ms.Length];
-                ms.Read(retVal, 0, (int)ms.Length);
-                return retVal;
-            }
-        }
 
         /// <summary>
         /// Process a message received by the syslog message handler
         /// </summary>
         private void ProcessMessage(Syslog.TransportProtocol.SyslogMessageReceivedEventArgs e)
         {
-            if (e == null || e.Message == null)
+            try
             {
-                Trace.TraceWarning("Received null SyslogEvent from transport");
-                return;
+                if (e == null || e.Message == null)
+                {
+                    Trace.TraceWarning("Received null SyslogEvent from transport");
+                    return;
+                }
+
+
+                // Secured copy
+                AuthenticatedSyslogMessageReceivedEventArgs securedEvent = e as AuthenticatedSyslogMessageReceivedEventArgs;
+
+                // Node information lookup service
+                INodeInfoLookupService nodeService = this.Context.GetService(typeof(INodeInfoLookupService)) as INodeInfoLookupService;
+                IAuditPersistenceService storeService = this.Context.GetService(typeof(IAuditPersistenceService)) as IAuditPersistenceService;
+
+                // Process a result
+                AuditMessageInfo ami = null;
+                var processResult = MessageUtil.ParseAudit(e.Message);
+
+                
+                // Is this an error?
+                if (processResult.Outcome != Everest.Connectors.ResultCode.Accepted)
+                    ami = this.CreateInvalidAuditMessageInfo(processResult);
+                else
+                {
+                    ami = new AuditMessageInfo()
+                    {
+                        StatusHistory = new List<AuditStatusEntry>()
+                    {
+                        new AuditStatusEntry()
+                        {
+                            EffectiveFrom = DateTime.Now,
+                            StatusCode = StatusType.New
+                        }
+                    }
+                    };
+                    ami.Event = processResult.Message;
+                }
+
+                // Set core properties
+                ami.CorrelationToken = e.Message.CorrelationId;
+                ami.CreationTime = DateTime.Now;
+                ami.SessionId = e.Message.SessionId;
+
+                // Sender / receiver information
+                Uri solicitorSource = new Uri(String.Format("atna://{0}", e.SolicitorEndpoint.Host)),
+                    solicitorHost = new Uri(String.Format("atna://{0}", e.Message.HostName)),
+                    receiveHost = new Uri(String.Format("atna://{0}", e.ReceiveEndpoint.Host));
+
+                ami.Receiver = nodeService.GetNodeInfo(receiveHost, false);
+                if (ami.Receiver == null)
+                {
+                    ami.Status.IsAlert = true;
+                    ami.Errors.Add(new AuditErrorInfo()
+                    {
+                        Message = String.Format("Receive endpoint {0} is unknown", e.ReceiveEndpoint)
+                    });
+                    ami.Receiver = new NodeInfo()
+                    {
+                        Status = StatusType.New,
+                        Name = e.ReceiveEndpoint.ToString(),
+                        Host = e.ReceiveEndpoint
+                    };
+                }
+
+
+                ami.SenderNode = nodeService.GetNodeInfo(solicitorSource, false);
+                if (ami.SenderNode == null && e.Message.HostName != "-")
+                    ami.SenderNode = nodeService.GetNodeInfo(solicitorHost, false);
+
+                if (ami.SenderNode == null)
+                {
+                    ami.Status.IsAlert = true;
+                    ami.Errors.Add(new AuditErrorInfo()
+                    {
+                        Message = String.Format("Solicitor endpoint/hostname {0}/{1} is unknown", solicitorSource, solicitorHost)
+                    });
+                    ami.SenderNode = new NodeInfo()
+                    {
+                        Status = StatusType.New,
+                        Name = e.Message.HostName,
+                        Host = e.Message.HostName != "-" ? solicitorHost : solicitorSource,
+                        X509Thumbprint = securedEvent != null ? securedEvent.RemoteCertificate.GetCertHashString() : null
+                    };
+                }
+
+                // Sender node
+                ami.SenderProcess = e.Message.ProcessName;
+
+                if (securedEvent != null && ami.SenderNode.X509Thumbprint != securedEvent.RemoteCertificate.GetCertHashString())
+                {
+                    ami.Status.IsAlert = true;
+                    ami.Errors.Add(new AuditErrorInfo()
+                    {
+                        Message = String.Format("Cert hash {0} does not equal configured value of {1}", securedEvent.RemoteCertificate.GetCertHashString(), ami.SenderNode.X509Thumbprint)
+                    });
+                }
+
+                if (storeService != null)
+                    storeService.PersistAuditMessage(ami);
             }
-
-
-            // Secured copy
-            AuthenticatedSyslogMessageReceivedEventArgs securedEvent = e as AuthenticatedSyslogMessageReceivedEventArgs;
-
-            // Node information lookup service
-            INodeInfoLookupService nodeInfo = this.Context.GetService(typeof(INodeInfoLookupService)) as INodeInfoLookupService;
-
-            // Process a result
-            var processResult = MessageUtil.ParseAudit(e.Message);
-            
-            AuditMessageInfo ami = null;
-            // Is this an error?
-            if (processResult.Outcome != Everest.Connectors.ResultCode.Accepted)
-                ami = this.CreateInvalidAuditMessageInfo(processResult);
-            else
-                ; // TODO: Serialize the full message
-            // Principal 
-            ami.CreatorPrincipalData = this.SerializePrincipal(WindowsIdentity.GetCurrent());
-            
-            // Sender / receiver information
-            ami.Receiver = nodeInfo.GetNodeInfo(e.ReceiveEndpoint, false);
-            ami.SenderNode = nodeInfo.GetNodeInfo(e.SolicitorEndpoint, false);
-
-            // Sender node
-            if(ami.SenderNode != null)
-                ami.SenderProcess = ami.SenderNode.Processes.Find(o => o.Name == e.Message.ProcessName);
-
-
-
+            catch(Exception ex)
+            {
+                Trace.TraceError(ex.ToString());
+                throw;
+            }
         }
 
         /// <summary>
@@ -117,9 +178,14 @@ namespace MARC.EHRS.VisualizationServer.Actions
             // Construct the return value
             var retVal = new AuditMessageInfo()
             {
-                CorrelationToken = processResult.SourceMessage.CorrelationId,
-                CreationTime = processResult.SourceMessage.Timestamp,
-                Status = StatusType.Held, // Held because message is an error
+                StatusHistory = new List<AuditStatusEntry>() {
+                    new AuditStatusEntry()
+                    {
+                        EffectiveFrom = DateTime.Now,
+                        IsAlert = true,
+                        StatusCode = StatusType.Held
+                    }
+                }, // Held because message is an error
                 Errors = new List<AuditErrorInfo>()
             };
 

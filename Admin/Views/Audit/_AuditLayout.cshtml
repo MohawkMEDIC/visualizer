@@ -1,0 +1,716 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="page-header">
+    <h1>Audit Control Centre</h1>
+</div>
+<div id="fullHeight" class="container-fluid" style="height:auto;">
+    <div id="side-nav" class="col-md-3">
+            <ul class="nav nav-pills nav-stacked">
+                <li>
+                    <a href="/Audit"><span class="glyphicon glyphicon-dashboard"></span> Dashboard</a>
+                    <ul class="nav nav-pills nav-stacked">
+                        <li><a href="javascript:" onclick="javascript:AuditTool.ShowInboxView()"><span class="glyphicon glyphicon-certificate"></span> New <span data-counter="NEW" class="badge">0</span></a></li>
+                        <li><a href="javascript:" onclick="javascript:AuditTool.ShowAlertView()"><span class="glyphicon glyphicon-bell"></span> Alerts <span data-counter="IsAlert" class="badge">0</span></a></li>
+                        <li><a href="javascript:" onclick="javascript:AuditTool.ShowActiveView()"><span class="glyphicon glyphicon-eye-open"></span> Reviewed <span data-counter="ACTIVE" class="badge">0</span></a></li>
+                        <li><a href="javascript:" onclick="javascript:AuditTool.ShowPinnedView()"><span class="glyphicon glyphicon-star-empty"></span> Starred <span data-counter="HELD" class="badge">0</span></a></li>
+                        <li><a href="javascript:" onclick="javascript:AuditTool.ShowArchiveView()"><span class="glyphicon glyphicon-briefcase"></span> Archived <span data-counter="ARCHIVED" class="badge">0</span></a></li>
+                        <li><a href="javascript:" onclick="javascript:AuditTool.ShowDeletedView()"><span class="glyphicon glyphicon-trash"></span> Deleted <span data-counter="OBSOLETE" class="badge">0</span></a></li>
+                        <li><a href="javascript:" onclick="javascript:AuditTool.ShowAuditView()"><span class="glyphicon glyphicon-cog"></span> System Audits <span data-counter="SYSTEM" class="badge">0</span></a></li>
+                    </ul>
+                </li>
+                <li><a href="javascript:" onclick="javascript:AuditTool.ShowAdvancedSearchView()"><span class="glyphicon glyphicon-search"></span> Advanced Search</a></li>
+                <li><a href="javascript:" onclick="javascript:AuditTool.ShowStatsView()"><span class="glyphicon glyphicon-stats"></span> Statistics</a></li>
+            </ul>
+    </div>
+    <div class="col-md-9 panel panel-default" style="overflow:auto;" >
+        <h4 id="viewTitle">@ViewBag.ViewTitle</h4>
+        <small id="viewSub"></small>
+        
+        @Html.AntiForgeryToken()
+        @RenderSection("AuditView", true)
+            
+        <div id="waitDiv" style="clear:both;display:none;width:100%; height:100%; position:absolute; top:0px; left:0px; z-index:1; background-color:rgba(0,0,0,0.5)">
+            
+            <div style="width:50%; margin:auto auto; top:40%; left:25%; position:absolute">
+                <h4 style="color:white">Please Wait..</h4>
+                <div class="progress progress-striped active">
+                     <div id="progress" class="progress-bar" style="width: 100%;"></div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div id="errorModal" class="modal fade" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+        <div class="modal-dialog panel panel-default">
+            <div class="modal-header">
+                <h4 class="modal-title">An Error Occurred</h4>
+            </div>
+            <div class="modal-body" id="errorDescription"></div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" onclick="javascript:$('#errorModal').modal('hide'); if($('#errorModal').data() == true) window.location = '/';">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script type="text/javascript">
+        // Auditing tool
+        var AuditTool = {
+            AutoUpdateResults: true,
+            HashMonitor: null,
+            StartUrlMonitor: function () {
+                this.HashMonitor = setInterval(function () {
+                    AuditTool.HashNavigate();
+                }, 1000);
+            },
+            StopUrlMonitor: function () {
+                clearInterval(this.HashMonitor);
+            },
+            Initialize: function() {
+                // Now iterate through control and replace links with a me handler
+                $(this.ViewControlId).parent().delegate(this.ViewControlId + " a[href!=\"javascript:\"]:not([data-toggle]):not([target])", 'click', function () {
+                    var self = $(this);
+                    var url = self.attr('href');
+                    AuditTool.SetView(url);
+                    return false;
+                });
+                $(this.ViewControlId).parent().delegate(this.ViewControlId + " a[data-toggle=\"tab\"]", 'click', function(e)
+                {
+                    e.preventDefault();
+                    $(this).tab('show');
+                });
+                $(this.ViewControlId).parent().delegate(this.ViewControlId + " input[data-filter-by]", 'change', AuditTool.SearchBasic);
+                $(this.ViewControlId).parent().delegate(this.ViewControlId + " select[data-filter-by]", 'change', AuditTool.SearchBasic);
+
+                // Monitor counts every 10 sec
+                setInterval(function () {
+                    AuditTool.RefreshCounts();
+                }, 10000);
+
+                // Monitor changes in URL for hash nav every 1 sec
+                this.StartUrlMonitor();
+
+                /// Global error handling
+                $.ajaxSetup(
+                    {
+                        error: function (x, e) {
+                            var getMeOuttaHere = false;
+                            switch (x.status) {
+                                case 0:
+                                    $("#errorDescription").html("Could not complete operation, It appears you're offline, try connecting to the internet and performing the operation again");
+                                    break;
+                                case 401:
+                                case 403:
+                                    $("#errorDescription").html("You are not authorized to perform this operation. You will be redirected back to the home page");
+                                    getMeOuttaHere = true;
+                                    break;
+                                default:
+                                    $("#errorDescription").html("A generic error occurred, please consult the audit and/or server logs");
+                                    break;
+                            }
+
+
+                            $("#errorModal").modal('show');
+                            if (getMeOuttaHere)
+                                $("#errorModal").data(getMeOuttaHere);
+                            AuditTool.HideModal();
+                        }
+                    });
+
+            },
+            SearchBasic: function (e) {
+                if (!AuditTool.AutoUpdateResults)
+                    return;
+                e.preventDefault();
+                var filterField = $(this).attr('data-filter-by');
+                var filterValue = $(this).val();
+
+                // Now data 
+                // We clear when: Filter has no value, filter a checkbox and is not checked, or filter is multi and nothing selected
+                if (filterValue == "" || filterValue == null || ($(this).attr('type') == 'checkbox' && !this.checked))
+                    delete AuditTool.ViewFilter[filterField];
+                else
+                    AuditTool.ViewFilter[filterField] = filterValue;
+
+                if ($(this).attr('data-filter-autosubmit') == 'true') {
+                    AuditTool.ViewFilter["showFilterBar"] = true;
+                    AuditTool.SetViewEx("@Url.Action("List")", AuditTool.ViewFilter);
+                }
+                else if ($(this).attr('data-filter-summarize')) {
+                    $($(this).attr('data-filter-summarize')).html(AuditTool.BuildEnglishQueryString(AuditTool.ViewFilter));
+                }
+            },
+            RefreshCounts: function () {
+                $.ajax("@Url.Action("Count")",
+                        {
+                            method: "get",
+                            dataType: "json",
+                            cache: false,
+                            success: function (data) {
+                                $("span[data-counter]").each(function (idx, ele) {
+                                    $(ele).html(data[$(ele).attr('data-counter')]);
+                                });
+                            }
+                        });
+            },
+            ViewControlId: null,
+            ViewQueryString: "",
+            ViewFilter : {},
+            AntiForgeryToken: "*[name='__RequestVerificationToken']",
+            ShowModal: function () {
+                $("#waitDiv").show();
+            },
+            HideModal: function () {
+                $("#waitDiv").hide();
+            },
+            // Parse filter flags from a URL
+            GetParameters: function(url)
+            {
+                var retVal = {};
+                var startParms = url.indexOf("?");
+                if (startParms == -1 || (url.indexOf("#") > 0 && url.indexOf("#") < startParms)) // prefer hash
+                    startParms = url.indexOf("#");
+                if (startParms == -1)
+                    return retVal;
+                else {
+                    var parmKvPairs = url.substring(startParms + 1, url.length).split("&");
+                    while (parmKvPairs.length > 0) {
+                        // Parse kv
+                        var kvPair = parmKvPairs.shift();
+                        kvPair = kvPair.split("=");
+                        var key = decodeURIComponent(kvPair[0]), value = decodeURIComponent(kvPair[1]).replace(/\+/g, " ");
+
+                        // Add or make array
+                        if (retVal[key] == null) {
+                            retVal[key] = value;
+                        }
+                        else {
+                            // Add
+                            if (!Array.isArray(retVal[key])) {
+                                retVal[key] = [retVal[key]];
+                            }
+                            retVal[key] = retVal[key].concat([value]);
+                        }
+                    }
+                    return retVal;
+                }
+            },
+            // Create a query string
+            CreateRequestQueryString:function(data)
+            {
+                var qs = "";
+                for (var d in data)
+                    qs += d + "=" + data[d] + "&";
+                if (qs.length == 0)
+                    return qs;
+                else
+                    return qs.substring(0, qs.length - 1);
+            },
+            // Create request URL
+            CreateRequestUrl:function(baseUrl, data)
+            {
+                var url = baseUrl;
+                var qs = this.CreateRequestQueryString(data)
+                if (qs.length == 0)
+                    return baseUrl;
+                else
+                    return baseUrl + "?" + qs;
+            },
+            // Get base URL
+            GetBaseUrl:function(url)
+            {
+                if (url.indexOf("?") > -1)
+                    return url.substring(0, url.indexOf("?"));
+                else if(url.indexOf("#") > -1)
+                    return url.substring(0, url.indexOf("#"));
+                else
+                    return url;
+            },
+            // Refresh the current view
+            SetView: function (url) {
+                
+                // Stop URL monitoring
+                this.StopUrlMonitor();
+                // Get the base URL
+                var baseUrl = this.GetBaseUrl(url);
+                var parameterData = this.GetParameters(url);
+                //parameterData["__ts"] = new Date().getTime();
+                parameterData["action"] = baseUrl.substring(baseUrl.lastIndexOf("/") + 1, baseUrl.length); // MVC Action
+                var parameterString = this.CreateRequestQueryString(parameterData);
+                //this.ShowModal();
+                $(this.ViewControlId).load(baseUrl + " " + AuditTool.ViewControlId, parameterString, function (responseText, textStatus, XHR) {
+                    // Update hash so back buttons work
+                    location.hash = parameterString;
+
+                    // Do callback
+                    if (AuditTool.LoadCallbackFunction != null)
+                        AuditTool.LoadCallbackFunction(responseText, textStatus, XHR)
+                    // Set the current view variables so we don't refresh once per second
+                    AuditTool.ViewQueryString = parameterString;
+                    AuditTool.ViewFilter = parameterData;
+
+                    // Start URL monitoring again
+                    AuditTool.StartUrlMonitor();
+                    AuditTool.HideModal();
+                    AuditTool.UpdateViewData();
+                });
+
+            },
+            SetViewEx : function(url, data)
+            {
+                this.SetView(this.CreateRequestUrl(url, data));
+            },
+            LoadCallbackFunction: null,
+            // Pin the specified object
+            Delete: function (sender, id) {
+                $(sender).disabled = true;
+                // Build the data string
+                this.ShowModal();
+                $.ajax("@Url.Action("Delete")",
+                    {
+                        data: "__RequestVerificationToken=" + $(AuditTool.AntiForgeryToken).val() + "&id=" + id,
+                        method: "post",
+                        dataType: "json",
+                        success: function () {
+                            AuditTool.HideModal();
+                            AuditTool.SetViewEx("@Url.Action("Index")/" + AuditTool.ViewFilter["action"], AuditTool.ViewFilter);
+                            AuditTool.RefreshCounts();
+                        },
+                        error: this._errorHandler
+                    }
+                );
+            },
+            DeleteAll: function (view) {
+                // Build the data string
+                if (confirm("Are you sure you wish to delete all the audits that match this query?")) {
+                    var viewData = this.CreateRequestQueryString(view);
+                    this.ShowModal();
+
+                    $.ajax("@Url.Action("DeleteAll")",
+                        {
+                            data: "__RequestVerificationToken=" + $(AuditTool.AntiForgeryToken).val() + "&" + viewData,
+                            method: "post",
+                            dataType: "json",
+                            success: function () { AuditTool.SetViewEx("@Url.Action("List")", AuditTool.ViewFilter); AuditTool.RefreshCounts(); },
+                            error: this._errorHandler
+                        }
+                    );
+                }
+            },
+            HashNavigate: function () {
+                var strLocation = ""+location.href;
+                if (location.hash && (strLocation.indexOf("?") == -1 || strLocation.indexOf("#") < strLocation.indexOf("?"))) { // If we have a hash and the has comes before the query
+                    var data = this.GetParameters(strLocation);
+                    
+                    if (data.action && this.CreateRequestQueryString(data) != this.ViewQueryString) {
+                        AuditTool.ShowModal();
+                        $("#viewTitle").html("");
+                        $("#viewSummary").html("");
+                        this.SetViewEx("@Url.Action("Index")/" + data["action"], data);
+                        return true;
+                    }
+                }
+                return false;
+            },
+            // Perform the advanced search
+            AdvancedSearch:function(sender, filter)
+            {
+                // Build the data string
+                this.ShowModal();
+                this.SetViewEx("@Url.Action("Search")", filter);
+                
+            },
+            // Pin the specified object
+            Pin: function (sender, id) {
+                // Build the data string
+                $(sender).disabled = true;
+                $.ajax("@Url.Action("Hold")",
+                    {
+                        data: "__RequestVerificationToken=" + $(AuditTool.AntiForgeryToken).val() + "&id=" + id,
+                        method: "post",
+                        dataType: "json",
+                        success: function () { AuditTool.SetViewEx("@Url.Action("Index")/" + AuditTool.ViewFilter["action"], AuditTool.ViewFilter); AuditTool.RefreshCounts(); },
+                        error: this._errorHandler
+                    }
+                );
+            },
+            // Archive the specified object
+            Archive: function (sender, id) {
+                $(sender).disabled = true;
+                $.ajax("@Url.Action("Archive")",
+                    {
+                        data: "__RequestVerificationToken=" + $(AuditTool.AntiForgeryToken).val() + "&id=" + id,
+                        method: "post",
+                        dataType: "json",
+                        success: function () { AuditTool.SetViewEx("@Url.Action("Index")/" + AuditTool.ViewFilter["action"], AuditTool.ViewFilter); AuditTool.RefreshCounts(); },
+                        error: this._errorHandler
+                    }
+                );
+            },
+            // Archive the specified object
+            ArchiveAll: function (view) {
+                // Build the data string
+                if (confirm("Are you sure you wish to archive all the audits that match this query?")) {
+                    var viewData = this.CreateRequestQueryString(view);
+                    this.ShowModal();
+
+                    $.ajax("@Url.Action("ArchiveAll")",
+                        {
+                            data: "__RequestVerificationToken=" + $(AuditTool.AntiForgeryToken).val() + "&" + viewData,
+                            method: "post",
+                            dataType: "json",
+                            success: function () { AuditTool.SetViewEx("@Url.Action("List")", AuditTool.ViewFilter); AuditTool.RefreshCounts(); },
+                            error: this._errorHandler
+                        }
+                    );
+                    }
+            },
+            // Archive the specified object
+            View: function (sender, id) {
+                this.ShowModal();
+                $(sender).disabled = true;
+                $("#viewTitle").html("Audit #" + id);
+                $("#viewSub").html("");
+                this.SetViewEx("@Url.Action("View")", { id: id });
+            },
+            ShowInboxView: function () {
+                this.SetViewEx("@Url.Action("List")", {
+                    StatusCode: 'NEW'
+                });
+            },
+            ShowArchiveView: function () {
+                this.SetViewEx("@Url.Action("List")", {
+                    StatusCode: 'ARCHIVED'
+                });
+            },
+            ShowPinnedView: function () {
+                this.SetViewEx("@Url.Action("List")", {
+                    StatusCode: 'HELD'
+                });
+            },
+            ShowAlertView: function () {
+                this.SetViewEx("@Url.Action("List")", {
+                    IsAlert: true,
+                    StatusCode:'!OBSOLETE'
+                });
+            },
+            ShowActiveView: function () {
+                this.SetViewEx("@Url.Action("List")", {
+                    StatusCode: 'ACTIVE'
+                });
+ 
+            },
+            ShowDeletedView: function () {
+                this.SetViewEx("@Url.Action("List")", {
+                    StatusCode: 'OBSOLETE'
+                });
+            },
+            ShowAuditView: function () {
+                this.SetViewEx("@Url.Action("List")", {
+                    StatusCode: "SYSTEM"
+                });
+            },
+            ShowAdvancedSearchView: function (data) {
+                this.SetViewEx("@Url.Action("Search")", data);
+            },
+            ShowStatsView: function (data) {
+                this.ShowModal();
+                this.SetViewEx("@Url.Action("Stats")", data);
+            },
+            UpdateViewData: function () {
+
+                
+                // Update the titles
+                switch (this.ViewFilter["action"].toLowerCase()) {
+                    case "view":
+                        $("#viewTitle").html("Audit #" + this.ViewFilter["id"]);
+                        $("#viewSub").html("");
+                        break;
+                    case "search":
+                        $("#viewTitle").html("Advanced Search");
+                        $("#viewSub").html("Enter your search criteria below to initiate a search");
+                        break;
+                    case "stats":
+                        $("#viewTitle").html("Statistics");
+                        $("#viewSub").html("Audit content charts");
+                        // Get stats data 
+                        this.ShowModal();
+                        
+                        $.ajax("@Url.Action("StatsData")", {
+                            success: function (data) {
+                                AuditTool.HideModal();
+                                $(AuditTool.ViewControlId + " canvas[data-chart-type]").each(function (i, e) {
+
+                                    // Add chart
+                                    var graphData = data[$(e).attr('data-chart-property')];
+                                    var chartType = $(e).attr('data-chart-type');
+
+                                    switch (chartType) {
+                                        case "doughnut":
+                                            new Chart($(e).get(0).getContext("2d")).Doughnut(graphData['data']);
+                                            break;
+                                        case "bar":
+                                            new Chart($(e).get(0).getContext("2d")).Bar(graphData['data']);
+                                            break;
+                                        case "line":
+                                            new Chart($(e).get(0).getContext("2d")).Line(graphData['data']);
+                                            break;
+                                        case "hollow-line":
+                                            for (var i = 0; i < graphData['data'].datasets.length; i++) {
+                                                for (var l in graphData['legend']) {
+                                                    if(graphData['legend'][l] == graphData['data'].datasets[i].fillColor)
+                                                        graphData['legend'][l] = graphData['data'].datasets[i].strokeColor;
+                                                }
+                                                graphData['data'].datasets[i].fillColor = "rgba(0,0,0,0)";
+                                            }
+                                            
+                                            new Chart($(e).get(0).getContext("2d")).Line(graphData['data'], { scaleOverlay: true });
+                                            break;
+                                        case "radar":
+                                            new Chart($(e).get(0).getContext("2d")).Radar(graphData['data']);
+                                            break;
+                                        case "pie":
+                                            new Chart($(e).get(0).getContext("2d")).Pie(graphData['data']);
+                                            break;
+                                        case "polar":
+                                            new Chart($(e).get(0).getContext("2d")).PolarArea(graphData['data']);
+                                            break;
+                                    }
+                                    // Add legend
+                                    var legendId = $(e).attr('data-chart-legend');
+                                    if (legendId == null) return;
+
+                                    var legendHtml = "";
+                                    for (var i in graphData['legend']) {
+                                        var description = i;
+                                        if (chartType == "doughnut")
+                                        {
+
+                                            // Get value
+                                            for (var d = 0; d < graphData['data'].length; d++)
+                                                if (graphData['data'][d]['color'] == graphData['legend'][i])
+                                                    description += " (" + graphData['data'][d]['value'] + ")";
+                                        }
+                                        legendHtml += "<li><span style=\"background-color:" + graphData['legend'][i] + "\">&nbsp;&nbsp;</span> " + description + "</li>";
+                                    }
+                                    $(legendId).html(legendHtml);
+                                });
+                            },
+                            method: "get",
+                            dataType: "json",
+                            cache: true,
+                            data:this.ViewFilter
+                        });
+                        break;
+                    case "list":
+                        {
+
+                            // Update title
+                            if (this.ViewFilter["showFilterBar"]) {
+                                $("#viewTitle").html("Filtered Results");
+                                $("#viewSub").html("Current Filter: <div class=\"well\">" + this.BuildEnglishQueryString(this.ViewFilter) + "</div>");
+                            }
+                            else if (this.ViewFilter["StatusCode"]) {
+                                switch (this.ViewFilter["StatusCode"].toLowerCase()) {
+                                    case "new":
+                                        $("#viewTitle").html("New Audits");
+                                        $("#viewSub").html("Contains audits which have not been reviewed or categorized by a user.");
+                                        break;
+                                    case "obsolete":
+                                        $("#viewTitle").html("Removed Audits");
+                                        $("#viewSub").html("Contains audits which are deleted, or more specifically considered to no longer be useful. These audits will not appear in searches or reports");
+                                        break;
+                                    case "system":
+                                        $("#viewTitle").html("System Audits");
+                                        $("#viewSub").html("Contains audits generated from internal system functions.");
+                                        break;
+                                    case "active":
+                                        $("#viewTitle").html("Reviewed Audits");
+                                        $("#viewSub").html("Contains a list of audits which have been viewed and marked 'reviewed' by a user.");
+                                        break;
+                                    case "held":
+                                        $("#viewTitle").html("Starred Audits");
+                                        $("#viewSub").html("Contains audits which are considered of particular interest by a user.");
+                                        break;
+                                    case "archived":
+                                        $("#viewTitle").html("Archived Audits");
+                                        $("#viewSub").html("Contains audits which, while no longer considered operatationally useful, may provide some useful history.");
+                                        break;
+                                    default:
+                                        $("#viewTitle").html("Results");
+                                        $("#viewSub").html("Results for a saved view are being shown");
+                                        break;
+                                }
+                            }
+                            else if (this.ViewFilter["IsAlert"]) {
+                                $("#viewTitle").html("Alerts");
+                                $("#viewSub").html("Contains audits which the MyST system has tagged as an alert.");
+                            }
+                            else {
+                                $("#viewTitle").html("All");
+                                $("#viewSub").html("Showing all audits");
+                            }
+                            break;
+                        }
+                }
+
+                // Update any tooltip 
+                $(this.ViewControlId + ' *[data-original-title]').tooltip();
+                $('#viewSub *[data-original-title]').tooltip();
+
+                // Update the search filter stuff
+                this.AutoUpdateResults = false;
+                for (var p in this.ViewFilter) {
+
+                    var currentFilter = $('*[data-filter-by="' + p + '"]');
+                    if (currentFilter != null) {
+                        if (currentFilter.attr('type') == 'checkbox')
+                            currentFilter.attr('checked', "checked");
+                        else if (currentFilter.attr('multiple') == 'multiple' && !Array.isArray(this.ViewFilter[p]))
+                            currentFilter.val(this.ViewFilter[p].split(","));
+                        else
+                            currentFilter.val(this.ViewFilter[p]);
+                    }
+                }
+                this.AutoUpdateResults = true;
+
+                // Add select2 options to any select box
+                $(this.ViewControlId + ' select[data-filter-by]').select2({
+                    formatResult: function (data, container, query) {
+                        var html = "", text = data.text;
+                        if (text.indexOf("!") == 0) {
+                            html = AuditTool.QueryParameterPretty["=!"];
+                            text = text.substring(1, text.length);
+                        }
+                        else if (text.indexOf("~") == 0) {
+                            html = AuditTool.QueryParameterPretty["=~"];
+                            text = text.substring(1, text.length);
+                        }
+                        return " <small>" + html + "</small>" + text;
+                    },
+                    escapeMarkup: function (html) { return html; }
+                });
+
+
+                // Setup the dynamic search boxes
+                $(this.ViewControlId + ' select[data-filter-by]').siblings('.select2-container').css('display', 'block');
+                $(this.ViewControlId + ' input[data-filter-by]').siblings('.select2-container').css('display', 'block');
+
+                // Update any search parameter input
+                $(this.ViewControlId + " input[data-filter-type='date']").each(function (i, e) {
+                    $(e).datepicker({
+                        dateFormat: $(e).attr('data-date-format') ? $(e).attr('data-date-format') : "yy-mm-dd"
+                    });
+                });
+               
+                // Any summarization?
+                var alreadySummarized = [];
+                $(this.ViewControlId + ' *[data-filter-summarize]').each(function (i, e) {
+                    var summName = $(e).attr('data-filter-summarize');
+                    if ($.inArray(summName, alreadySummarized) == -1) {
+                        $(summName).html(AuditTool.BuildEnglishQueryString(AuditTool.ViewFilter));
+                        alreadySummarized.concat([summName]);
+                    }
+                });
+
+                
+            },
+            QueryParameterPretty: {
+                "," : " <span data-toggle='tooltip' data-original-title=\"Matches the previous expression or the next\" class='label label-primary'>OR</span> ",
+                "&": " <span data-original-title=\"Matches the previous expression and the next\" class='label label-primary'>AND</span> ",
+                "=~": " <span data-original-title=\"The variable must be similar to the value\" class='label label-primary'>LIKE</span> ",
+                "=!": " <span data-original-title=\"The variable must not equal the value\" class='label label-primary'>NOT EQUAL TO</span> ",
+                "=>": " <span data-original-title=\"The variable must be greater than the value\" class='label label-primary'>GREATER THAN</span> ",
+                "=<": " <span data-original-title=\"The variable must less than the value\" class='label label-primary'>LESS THAN</span> ",
+                "=": " <span data-original-title=\"The variable must equal the value specified\" class='label label-primary'>EQUALS</span> ",
+                "\\[s\\](.*?)\\[/s\\]": " <span data-original-title=\"Represents the string value '$1'\" class='label label-success'>$1</span> ",
+                "\\[v\\](.*?)\\[/v\\]": " <span data-original-title=\"Represents the filter parameter '$1'\" class='label label-info'>$1</span> "
+            },
+            BuildEnglishQueryString: function (data) {
+
+                var html = "";
+                if (Array.isArray(data) || typeof data == "object") {
+
+                    // Build known filters
+                    var knownFilters = [];
+                    var elements = $(AuditTool.ViewControlId + " *[data-filter-by]");
+                    for (var i = 0; i < elements.length; i++) {
+                        knownFilters = knownFilters.concat([$(elements[i]).attr('data-filter-by')]);
+                    }
+
+                    for (var k in data) {
+                        var qp = k;
+                        // Skip other fields
+                        while (qp.indexOf("@@") == 0)
+                            qp = qp.substring(1, k.length);
+                        if ($.inArray(qp, knownFilters) == -1) continue;
+                        if (data[k].indexOf && data[k].indexOf(',') > -1)
+                            data[k] = data[k].split(',');
+
+                        if (Array.isArray(data[k])) {
+                            for (var v in data[k])
+                                html += "[v]" + qp + "[/v]" + this.BuildEnglishQueryString(data[k][v]) + ",";
+                            html = html.substring(0, html.length - 1);
+                        }
+                        else
+                            html += "[v]" + qp + "[/v]" + this.BuildEnglishQueryString(data[k]);
+                        html += "&";
+                    }
+                    html = html.substring(0, html.length - 1);
+
+                    // Pretty print
+                    var retVal = "";
+                    while (html.length > 0) {
+                        for (var v in AuditTool.QueryParameterPretty) {
+                            var re = new RegExp(v, 'g');
+                            var match = re.exec(html);
+                            if(match != null && html.indexOf(match[0]) == 0) // First!
+                            {
+                                var tString = html.substring(0, match[0].length);
+                                tString = tString.replace(re, AuditTool.QueryParameterPretty[v]);
+                                retVal += tString;
+                                html = html.substring(match[0].length, html.length);
+                            }
+                        }
+
+                    }
+
+                    if (retVal.length == 0)
+                        retVal = "<span class=\"label label-info\"  data-original-title=\"There is no query filter, all audits are conveyed\">ALL AUDITS</span>";
+                    html = retVal;
+                }
+                else {
+                    data = "" + data;
+                    if (data.indexOf("!") == 0) {
+                        html += "=!";
+                        data = data.substring(1, data.length);
+                    }
+                    else if (data.indexOf("~") == 0) {
+                        html += "=~";
+                        data = data.substring(1, data.length);
+                    }
+                    else if (data.indexOf("<") == 0) {
+                        html += "=<";
+                        data = data.substring(1, data.length);
+                    }
+                    else if (data.indexOf(">") == 0) {
+                        html += "=>";
+                        data = data.substring(1, data.length);
+                    }
+                    else
+                        html += "=";
+                    html += "[s]" + data + "[/s]";
+                }
+
+                return html;
+            }
+        }; // End archive object
+    </script>
+    @RenderSection("Scripts")
+}

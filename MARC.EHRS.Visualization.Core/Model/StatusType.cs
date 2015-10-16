@@ -15,6 +15,7 @@ namespace MARC.EHRS.Visualization.Core.Model
         Held, 
         Nullified,
         Obsolete,
-        Archived
+        Archived,
+        System
     }
 }

@@ -7,6 +7,7 @@ using MARC.EHRS.VisualizationServer.Syslog.Configuration;
 using System.Threading;
 using MARC.HI.EHRS.SVC.Core.Services;
 using System.IO;
+using System.Diagnostics;
 
 namespace MARC.EHRS.VisualizationServer.Syslog
 {
@@ -54,8 +55,14 @@ namespace MARC.EHRS.VisualizationServer.Syslog
             PersistMessageEvent(e);
 
             // Perform actions
-            foreach(var act in this.m_action)
-                act.HandleInvalidMessage(sender, e);
+            foreach (var act in this.m_action)
+                try {
+                    act.HandleInvalidMessage(sender, e);
+                }
+                catch(Exception ex)
+                {
+                    Trace.TraceError("Error executing action {0}: {1}", act, ex.ToString());
+                }
         }
 
         /// <summary>
@@ -66,7 +73,15 @@ namespace MARC.EHRS.VisualizationServer.Syslog
 
             // Perform actions
             foreach(var act in this.m_action)
-                act.HandleMessageReceived(sender, e);
+                try
+                {
+                    act.HandleMessageReceived(sender, e);
+                }
+                catch (Exception ex)
+                {
+                    Trace.TraceError("Error executing action {0}: {1}", act, ex.ToString());
+                }
+
         }
 
         /// <summary>

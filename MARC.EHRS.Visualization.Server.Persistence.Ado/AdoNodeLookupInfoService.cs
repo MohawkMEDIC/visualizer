@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using MARC.EHRS.Visualization.Core.Services;
+using MARC.EHRS.Visualization.Core.Model;
 
-namespace MARC.EHRS.VisualizationServer.Actions.Persistence
+namespace MARC.EHRS.Visualization.Server.Persistence.Ado
 {
     /// <summary>
     /// Represents a service that can lookup node information 
@@ -14,11 +15,24 @@ namespace MARC.EHRS.VisualizationServer.Actions.Persistence
         #region INodeInfoLookupService Members
 
         /// <summary>
+        /// Audit context
+        /// </summary>
+        private AuditModelDataContext m_context;
+
+        /// <summary>
         /// Get node information given the endpoint of the node
         /// </summary>
         public Visualization.Core.Model.NodeInfo GetNodeInfo(Uri nodeEndpoint, bool includeHistory)
         {
-            throw new NotImplementedException();
+            var nodeVersion = this.m_context.NodeVersions.Where(o => o.HostName == nodeEndpoint.Host && o.ObsoletionTime == null).OrderByDescending(o => o.NodeVersionId).FirstOrDefault();
+
+            if (nodeVersion != null)
+                return AdoAuditPersistenceService.ParseNodeVersion(nodeVersion);
+
+            // TODO: Handle history
+
+            return null;
+
         }
 
         /// <summary>
@@ -26,7 +40,14 @@ namespace MARC.EHRS.VisualizationServer.Actions.Persistence
         /// </summary>
         public Visualization.Core.Model.NodeInfo GetNodeInfo(decimal nodeId, bool includeHistory)
         {
-            throw new NotImplementedException();
+            var nodeVersion = this.m_context.NodeVersions.Where(o => o.NodeId == nodeId && o.ObsoletionTime == null).OrderByDescending(o => o.NodeVersionId).FirstOrDefault();
+
+            if (nodeVersion != null)
+                return AdoAuditPersistenceService.ParseNodeVersion(nodeVersion);
+
+            // TODO: Handle history 
+
+            return null;
         }
 
         /// <summary>
@@ -34,22 +55,31 @@ namespace MARC.EHRS.VisualizationServer.Actions.Persistence
         /// </summary>
         public List<Visualization.Core.Model.NodeInfo> SearchNodeInfo(Visualization.Core.Model.NodeInfo prototype)
         {
-            throw new NotImplementedException();
+            if (prototype.Id != default(int))
+                return new List<NodeInfo>() { this.GetNodeInfo(prototype.Id, false) };
+            else if (prototype.Host != null)
+                return new List<NodeInfo>() { this.GetNodeInfo(prototype.Host, false) };
+            else
+                return this.m_context.NodeVersions.Where(o => o.NodeMagic == Convert.FromBase64String(prototype.X509Thumbprint)).Select(o => AdoAuditPersistenceService.ParseNodeVersion(o)).ToList();
         }
 
+       
         #endregion
 
         #region IUsesHostContext Members
 
+        /// <summary>
+        /// When the service is "hooked up"
+        /// </summary>
         public IServiceProvider Context
         {
             get
             {
-                throw new NotImplementedException();
+                return null;
             }
             set
             {
-                throw new NotImplementedException();
+                this.m_context = new AuditModelDataContext();
             }
         }
 

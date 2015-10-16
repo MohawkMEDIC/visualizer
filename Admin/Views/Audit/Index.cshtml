@@ -1,0 +1,38 @@
+﻿@model IEnumerable<MYST.OpAdmin.DAL.AuditSummaryVw>
+@{
+    ViewBag.Title = "Audit Control Centre";
+    ViewBag.ViewTitle = "Summary";
+    Layout = "~/Views/Audit/_AuditLayout.cshtml";
+}
+
+@section AuditView
+{
+<div id="view">
+
+</div>
+}
+
+@section Scripts
+{
+    <script type="text/javascript">
+        // Document ready Initialize
+        $(document).ready(function () {
+            AuditTool.ViewControlId = "#view";
+            AuditTool.RefreshCounts();
+            AuditTool.Initialize();
+
+            // Are there current query parameters?
+            var data = AuditTool.GetParameters("@Html.Raw(Request.Url.ToString())");
+            if (@Request.QueryString.Count != 0) {
+                var currentView = "@Url.Action(Request.QueryString["action"] ?? "List")";
+                AuditTool.SetViewEx(currentView, data);
+            }
+            else if(!AuditTool.HashNavigate())
+                AuditTool.SetViewEx("@Url.Action("List")", { StatusCode: ['NEW', 'HELD'], OutcomeCode: '!Success', EventType: '!Audit Log Used' });
+
+
+        });
+    </script>
+      
+
+}

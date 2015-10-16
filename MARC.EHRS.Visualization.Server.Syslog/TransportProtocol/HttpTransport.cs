@@ -97,7 +97,9 @@ namespace MARC.EHRS.VisualizationServer.Syslog.TransportProtocol
                         message.HostName = request.RemoteEndPoint.ToString();
                         message.Original = httpMessageStr;
                         message.Version = 1;
-
+                        message.ProcessName = "UNKNOWN/HTTP";
+                        message.ProcessId = "0";
+                        message.SessionId = Guid.NewGuid();
                         if (request.HttpMethod != "POST")
                             throw new InvalidOperationException("Invalid HTTP method. Expected POST");
                         //else if (request.ContentType != "application/ihe+rfc3881" &&

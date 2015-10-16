@@ -154,7 +154,7 @@ namespace MARC.EHRS.VisualizationServer.Actions
                     return; // no message
 
                 // Notify received
-                Trace.TraceInformation("Received message from {0} with correlation id {1}", e.SolicitorEndpoint, e.Message.CorrelationId);
+                Trace.TraceInformation("Received message from {0} on {2} with correlation id {1}", e.SolicitorEndpoint, e.Message.CorrelationId, e.ReceiveEndpoint);
                 var evt = this.ConvertToVisualization(e);
                 if (evt != null)
                 {

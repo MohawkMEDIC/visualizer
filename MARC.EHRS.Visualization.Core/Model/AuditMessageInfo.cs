@@ -9,18 +9,31 @@ namespace MARC.EHRS.Visualization.Core.Model
     /// <summary>
     /// Audit event information
     /// </summary>
-    public class AuditMessageInfo : VersionedData
-    {
-
+    public class AuditMessageInfo : StoredData
+    {   
+        /// <summary>
+        /// Status history
+        /// </summary>
+        public AuditMessageInfo()
+        {
+            this.StatusHistory = new List<AuditStatusEntry>();
+            this.Errors = new List<AuditErrorInfo>();
+        }
+        
         /// <summary>
         /// Gets or sets the correlation token
         /// </summary>
         public Guid CorrelationToken { get; set; }
 
         /// <summary>
-        /// Gets or sets the audit session
+        /// The session identifier
         /// </summary>
-        public AuditSessionInfo Session { get; set; }
+        public Guid SessionId { get; set; }
+
+        /// <summary>
+        /// The time the audit message was created
+        /// </summary>
+        public DateTime CreationTime { get; set; }
 
         /// <summary>
         /// Gets or sets the sending node
@@ -30,7 +43,7 @@ namespace MARC.EHRS.Visualization.Core.Model
         /// <summary>
         /// Gets or sets the sender process
         /// </summary>
-        public ProcessInfo SenderProcess { get; set; }
+        public String SenderProcess { get; set; }
 
         /// <summary>
         /// Gets or sets the receiver node
@@ -38,9 +51,14 @@ namespace MARC.EHRS.Visualization.Core.Model
         public NodeInfo Receiver { get; set; }
 
         /// <summary>
-        /// Gets or sets the status
+        /// Gets the current status
         /// </summary>
-        public StatusType Status { get; set; }
+        public AuditStatusEntry Status { get { return this.StatusHistory.Last(o => o.EffectiveTo == default(DateTime)); } }
+
+        /// <summary>
+        /// Gets the status history
+        /// </summary>
+        public List<AuditStatusEntry> StatusHistory { get; set; }
 
         /// <summary>
         /// Gets or sets the audit error information
@@ -50,6 +68,6 @@ namespace MARC.EHRS.Visualization.Core.Model
         /// <summary>
         /// The processed audit event
         /// </summary>
-        public AuditEventInfo Event { get; set; }
+        public AuditMessage Event { get; set; }
     }
 }
