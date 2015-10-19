@@ -12,26 +12,29 @@ namespace MARC.EHRS.Visualization.Server.Persistence.Ado
     /// </summary>
     public class AdoNodeLookupInfoService : INodeInfoLookupService
     {
-        #region INodeInfoLookupService Members
-
         /// <summary>
-        /// Audit context
+        /// Context
         /// </summary>
-        private AuditModelDataContext m_context;
+        public IServiceProvider Context { get; set; }
+
+        #region INodeInfoLookupService Members
 
         /// <summary>
         /// Get node information given the endpoint of the node
         /// </summary>
         public Visualization.Core.Model.NodeInfo GetNodeInfo(Uri nodeEndpoint, bool includeHistory)
         {
-            var nodeVersion = this.m_context.NodeVersions.Where(o => o.HostName == nodeEndpoint.Host && o.ObsoletionTime == null).OrderByDescending(o => o.NodeVersionId).FirstOrDefault();
+            using (var context = new AuditModelDataContext())
+            {
+                var nodeVersion = context.NodeVersions.Where(o => o.HostName == nodeEndpoint.Host && o.ObsoletionTime == null).OrderByDescending(o => o.NodeVersionId).FirstOrDefault();
 
-            if (nodeVersion != null)
-                return AdoAuditPersistenceService.ParseNodeVersion(nodeVersion);
+                if (nodeVersion != null)
+                    return AdoAuditPersistenceService.ParseNodeVersion(nodeVersion);
 
-            // TODO: Handle history
+                // TODO: Handle history
 
-            return null;
+                return null;
+            }
 
         }
 
@@ -40,13 +43,15 @@ namespace MARC.EHRS.Visualization.Server.Persistence.Ado
         /// </summary>
         public Visualization.Core.Model.NodeInfo GetNodeInfo(decimal nodeId, bool includeHistory)
         {
-            var nodeVersion = this.m_context.NodeVersions.Where(o => o.NodeId == nodeId && o.ObsoletionTime == null).OrderByDescending(o => o.NodeVersionId).FirstOrDefault();
+            using (var context = new AuditModelDataContext())
+            {
+                var nodeVersion = context.NodeVersions.Where(o => o.NodeId == nodeId && o.ObsoletionTime == null).OrderByDescending(o => o.NodeVersionId).FirstOrDefault();
 
-            if (nodeVersion != null)
-                return AdoAuditPersistenceService.ParseNodeVersion(nodeVersion);
+                if (nodeVersion != null)
+                    return AdoAuditPersistenceService.ParseNodeVersion(nodeVersion);
 
-            // TODO: Handle history 
-
+                // TODO: Handle history 
+            }
             return null;
         }
 
@@ -55,34 +60,18 @@ namespace MARC.EHRS.Visualization.Server.Persistence.Ado
         /// </summary>
         public List<Visualization.Core.Model.NodeInfo> SearchNodeInfo(Visualization.Core.Model.NodeInfo prototype)
         {
-            if (prototype.Id != default(int))
-                return new List<NodeInfo>() { this.GetNodeInfo(prototype.Id, false) };
-            else if (prototype.Host != null)
-                return new List<NodeInfo>() { this.GetNodeInfo(prototype.Host, false) };
-            else
-                return this.m_context.NodeVersions.Where(o => o.NodeMagic == Convert.FromBase64String(prototype.X509Thumbprint)).Select(o => AdoAuditPersistenceService.ParseNodeVersion(o)).ToList();
+            using (var context = new AuditModelDataContext())
+            {
+                if (prototype.Id != default(int))
+                    return new List<NodeInfo>() { this.GetNodeInfo(prototype.Id, false) };
+                else if (prototype.Host != null)
+                    return new List<NodeInfo>() { this.GetNodeInfo(prototype.Host, false) };
+                else
+                    return context.NodeVersions.Where(o => o.NodeMagic == Convert.FromBase64String(prototype.X509Thumbprint)).Select(o => AdoAuditPersistenceService.ParseNodeVersion(o)).ToList();
+            }
         }
 
        
-        #endregion
-
-        #region IUsesHostContext Members
-
-        /// <summary>
-        /// When the service is "hooked up"
-        /// </summary>
-        public IServiceProvider Context
-        {
-            get
-            {
-                return null;
-            }
-            set
-            {
-                this.m_context = new AuditModelDataContext();
-            }
-        }
-
         #endregion
     }
 }

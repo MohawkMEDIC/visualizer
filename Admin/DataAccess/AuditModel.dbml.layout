@@ -1,0 +1,334 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 14.625, 24.125" name="AuditModel">
+  <DataContextMoniker Name="/AuditModelDataContext" />
+  <nestedChildShapes>
+    <classShape Id="18b18b96-c0fa-4dbb-abf8-30527c83b367" absoluteBounds="3.375, 6.875, 2, 2.5401025390625005">
+      <DataClassMoniker Name="/AuditModelDataContext/Audit" />
+      <nestedChildShapes>
+        <elementListCompartment Id="4eb7ee9c-3660-4937-9d7a-de991502c208" absoluteBounds="3.39, 7.335, 1.9700000000000002, 1.9801025390625" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="8e8cf45b-801e-471c-a591-167cb696d6dc" absoluteBounds="1.75, 13.875, 2, 1.1939925130208344">
+      <DataClassMoniker Name="/AuditModelDataContext/StatusCode" />
+      <nestedChildShapes>
+        <elementListCompartment Id="f857e667-dcb5-430e-924d-65821e253344" absoluteBounds="1.7650000000000001, 14.335, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="f85f6a5e-3be0-4e8f-adfc-e50eb0668701" absoluteBounds="6.25, 6.25, 2, 1.1939925130208344">
+      <DataClassMoniker Name="/AuditModelDataContext/AuditAuditSourceAssoc" />
+      <nestedChildShapes>
+        <elementListCompartment Id="b5be1e58-1047-440b-9c3a-6bed014f1ea7" absoluteBounds="6.265, 6.71, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="9bd806d7-a581-4754-bd67-1ecbd9e037cc" absoluteBounds="0.75, 9, 2, 1.5785953776041666">
+      <DataClassMoniker Name="/AuditModelDataContext/AuditCode" />
+      <nestedChildShapes>
+        <elementListCompartment Id="9ef34824-636d-49ee-9bc7-317612d180c8" absoluteBounds="0.765, 9.46, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="12b2afb7-084f-420d-add6-2e46d96aa90c" absoluteBounds="6.25, 8.625, 2, 1.1939925130208344">
+      <DataClassMoniker Name="/AuditModelDataContext/AuditEventTypeAuditCodeAssoc" />
+      <nestedChildShapes>
+        <elementListCompartment Id="7e695131-729a-4c73-814c-64cbaa501d3c" absoluteBounds="6.265, 9.085, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="addcba75-6405-4786-a158-7678a1d4a2ae" absoluteBounds="9.25, 8.875, 2, 2.5401025390625005">
+      <DataClassMoniker Name="/AuditModelDataContext/AuditObject" />
+      <nestedChildShapes>
+        <elementListCompartment Id="ddb4fc15-cfc6-4c05-a665-fcf7c3f6d092" absoluteBounds="9.265, 9.335, 1.9700000000000002, 1.9801025390625" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="fd4f7954-15b5-4c4a-89ae-b9fca6724552" absoluteBounds="12, 9.375, 2, 1.5785953776041666">
+      <DataClassMoniker Name="/AuditModelDataContext/AuditObjectDetail" />
+      <nestedChildShapes>
+        <elementListCompartment Id="7049ea4b-1178-4b83-8c3e-23ebd9d85bab" absoluteBounds="12.015, 9.835, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="dcc0ddff-282b-4144-b5fa-4c23985bb55c" absoluteBounds="9.25, 5.625, 2, 2.3478011067708344">
+      <DataClassMoniker Name="/AuditModelDataContext/AuditParticipant" />
+      <nestedChildShapes>
+        <elementListCompartment Id="3868ee47-728a-48a7-b33a-695e51f41145" absoluteBounds="9.265, 6.085, 1.9700000000000002, 1.7878011067708335" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="dc309370-5955-40fe-9df2-7f9940268426" absoluteBounds="12, 6.5, 2, 1.1939925130208327">
+      <DataClassMoniker Name="/AuditModelDataContext/AuditParticipantRoleCodeAssoc" />
+      <nestedChildShapes>
+        <elementListCompartment Id="4bd76dd4-3666-4a74-93cf-4622f5fc8e24" absoluteBounds="12.015, 6.96, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="2f6b4412-a739-48b3-82c5-414b9fc7b749" absoluteBounds="2.875, 4.125, 2, 1.5785953776041666">
+      <DataClassMoniker Name="/AuditModelDataContext/AuditSession" />
+      <nestedChildShapes>
+        <elementListCompartment Id="d7758007-fca5-47df-84e3-b16d7c26dc8c" absoluteBounds="2.89, 4.585, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="cb7146bd-5866-4aa3-a0c4-60a71d9208ca" absoluteBounds="3.5, 16.125, 2, 1.3862939453124952">
+      <DataClassMoniker Name="/AuditModelDataContext/AuditSource" />
+      <nestedChildShapes>
+        <elementListCompartment Id="4db6f360-6fa3-45fa-a50d-ae710d712ff5" absoluteBounds="3.515, 16.585, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="9789b791-4790-46f4-a793-1b6cfedf91de" absoluteBounds="3.5, 9.75, 2, 1.1939925130208344">
+      <DataClassMoniker Name="/AuditModelDataContext/AuditSourceTypeAssoc" />
+      <nestedChildShapes>
+        <elementListCompartment Id="b3603aec-c2c0-44df-988b-b872a349d520" absoluteBounds="3.515, 10.21, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="3fad5910-a30d-4816-9130-307f836bcea5" absoluteBounds="6.25, 2.875, 2, 2.1554996744791666">
+      <DataClassMoniker Name="/AuditModelDataContext/AuditStatus" />
+      <nestedChildShapes>
+        <elementListCompartment Id="82674184-357e-4517-9897-eda7cf5ec82c" absoluteBounds="6.265, 3.335, 1.9700000000000002, 1.5954996744791665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="331e6baa-58f7-4d66-bed3-381c5e39fec8" absoluteBounds="1.75, 12.125, 2, 1.0016910807291666">
+      <DataClassMoniker Name="/AuditModelDataContext/Node" />
+      <nestedChildShapes>
+        <elementListCompartment Id="ead71307-2f03-4c36-a13b-c42dce39a139" absoluteBounds="1.7650000000000001, 12.585, 1.9700000000000002, 0.44169108072916669" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(5.375 : 7.15949625651042); (5.79166666666667 : 7.15949625651042 : JumpStart); (5.95833333333333 : 7.15949625651042 : JumpEnd); (6.25 : 7.15949625651042)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/AuditModelDataContext/Audit/Audit_AuditAuditSourceAssoc" />
+      <nodes>
+        <classShapeMoniker Id="18b18b96-c0fa-4dbb-abf8-30527c83b367" />
+        <classShapeMoniker Id="f85f6a5e-3be0-4e8f-adfc-e50eb0668701" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(2.75 : 9.20755126953125); (3.04166666666667 : 9.20755126953125 : JumpStart); (3.33333333333333 : 9.20755126953125 : JumpEnd); (3.375 : 9.20755126953125)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/AuditModelDataContext/AuditCode/AuditCode_Audit" />
+      <nodes>
+        <classShapeMoniker Id="9bd806d7-a581-4754-bd67-1ecbd9e037cc" />
+        <classShapeMoniker Id="18b18b96-c0fa-4dbb-abf8-30527c83b367" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(2.75 : 9.04127563476563); (3.04166666666667 : 9.04127563476563 : JumpStart); (3.33333333333333 : 9.04127563476563 : JumpEnd); (3.375 : 9.04127563476563)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/AuditModelDataContext/AuditCode/AuditCode_Audit1" />
+      <nodes>
+        <classShapeMoniker Id="9bd806d7-a581-4754-bd67-1ecbd9e037cc" />
+        <classShapeMoniker Id="18b18b96-c0fa-4dbb-abf8-30527c83b367" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(2.75 : 9.37382690429688); (3.04166666666667 : 9.37382690429688 : JumpStart); (3.33333333333333 : 9.37382690429688 : JumpEnd); (3.375 : 9.37382690429688)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/AuditModelDataContext/AuditCode/AuditCode_Audit2" />
+      <nodes>
+        <classShapeMoniker Id="9bd806d7-a581-4754-bd67-1ecbd9e037cc" />
+        <classShapeMoniker Id="18b18b96-c0fa-4dbb-abf8-30527c83b367" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(5.375 : 9.02005126953125); (5.66666666666667 : 9.02005126953125 : JumpStart); (6.08333333333333 : 9.02005126953125 : JumpEnd); (6.25 : 9.02005126953125)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/AuditModelDataContext/Audit/Audit_AuditEventTypeAuditCodeAssoc" />
+      <nodes>
+        <classShapeMoniker Id="18b18b96-c0fa-4dbb-abf8-30527c83b367" />
+        <classShapeMoniker Id="12b2afb7-084f-420d-add6-2e46d96aa90c" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(2.75 : 9.59316345214844); (3.04166666666667 : 9.59316345214844 : JumpStart); (3.48958333333333 : 9.59316345214844 : JumpEnd); (5.66666666666667 : 9.59316345214844 : JumpStart); (5.95833333333333 : 9.59316345214844 : JumpEnd); (6.25 : 9.59316345214844)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/AuditModelDataContext/AuditCode/AuditCode_AuditEventTypeAuditCodeAssoc" />
+      <nodes>
+        <classShapeMoniker Id="9bd806d7-a581-4754-bd67-1ecbd9e037cc" />
+        <classShapeMoniker Id="12b2afb7-084f-420d-add6-2e46d96aa90c" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(3.40625 : 9.4151025390625); (3.40625 : 11.2107975260417); (4.57291666666667 : 11.2107975260417 : JumpStart); (4.73958333333333 : 11.2107975260417 : JumpEnd); (5.79166666666667 : 11.2107975260417 : JumpStart); (5.95833333333333 : 11.2107975260417 : JumpEnd); (7.16666666666667 : 11.2107975260417 : JumpStart); (7.33333333333333 : 11.2107975260417 : JumpEnd); (9.25 : 11.2107975260417)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/AuditModelDataContext/Audit/Audit_AuditObject" />
+      <nodes>
+        <classShapeMoniker Id="18b18b96-c0fa-4dbb-abf8-30527c83b367" />
+        <classShapeMoniker Id="addcba75-6405-4786-a158-7678a1d4a2ae" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(1.75 : 10.5785953776042); (1.75 : 11.0773925195313); (2.19791916666667 : 11.0773925195313 : JumpStart); (2.36458583333333 : 11.0773925195313 : JumpEnd); (2.89323104166667 : 11.0773925195313 : JumpStart); (3.05989770833333 : 11.0773925195313 : JumpEnd); (3.32291666666667 : 11.0773925195313 : JumpStart); (3.48958333333333 : 11.0773925195313 : JumpEnd); (4.57291666666667 : 11.0773925195313 : JumpStart); (4.73958333333333 : 11.0773925195313 : JumpEnd); (5.79166666666667 : 11.0773925195313 : JumpStart); (5.95833333333333 : 11.0773925195313 : JumpEnd); (7.16666666666667 : 11.0773925195313 : JumpStart); (7.33333333333333 : 11.0773925195313 : JumpEnd); (9.25 : 11.0773925195313)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/AuditModelDataContext/AuditCode/AuditCode_AuditObject" />
+      <nodes>
+        <classShapeMoniker Id="9bd806d7-a581-4754-bd67-1ecbd9e037cc" />
+        <classShapeMoniker Id="addcba75-6405-4786-a158-7678a1d4a2ae" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(2.2812525 : 10.5785953776042); (2.2812525 : 11.3442025325521); (2.89323104166667 : 11.3442025325521 : JumpStart); (3.05989770833333 : 11.3442025325521 : JumpEnd); (4.57291666666667 : 11.3442025325521 : JumpStart); (4.73958333333333 : 11.3442025325521 : JumpEnd); (5.79166666666667 : 11.3442025325521 : JumpStart); (5.95833333333333 : 11.3442025325521 : JumpEnd); (7.16666666666667 : 11.3442025325521 : JumpStart); (7.33333333333333 : 11.3442025325521 : JumpEnd); (9.25 : 11.3442025325521)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/AuditModelDataContext/AuditCode/AuditCode_AuditObject1" />
+      <nodes>
+        <classShapeMoniker Id="9bd806d7-a581-4754-bd67-1ecbd9e037cc" />
+        <classShapeMoniker Id="addcba75-6405-4786-a158-7678a1d4a2ae" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(1.2187475 : 10.5785953776042); (1.2187475 : 11.0461400195313); (1.41666666666667 : 11.0461400195313 : JumpStart); (1.58333333333333 : 11.0461400195313 : JumpEnd); (2.19791916666667 : 11.0461400195313 : JumpStart); (2.36458583333333 : 11.0461400195313 : JumpEnd); (2.89323104166667 : 11.0461400195313 : JumpStart); (3.05989770833333 : 11.0461400195313 : JumpEnd); (3.32291666666667 : 11.0461400195313 : JumpStart); (3.48958333333333 : 11.0461400195313 : JumpEnd); (4.57291666666667 : 11.0461400195313 : JumpStart); (4.73958333333333 : 11.0461400195313 : JumpEnd); (5.79166666666667 : 11.0461400195313 : JumpStart); (5.95833333333333 : 11.0461400195313 : JumpEnd); (7.16666666666667 : 11.0461400195313 : JumpStart); (7.33333333333333 : 11.0461400195313 : JumpEnd); (9.25 : 11.0461400195313)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/AuditModelDataContext/AuditCode/AuditCode_AuditObject2" />
+      <nodes>
+        <classShapeMoniker Id="9bd806d7-a581-4754-bd67-1ecbd9e037cc" />
+        <classShapeMoniker Id="addcba75-6405-4786-a158-7678a1d4a2ae" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(2.54687875 : 10.5785953776042); (2.54687875 : 11.1086450195313); (2.89323104166667 : 11.1086450195313 : JumpStart); (3.05989770833333 : 11.1086450195313 : JumpEnd); (3.32291666666667 : 11.1086450195313 : JumpStart); (3.48958333333333 : 11.1086450195313 : JumpEnd); (4.57291666666667 : 11.1086450195313 : JumpStart); (4.73958333333333 : 11.1086450195313 : JumpEnd); (5.79166666666667 : 11.1086450195313 : JumpStart); (5.95833333333333 : 11.1086450195313 : JumpEnd); (7.16666666666667 : 11.1086450195313 : JumpStart); (7.33333333333333 : 11.1086450195313 : JumpEnd); (9.25 : 11.1086450195313)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/AuditModelDataContext/AuditCode/AuditCode_AuditObject3" />
+      <nodes>
+        <classShapeMoniker Id="9bd806d7-a581-4754-bd67-1ecbd9e037cc" />
+        <classShapeMoniker Id="addcba75-6405-4786-a158-7678a1d4a2ae" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(11.25 : 10.1642976888021); (12 : 10.1642976888021)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/AuditModelDataContext/AuditObject/AuditObject_AuditObjectDetail" />
+      <nodes>
+        <classShapeMoniker Id="addcba75-6405-4786-a158-7678a1d4a2ae" />
+        <classShapeMoniker Id="fd4f7954-15b5-4c4a-89ae-b9fca6724552" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(5.375 : 7.73964680989583); (5.79166666666667 : 7.73964680989583 : JumpStart); (5.95833333333333 : 7.73964680989583 : JumpEnd); (7.16666666666667 : 7.73964680989583 : JumpStart); (7.33333333333333 : 7.73964680989583 : JumpEnd); (9.25 : 7.73964680989583)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/AuditModelDataContext/Audit/Audit_AuditParticipant" />
+      <nodes>
+        <classShapeMoniker Id="18b18b96-c0fa-4dbb-abf8-30527c83b367" />
+        <classShapeMoniker Id="dcc0ddff-282b-4144-b5fa-4c23985bb55c" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(2.75 : 10.1171314148763); (3 : 10.1171314148763); (3 : 9.6651025390625); (3.04166666666667 : 9.6651025390625 : JumpStart); (3.48958333333333 : 9.6651025390625 : JumpEnd); (5.66666666666667 : 9.6651025390625 : JumpStart); (5.95833333333333 : 9.6651025390625 : JumpEnd); (6 : 9.6651025390625); (6 : 8.375); (13 : 8.375); (13 : 7.69399251302083)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/AuditModelDataContext/AuditCode/AuditCode_AuditParticipantRoleCodeAssoc" />
+      <nodes>
+        <classShapeMoniker Id="9bd806d7-a581-4754-bd67-1ecbd9e037cc" />
+        <classShapeMoniker Id="dc309370-5955-40fe-9df2-7f9940268426" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(11.25 : 7.09699625651042); (12 : 7.09699625651042)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/AuditModelDataContext/AuditParticipant/AuditParticipant_AuditParticipantRoleCodeAssoc" />
+      <nodes>
+        <classShapeMoniker Id="dcc0ddff-282b-4144-b5fa-4c23985bb55c" />
+        <classShapeMoniker Id="dc309370-5955-40fe-9df2-7f9940268426" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(4.125 : 5.70359537760417); (4.125 : 6.875)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/AuditModelDataContext/AuditSession/AuditSession_Audit" />
+      <nodes>
+        <classShapeMoniker Id="2f6b4412-a739-48b3-82c5-414b9fc7b749" />
+        <classShapeMoniker Id="18b18b96-c0fa-4dbb-abf8-30527c83b367" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(5.5 : 16.8181469726562); (7.25 : 16.8181469726562); (7.25 : 10.0689925130208); (5.95833333333333 : 10.0689925130208 : JumpStart); (5.79166666666667 : 10.0689925130208 : JumpEnd); (5.75 : 10.0689925130208); (5.75 : 7.94399251302083); (5.79166666666667 : 7.94399251302083 : JumpStart); (5.95833333333333 : 7.94399251302083 : JumpEnd); (7.25 : 7.94399251302083); (7.25 : 7.44399251302083)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/AuditModelDataContext/AuditSource/AuditSource_AuditAuditSourceAssoc" />
+      <nodes>
+        <classShapeMoniker Id="cb7146bd-5866-4aa3-a0c4-60a71d9208ca" />
+        <classShapeMoniker Id="f85f6a5e-3be0-4e8f-adfc-e50eb0668701" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(4.65625 : 16.125); (4.65625 : 10.9439925130208)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/AuditModelDataContext/AuditSource/AuditSource_AuditSourceTypeAssoc" />
+      <nodes>
+        <classShapeMoniker Id="cb7146bd-5866-4aa3-a0c4-60a71d9208ca" />
+        <classShapeMoniker Id="9789b791-4790-46f4-a793-1b6cfedf91de" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(2.75 : 10.4103633962402); (3.04166666666667 : 10.4103633962402 : JumpStart); (3.48958333333333 : 10.4103633962402 : JumpEnd); (3.5 : 10.4103633962402)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/AuditModelDataContext/AuditCode/AuditCode_AuditSourceTypeAssoc" />
+      <nodes>
+        <classShapeMoniker Id="9bd806d7-a581-4754-bd67-1ecbd9e037cc" />
+        <classShapeMoniker Id="9789b791-4790-46f4-a793-1b6cfedf91de" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(5.28125 : 6.875); (5.28125 : 3.98640055338542); (6.25 : 3.98640055338542)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/AuditModelDataContext/Audit/Audit_AuditStatus" />
+      <nodes>
+        <classShapeMoniker Id="18b18b96-c0fa-4dbb-abf8-30527c83b367" />
+        <classShapeMoniker Id="3fad5910-a30d-4816-9130-307f836bcea5" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(2.44621064828726 : 13.875); (4.125 : 13.5); (4.57291666666667 : 13.5 : JumpStart); (4.73958333333333 : 13.5 : JumpEnd); (5.875 : 13.5); (5.875 : 5.40549967447917); (6.25 : 5.03049967447917)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/AuditModelDataContext/StatusCode/StatusCode_AuditStatus" />
+      <nodes>
+        <classShapeMoniker Id="8e8cf45b-801e-471c-a591-167cb696d6dc" />
+        <classShapeMoniker Id="3fad5910-a30d-4816-9130-307f836bcea5" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="0d10d452-a9a1-4bfa-af42-c1f103fa7d58" absoluteBounds="3.125, 1.5, 2, 2.3478011067708335">
+      <DataClassMoniker Name="/AuditModelDataContext/NodeVersion" />
+      <nestedChildShapes>
+        <elementListCompartment Id="116b8212-01ff-49c9-97e3-cd6a24893ba5" absoluteBounds="3.14, 1.96, 1.9700000000000002, 1.7878011067708335" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(5.125 : 2.67390055338542); (5.75 : 2.67390055338542); (5.75 : 5.28049967447917); (5.91666666666667 : 5.28049967447917 : JumpStart); (6.08333333333333 : 5.28049967447917 : JumpEnd); (10.25 : 5.28049967447917); (10.25 : 5.625)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/AuditModelDataContext/NodeVersion/NodeVersion_AuditParticipant" />
+      <nodes>
+        <classShapeMoniker Id="0d10d452-a9a1-4bfa-af42-c1f103fa7d58" />
+        <classShapeMoniker Id="dcc0ddff-282b-4144-b5fa-4c23985bb55c" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(4 : 3.84780110677083); (4 : 4.125)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/AuditModelDataContext/NodeVersion/NodeVersion_AuditSession" />
+      <nodes>
+        <classShapeMoniker Id="0d10d452-a9a1-4bfa-af42-c1f103fa7d58" />
+        <classShapeMoniker Id="2f6b4412-a739-48b3-82c5-414b9fc7b749" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(4.5 : 3.84780110677083); (4.5 : 4.125)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/AuditModelDataContext/NodeVersion/NodeVersion_AuditSession1" />
+      <nodes>
+        <classShapeMoniker Id="0d10d452-a9a1-4bfa-af42-c1f103fa7d58" />
+        <classShapeMoniker Id="2f6b4412-a739-48b3-82c5-414b9fc7b749" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(2.976564375 : 12.125); (2.976564375 : 10.8285953776042); (3.125 : 10.8285953776042); (3.125 : 5.95359537760417); (2.625 : 5.95359537760417); (2.625 : 3.7131982421875); (2.75 : 3.7131982421875); (2.75 : 2.67390055338542); (2.79166666666667 : 2.67390055338542 : JumpStart); (2.95833333333333 : 2.67390055338542 : JumpEnd); (3.125 : 2.67390055338542)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/AuditModelDataContext/Node/Node_NodeVersion" />
+      <nodes>
+        <classShapeMoniker Id="331e6baa-58f7-4d66-bed3-381c5e39fec8" />
+        <classShapeMoniker Id="0d10d452-a9a1-4bfa-af42-c1f103fa7d58" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(2.75 : 13.875); (2.75 : 13.3766910807292); (1.5 : 13.3766910807292); (1.5 : 10.7035953776042); (1.66666666666667 : 10.7035953776042 : JumpStart); (1.83333333333333 : 10.7035953776042 : JumpEnd); (2.19791916666667 : 10.7035953776042 : JumpStart); (2.36458583333333 : 10.7035953776042 : JumpEnd); (2.46354541666667 : 10.7035953776042 : JumpStart); (2.63021208333333 : 10.7035953776042 : JumpEnd); (3.04166666666667 : 10.7035953776042 : JumpStart); (3.20833333333333 : 10.7035953776042 : JumpEnd); (3.25 : 10.7035953776042); (3.25 : 6.20359537760417); (3.20833333333333 : 6.20359537760417 : JumpStart); (3.04166666666667 : 6.20359537760417 : JumpEnd); (2.375 : 6.20359537760417); (2.375 : 3.8381982421875); (2.54166666666667 : 3.8381982421875 : JumpStart); (2.70833333333333 : 3.8381982421875 : JumpEnd); (2.875 : 3.8381982421875); (2.875 : 2.05569827669271); (3.125 : 2.05569827669271)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/AuditModelDataContext/StatusCode/StatusCode_NodeVersion" />
+      <nodes>
+        <classShapeMoniker Id="8e8cf45b-801e-471c-a591-167cb696d6dc" />
+        <classShapeMoniker Id="0d10d452-a9a1-4bfa-af42-c1f103fa7d58" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="2520425b-a485-4f2c-a6e5-b73fb985fc03" absoluteBounds="0.5, 1.5, 2, 1.9631982421875">
+      <DataClassMoniker Name="/AuditModelDataContext/AuditError" />
+      <nestedChildShapes>
+        <elementListCompartment Id="0fb2fd3b-2b2c-49db-8cbb-9993d28f6473" absoluteBounds="0.515, 1.96, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(1.20863627929688 : 3.4631982421875); (1.20863627929688 : 3.7131982421875); (1.80523818359375 : 3.7131982421875); (1.80523818359375 : 3.4631982421875)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/AuditModelDataContext/AuditError/AuditError_AuditError" />
+      <nodes>
+        <classShapeMoniker Id="2520425b-a485-4f2c-a6e5-b73fb985fc03" />
+        <classShapeMoniker Id="2520425b-a485-4f2c-a6e5-b73fb985fc03" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(2.875 : 4.91429768880208); (2.70833333333333 : 4.91429768880208 : JumpStart); (2.54166666666667 : 4.91429768880208 : JumpEnd); (2.45833333333333 : 4.91429768880208 : JumpStart); (2.29166666666667 : 4.91429768880208 : JumpEnd); (0.823065639648437 : 4.91429768880208); (0.823065639648437 : 3.4631982421875)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/AuditModelDataContext/AuditSession/AuditSession_AuditError" />
+      <nodes>
+        <classShapeMoniker Id="2f6b4412-a739-48b3-82c5-414b9fc7b749" />
+        <classShapeMoniker Id="2520425b-a485-4f2c-a6e5-b73fb985fc03" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="16c4f1cf-84ca-43a0-9e11-1999a91ada95" absoluteBounds="9.375, 0.75, 2, 3.6939111328124992">
+      <DataClassMoniker Name="/AuditModelDataContext/AuditObjectSummaryVw" />
+      <nestedChildShapes>
+        <elementListCompartment Id="e89e4037-bc9b-4481-aaf0-ce63d9f1bb26" absoluteBounds="9.39, 1.21, 1.9700000000000002, 3.1339111328125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="7aff3cae-c954-4d6b-84a0-c448d302ec2b" absoluteBounds="12.375, 0.75, 2, 2.7324039713541666">
+      <DataClassMoniker Name="/AuditModelDataContext/AuditParticipantSummaryVw" />
+      <nestedChildShapes>
+        <elementListCompartment Id="2760fd5c-294a-4521-b2ae-2848121c0bde" absoluteBounds="12.39, 1.21, 1.9700000000000002, 2.1724039713541665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="e0c1b6b7-2c60-479f-b186-d98fd9adfe57" absoluteBounds="11.375, 13.25, 2, 1.3862939453124987">
+      <DataClassMoniker Name="/AuditModelDataContext/AuditStatusCodeSummaryVw" />
+      <nestedChildShapes>
+        <elementListCompartment Id="9867dc7a-3b70-4182-9013-e5cce4cb5c16" absoluteBounds="11.39, 13.71, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="a4f6b0fe-191a-48c6-910f-952b53b897e8" absoluteBounds="6.125, 17.875, 2, 2.7324039713541666">
+      <DataClassMoniker Name="/AuditModelDataContext/AuditSummaryVw" />
+      <nestedChildShapes>
+        <elementListCompartment Id="b4d0bb2b-2517-4f56-8c07-087f7fd5d774" absoluteBounds="6.14, 18.335, 1.9700000000000002, 2.1724039713541665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="6aebc92b-9c7c-4d19-81fd-6a6e967b0f0f" absoluteBounds="2.125, 17.875, 2, 6.0015283203125">
+      <DataClassMoniker Name="/AuditModelDataContext/AuditDetailVw" />
+      <nestedChildShapes>
+        <elementListCompartment Id="bdb3cbe1-3b52-4e50-bb2e-2bd8f0740888" absoluteBounds="2.14, 18.335, 1.9700000000000002, 5.4415283203125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="952d39fa-48a9-4cb5-8560-08f27551a5f8" absoluteBounds="0.75, 16.125, 2, 1.7708968098958331">
+      <DataClassMoniker Name="/AuditModelDataContext/AuditSourceSummaryVw" />
+      <nestedChildShapes>
+        <elementListCompartment Id="bc9377d1-89d7-44d4-9ede-8440010c526b" absoluteBounds="0.765, 16.585, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+  </nestedChildShapes>
+</ordesignerObjectsDiagram>

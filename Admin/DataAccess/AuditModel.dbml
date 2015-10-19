@@ -1,0 +1,314 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="VisualizerDb" Class="AuditModelDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=.;Initial Catalog=VisualizerDb;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="VisualizerDbConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.Audit" Member="Audits">
+    <Type Name="Audit">
+      <Column Name="AuditId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ActionCodeId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="OutcomeCodeId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="EventCodeId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="EventTimestamp" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="CreationTimestamp" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="SessionId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="ProcessName" Type="System.String" DbType="VarChar(MAX)" CanBeNull="false" />
+      <Column Name="GlobalId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Association Name="Audit_AuditAuditSourceAssoc" Member="AuditAuditSourceAssocs" ThisKey="AuditId" OtherKey="AuditId" Type="AuditAuditSourceAssoc" />
+      <Association Name="Audit_AuditEventTypeAuditCodeAssoc" Member="AuditEventTypeAuditCodeAssocs" ThisKey="AuditId" OtherKey="AuditId" Type="AuditEventTypeAuditCodeAssoc" />
+      <Association Name="Audit_AuditObject" Member="AuditObjects" ThisKey="AuditId" OtherKey="AuditId" Type="AuditObject" />
+      <Association Name="Audit_AuditParticipant" Member="AuditParticipants" ThisKey="AuditId" OtherKey="AuditId" Type="AuditParticipant" />
+      <Association Name="Audit_AuditStatus" Member="AuditStatus" ThisKey="AuditId" OtherKey="AuditId" Type="AuditStatus" />
+      <Association Name="AuditCode_Audit" Member="ActionCode" Storage="_AuditCode" ThisKey="ActionCodeId" OtherKey="CodeId" Type="AuditCode" IsForeignKey="true" />
+      <Association Name="AuditCode_Audit1" Member="EventCode" Storage="_AuditCode1" ThisKey="EventCodeId" OtherKey="CodeId" Type="AuditCode" IsForeignKey="true" />
+      <Association Name="AuditCode_Audit2" Member="OutcomeCode" Storage="_AuditCode2" ThisKey="OutcomeCodeId" OtherKey="CodeId" Type="AuditCode" IsForeignKey="true" />
+      <Association Name="AuditSession_Audit" Member="AuditSession" ThisKey="SessionId" OtherKey="SessionId" Type="AuditSession" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.StatusCode" Member="StatusCodes">
+    <Type Name="StatusCode">
+      <Column Name="CodeId" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(16) NOT NULL" CanBeNull="false" />
+      <Association Name="StatusCode_AuditStatus" Member="AuditStatus" ThisKey="CodeId" OtherKey="StatusCodeId" Type="AuditStatus" />
+      <Association Name="StatusCode_NodeVersion" Member="NodeVersions" ThisKey="CodeId" OtherKey="StatusCodeId" Type="NodeVersion" />
+    </Type>
+  </Table>
+  <Table Name="dbo.AuditAuditSourceAssoc" Member="AuditAuditSourceAssocs">
+    <Type Name="AuditAuditSourceAssoc">
+      <Column Name="AuditSourceId" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="AuditId" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Association Name="Audit_AuditAuditSourceAssoc" Member="Audit" ThisKey="AuditId" OtherKey="AuditId" Type="Audit" IsForeignKey="true" />
+      <Association Name="AuditSource_AuditAuditSourceAssoc" Member="AuditSource" ThisKey="AuditSourceId" OtherKey="AuditSourceId" Type="AuditSource" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.AuditCode" Member="AuditCodes">
+    <Type Name="AuditCode">
+      <Column Name="CodeId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Mnemonic" Type="System.String" DbType="VarChar(54) NOT NULL" CanBeNull="false" />
+      <Column Name="Domain" Type="System.String" DbType="VarChar(54) NOT NULL" CanBeNull="false" />
+      <Column Name="DisplayName" Type="System.String" DbType="VarChar(256)" CanBeNull="true" />
+      <Association Name="AuditCode_Audit" Member="Audits" ThisKey="CodeId" OtherKey="ActionCodeId" Type="Audit" />
+      <Association Name="AuditCode_Audit1" Member="Audits1" ThisKey="CodeId" OtherKey="EventCodeId" Type="Audit" />
+      <Association Name="AuditCode_Audit2" Member="Audits2" ThisKey="CodeId" OtherKey="OutcomeCodeId" Type="Audit" />
+      <Association Name="AuditCode_AuditEventTypeAuditCodeAssoc" Member="AuditEventTypeAuditCodeAssocs" ThisKey="CodeId" OtherKey="CodeId" Type="AuditEventTypeAuditCodeAssoc" />
+      <Association Name="AuditCode_AuditObject" Member="AuditObjects" ThisKey="CodeId" OtherKey="IdTypeCodeId" Type="AuditObject" />
+      <Association Name="AuditCode_AuditObject1" Member="AuditObjects1" ThisKey="CodeId" OtherKey="LifecycleCodeId" Type="AuditObject" />
+      <Association Name="AuditCode_AuditObject2" Member="AuditObjects2" ThisKey="CodeId" OtherKey="RoleCodeId" Type="AuditObject" />
+      <Association Name="AuditCode_AuditObject3" Member="AuditObjects3" ThisKey="CodeId" OtherKey="TypeCodeId" Type="AuditObject" />
+      <Association Name="AuditCode_AuditParticipantRoleCodeAssoc" Member="AuditParticipantRoleCodeAssocs" ThisKey="CodeId" OtherKey="CodeId" Type="AuditParticipantRoleCodeAssoc" />
+      <Association Name="AuditCode_AuditSourceTypeAssoc" Member="AuditSourceTypeAssocs" ThisKey="CodeId" OtherKey="CodeId" Type="AuditSourceTypeAssoc" />
+    </Type>
+  </Table>
+  <Table Name="dbo.AuditEventTypeAuditCodeAssoc" Member="AuditEventTypeAuditCodeAssocs">
+    <Type Name="AuditEventTypeAuditCodeAssoc">
+      <Column Name="AuditId" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="CodeId" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Association Name="Audit_AuditEventTypeAuditCodeAssoc" Member="Audit" ThisKey="AuditId" OtherKey="AuditId" Type="Audit" IsForeignKey="true" />
+      <Association Name="AuditCode_AuditEventTypeAuditCodeAssoc" Member="EventTypeCode" Storage="_AuditCode" ThisKey="CodeId" OtherKey="CodeId" Type="AuditCode" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.AuditObject" Member="AuditObjects">
+    <Type Name="AuditObject">
+      <Column Name="ObjectId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="AuditId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ExternalIdentifier" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="TypeCodeId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="RoleCodeId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="LifecycleCodeId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="IdTypeCodeId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ObjectSpec" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="ObjectSpecType" Type="System.Char" DbType="Char(1)" CanBeNull="true" />
+      <Association Name="AuditObject_AuditObjectDetail" Member="AuditObjectDetails" ThisKey="ObjectId" OtherKey="ObjectId" Type="AuditObjectDetail" />
+      <Association Name="Audit_AuditObject" Member="Audit" ThisKey="AuditId" OtherKey="AuditId" Type="Audit" IsForeignKey="true" />
+      <Association Name="AuditCode_AuditObject" Member="IdTypeCode" Storage="_AuditCode" ThisKey="IdTypeCodeId" OtherKey="CodeId" Type="AuditCode" IsForeignKey="true" />
+      <Association Name="AuditCode_AuditObject1" Member="LifecycleCode" Storage="_AuditCode1" ThisKey="LifecycleCodeId" OtherKey="CodeId" Type="AuditCode" IsForeignKey="true" />
+      <Association Name="AuditCode_AuditObject2" Member="RoleCode" Storage="_AuditCode2" ThisKey="RoleCodeId" OtherKey="CodeId" Type="AuditCode" IsForeignKey="true" />
+      <Association Name="AuditCode_AuditObject3" Member="TypeCode" Storage="_AuditCode3" ThisKey="TypeCodeId" OtherKey="CodeId" Type="AuditCode" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.AuditObjectDetail" Member="AuditObjectDetails">
+    <Type Name="AuditObjectDetail">
+      <Column Name="ObjectDetailId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ObjectId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="DetailType" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="DetailValue" Type="System.Data.Linq.Binary" DbType="VarBinary(MAX) NOT NULL" CanBeNull="false" UpdateCheck="Never" />
+      <Association Name="AuditObject_AuditObjectDetail" Member="AuditObject" ThisKey="ObjectId" OtherKey="ObjectId" Type="AuditObject" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.AuditParticipant" Member="AuditParticipants">
+    <Type Name="AuditParticipant">
+      <Column Name="ParticipantId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="AuditId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="UserId" Type="System.String" DbType="NVarChar(128)" CanBeNull="true" />
+      <Column Name="NodeVersionId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="RawUserId" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="RawUserName" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="IsRequestor" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="NetworkAccessPoint" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Association Name="AuditParticipant_AuditParticipantRoleCodeAssoc" Member="AuditParticipantRoleCodeAssocs" ThisKey="ParticipantId" OtherKey="ParticipantId" Type="AuditParticipantRoleCodeAssoc" />
+      <Association Name="Audit_AuditParticipant" Member="Audit" ThisKey="AuditId" OtherKey="AuditId" Type="Audit" IsForeignKey="true" />
+      <Association Name="NodeVersion_AuditParticipant" Member="NodeVersion" ThisKey="NodeVersionId" OtherKey="NodeVersionId" Type="NodeVersion" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.AuditParticipantRoleCodeAssoc" Member="AuditParticipantRoleCodeAssocs">
+    <Type Name="AuditParticipantRoleCodeAssoc">
+      <Column Name="ParticipantId" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="CodeId" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Association Name="AuditCode_AuditParticipantRoleCodeAssoc" Member="RoleCode" Storage="_AuditCode" ThisKey="CodeId" OtherKey="CodeId" Type="AuditCode" IsForeignKey="true" />
+      <Association Name="AuditParticipant_AuditParticipantRoleCodeAssoc" Member="AuditParticipant" ThisKey="ParticipantId" OtherKey="ParticipantId" Type="AuditParticipant" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.AuditSession" Member="AuditSessions">
+    <Type Name="AuditSession">
+      <Column Name="SessionId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="ReceiverNodeVersionId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="SenderNodeVersionId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="CreationTimestamp" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Association Name="AuditSession_Audit" Member="Audits" ThisKey="SessionId" OtherKey="SessionId" Type="Audit" />
+      <Association Name="AuditSession_AuditError" Member="AuditErrors" ThisKey="SessionId" OtherKey="SessionId" Type="AuditError" />
+      <Association Name="NodeVersion_AuditSession" Member="Receiver" ThisKey="ReceiverNodeVersionId" OtherKey="NodeVersionId" Type="NodeVersion" IsForeignKey="true" />
+      <Association Name="NodeVersion_AuditSession1" Member="Sender" ThisKey="SenderNodeVersionId" OtherKey="NodeVersionId" Type="NodeVersion" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.AuditSource" Member="AuditSources">
+    <Type Name="AuditSource">
+      <Column Name="AuditSourceId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="EnterpriseSiteName" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="AuditSourceName" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Association Name="AuditSource_AuditAuditSourceAssoc" Member="AuditAuditSourceAssocs" ThisKey="AuditSourceId" OtherKey="AuditSourceId" Type="AuditAuditSourceAssoc" />
+      <Association Name="AuditSource_AuditSourceTypeAssoc" Member="AuditSourceTypeAssocs" ThisKey="AuditSourceId" OtherKey="AuditSourceId" Type="AuditSourceTypeAssoc" />
+    </Type>
+  </Table>
+  <Table Name="dbo.AuditSourceTypeAssoc" Member="AuditSourceTypeAssocs">
+    <Type Name="AuditSourceTypeAssoc">
+      <Column Name="AuditSourceId" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="CodeId" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Association Name="AuditSource_AuditSourceTypeAssoc" Member="AuditSource" ThisKey="AuditSourceId" OtherKey="AuditSourceId" Type="AuditSource" IsForeignKey="true" />
+      <Association Name="AuditCode_AuditSourceTypeAssoc" Member="TypeCode" Storage="_AuditCode" ThisKey="CodeId" OtherKey="CodeId" Type="AuditCode" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.AuditStatus" Member="AuditStatus">
+    <Type Name="AuditStatus">
+      <Column Name="AuditVersionId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="AuditId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="StatusCodeId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="IsAlert" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="CreationTimestamp" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="ObsoletionTimestamp" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ModifiedBy" Type="System.String" DbType="VARCHAR(MAX)" CanBeNull="false" />
+      <Association Name="Audit_AuditStatus" Member="Audit" ThisKey="AuditId" OtherKey="AuditId" Type="Audit" IsForeignKey="true" />
+      <Association Name="StatusCode_AuditStatus" Member="StatusCode" ThisKey="StatusCodeId" OtherKey="CodeId" Type="StatusCode" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Node" Member="Nodes">
+    <Type Name="Node">
+      <Column Name="NodeId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Association Name="Node_NodeVersion" Member="NodeVersions" ThisKey="NodeId" OtherKey="NodeId" Type="NodeVersion" />
+    </Type>
+  </Table>
+  <Table Name="dbo.NodeVersion" Member="NodeVersions">
+    <Type Name="NodeVersion">
+      <Column Name="NodeVersionId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="NodeId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="HostName" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="NodeMagic" Type="System.Data.Linq.Binary" DbType="VarBinary(MAX)" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="StatusCodeId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="CreationTimestamp" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="ObsoletionTime" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Association Name="NodeVersion_AuditParticipant" Member="AuditParticipants" ThisKey="NodeVersionId" OtherKey="NodeVersionId" Type="AuditParticipant" />
+      <Association Name="NodeVersion_AuditSession" Member="AuditSessions" ThisKey="NodeVersionId" OtherKey="ReceiverNodeVersionId" Type="AuditSession" />
+      <Association Name="NodeVersion_AuditSession1" Member="AuditSessions1" ThisKey="NodeVersionId" OtherKey="SenderNodeVersionId" Type="AuditSession" />
+      <Association Name="Node_NodeVersion" Member="Node" ThisKey="NodeId" OtherKey="NodeId" Type="Node" IsForeignKey="true" />
+      <Association Name="StatusCode_NodeVersion" Member="StatusCode" ThisKey="StatusCodeId" OtherKey="CodeId" Type="StatusCode" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.AuditError" Member="AuditErrors">
+    <Type Name="AuditError">
+      <Column Name="ErrorId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="SessionId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="ErrorMessage" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="AuditMessageId" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
+      <Column Name="StackTrace" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="CausedById" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="AuditError_AuditError" Member="AuditErrors" ThisKey="ErrorId" OtherKey="CausedById" Type="AuditError" />
+      <Association Name="AuditError_AuditError" Member="AuditError1" ThisKey="CausedById" OtherKey="ErrorId" Type="AuditError" IsForeignKey="true" />
+      <Association Name="AuditSession_AuditError" Member="AuditSession" ThisKey="SessionId" OtherKey="SessionId" Type="AuditSession" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.AuditObjectSummaryVw" Member="AuditObjectSummaryVws">
+    <Type Name="AuditObjectSummaryVw">
+      <Column Name="ObjectId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="AuditId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="ExternalIdentifier" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="TypeCodeId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="RoleCodeId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="LifecycleCodeId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="IdTypeCodeId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="ObjectSpec" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="ObjectSpecType" Type="System.Char" DbType="Char(1)" CanBeNull="true" />
+      <Column Name="IdTypeCodeMnemonic" Type="System.String" DbType="VarChar(54) NOT NULL" CanBeNull="false" />
+      <Column Name="IdTypeCodeDomain" Type="System.String" DbType="VarChar(54) NOT NULL" CanBeNull="false" />
+      <Column Name="IdTypeCodeDisplayName" Type="System.String" DbType="VarChar(256)" CanBeNull="true" />
+      <Column Name="RoleCode" Type="System.String" DbType="VarChar(256)" CanBeNull="true" />
+      <Column Name="TypeCode" Type="System.String" DbType="VarChar(256)" CanBeNull="true" />
+      <Column Name="LifecycleCode" Type="System.String" DbType="VarChar(256)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.AuditParticipantSummaryVw" Member="AuditParticipantSummaryVws">
+    <Type Name="AuditParticipantSummaryVw">
+      <Column Name="ParticipantId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="AuditId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="UserId" Type="System.String" DbType="VarChar(512)" CanBeNull="true" />
+      <Column Name="NodeVersionId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="RawUserId" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="RawUserName" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="IsRequestor" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="NetworkAccessPoint" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="RoleCodeMnemonic" Type="System.String" DbType="VarChar(54) NOT NULL" CanBeNull="false" />
+      <Column Name="RoleCodeDisplay" Type="System.String" DbType="VarChar(256)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.AuditStatusCodeSummaryVw" Member="AuditStatusCodeSummaryVws">
+    <Type Name="AuditStatusCodeSummaryVw">
+      <Column Name="CodeID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Name" Type="System.String" DbType="VarChar(16) NOT NULL" CanBeNull="false" />
+      <Column Name="nAudits" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.AuditSummaryVw" Member="AuditSummaryVws">
+    <Type Name="AuditSummaryVw">
+      <Column Name="AuditId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="GlobalId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="CreationTimestamp" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="EventTimestamp" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="EventCode" Type="System.String" DbType="VarChar(256)" CanBeNull="true" />
+      <Column Name="ActionCode" Type="System.String" DbType="VarChar(256)" CanBeNull="true" />
+      <Column Name="OutcomeCode" Type="System.String" DbType="VarChar(256)" CanBeNull="true" />
+      <Column Name="StatusCode" Type="System.String" DbType="VarChar(16) NOT NULL" CanBeNull="false" />
+      <Column Name="IsAlert" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="EventType" Type="System.String" DbType="VarChar(256)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.AuditDetailVw" Member="AuditDetailVws">
+    <Type Name="AuditDetailVw">
+      <Column Name="AuditId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="GlobalId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="CreationTimestamp" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="EventTimestamp" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="EventCode" Type="System.String" DbType="VarChar(256)" CanBeNull="true" />
+      <Column Name="ActionCode" Type="System.String" DbType="VarChar(256)" CanBeNull="true" />
+      <Column Name="OutcomeCode" Type="System.String" DbType="VarChar(256)" CanBeNull="true" />
+      <Column Name="StatusCode" Type="System.String" DbType="VarChar(16) NOT NULL" CanBeNull="false" />
+      <Column Name="IsAlert" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="EventType" Type="System.String" DbType="VarChar(256)" CanBeNull="true" />
+      <Column Name="ParticipantId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="NetworkAccessPoint" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="PtcptUserId" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="PtcptUserName" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="PtcptDeviceName" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="PtcptObjectRoleCodeDisplay" Type="System.String" DbType="VarChar(256)" CanBeNull="true" />
+      <Column Name="PtcptObjectRoleCodeMnemonic" Type="System.String" DbType="VarChar(54)" CanBeNull="true" />
+      <Column Name="ObjExternalIdentifier" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="ObjTypeCode" Type="System.String" DbType="VarChar(256)" CanBeNull="true" />
+      <Column Name="ObjLifecycle" Type="System.String" DbType="VarChar(256)" CanBeNull="true" />
+      <Column Name="ObjRoleCode" Type="System.String" DbType="VarChar(256)" CanBeNull="true" />
+      <Column Name="ObjIdTypeCode" Type="System.String" DbType="VarChar(256)" CanBeNull="true" />
+      <Column Name="ObjectSpec" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="AuditSourceId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="EnterpriseSiteName" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="AuditSourceName" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="AuditSourceType" Type="System.String" DbType="VarChar(256)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.AuditSourceSummaryVw" Member="AuditSourceSummaryVws">
+    <Type Name="AuditSourceSummaryVw">
+      <Column Name="AuditId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="AuditSourceId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="EnterpriseSiteName" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="AuditSourceName" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="AuditSourceType" Type="System.String" DbType="VarChar(256)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Function Name="dbo.sp_CreateAuditCodeIfNotExists" Method="sp_CreateAuditCodeIfNotExists">
+    <Parameter Name="DomainIn" Parameter="domainIn" Type="System.String" DbType="VarChar(48)" />
+    <Parameter Name="MnemonicIn" Parameter="mnemonicIn" Type="System.String" DbType="VarChar(48)" />
+    <Parameter Name="DisplayNameIn" Parameter="displayNameIn" Type="System.String" DbType="VarChar(48)" />
+    <Parameter Name="CodeIdOut" Parameter="codeIdOut" Type="System.Int32" DbType="Int" Direction="InOut" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.fn_GetAuditCodeId" Method="fn_GetAuditCodeId" IsComposable="true">
+    <Parameter Name="DomainIn" Parameter="domainIn" Type="System.String" DbType="VarChar(1)" />
+    <Parameter Name="MnemonicIn" Parameter="mnemonicIn" Type="System.String" DbType="VarChar(1)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.fn_WeekOfYear" Method="fn_WeekOfYear" IsComposable="true">
+    <Parameter Name="Date" Parameter="date" Type="System.DateTime" DbType="DateTime" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.sp_SetAuditStatus" Method="sp_SetAuditStatus">
+    <Parameter Name="AuditIdIn" Parameter="auditIdIn" Type="System.Int32" DbType="Int" />
+    <Parameter Name="StatusIn" Parameter="statusIn" Type="System.String" DbType="VarChar(28)" />
+    <Parameter Name="IsAlert" Parameter="isAlert" Type="System.Boolean" DbType="Bit" />
+    <Parameter Name="ModifiedByIn" Parameter="modifiedByIn" Type="System.String" DbType="VarChar(128)" />
+    <Parameter Name="VersionId" Parameter="versionId" Type="System.Int32" DbType="Int" Direction="InOut" />
+    <Return Type="System.Int32" />
+  </Function>
+</Database>

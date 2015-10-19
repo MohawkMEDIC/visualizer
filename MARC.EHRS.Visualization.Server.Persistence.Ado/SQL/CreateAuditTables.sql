@@ -213,6 +213,17 @@ INSERT INTO AuditCode (Mnemonic, Domain, DisplayName) VALUES ('110136','DCM','Se
 INSERT INTO AuditCode (Mnemonic, Domain, DisplayName) VALUES ('110137','DCM','User security Attributes Changed');
 INSERT INTO AuditCode (Mnemonic, Domain, DisplayName) VALUES ('110153','DCM','Source');
 INSERT INTO AuditCode (Mnemonic, Domain, DisplayName) VALUES ('110152','DCM','Destination');
+
+INSERT INTO AuditCode (Mnemonic, Domain, DisplayName) VALUES ('1','RFC-3881 AuditSourceType','End User Interface');
+INSERT INTO AuditCode (Mnemonic, Domain, DisplayName) VALUES ('2','RFC-3881 AuditSourceType','Device Or Instrument');
+INSERT INTO AuditCode (Mnemonic, Domain, DisplayName) VALUES ('3','RFC-3881 AuditSourceType','Web Server Process');
+INSERT INTO AuditCode (Mnemonic, Domain, DisplayName) VALUES ('4','RFC-3881 AuditSourceType','Application Server Process');
+INSERT INTO AuditCode (Mnemonic, Domain, DisplayName) VALUES ('5','RFC-3881 AuditSourceType','Database Server Process');
+INSERT INTO AuditCode (Mnemonic, Domain, DisplayName) VALUES ('6','RFC-3881 AuditSourceType','Security Service Process');
+INSERT INTO AuditCode (Mnemonic, Domain, DisplayName) VALUES ('7','RFC-3881 AuditSourceType','ISO Level 1 or 3 Component');
+INSERT INTO AuditCode (Mnemonic, Domain, DisplayName) VALUES ('8','RFC-3881 AuditSourceType','ISO Level 4 or 6 Software');
+INSERT INTO AuditCode (Mnemonic, Domain, DisplayName) VALUES ('9','RFC-3881 AuditSourceType','Other');
+
 GO
 
 -- CREATE AUDIT CODE IF NOT ALREADY EXISTS
@@ -475,7 +486,7 @@ GO
 
 -- AUDIT VIEW: DEIDENTIFIED DATA
 CREATE VIEW AuditSummaryVw AS
-	SELECT Audit.AuditId, Audit.CreationTimestamp, Audit.EventTimestamp, EventCode.DisplayName AS EventCode, ActionCode.DisplayName AS ActionCode, OutcomeCode.DisplayName AS OutcomeCode, StatusCode.Name AS StatusCode, AuditStatus.IsAlert, EventType.DisplayName AS EventType FROM 
+	SELECT Audit.AuditId, Audit.GlobalId, Audit.CreationTimestamp, Audit.EventTimestamp, EventCode.DisplayName AS EventCode, ActionCode.DisplayName AS ActionCode, OutcomeCode.DisplayName AS OutcomeCode, StatusCode.Name AS StatusCode, AuditStatus.IsAlert, EventType.DisplayName AS EventType FROM 
 		Audit LEFT JOIN AuditCode AS EventCode ON (EventCode.CodeId = Audit.EventCodeId)
 		LEFT JOIN AuditCode AS ActionCode ON (ActionCode.CodeId = Audit.ActionCodeId)
 		LEFT JOIN AuditCode AS OutcomeCode ON (OutcomeCode.CodeId = Audit.OutcomeCodeId) 
@@ -506,7 +517,13 @@ CREATE VIEW AuditObjectSummaryVw AS
 
 GO 
 
-/*
+CREATE VIEW AuditSourceSummaryVw AS
+	SELECT AuditAuditSourceAssoc.AuditId, AuditSource.*, AuditCode.DisplayName AS AuditSourceType 
+	FROM AuditAuditSourceAssoc INNER JOIN AuditSource ON (AuditAuditSourceAssoc.AuditSourceId = AuditSource.AuditSourceId)
+		LEFT JOIN AuditSourceTypeAssoc ON (AuditSourceTypeAssoc.AuditSourceId = AuditSource.AuditSourceId)
+		LEFT JOIN AuditCode ON (AuditCode.CodeId = AuditSourceTypeAssoc.CodeId)
+GO
+
 CREATE VIEW AuditDetailVw AS
 	SELECT 
 		AuditSummaryVw.*, 
@@ -514,10 +531,6 @@ CREATE VIEW AuditDetailVw AS
 		AuditParticipantSummaryVw.NetworkAccessPoint, 
 		AuditParticipantSummaryVw.RawUserId AS PtcptUserId, 
 		AuditParticipantSummaryVw.RawUserName AS PtcptUserName,
-		AspNetUsers.Id AS PtcptAspNetId, 
-		AspNetUsers.FirstName AS PtcptFirstName, 
-		AspNetUsers.LastName AS PtcptLastName, 
-		AspNetUsers.Email AS PtcptEmail, 
 		NodeVersion.Name AS PtcptDeviceName, 
 		AuditParticipantSummaryVw.RoleCodeDisplay AS PtcptObjectRoleCodeDisplay, 
 		AuditParticipantSummaryVw.RoleCodeMnemonic AS PtcptObjectRoleCodeMnemonic, 
@@ -526,15 +539,18 @@ CREATE VIEW AuditDetailVw AS
 		AuditObjectSummaryVw.LifecycleCode AS ObjLifecycle,
 		AuditObjectSummaryVw.RoleCode AS ObjRoleCode,
 		AuditObjectSummaryVw.IdTypeCodeDisplayName AS ObjIdTypeCode,
-		AuditObjectSummaryVw.ObjectSpec
+		AuditObjectSummaryVw.ObjectSpec,
+		AuditSourceSummaryVw.AuditSourceName,
+		AuditSourceSummaryVw.EnterpriseSiteName,
+		AuditSourceSummaryVw.AuditSourceType
 	FROM AuditSummaryVw LEFT JOIN AuditParticipantSummaryVw ON (AuditParticipantSummaryVw.AuditId = AuditSummaryVw.AuditId)
 		LEFT JOIN AuditObjectSummaryVw ON (AuditObjectSummaryVw .AuditId = AuditSummaryVw.AuditId)
-		LEFT JOIN AspNetUsers ON (AuditParticipantSummaryVw.UserId = AspNetUsers.Id)
 		LEFT JOIN NodeVersion ON (AuditParticipantSummaryVw.NodeVersionId = NodeVersion.NodeVersionId)
-*/
+		LEFT JOIN AuditAuditSourceAssoc ON (AuditSummaryVw.AuditId = AuditAuditSourceAssoc.AuditId)
+		LEFT JOIN AuditSourceSummaryVw ON (AuditAuditSourceAssoc.AuditSourceId = AuditSourceSummaryVw.AuditSourceId)
 GO
 
-CREATE PROCEDURE sp_SetAuditStatus(@AuditIdIn INTEGER, @StatusIn VARCHAR(28), @IsAlert BIT, @VersionId INTEGER OUTPUT) AS
+CREATE PROCEDURE sp_SetAuditStatus(@AuditIdIn INTEGER, @StatusIn VARCHAR(28), @IsAlert BIT, @ModifiedByIn VARCHAR(128), @VersionId INTEGER OUTPUT) AS
 DECLARE
 	@StatusId INTEGER,
 	@AsAlert BIT
@@ -543,9 +559,15 @@ BEGIN
 	SET @AsAlert = (SELECT IsAlert FROM AuditStatus WHERE AuditStatus.AuditVersionId = (SELECT TOP 1 AuditVersionId FROM AuditStatus WHERE AuditId = @AuditIdIn ORDER BY CreationTimestamp DESC));
 	SET @StatusId = (SELECT CodeId FROM StatusCode WHERE Name = @StatusIn);
 	UPDATE AuditStatus SET ObsoletionTimestamp = CURRENT_TIMESTAMP WHERE AuditId = @AuditIdIn AND ObsoletionTimestamp IS NULL;
-	INSERT INTO AuditStatus(AuditId, IsAlert, StatusCodeId) VALUES (@AuditIdIn, COALESCE(@IsAlert, @AsAlert), @StatusId);
+	INSERT INTO AuditStatus(AuditId, IsAlert, StatusCodeId, ModifiedBy) VALUES (@AuditIdIn, COALESCE(@IsAlert, @AsAlert), @StatusId, @ModifiedByIn);
 	SET @VersionId = SCOPE_IDENTITY();
 END;
 
-SELECT * FROM AuditParticipantSummaryVw;
-SELECT * FROM AuditObjectSummaryVw;
+GO
+
+CREATE FUNCTION fn_WeekOfYear(@Date DATETIME) 
+RETURNS Int 
+AS 
+BEGIN 
+RETURN (CAST(DATEPART(ww, @Date) AS INT)) 
+END

@@ -3,8 +3,11 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - MEDIC Visualizer 4.0</title>
-    @Styles.Render("~/Content/css")
+    <title>@ViewBag.Title - MEDIC AVIC</title>
+    @Styles.Render("~/Content/sitecss")
+    @Styles.Render("~/Content/jqueryuicss")
+
+
     @Scripts.Render("~/bundles/modernizr")
 
 </head>
@@ -17,13 +20,15 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                <span>
+                    <span class="glyphicon glyphicon-eye-open pull-left" style="color:white; font-size:2.2em; padding:8px "></span>
+                    <span>@Html.ActionLink("MEDIC AVIC", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })</span>
+                </span>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    <li>@Html.ActionLink("Audits", "Index", "Audit")</li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
@@ -38,7 +43,16 @@
     </div>
 
     @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryui")
+
+
     @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/select2")
+    @Scripts.Render("~/bundles/chartjs")
+
+
+
+
     @RenderSection("scripts", required: false)
 </body>
 </html>

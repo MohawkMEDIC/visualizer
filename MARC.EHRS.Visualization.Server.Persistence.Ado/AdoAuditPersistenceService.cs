@@ -19,143 +19,139 @@ namespace MARC.EHRS.Visualization.Server.Persistence.Ado
         #region IAudtPersistenceService Members
 
         /// <summary>
-        /// Audit context
-        /// </summary>
-        private AuditModelDataContext m_context;
-
-        /// <summary>
         /// Persists an audit message
         /// </summary>
         public void PersistAuditMessage(Visualization.Core.Model.AuditMessageInfo audit)
         {
             // First we allow callers to change the audit event before we persist
             AuditPersistenceEventArgs evt = new AuditPersistenceEventArgs(audit);
+            this.SetAlertStatus(audit);
+
             if (this.Persisting != null)
                 this.Persisting(this, evt);
 
             if (evt.Cancel)
                 throw new OperationCanceledException("Persistence of audit cancelled by module hook");
 
-            audit.Status.IsAlert = evt.Alert;
-
-            // Next we want to construct the session
-            AuditSession saveSession = this.m_context.AuditSessions.FirstOrDefault(o => o.SessionId == audit.CorrelationToken);
-            // No session found? we'll create one
-            if (saveSession == null)
+            using (var context = new AuditModelDataContext())
             {
-                saveSession = new AuditSession()
+                // Next we want to construct the session
+                AuditSession saveSession = context.AuditSessions.FirstOrDefault(o => o.SessionId == audit.CorrelationToken);
+                // No session found? we'll create one
+                if (saveSession == null)
                 {
-                    SessionId = audit.SessionId,
-                    CreationTimestamp = DateTime.Now
-                };
-
-                // Find the sender
-                saveSession.Receiver = this.MapNodeInfo(audit.Receiver);
-                saveSession.Sender = this.MapNodeInfo(audit.SenderNode);
-
-            }
-
-            // Errors?
-            if (audit.Errors != null)
-            {
-                foreach (var err in audit.Errors)
-                {
-                    saveSession.AuditErrors.Add(new AuditError()
+                    saveSession = new AuditSession()
                     {
-                        ErrorMessage = err.Message,
-                        StackTrace = err.StackTrace,
-                        AuditMessageId = audit.CorrelationToken
-                    });
+                        SessionId = audit.SessionId,
+                        CreationTimestamp = DateTime.Now
+                    };
+
+                    // Find the sender
+                    saveSession.Receiver = this.MapNodeInfo(context, audit.Receiver);
+                    saveSession.Sender = this.MapNodeInfo(context, audit.SenderNode);
+
                 }
-            }
 
-            // Do message 
-            AuditMessage am = audit.Event;
-            if (am != null)
-            {
-                Audit auditSave = new Audit();
-                auditSave.GlobalId = audit.CorrelationToken;
-                saveSession.Audits.Add(auditSave);
-                auditSave.ProcessName = audit.SenderProcess;
-
-                // Core event identification attributes
-                if (am.EventIdentification != null)
+                // Errors?
+                if (audit.Errors != null)
                 {
-                    auditSave.ActionCode = this.GetAuditCode("ActionType", GetWireCode(am.EventIdentification.ActionCode), null);
-                    auditSave.OutcomeCode = this.GetAuditCode("OutcomeIndicator", this.GetWireCode(am.EventIdentification.EventOutcome), null);
+                    foreach (var err in audit.Errors)
+                    {
+                        saveSession.AuditErrors.Add(new AuditError()
+                        {
+                            ErrorMessage = err.Message,
+                            StackTrace = err.StackTrace,
+                            AuditMessageId = audit.CorrelationToken
+                        });
+                    }
+                }
 
-                    auditSave.EventCode = this.GetAuditCode(am.EventIdentification.EventId);
+                // Do message 
+                AuditMessage am = audit.Event;
+                if (am != null)
+                {
+                    Audit auditSave = new Audit();
+                    auditSave.GlobalId = audit.CorrelationToken;
+                    saveSession.Audits.Add(auditSave);
+                    auditSave.ProcessName = audit.SenderProcess;
 
                     foreach (var stat in audit.StatusHistory)
                     {
                         auditSave.AuditStatus.Add(new AuditStatus()
                         {
-                            StatusCode = this.m_context.StatusCodes.Where(o => o.Name == stat.StatusCode.ToString().ToUpper()).First(),
+                            StatusCode = context.StatusCodes.Where(o => o.Name == stat.StatusCode.ToString().ToUpper()).First(),
                             IsAlert = stat.IsAlert,
                             CreationTimestamp = stat.EffectiveFrom,
                             ObsoletionTimestamp = stat.EffectiveTo == default(DateTime) ? null : (DateTime?)stat.EffectiveTo,
                             ModifiedBy = Environment.UserName
                         });
                     }
-
-                    // Identification type
-                    if (am.EventIdentification.EventType != null)
-                        foreach (var ei in am.EventIdentification.EventType)
-                            auditSave.AuditEventTypeAuditCodeAssocs.Add(new AuditEventTypeAuditCodeAssoc()
-                            {
-                                EventTypeCode = this.GetAuditCode(ei)
-                            });
-                    auditSave.EventTimestamp = am.EventIdentification.EventDateTime;
-                    auditSave.CreationTimestamp = DateTime.Now;
-                }
-
-                // Now for the audit participants
-                if (am.Actors != null)
-                    foreach (var act in am.Actors)
-                        auditSave.AuditParticipants.Add(this.MapAuditActor(act));
-
-                if (am.AuditableObjects != null)
-                    foreach (var ao in am.AuditableObjects)
-                        auditSave.AuditObjects.Add(this.MapAuditObject(ao));
-
-                if (am.SourceIdentification != null)
-                    foreach (var si in am.SourceIdentification)
+                    // Core event identification attributes
+                    if (am.EventIdentification != null)
                     {
-                        var assoc = this.MapAuditSource(si);
-                        assoc.Audit = auditSave;
-                        auditSave.AuditAuditSourceAssocs.Add(assoc);
+                        auditSave.ActionCode = this.GetAuditCode(context, "ActionType", GetWireCode(am.EventIdentification.ActionCode), null);
+                        auditSave.OutcomeCode = this.GetAuditCode(context, "OutcomeIndicator", this.GetWireCode(am.EventIdentification.EventOutcome), null);
+
+                        auditSave.EventCode = this.GetAuditCode(context, am.EventIdentification.EventId);
+
+                        // Identification type
+                        if (am.EventIdentification.EventType != null)
+                            foreach (var ei in am.EventIdentification.EventType)
+                                auditSave.AuditEventTypeAuditCodeAssocs.Add(new AuditEventTypeAuditCodeAssoc()
+                                {
+                                    EventTypeCode = this.GetAuditCode(context, ei)
+                                });
+                        auditSave.EventTimestamp = am.EventIdentification.EventDateTime;
+                        auditSave.CreationTimestamp = DateTime.Now;
                     }
 
-            }
-            
-            // Add
-            this.m_context.AuditSessions.InsertOnSubmit(saveSession);
+                    // Now for the audit participants
+                    if (am.Actors != null)
+                        foreach (var act in am.Actors)
+                            auditSave.AuditParticipants.Add(this.MapAuditActor(context, act));
 
-            try
-            {
-                this.m_context.SubmitChanges();
-            }
-            catch(SqlException ex)
-            {
-                Trace.TraceError(ex.Message);
-                foreach (var kv in ex.Data.Keys)
-                    Trace.TraceError("\t(DTL): {0}={1}", kv, ex.Data[kv]);
-                throw;
-            }
-            if (this.Persisted != null)
-                this.Persisted(this, evt);
+                    if (am.AuditableObjects != null)
+                        foreach (var ao in am.AuditableObjects)
+                            auditSave.AuditObjects.Add(this.MapAuditObject(context, ao));
 
+                    if (am.SourceIdentification != null)
+                        foreach (var si in am.SourceIdentification)
+                        {
+                            var assoc = this.MapAuditSource(context, si);
+                            assoc.Audit = auditSave;
+                            auditSave.AuditAuditSourceAssocs.Add(assoc);
+                        }
+
+                }
+
+                // Add
+                context.AuditSessions.InsertOnSubmit(saveSession);
+
+                try
+                {
+                    context.SubmitChanges();
+                }
+                catch (SqlException ex)
+                {
+                    Trace.TraceError(ex.Message);
+                    foreach (var kv in ex.Data.Keys)
+                        Trace.TraceError("\t(DTL): {0}={1}", kv, ex.Data[kv]);
+                    throw;
+                }
+                if (this.Persisted != null)
+                    this.Persisted(this, evt);
+            }
         }
 
         /// <summary>
         /// Maps audit source information 
         /// </summary>
-        private AuditAuditSourceAssoc MapAuditSource(AtnaApi.Model.AuditSourceIdentificationType si)
+        private AuditAuditSourceAssoc MapAuditSource(AuditModelDataContext context, AtnaApi.Model.AuditSourceIdentificationType si)
         {
             // Do we have one on file?
-            var existing = this.m_context.AuditSources.FirstOrDefault(s => s.AuditSourceName == si.AuditSourceID && s.EnterpriseSiteName == si.AuditEnterpriseSiteID);
+            var existing = context.AuditSources.FirstOrDefault(s => s.AuditSourceName == si.AuditSourceID && s.EnterpriseSiteName == si.AuditEnterpriseSiteID);
             if (existing == null && String.IsNullOrEmpty(si.AuditEnterpriseSiteID))
-                existing = this.m_context.AuditSources.FirstOrDefault(s => s.AuditSourceName == si.AuditSourceID);
+                existing = context.AuditSources.FirstOrDefault(s => s.AuditSourceName == si.AuditSourceID);
 
             if (existing != null)
                 return new AuditAuditSourceAssoc()
@@ -173,7 +169,7 @@ namespace MARC.EHRS.Visualization.Server.Persistence.Ado
                     retVal.AuditSourceTypeAssocs.Add(new AuditSourceTypeAssoc()
                     {
                         AuditSource = retVal,
-                        TypeCode = this.GetAuditCode(astc)
+                        TypeCode = this.GetAuditCode(context, astc)
                     });
             return new AuditAuditSourceAssoc()
             {
@@ -184,18 +180,18 @@ namespace MARC.EHRS.Visualization.Server.Persistence.Ado
         /// <summary>
         /// Map an audit object
         /// </summary>
-        private AuditObject MapAuditObject(AtnaApi.Model.AuditableObject ao)
+        private AuditObject MapAuditObject(AuditModelDataContext context, AtnaApi.Model.AuditableObject ao)
         {
             var retVal = new AuditObject();
 
             // Codes
-            retVal.IdTypeCode = this.GetAuditCode(ao.IDTypeCode);
+            retVal.IdTypeCode = this.GetAuditCode(context, ao.IDTypeCode);
             if (ao.LifecycleTypeSpecified)
-                retVal.LifecycleCode = this.GetAuditCode("AuditableObjectLifecycle", this.GetWireCode(ao.LifecycleType), null);
+                retVal.LifecycleCode = this.GetAuditCode(context, "AuditableObjectLifecycle", this.GetWireCode(ao.LifecycleType), null);
             if (ao.RoleSpecified)
-                retVal.RoleCode = this.GetAuditCode("AuditableObjectRole", this.GetWireCode(ao.Role), null);
+                retVal.RoleCode = this.GetAuditCode(context, "AuditableObjectRole", this.GetWireCode(ao.Role), null);
             if (ao.TypeSpecified)
-                retVal.TypeCode = this.GetAuditCode("AuditableObjectType", this.GetWireCode(ao.Type), null);
+                retVal.TypeCode = this.GetAuditCode(context, "AuditableObjectType", this.GetWireCode(ao.Type), null);
             retVal.ExternalIdentifier = ao.ObjectId;
 
             // Object specifics
@@ -221,7 +217,7 @@ namespace MARC.EHRS.Visualization.Server.Persistence.Ado
         /// <summary>
         /// Map an audit actor
         /// </summary>
-        private AuditParticipant MapAuditActor(AtnaApi.Model.AuditActorData act)
+        private AuditParticipant MapAuditActor(AuditModelDataContext context, AtnaApi.Model.AuditActorData act)
         {
             var retVal = new AuditParticipant();
 
@@ -230,7 +226,7 @@ namespace MARC.EHRS.Visualization.Server.Persistence.Ado
                     new AuditParticipantRoleCodeAssoc()
                     {
                         AuditParticipant = retVal,
-                        RoleCode = this.GetAuditCode(rol)
+                        RoleCode = this.GetAuditCode(context, rol)
                     });
 
 
@@ -239,7 +235,7 @@ namespace MARC.EHRS.Visualization.Server.Persistence.Ado
             retVal.IsRequestor = act.UserIsRequestor;
 
             // First is there a node with the user identifier? 
-            retVal.NodeVersion = this.m_context.NodeVersions.FirstOrDefault(n => n.Name == act.UserIdentifier || n.HostName == act.NetworkAccessPointId);
+            retVal.NodeVersion = context.NodeVersions.FirstOrDefault(n => n.Name == act.UserIdentifier || n.HostName == act.NetworkAccessPointId);
 
             retVal.RawUserId = act.UserIdentifier;
             retVal.RawUserName = act.UserName;
@@ -249,15 +245,15 @@ namespace MARC.EHRS.Visualization.Server.Persistence.Ado
         /// <summary>
         /// Get the audit code
         /// </summary>
-        private AuditCode GetAuditCode<T>(AtnaApi.Model.CodeValue<T> codeValue)
+        private AuditCode GetAuditCode<T>(AuditModelDataContext context, AtnaApi.Model.CodeValue<T> codeValue)
         {
-            return this.GetAuditCode(codeValue.CodeSystem, codeValue.Code, codeValue.DisplayName);
+            return this.GetAuditCode(context, codeValue.CodeSystem, codeValue.Code, codeValue.DisplayName);
         }
 
         /// <summary>
         /// Get the audit code from the DB
         /// </summary>
-        public AuditCode GetAuditCode(String domain, String code, String display)
+        public AuditCode GetAuditCode(AuditModelDataContext context, String domain, String code, String display)
         {
 
             if (String.IsNullOrEmpty(domain) ||
@@ -268,8 +264,8 @@ namespace MARC.EHRS.Visualization.Server.Persistence.Ado
             }
 
             int? codeIdParameter = 0;
-            this.m_context.sp_CreateAuditCodeIfNotExists(domain, code, display, ref codeIdParameter);
-            return this.m_context.AuditCodes.Where(o => o.CodeId == (Int32)codeIdParameter.Value).First();
+            context.sp_CreateAuditCodeIfNotExists(domain, code, display, ref codeIdParameter);
+            return context.AuditCodes.Where(o => o.CodeId == (Int32)codeIdParameter.Value).First();
         }
 
         /// <summary>
@@ -289,9 +285,10 @@ namespace MARC.EHRS.Visualization.Server.Persistence.Ado
         /// <summary>
         /// Map node info
         /// </summary>
-        private NodeVersion MapNodeInfo(NodeInfo nodeInfo)
+        private NodeVersion MapNodeInfo(AuditModelDataContext context, NodeInfo nodeInfo)
         {
-            var retVal = this.m_context.NodeVersions.Where(o => o.HostName == nodeInfo.Host.Host && o.ObsoletionTime == null).OrderByDescending(o=>o.NodeVersionId).FirstOrDefault();
+
+            var retVal = context.NodeVersions.Where(o => o.HostName == nodeInfo.Host.Host && o.ObsoletionTime == null).OrderByDescending(o=>o.NodeVersionId).FirstOrDefault();
 
             if(retVal == null)
                 retVal = new NodeVersion()
@@ -323,6 +320,17 @@ namespace MARC.EHRS.Visualization.Server.Persistence.Ado
                 SenderNode = ParseNodeVersion(audit.AuditSession.Sender),
                 Receiver = ParseNodeVersion(audit.AuditSession.Receiver)
             };
+
+            // De-persist the session errors
+            foreach(var err in audit.AuditSession.AuditErrors)
+            {
+                retVal.Errors.Add(new AuditErrorInfo()
+                {
+                    Message = err.ErrorMessage,
+                    StackTrace = err.StackTrace
+                });
+            }
+
 
 
             // Audit stuffs
@@ -359,7 +367,7 @@ namespace MARC.EHRS.Visualization.Server.Persistence.Ado
             // Reverse map actors
             foreach (var itm in audit.AuditParticipants)
             {
-                var actor = new ExtendedActorInfo()
+                var actor = new ActorInfo()
                 {
                     ActorRoleCode = new List<AtnaApi.Model.CodeValue<string>>(),
                     NetworkAccessPointId = itm.NetworkAccessPoint,
@@ -443,6 +451,8 @@ namespace MARC.EHRS.Visualization.Server.Persistence.Ado
         /// </summary>
         internal static NodeInfo ParseNodeVersion(NodeVersion nodeVersion)
         {
+            if (nodeVersion == null)
+                return null;
             return new NodeInfo()
             {
                 GroupNode = null,
@@ -475,10 +485,13 @@ namespace MARC.EHRS.Visualization.Server.Persistence.Ado
         /// </summary>
         public Visualization.Core.Model.AuditMessageInfo DePersistAuditMessage(Guid correlationToken)
         {
-            var audit = this.m_context.Audits.FirstOrDefault(o => o.GlobalId == correlationToken);
-            if (audit != null)
-                return this.ConvertAuditMessage(audit);
-            return null;
+            using (var context = new AuditModelDataContext())
+            {
+                var audit = context.Audits.FirstOrDefault(o => o.GlobalId == correlationToken);
+                if (audit != null)
+                    return this.ConvertAuditMessage(audit);
+                return null;
+            }
         }
 
         /// <summary>
@@ -487,6 +500,67 @@ namespace MARC.EHRS.Visualization.Server.Persistence.Ado
         public IEnumerable<Visualization.Core.Model.AuditMessageInfo> SearchAuditMessage(Visualization.Core.Model.AuditMessageInfo prototype)
         {
             throw new NotImplementedException();
+        }
+
+
+        /// <summary>
+        /// Set alerting status on audit (default impl)
+        /// </summary>
+        private void SetAlertStatus(AuditMessageInfo ami)
+        {
+
+            foreach (var code in ami.Event.EventIdentification.EventType)
+                this.SetAlertStatusFromCode(code, ami);
+            this.SetAlertStatusFromCode(ami.Event.EventIdentification.EventId, ami);
+
+        }
+
+        /// <summary>
+        /// Set status from a code
+        /// </summary>
+        private void SetAlertStatusFromCode<T>(CodeValue<T> code, AuditMessageInfo ami)
+        {
+            switch (code.Code)
+            {
+                // Alertable no matter what
+                case "110132": // Use of a restricted function
+                case "110127": // Emergency Override
+                    ami.Status.IsAlert = true;
+                    if (ami.Status.IsAlert)
+                        ami.Errors.Add(new AuditErrorInfo() { Message = "Tag Alert: Event was security override/breach/use of restricted function" });
+
+                    break;
+                // Alertable if any failure occurs
+                case "110113": // Security Alert
+                case "110114": // User Authentication
+                case "110122": // Login
+                case "110126": // Node Authentication
+                case "110135": // Object Security Change Attempted
+                case "110136": // User Security Role Change Attempted
+                case "110137": // User Secuirty Attribute Change Attempted
+                    ami.Status.IsAlert = ami.Event.EventIdentification.EventOutcome != OutcomeIndicator.Success;
+                    if (ami.Status.IsAlert)
+                        ami.Errors.Add(new AuditErrorInfo() { Message = "Tag Alert: Event outcome on security event was unsuccessful" });
+                    break;
+                case "110101": // Audit log used , these are system logs
+                    ami.Status.StatusCode = ami.Event.EventIdentification.EventOutcome != OutcomeIndicator.Success ? StatusType.New : StatusType.System;
+                    if (ami.Status.StatusCode == StatusType.New)
+                        ami.Status.IsAlert = ami.Event.EventIdentification.EventOutcome != OutcomeIndicator.Success;
+                    if (ami.Status.IsAlert)
+                        ami.Errors.Add(new AuditErrorInfo() { Message = "Tag Alert: Event outcome was Serious Failure" });
+
+                    break;
+                // Only alertable if a major failure 
+                case "110106": // Export used
+                case "110107": // Import used
+                case "110109": // Order record
+                case "110110": // Patient record
+                case "110111": // Procedure record
+                    ami.Status.IsAlert = ami.Event.EventIdentification.EventOutcome == OutcomeIndicator.EpicFail;
+                    if (ami.Status.IsAlert)
+                        ami.Errors.Add(new AuditErrorInfo() { Message = "Tag Alert: Event outcome was Serious Failure" });
+                    break;
+            }
         }
 
         /// <summary>
@@ -511,17 +585,7 @@ namespace MARC.EHRS.Visualization.Server.Persistence.Ado
         /// <summary>
         /// When the service is "hooked up"
         /// </summary>
-        public IServiceProvider Context
-        {
-            get
-            {
-                return null;
-            }
-            set
-            {
-                this.m_context = new AuditModelDataContext();
-            }
-        }
+        public IServiceProvider Context { get; set; }
 
         #endregion
     }

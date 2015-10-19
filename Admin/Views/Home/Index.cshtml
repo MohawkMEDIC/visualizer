@@ -3,29 +3,27 @@
 }
 
 <div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="http://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+    <h1><span class="glyphicon glyphicon-lock"></span> MEDIC AVIC</h1>
+    <p class="lead">The MEDIC Audit Visualization Inspection Console (AVIC) lets you view ATNA Audit Messages processed by the MEDIC Visualizer</p>
+    <p><a href="/visualizer" class="btn btn-primary btn-lg">View Visualizer</a></p>
 </div>
 
 <div class="row">
     <div class="col-md-4">
-        <h2>Getting started</h2>
+        <h2>View Audits</h2>
         <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
+            View the audits which have been processed by the MEDIC Visualizer Service Core.
         </p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+        <p><a class="btn btn-default" href="/Audit">Go &raquo;</a></p>
     </div>
     <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
+        <h2>Search</h2>
+        <p>You can also perform complex queries on the MEDIC Visualizer persistence store</p>
+        <p><a class="btn btn-default" href="/Audit?action=Search">Go &raquo;</a></p>
     </div>
     <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+        <h2>Statistics</h2>
+        <p>You can easily view statistical information about the Visualization events processed.</p>
+        <p><a class="btn btn-default" href="/Audit?action=Stats">Go &raquo;</a></p>
     </div>
 </div>

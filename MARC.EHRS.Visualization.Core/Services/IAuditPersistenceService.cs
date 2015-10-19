@@ -27,12 +27,7 @@ namespace MARC.EHRS.Visualization.Core.Services
         /// Gets the data related to the persistence
         /// </summary>
         public AuditMessageInfo Data { get; private set; }
-
-        /// <summary>
-        /// Identifiy the alert
-        /// </summary>
-        public bool Alert { get; set; }
-
+        
         /// <summary>
         /// When set to true signals a cancel
         /// </summary>

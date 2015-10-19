@@ -9,7 +9,7 @@ namespace MARC.EHRS.Visualization.Core.Model
     /// <summary>
     /// Represents extended actor information
     /// </summary>
-    public class ExtendedActorInfo : AtnaApi.Model.AuditActorData
+    public class ActorInfo : AtnaApi.Model.AuditActorData
     {
 
         /// <summary>

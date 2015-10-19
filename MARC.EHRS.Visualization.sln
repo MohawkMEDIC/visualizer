@@ -45,6 +45,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MARC.EHRS.Visualization.Cli
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MARC.EHRS.Visualization.Server", "MARC.EHRS.Visualization.Server\MARC.EHRS.Visualization.Server.csproj", "{00A44E45-3F01-45D9-87DE-6AF6C083E392}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Admin", "Admin\Admin.csproj", "{474678DB-5B37-4358-9153-39F1F1EABF71}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -155,6 +157,18 @@ Global
 		{00A44E45-3F01-45D9-87DE-6AF6C083E392}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{00A44E45-3F01-45D9-87DE-6AF6C083E392}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{00A44E45-3F01-45D9-87DE-6AF6C083E392}.Release|x86.ActiveCfg = Release|Any CPU
+		{474678DB-5B37-4358-9153-39F1F1EABF71}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{474678DB-5B37-4358-9153-39F1F1EABF71}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{474678DB-5B37-4358-9153-39F1F1EABF71}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{474678DB-5B37-4358-9153-39F1F1EABF71}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{474678DB-5B37-4358-9153-39F1F1EABF71}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{474678DB-5B37-4358-9153-39F1F1EABF71}.Debug|x86.Build.0 = Debug|Any CPU
+		{474678DB-5B37-4358-9153-39F1F1EABF71}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{474678DB-5B37-4358-9153-39F1F1EABF71}.Release|Any CPU.Build.0 = Release|Any CPU
+		{474678DB-5B37-4358-9153-39F1F1EABF71}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{474678DB-5B37-4358-9153-39F1F1EABF71}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{474678DB-5B37-4358-9153-39F1F1EABF71}.Release|x86.ActiveCfg = Release|Any CPU
+		{474678DB-5B37-4358-9153-39F1F1EABF71}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -172,6 +186,7 @@ Global
 		{A9B82A70-5004-4A1E-9F7E-BF445EAB97DF} = {8A9952C0-B0A2-4812-8266-F4C128E19098}
 		{06C72C41-5540-423B-B6A9-4472BF84FD7A} = {8A9952C0-B0A2-4812-8266-F4C128E19098}
 		{00A44E45-3F01-45D9-87DE-6AF6C083E392} = {AE3E3DA1-AD73-4D44-AE3D-64C61464F4BE}
+		{474678DB-5B37-4358-9153-39F1F1EABF71} = {646E55E3-961F-4C8F-ADB3-43E299752AB8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		VisualSVNWorkingCopyRoot = .

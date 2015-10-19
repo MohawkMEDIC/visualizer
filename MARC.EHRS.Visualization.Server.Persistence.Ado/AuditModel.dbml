@@ -163,6 +163,19 @@
       <Association Name="Node_NodeVersion" Member="NodeVersions" ThisKey="NodeId" OtherKey="NodeId" Type="NodeVersion" />
     </Type>
   </Table>
+  <Table Name="dbo.AuditError" Member="AuditErrors">
+    <Type Name="AuditError">
+      <Column Name="ErrorId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="SessionId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
+      <Column Name="ErrorMessage" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="AuditMessageId" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
+      <Column Name="StackTrace" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="CausedById" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="AuditError_AuditError" Member="AuditErrors" ThisKey="ErrorId" OtherKey="CausedById" Type="AuditError" />
+      <Association Name="AuditError_AuditError" Member="AuditError1" ThisKey="CausedById" OtherKey="ErrorId" Type="AuditError" IsForeignKey="true" />
+      <Association Name="AuditSession_AuditError" Member="AuditSession" ThisKey="SessionId" OtherKey="SessionId" Type="AuditSession" IsForeignKey="true" />
+    </Type>
+  </Table>
   <Table Name="dbo.NodeVersion" Member="NodeVersions">
     <Type Name="NodeVersion">
       <Column Name="NodeVersionId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -178,19 +191,6 @@
       <Association Name="NodeVersion_AuditSession1" Member="AuditSessions1" ThisKey="NodeVersionId" OtherKey="SenderNodeVersionId" Type="AuditSession" />
       <Association Name="Node_NodeVersion" Member="Node" ThisKey="NodeId" OtherKey="NodeId" Type="Node" IsForeignKey="true" />
       <Association Name="StatusCode_NodeVersion" Member="StatusCode" ThisKey="StatusCodeId" OtherKey="CodeId" Type="StatusCode" IsForeignKey="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.AuditError" Member="AuditErrors">
-    <Type Name="AuditError">
-      <Column Name="ErrorId" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="SessionId" Type="System.Guid" DbType="UniqueIdentifier NOT NULL" CanBeNull="false" />
-      <Column Name="ErrorMessage" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
-      <Column Name="AuditMessageId" Type="System.Guid" DbType="UniqueIdentifier" CanBeNull="true" />
-      <Column Name="StackTrace" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
-      <Column Name="CausedById" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Association Name="AuditError_AuditError" Member="AuditErrors" ThisKey="ErrorId" OtherKey="CausedById" Type="AuditError" />
-      <Association Name="AuditError_AuditError" Member="AuditError1" ThisKey="CausedById" OtherKey="ErrorId" Type="AuditError" IsForeignKey="true" />
-      <Association Name="AuditSession_AuditError" Member="AuditSession" ThisKey="SessionId" OtherKey="SessionId" Type="AuditSession" IsForeignKey="true" />
     </Type>
   </Table>
   <Function Name="dbo.sp_CreateAuditCodeIfNotExists" Method="sp_CreateAuditCodeIfNotExists">

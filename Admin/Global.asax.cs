@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Admin.Util;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -31,20 +32,16 @@ namespace Admin
                 case 401:
                     if (Request.Headers["Authorization"] != null)
                     { // failed password attempt
-                        AuditUtil.AuditGenericError(this.Context, AtnaApi.Model.OutcomeIndicator.EpicFail, AtnaApi.Model.EventIdentifierType.ApplicationActivity, AtnaApi.Model.EventIdentificationType.EventType_UserAuthentication, aspxerrorpath);
+                        AuditUtil.AuditGenericError(this.Context, AtnaApi.Model.OutcomeIndicator.EpicFail, AtnaApi.Model.EventIdentifierType.ApplicationActivity, AuditUtil.MakeGenericCode(AtnaApi.Model.EventIdentifierType.UserAuthentication), aspxerrorpath);
                         Response.RedirectToRoute("Default", new { controller = "Error", action = "Unauthorized", aspxerrorpath = Request.RawUrl });
                     }
                     break;
                 case 403:
                     Response.ClearContent();
-                    AuditUtil.AuditGenericError(this.Context, AtnaApi.Model.OutcomeIndicator.EpicFail, AtnaApi.Model.EventIdentifierType.ApplicationActivity, AtnaApi.Model.EventIdentificationType.EventType_UseOfARestrictedFunction, aspxerrorpath);
+                    AuditUtil.AuditGenericError(this.Context, AtnaApi.Model.OutcomeIndicator.EpicFail, AtnaApi.Model.EventIdentifierType.ApplicationActivity, AuditUtil.MakeGenericCode(AtnaApi.Model.EventIdentifierType.UseOfRestrictedFunction), aspxerrorpath);
                     Response.RedirectToRoute("Default", new { controller = "Error", action = "Forbidden", aspxerrorpath = Request.RawUrl });
                     break;
-                case 404:
-                    Response.ClearContent();
-                    AuditUtil.AuditGenericError(this.Context, AtnaApi.Model.OutcomeIndicator.SeriousFail, AtnaApi.Model.EventIdentifierType.ApplicationActivity, AtnaApi.Model.EventIdentificationType.EventType_Query, aspxerrorpath);
-                    Response.RedirectToRoute("Default", new { controller = "Error", action = "NotFound", aspxerrorpath = Request.RawUrl });
-                    break;
+              
                 case 503:
                     Response.ClearContent();
                     Response.RedirectToRoute("Default", new { controller = "Error", action = "Unavailable", aspxerrorpath = Request.RawUrl });

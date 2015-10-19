@@ -72,12 +72,12 @@ namespace MARC.EHRS.Visualization.Server.Persistence.Ado
     partial void InsertNode(Node instance);
     partial void UpdateNode(Node instance);
     partial void DeleteNode(Node instance);
-    partial void InsertNodeVersion(NodeVersion instance);
-    partial void UpdateNodeVersion(NodeVersion instance);
-    partial void DeleteNodeVersion(NodeVersion instance);
     partial void InsertAuditError(AuditError instance);
     partial void UpdateAuditError(AuditError instance);
     partial void DeleteAuditError(AuditError instance);
+    partial void InsertNodeVersion(NodeVersion instance);
+    partial void UpdateNodeVersion(NodeVersion instance);
+    partial void DeleteNodeVersion(NodeVersion instance);
     #endregion
 		
 		public AuditModelDataContext() : 
@@ -222,19 +222,19 @@ namespace MARC.EHRS.Visualization.Server.Persistence.Ado
 			}
 		}
 		
-		public System.Data.Linq.Table<NodeVersion> NodeVersions
-		{
-			get
-			{
-				return this.GetTable<NodeVersion>();
-			}
-		}
-		
 		public System.Data.Linq.Table<AuditError> AuditErrors
 		{
 			get
 			{
 				return this.GetTable<AuditError>();
+			}
+		}
+		
+		public System.Data.Linq.Table<NodeVersion> NodeVersions
+		{
+			get
+			{
+				return this.GetTable<NodeVersion>();
 			}
 		}
 		
@@ -3865,6 +3865,298 @@ namespace MARC.EHRS.Visualization.Server.Persistence.Ado
 		}
 	}
 	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.AuditError")]
+	public partial class AuditError : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _ErrorId;
+		
+		private System.Guid _SessionId;
+		
+		private string _ErrorMessage;
+		
+		private System.Nullable<System.Guid> _AuditMessageId;
+		
+		private string _StackTrace;
+		
+		private System.Nullable<int> _CausedById;
+		
+		private EntitySet<AuditError> _AuditErrors;
+		
+		private EntityRef<AuditError> _AuditError1;
+		
+		private EntityRef<AuditSession> _AuditSession;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnErrorIdChanging(int value);
+    partial void OnErrorIdChanged();
+    partial void OnSessionIdChanging(System.Guid value);
+    partial void OnSessionIdChanged();
+    partial void OnErrorMessageChanging(string value);
+    partial void OnErrorMessageChanged();
+    partial void OnAuditMessageIdChanging(System.Nullable<System.Guid> value);
+    partial void OnAuditMessageIdChanged();
+    partial void OnStackTraceChanging(string value);
+    partial void OnStackTraceChanged();
+    partial void OnCausedByIdChanging(System.Nullable<int> value);
+    partial void OnCausedByIdChanged();
+    #endregion
+		
+		public AuditError()
+		{
+			this._AuditErrors = new EntitySet<AuditError>(new Action<AuditError>(this.attach_AuditErrors), new Action<AuditError>(this.detach_AuditErrors));
+			this._AuditError1 = default(EntityRef<AuditError>);
+			this._AuditSession = default(EntityRef<AuditSession>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ErrorId", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int ErrorId
+		{
+			get
+			{
+				return this._ErrorId;
+			}
+			set
+			{
+				if ((this._ErrorId != value))
+				{
+					this.OnErrorIdChanging(value);
+					this.SendPropertyChanging();
+					this._ErrorId = value;
+					this.SendPropertyChanged("ErrorId");
+					this.OnErrorIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SessionId", DbType="UniqueIdentifier NOT NULL")]
+		public System.Guid SessionId
+		{
+			get
+			{
+				return this._SessionId;
+			}
+			set
+			{
+				if ((this._SessionId != value))
+				{
+					if (this._AuditSession.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnSessionIdChanging(value);
+					this.SendPropertyChanging();
+					this._SessionId = value;
+					this.SendPropertyChanged("SessionId");
+					this.OnSessionIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ErrorMessage", DbType="VarChar(MAX) NOT NULL", CanBeNull=false)]
+		public string ErrorMessage
+		{
+			get
+			{
+				return this._ErrorMessage;
+			}
+			set
+			{
+				if ((this._ErrorMessage != value))
+				{
+					this.OnErrorMessageChanging(value);
+					this.SendPropertyChanging();
+					this._ErrorMessage = value;
+					this.SendPropertyChanged("ErrorMessage");
+					this.OnErrorMessageChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AuditMessageId", DbType="UniqueIdentifier")]
+		public System.Nullable<System.Guid> AuditMessageId
+		{
+			get
+			{
+				return this._AuditMessageId;
+			}
+			set
+			{
+				if ((this._AuditMessageId != value))
+				{
+					this.OnAuditMessageIdChanging(value);
+					this.SendPropertyChanging();
+					this._AuditMessageId = value;
+					this.SendPropertyChanged("AuditMessageId");
+					this.OnAuditMessageIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_StackTrace", DbType="VarChar(MAX)")]
+		public string StackTrace
+		{
+			get
+			{
+				return this._StackTrace;
+			}
+			set
+			{
+				if ((this._StackTrace != value))
+				{
+					this.OnStackTraceChanging(value);
+					this.SendPropertyChanging();
+					this._StackTrace = value;
+					this.SendPropertyChanged("StackTrace");
+					this.OnStackTraceChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CausedById", DbType="Int")]
+		public System.Nullable<int> CausedById
+		{
+			get
+			{
+				return this._CausedById;
+			}
+			set
+			{
+				if ((this._CausedById != value))
+				{
+					if (this._AuditError1.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnCausedByIdChanging(value);
+					this.SendPropertyChanging();
+					this._CausedById = value;
+					this.SendPropertyChanged("CausedById");
+					this.OnCausedByIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="AuditError_AuditError", Storage="_AuditErrors", ThisKey="ErrorId", OtherKey="CausedById")]
+		public EntitySet<AuditError> AuditErrors
+		{
+			get
+			{
+				return this._AuditErrors;
+			}
+			set
+			{
+				this._AuditErrors.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="AuditError_AuditError", Storage="_AuditError1", ThisKey="CausedById", OtherKey="ErrorId", IsForeignKey=true)]
+		public AuditError AuditError1
+		{
+			get
+			{
+				return this._AuditError1.Entity;
+			}
+			set
+			{
+				AuditError previousValue = this._AuditError1.Entity;
+				if (((previousValue != value) 
+							|| (this._AuditError1.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._AuditError1.Entity = null;
+						previousValue.AuditErrors.Remove(this);
+					}
+					this._AuditError1.Entity = value;
+					if ((value != null))
+					{
+						value.AuditErrors.Add(this);
+						this._CausedById = value.ErrorId;
+					}
+					else
+					{
+						this._CausedById = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("AuditError1");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="AuditSession_AuditError", Storage="_AuditSession", ThisKey="SessionId", OtherKey="SessionId", IsForeignKey=true)]
+		public AuditSession AuditSession
+		{
+			get
+			{
+				return this._AuditSession.Entity;
+			}
+			set
+			{
+				AuditSession previousValue = this._AuditSession.Entity;
+				if (((previousValue != value) 
+							|| (this._AuditSession.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._AuditSession.Entity = null;
+						previousValue.AuditErrors.Remove(this);
+					}
+					this._AuditSession.Entity = value;
+					if ((value != null))
+					{
+						value.AuditErrors.Add(this);
+						this._SessionId = value.SessionId;
+					}
+					else
+					{
+						this._SessionId = default(System.Guid);
+					}
+					this.SendPropertyChanged("AuditSession");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_AuditErrors(AuditError entity)
+		{
+			this.SendPropertyChanging();
+			entity.AuditError1 = this;
+		}
+		
+		private void detach_AuditErrors(AuditError entity)
+		{
+			this.SendPropertyChanging();
+			entity.AuditError1 = null;
+		}
+	}
+	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.NodeVersion")]
 	public partial class NodeVersion : INotifyPropertyChanging, INotifyPropertyChanged
 	{
@@ -4258,298 +4550,6 @@ namespace MARC.EHRS.Visualization.Server.Persistence.Ado
 		{
 			this.SendPropertyChanging();
 			entity.Sender = null;
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.AuditError")]
-	public partial class AuditError : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _ErrorId;
-		
-		private System.Guid _SessionId;
-		
-		private string _ErrorMessage;
-		
-		private System.Nullable<System.Guid> _AuditMessageId;
-		
-		private string _StackTrace;
-		
-		private System.Nullable<int> _CausedById;
-		
-		private EntitySet<AuditError> _AuditErrors;
-		
-		private EntityRef<AuditError> _AuditError1;
-		
-		private EntityRef<AuditSession> _AuditSession;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnErrorIdChanging(int value);
-    partial void OnErrorIdChanged();
-    partial void OnSessionIdChanging(System.Guid value);
-    partial void OnSessionIdChanged();
-    partial void OnErrorMessageChanging(string value);
-    partial void OnErrorMessageChanged();
-    partial void OnAuditMessageIdChanging(System.Nullable<System.Guid> value);
-    partial void OnAuditMessageIdChanged();
-    partial void OnStackTraceChanging(string value);
-    partial void OnStackTraceChanged();
-    partial void OnCausedByIdChanging(System.Nullable<int> value);
-    partial void OnCausedByIdChanged();
-    #endregion
-		
-		public AuditError()
-		{
-			this._AuditErrors = new EntitySet<AuditError>(new Action<AuditError>(this.attach_AuditErrors), new Action<AuditError>(this.detach_AuditErrors));
-			this._AuditError1 = default(EntityRef<AuditError>);
-			this._AuditSession = default(EntityRef<AuditSession>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ErrorId", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int ErrorId
-		{
-			get
-			{
-				return this._ErrorId;
-			}
-			set
-			{
-				if ((this._ErrorId != value))
-				{
-					this.OnErrorIdChanging(value);
-					this.SendPropertyChanging();
-					this._ErrorId = value;
-					this.SendPropertyChanged("ErrorId");
-					this.OnErrorIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SessionId", DbType="UniqueIdentifier NOT NULL")]
-		public System.Guid SessionId
-		{
-			get
-			{
-				return this._SessionId;
-			}
-			set
-			{
-				if ((this._SessionId != value))
-				{
-					if (this._AuditSession.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnSessionIdChanging(value);
-					this.SendPropertyChanging();
-					this._SessionId = value;
-					this.SendPropertyChanged("SessionId");
-					this.OnSessionIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ErrorMessage", DbType="VarChar(MAX) NOT NULL", CanBeNull=false)]
-		public string ErrorMessage
-		{
-			get
-			{
-				return this._ErrorMessage;
-			}
-			set
-			{
-				if ((this._ErrorMessage != value))
-				{
-					this.OnErrorMessageChanging(value);
-					this.SendPropertyChanging();
-					this._ErrorMessage = value;
-					this.SendPropertyChanged("ErrorMessage");
-					this.OnErrorMessageChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AuditMessageId", DbType="UniqueIdentifier")]
-		public System.Nullable<System.Guid> AuditMessageId
-		{
-			get
-			{
-				return this._AuditMessageId;
-			}
-			set
-			{
-				if ((this._AuditMessageId != value))
-				{
-					this.OnAuditMessageIdChanging(value);
-					this.SendPropertyChanging();
-					this._AuditMessageId = value;
-					this.SendPropertyChanged("AuditMessageId");
-					this.OnAuditMessageIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_StackTrace", DbType="VarChar(MAX)")]
-		public string StackTrace
-		{
-			get
-			{
-				return this._StackTrace;
-			}
-			set
-			{
-				if ((this._StackTrace != value))
-				{
-					this.OnStackTraceChanging(value);
-					this.SendPropertyChanging();
-					this._StackTrace = value;
-					this.SendPropertyChanged("StackTrace");
-					this.OnStackTraceChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CausedById", DbType="Int")]
-		public System.Nullable<int> CausedById
-		{
-			get
-			{
-				return this._CausedById;
-			}
-			set
-			{
-				if ((this._CausedById != value))
-				{
-					if (this._AuditError1.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnCausedByIdChanging(value);
-					this.SendPropertyChanging();
-					this._CausedById = value;
-					this.SendPropertyChanged("CausedById");
-					this.OnCausedByIdChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="AuditError_AuditError", Storage="_AuditErrors", ThisKey="ErrorId", OtherKey="CausedById")]
-		public EntitySet<AuditError> AuditErrors
-		{
-			get
-			{
-				return this._AuditErrors;
-			}
-			set
-			{
-				this._AuditErrors.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="AuditError_AuditError", Storage="_AuditError1", ThisKey="CausedById", OtherKey="ErrorId", IsForeignKey=true)]
-		public AuditError AuditError1
-		{
-			get
-			{
-				return this._AuditError1.Entity;
-			}
-			set
-			{
-				AuditError previousValue = this._AuditError1.Entity;
-				if (((previousValue != value) 
-							|| (this._AuditError1.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._AuditError1.Entity = null;
-						previousValue.AuditErrors.Remove(this);
-					}
-					this._AuditError1.Entity = value;
-					if ((value != null))
-					{
-						value.AuditErrors.Add(this);
-						this._CausedById = value.ErrorId;
-					}
-					else
-					{
-						this._CausedById = default(Nullable<int>);
-					}
-					this.SendPropertyChanged("AuditError1");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="AuditSession_AuditError", Storage="_AuditSession", ThisKey="SessionId", OtherKey="SessionId", IsForeignKey=true)]
-		public AuditSession AuditSession
-		{
-			get
-			{
-				return this._AuditSession.Entity;
-			}
-			set
-			{
-				AuditSession previousValue = this._AuditSession.Entity;
-				if (((previousValue != value) 
-							|| (this._AuditSession.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._AuditSession.Entity = null;
-						previousValue.AuditErrors.Remove(this);
-					}
-					this._AuditSession.Entity = value;
-					if ((value != null))
-					{
-						value.AuditErrors.Add(this);
-						this._SessionId = value.SessionId;
-					}
-					else
-					{
-						this._SessionId = default(System.Guid);
-					}
-					this.SendPropertyChanged("AuditSession");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_AuditErrors(AuditError entity)
-		{
-			this.SendPropertyChanging();
-			entity.AuditError1 = this;
-		}
-		
-		private void detach_AuditErrors(AuditError entity)
-		{
-			this.SendPropertyChanging();
-			entity.AuditError1 = null;
 		}
 	}
 	

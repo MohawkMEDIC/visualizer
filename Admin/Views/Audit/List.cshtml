@@ -1,6 +1,6 @@
-﻿@model IQueryable<MYST.OpAdmin.DAL.AuditSummaryVw>
+﻿@model Admin.Models.AuditSummaryCollectionViewModel
 @{
-    var grid = new System.Web.Helpers.WebGrid(Model, defaultSort: "CreationTimestamp", rowsPerPage: Int32.Parse(Request.QueryString["count"] ?? "20"), selectionFieldName: "AuditId");
+    var grid = new System.Web.Helpers.WebGrid(Model.Results, defaultSort: "CreationTimestamp", rowsPerPage: Int32.Parse(Request.QueryString["count"] ?? "20"), selectionFieldName: "AuditId");
     grid.Pager(WebGridPagerModes.All, "First", "Previous", "Next", "Last");
     if (Request.QueryString[grid.SortDirectionFieldName].IsEmpty())
     {
@@ -115,13 +115,13 @@
     columnName: "StatusCode",
     header: "Status",
     style: "width:350px",
-    format: (x) => new HtmlString(MYST.OpAdmin.UtilityFunctions.HtmlDisplayUtils.BuildAuditStatusColumnStyle(x.Value))
+    format: (x) => new HtmlString(Admin.Util.HtmlDisplayUtils.BuildAuditStatusColumnStyle(x.Value))
     ),
     grid.Column(
     columnName: "IsAlert",
     header: "Alert",
     style: "width:5%",
-    format: (x) => new HtmlString(MYST.OpAdmin.UtilityFunctions.HtmlDisplayUtils.BuildAuditAlertColumnStyle(x.Value))
+    format: (x) => new HtmlString(Admin.Util.HtmlDisplayUtils.BuildAuditAlertColumnStyle(x.Value))
     ),
         grid.Column(
         columnName: "CreationTimestamp",
@@ -148,7 +148,7 @@
         header: "Actions",
         columnName: "AuditId",
         canSort: false,
-        format: (item) => new HtmlString(MYST.OpAdmin.UtilityFunctions.HtmlDisplayUtils.BuildAuditColumnAction(item.Value)))
+        format: (item) => new HtmlString(Admin.Util.HtmlDisplayUtils.BuildAuditColumnAction(item.Value)))
     )
 )
         </div>

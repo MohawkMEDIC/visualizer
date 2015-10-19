@@ -1,38 +1,43 @@
-﻿@model MYST.OpAdmin.Models.AuditViewModel
+﻿@model Admin.Models.AuditViewModel
 
 <div id="view" class="container-fluid">
     <div class="row">
 
         <div class="col-md-12 col-xs-18">
             <h3><a target="_self" href="@Url.Action("Index")#action=View&id=@Model.Id"
-                @foreach (var itm in Model.Audit.EventIdentification.EventType)
+                @foreach (var itm in Model.Audit.Event.EventIdentification.EventType)
                 {
                     <span>@itm.DisplayName (@itm.Code)</span>
                 }
             </a>
             </h3>
-            <small>Audited on @Model.Audit.EventIdentification.EventDateTime.ToString("dddd MMM dd, yyyy @ HH:mm:ss") . 
-            You can view <a href="javascript:" onclick="javascript:AuditTool.SetViewEx('@Url.Action("Search")', { 'Participant::RawUserId':'@Model.SourceUser.UserIdentifier.Replace("\\", "\\\\")', 'CreationTimestamp':'>@Model.DalModel.CreationTimestamp.Subtract(new TimeSpan(0, 2, 30))', '@Html.Raw("@CreationTimestamp")' : '<@Model.DalModel.CreationTimestamp.AddMinutes(2).AddSeconds(30)' });">Related Audits</a> (same user created within 5 minutes of this audit)</small>
+            <small>
+                Event occurring on @Model.Audit.Event.EventIdentification.EventDateTime.ToString("dddd MMM dd, yyyy @ HH:mm:ss")  .
+                @if (Model.SourceSystem != null)
+                {
+                    <span>You can view <a href="javascript:" onclick="javascript:AuditTool.SetViewEx('@Url.Action("Search")', { 'Participant::RawUserId':'@Model.SourceSystem.UserIdentifier.Replace("\\", "\\\\")', 'CreationTimestamp':'>@Model.DalModel.CreationTimestamp.Subtract(new TimeSpan(0, 2, 30))', '@Html.Raw("@CreationTimestamp")' : '<@Model.DalModel.CreationTimestamp.AddMinutes(2).AddSeconds(30)' });">Related Audits</a> (same user created within 5 minutes of this audit)</span>
+                }
+            </small>
         </div>
     </div>
     <div class="row">
         <div class="col-md-4">
-            @Html.Raw(MYST.OpAdmin.UtilityFunctions.HtmlDisplayUtils.BuildAuditStatusColumnStyle(Model.DalModel))
+            @Html.Raw(Admin.Util.HtmlDisplayUtils.BuildAuditStatusColumnStyle(Model.DalModel))
         </div>
         <div class="col-md-4">
             @if (Model.DalModel.IsAlert == true)
             {
                 <span class="label label-danger" style="font-size: 14px; text-align: center; width: 100%; display: block">
-                    @Html.Raw(MYST.OpAdmin.UtilityFunctions.HtmlDisplayUtils.BuildAuditAlertColumnStyle(Model.DalModel))
+                    @Html.Raw(Admin.Util.HtmlDisplayUtils.BuildAuditAlertColumnStyle(Model.DalModel))
                     ALERT
-                    @Html.Raw(MYST.OpAdmin.UtilityFunctions.HtmlDisplayUtils.BuildAuditAlertColumnStyle(Model.DalModel))
+                    @Html.Raw(Admin.Util.HtmlDisplayUtils.BuildAuditAlertColumnStyle(Model.DalModel))
                 </span>
             }
 
         </div>
         <div class="col-md-4">
             <div style="float: right">
-                @Html.Raw(MYST.OpAdmin.UtilityFunctions.HtmlDisplayUtils.BuildAuditColumnAction(Model.DalModel, false))
+                @Html.Raw(Admin.Util.HtmlDisplayUtils.BuildAuditColumnAction(Model.DalModel, false))
             </div>
             <div style="clear: both"></div>
         </div>
@@ -41,24 +46,24 @@
         <div class="col-md-3" style="font-size: 1.2em;">
             <strong>Operation:</strong>
             @{
-                switch (Model.Audit.EventIdentification.ActionCode)
+                switch (Model.Audit.Event.EventIdentification.ActionCode)
                 {
                     case AtnaApi.Model.ActionType.Read:
                 <span class="label label-primary"><span class="glyphicon glyphicon-eye-open"></span>Read</span>
                         break;
                     case AtnaApi.Model.ActionType.Create:
-                <span class="label label-warning"><span class="glyphicon glyphicon-file"></span>@Model.Audit.EventIdentification.ActionCode</span>
-                <a href="~/Views/Home/">~/Views/Home/</a>
+
+                <span class="label label-warning"><span class="glyphicon glyphicon-file"></span>@Model.Audit.Event.EventIdentification.ActionCode</span>
                         break;
                     case AtnaApi.Model.ActionType.Update:
-                <span class="label label-warning"><span class="glyphicon glyphicon-floppy-saved"></span>@Model.Audit.EventIdentification.ActionCode</span>
-                   
+                <span class="label label-warning"><span class="glyphicon glyphicon-floppy-saved"></span>@Model.Audit.Event.EventIdentification.ActionCode</span>
+
                         break;
                     case AtnaApi.Model.ActionType.Delete:
-                <span class="label label-warning"><span class="glyphicon glyphicon-trash"></span>@Model.Audit.EventIdentification.ActionCode</span>
+                <span class="label label-warning"><span class="glyphicon glyphicon-trash"></span>@Model.Audit.Event.EventIdentification.ActionCode</span>
                         break;
                     default:
-                <span class="label label-info"><span class="glyphicon glyphicon-cog"></span>@Model.Audit.EventIdentification.ActionCode</span>
+                <span class="label label-info"><span class="glyphicon glyphicon-cog"></span>@Model.Audit.Event.EventIdentification.ActionCode</span>
                         break;
                 }
             }
@@ -67,7 +72,7 @@
         <div class="col-md-4" style="font-size: 1.2em;">
             <strong>Outcome:</strong>
             @{
-                switch (Model.Audit.EventIdentification.EventOutcome)
+                switch (Model.Audit.Event.EventIdentification.EventOutcome)
                 {
                     case AtnaApi.Model.OutcomeIndicator.Success:
                 <span class="label label-success"><span class="glyphicon glyphicon-ok-sign"></span>Success</span>
@@ -83,7 +88,7 @@
                         break;
 
                     default:
-                <span class="label label-default">@Model.Audit.EventIdentification.ActionCode</span>
+                <span class="label label-default">@Model.Audit.Event.EventIdentification.ActionCode</span>
                         break;
                 }
             }
@@ -91,16 +96,16 @@
         <div class="col-md-5" style="font-size: 1.2em;">
             <strong>Event Type:</strong>
             @{
-                switch (Model.Audit.EventIdentification.EventId.StrongCode)
+                switch (Model.Audit.Event.EventIdentification.EventId.StrongCode)
                 {
                     case AtnaApi.Model.EventIdentifierType.ApplicationActivity:
                     case AtnaApi.Model.EventIdentifierType.NetowrkActivity:
-                <span class="label label-info" data-toggle="tooltip" data-placement="left" data-original-title="This event is generated as part of regularily occuring application function">@Html.Raw(Model.Audit.EventIdentification.EventId.DisplayName) (APP)</span>
+                <span class="label label-info" data-toggle="tooltip" data-placement="left" data-original-title="This event is generated as part of regularily occuring application function">@Html.Raw(Model.Audit.Event.EventIdentification.EventId.DisplayName) (APP)</span>
                         break;
                     case AtnaApi.Model.EventIdentifierType.Disclosure:
                     case AtnaApi.Model.EventIdentifierType.Export:
                     case AtnaApi.Model.EventIdentifierType.Query:
-                <span class="label label-warning" data-toggle="tooltip" data-placement="left" data-original-title="This event id indicates that some data was obtained or sent to a remote host">@Html.Raw(Model.Audit.EventIdentification.EventId.DisplayName) (READ)</span>
+                <span class="label label-warning" data-toggle="tooltip" data-placement="left" data-original-title="This event id indicates that some data was obtained or sent to a remote host">@Html.Raw(Model.Audit.Event.EventIdentification.EventId.DisplayName) (READ)</span>
                         break;
                     case AtnaApi.Model.EventIdentifierType.CareEpisode:
                     case AtnaApi.Model.EventIdentifierType.CareProtocol:
@@ -111,11 +116,11 @@
                     case AtnaApi.Model.EventIdentifierType.ProcedureRecord:
                     case AtnaApi.Model.EventIdentifierType.ProvisioningEvent:
                     case AtnaApi.Model.EventIdentifierType.ResourceAssignment:
-                <span class="label label-danger" data-toggle="tooltip" data-placement="left" data-original-title="This event id indicates that some data was created, updated, deleted, or otherwise modified by a remote system">@Html.Raw(Model.Audit.EventIdentification.EventId.DisplayName) (WRITE)</span>
+                <span class="label label-danger" data-toggle="tooltip" data-placement="left" data-original-title="This event id indicates that some data was created, updated, deleted, or otherwise modified by a remote system">@Html.Raw(Model.Audit.Event.EventIdentification.EventId.DisplayName) (WRITE)</span>
                         break;
                     case AtnaApi.Model.EventIdentifierType.UseOfRestrictedFunction:
                     case AtnaApi.Model.EventIdentifierType.UserAuthentication:
-                <span class="label label-danger" data-toggle="tooltip" data-placement="left" data-original-title="This event id indicates that some use of a security function">@Html.Raw(Model.Audit.EventIdentification.EventId.DisplayName) (AUTHENTICATE)</span>
+                <span class="label label-danger" data-toggle="tooltip" data-placement="left" data-original-title="This event id indicates that some use of a security function">@Html.Raw(Model.Audit.Event.EventIdentification.EventId.DisplayName) (AUTHENTICATE)</span>
                         break;
 
 
@@ -126,17 +131,42 @@
         </div>
     </div>
 
-    @if (Model.Audit.SourceIdentification != null)
+    <div class="row">
+        <div class="col-md-12 col-xs-18">
+            <h4><span class="glyphicon glyphicon-info-sign"></span> Information</h4>
+        </div>
+    </div>
+    <div class="row">
+        <div style="margin: auto; width: 80%" class="well">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-3"><strong>Received On:</strong></div>
+                    <div class="col-md-8">@Model.Audit.CreationTime.ToString("dddd MMM dd, yyyy @ HH:mm:ss") </div>
+                </div>
+                    <div class="row">
+                        <div class="col-md-3"><strong>Received By:</strong></div>
+                        <div class="col-md-8">@Model.Audit.Receiver.Name (via: @Model.Audit.Receiver.Host.Host)</div>
+                    </div>
+                <div class="row">
+                    <div class="col-md-3"><strong>Sent By:</strong></div>
+                    <div class="col-md-8">@Model.Audit.SenderNode.Name (via: @Model.Audit.SenderNode.Host.Host, pid: @Model.Audit.SenderProcess)</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    @if (Model.Audit.Event.SourceIdentification != null)
     {
         <div class="row">
             <div class="col-md-12 col-xs-18">
-                <h4>Sources (Generated By)</h4>
+                <h4><span class="glyphicon glyphicon-send"></span> Sources (Generated By)</h4>
             </div>
         </div>
         <div class="row">
             <div style="margin: auto; width: 80%" class="well">
                 <div class="container-fluid">
-                    @foreach (var src in Model.Audit.SourceIdentification)
+                    @foreach (var src in Model.Audit.Event.SourceIdentification)
                     {
                         <div class="row">
                             <h4><span class="glyphicon glyphicon-cog"></span>@src.AuditEnterpriseSiteID (@src.AuditSourceID)
@@ -155,36 +185,41 @@
     }
     <div class="row">
         <div class="col-md-12 col-xs-18">
-            <h4>Actors (Systems &amp; Users)</h4>
+            <h4><span class="glyphicon glyphicon-transfer"></span> Actors (Systems &amp; Users)</h4>
         </div>
     </div>
+
+    @if (Model.SourceSystem != null) // Doesn't really come "from" somewhere "to" another place (not a communication)
+    {
     <div class="row">
         <div style="margin: auto; width: 80%" class="well">
             <div class="flow-layout">
                 <div class="row">
                     <div class="col-md-3">
-                        <span class="glyphicon-large glyphicon-user glyphicon"></span>
-                        <small>
-                            <a href="javascript:" onclick="javascript:AuditTool.ShowAdvancedSearchView({ 'Participant::RawUserId' : '@Model.SourceUser.UserIdentifier' });">
-                            @if (Model.SourceUser.AspNetUserId == null)
-                            {
-                                @Model.SourceUser.UserIdentifier <em>(@Model.SourceUser.UserName)</em>
-                            }
-                            else
-                            {
-                                @Model.SourceUser.AspNetUserName <em>(@Model.SourceUser.AspNetUserFullName)</em>
-                            }
-                            </a>
-                            <br />
-                            <strong>Acting in role(s):</strong>
-                            @foreach (var rol in Model.SourceUser.ActorRoleCode)
-                            {
-                                <br />@rol.Code <span>(</span>@rol.DisplayName<span>)</span>
-                            }
-                        </small>
+                        <span class="glyphicon-large glyphicon-user glyphicon"></span><br/>
+                        @if (Model.SourceUser != null)
+                        {
+                            <small>
+                                <a href="javascript:" onclick="javascript:AuditTool.ShowAdvancedSearchView({ 'Participant::RawUserId' : '@Model.SourceUser.UserIdentifier' });">
+                                    @Model.SourceUser.UserIdentifier <em>(@Model.SourceUser.UserName)</em>
+                                </a>
+                                <br />
+                                <strong>Acting in role(s):</strong>
+                                @foreach (var rol in Model.SourceUser.ActorRoleCode)
+                                {
+                                    <br />@rol.Code <span>(</span>@rol.DisplayName<span>)</span>
+                                }
+                            </small>
+                        }
+                        else
+                        {
+                            <small>
+                                Unknown / Not Specified
+                            </small>
+                        }
                     </div>
                     <div class="col-md-1">
-                        @switch (Model.Audit.EventIdentification.ActionCode)
+                        @switch (Model.Audit.Event.EventIdentification.ActionCode)
                         {
                             case AtnaApi.Model.ActionType.Read:
                             <span class="glyphicon glyphicon-arrow-left glyphicon-large"></span>
@@ -201,9 +236,19 @@
 
                     </div>
                     <div class="col-md-3">
-                        <span class="glyphicon glyphicon-phone glyphicon-large"></span>
+                        <span class="glyphicon glyphicon-phone glyphicon-large"></span><br/>
 
-                        <small>@Model.SourceSystem.UserIdentifier<br />
+                        <small>
+
+                            @if (Model.SourceSystem.UserIdentifier == "http://www.w3.org/2005/08/addressing/anonymous")
+                            {
+                                <em>Anonymous WS-A Host</em>
+                            }
+                            else
+                            {
+                                <em>@Model.SourceSystem.UserIdentifier</em>
+                            }
+                            <br />
                             <strong>Access Point:</strong><br />
                             @Model.SourceSystem.NetworkAccessPointId<br />
                             <strong>Acting in role(s):</strong>
@@ -215,7 +260,7 @@
 
                     </div>
                     <div class="col-md-1">
-                        @switch (Model.Audit.EventIdentification.ActionCode)
+                        @switch (Model.Audit.Event.EventIdentification.ActionCode)
                         {
                             case AtnaApi.Model.ActionType.Read:
                             <span class="glyphicon glyphicon-arrow-left glyphicon-large"></span>
@@ -230,12 +275,12 @@
                                 break;
                         }
 
-                        <small>(@Model.Audit.EventIdentification.ActionCode)</small>
+                        <small>(@Model.Audit.Event.EventIdentification.ActionCode)</small>
 
                     </div>
                     <div class="col-md-1"></div>
                     <div class="col-md-3">
-                        @switch (Model.Audit.EventIdentification.ActionCode)
+                        @switch (Model.Audit.Event.EventIdentification.ActionCode)
                         {
                             case AtnaApi.Model.ActionType.Read:
                             <span class="glyphicon glyphicon-cloud-download glyphicon-large"></span>
@@ -249,8 +294,8 @@
                             <span class="glyphicon glyphicon-cloud glyphicon-large"></span>
                                 break;
                         }
-
-                        <small>@Model.DestinationSystem.UserIdentifier (PU: @Model.DestinationSystem.UserName)<br />
+                        <br />
+                        <small>@Model.DestinationSystem.UserIdentifier (PU: @(Model.DestinationSystem.UserName)<br />
                             <strong>Access Point:</strong><br />
                             @Model.DestinationSystem.NetworkAccessPointId
                             <br />
@@ -266,11 +311,20 @@
             </div>
         </div>
     </div>
+    }
+    else
+    {
+        <div class="row">
+            <div class="col-md-12">
+                <em>This audit doesn't appear to represent an interoperability transaction</em>
+            </div>
+        </div>
+    }
     <div class="row">
         <div class="col-md-12 col-xs-18">
-            <h4>Audit Details</h4>
+            <h4><span class="glyphicon glyphicon-zoom-in"></span> Audit Details</h4>
             <div class="panel-group" id="detailAccordion">
-                @foreach (var ao in Model.Audit.AuditableObjects)
+                @foreach (var ao in Model.Audit.Event.AuditableObjects)
                 {
                     <div class="panel panel-default">
                         <div class="panel-heading">
@@ -321,7 +375,7 @@
                                         }
 
                                         @ao.IDTypeCode.DisplayName</span>
-                                    @MYST.OpAdmin.UtilityFunctions.HtmlDisplayUtils.BuildItemLink(ao)
+                                    @Admin.Util.HtmlDisplayUtils.BuildItemLink(ao)
                                 </div>
                             </div>
                             <div class="row" style="font-size: 1.2em">
@@ -406,7 +460,6 @@
                                         default:
                                         <span class="label label-info"><span class="glyphicon glyphicon-question-sign"></span>@ao.Role</span>
                                             break;
-                                        @ao.Role
                                     }
                                 </div>
                             </div>
@@ -415,7 +468,7 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         <h4>Request Query</h4>
-                                        @ao.ObjectSpec
+                                        <pre class="pre-scrollable">@System.Text.Encoding.UTF8.GetString(Convert.FromBase64String(ao.ObjectSpec))</pre>
                                     </div>
                                 </div>
                             }
@@ -428,7 +481,7 @@
                                             @foreach (var dtl in ao.ObjectDetail)
                                             {
                                                 <div class="row">
-                                                    <div class="col-md-12">@MYST.OpAdmin.UtilityFunctions.HtmlDisplayUtils.PrettyPrintTypeName(dtl.Type)</div>
+                                                    <div class="col-md-12">@Admin.Util.HtmlDisplayUtils.PrettyPrintTypeName(dtl.Type)</div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-md-12">
@@ -437,14 +490,14 @@
                                                             <div class="tab-content">
                                                                 <div class="tab-pane active" id="@String.Format("htm{0}", dtl.GetHashCode())">
                                                                     <div style="overflow: auto; padding: 2px" class="panel panel-default">
-                                                                        @MYST.OpAdmin.UtilityFunctions.HtmlDisplayUtils.PrettyPrint(dtl)
+                                                                        @Admin.Util.HtmlDisplayUtils.PrettyPrint(dtl)
                                                                     </div>
                                                                 </div>
                                                                 <div class="tab-pane" id="@String.Format("xml{0}", dtl.GetHashCode())">
-                                                                    <pre class="pre-scrollable" style="position: relative;">@MYST.OpAdmin.UtilityFunctions.HtmlDisplayUtils.PrettyPrintXml(dtl.Value)</pre>
+                                                                    <pre class="pre-scrollable" style="position: relative;">@Admin.Util.HtmlDisplayUtils.PrettyPrintXml(dtl.Value)</pre>
                                                                 </div>
                                                                 <div class="tab-pane" id="@String.Format("hex{0}", dtl.GetHashCode())">
-                                                                    <pre class="pre-scrollable" style="position: relative;">@MYST.OpAdmin.UtilityFunctions.HtmlDisplayUtils.PrettyPrintBin(dtl.Value)</pre>
+                                                                    <pre class="pre-scrollable" style="position: relative;">@Admin.Util.HtmlDisplayUtils.PrettyPrintBin(dtl.Value)</pre>
                                                                 </div>
                                                             </div>
 
@@ -467,43 +520,63 @@
             </div>
         </div>
     </div>
-    @if (Model.Audit is MARC.EHRS.Visualization.Server.Persistence.Ado.ExtendedAuditMessage)
+    @if (Model.Audit.Errors.Count > 0)
     {
-        var extended = (Model.Audit as MARC.EHRS.Visualization.Server.Persistence.Ado.ExtendedAuditMessage).StatusHistory;
         
         <div class="row">
             <div class="col-md-12 col-xs-18">
-                <h4>History (Revisions)</h4>
+                <h4><span class="glyphicon glyphicon-exclamation-sign"></span> Alert Information</h4>
                 @{
-        var historyGrid = new WebGrid(source: extended, defaultSort: "EffectiveFrom");
+                    var alertInfo = new WebGrid(source: Model.Audit.Errors);
                 }
-                @historyGrid.GetHtml(
-                tableStyle: "table table-striped",
-                columns: historyGrid.Columns(
-                    historyGrid.Column(
-                        header: " ",
-                        format: (x) => new HtmlString(x.Value.EffectiveTo != default(DateTime) ? "<span style=\"glyphicon glyphicon-asterisk\"></span>" : "")
-                    ),
-                    historyGrid.Column(
-                        header: "Date",
-                        columnName: "EffectiveFrom",
-                        format: (x) => String.Format("{0:ddd MMM dd, yyyy @ HH:mm:ss}", x.Value.EffectiveFrom)
-                       ),
-                     historyGrid.Column(
-                        header: "Status",
-                        columnName: "StatusCode"
-                       ),
-                     historyGrid.Column(
-                        header: "Alert",
-                        columnName: "IsAlert"
-                       ),
-                     historyGrid.Column(
-                        header: "Set By",
-                        columnName: "SetByUserId"
-                       )
-                   )
-                )
+                @alertInfo.GetHtml(
+                             tableStyle: "table table-striped",
+                             columns: alertInfo.Columns(
+                                 alertInfo.Column(
+                                     header: "Message",
+                                     columnName: "Message"
+                                     ),
+                                     alertInfo.Column(
+                                     header: "Stack Trace",
+                                     columnName: "StackTrace"
+                                     )
+                                 )
+                             )
             </div>
         </div>
     }
+    <div class="row">
+        <div class="col-md-12 col-xs-18">
+            <h4><span class="glyphicon glyphicon-calendar"></span> History (Revisions)</h4>
+            @{
+    var historyGrid = new WebGrid(source: Model.Audit.StatusHistory, defaultSort: "EffectiveFrom");
+            }
+            @historyGrid.GetHtml(
+            tableStyle: "table table-striped",
+            columns: historyGrid.Columns(
+                historyGrid.Column(
+                    header: " ",
+                    format: (x) => new HtmlString(x.Value.EffectiveTo != default(DateTime) ? "<span style=\"glyphicon glyphicon-asterisk\"></span>" : "")
+                ),
+                historyGrid.Column(
+                    header: "Date",
+                    columnName: "EffectiveFrom",
+                    format: (x) => String.Format("{0:ddd MMM dd, yyyy @ HH:mm:ss}", x.Value.EffectiveFrom)
+                    ),
+                    historyGrid.Column(
+                    header: "Status",
+                    columnName: "StatusCode"
+                    ),
+                    historyGrid.Column(
+                    header: "Alert",
+                    columnName: "IsAlert"
+                    ),
+                    historyGrid.Column(
+                    header: "Set By",
+                    columnName: "SetByUserId"
+                    )
+                )
+            )
+        </div>
+    </div>
 </div>

@@ -9,20 +9,20 @@
 <div id="fullHeight" class="container-fluid" style="height:auto;">
     <div id="side-nav" class="col-md-3">
             <ul class="nav nav-pills nav-stacked">
-                <li>
+                <li role="presentation"> 
                     <a href="/Audit"><span class="glyphicon glyphicon-dashboard"></span> Dashboard</a>
-                    <ul class="nav nav-pills nav-stacked">
-                        <li><a href="javascript:" onclick="javascript:AuditTool.ShowInboxView()"><span class="glyphicon glyphicon-certificate"></span> New <span data-counter="NEW" class="badge">0</span></a></li>
-                        <li><a href="javascript:" onclick="javascript:AuditTool.ShowAlertView()"><span class="glyphicon glyphicon-bell"></span> Alerts <span data-counter="IsAlert" class="badge">0</span></a></li>
-                        <li><a href="javascript:" onclick="javascript:AuditTool.ShowActiveView()"><span class="glyphicon glyphicon-eye-open"></span> Reviewed <span data-counter="ACTIVE" class="badge">0</span></a></li>
-                        <li><a href="javascript:" onclick="javascript:AuditTool.ShowPinnedView()"><span class="glyphicon glyphicon-star-empty"></span> Starred <span data-counter="HELD" class="badge">0</span></a></li>
-                        <li><a href="javascript:" onclick="javascript:AuditTool.ShowArchiveView()"><span class="glyphicon glyphicon-briefcase"></span> Archived <span data-counter="ARCHIVED" class="badge">0</span></a></li>
-                        <li><a href="javascript:" onclick="javascript:AuditTool.ShowDeletedView()"><span class="glyphicon glyphicon-trash"></span> Deleted <span data-counter="OBSOLETE" class="badge">0</span></a></li>
-                        <li><a href="javascript:" onclick="javascript:AuditTool.ShowAuditView()"><span class="glyphicon glyphicon-cog"></span> System Audits <span data-counter="SYSTEM" class="badge">0</span></a></li>
+                    <ul class="nav nav-pills nav-stacked" style="padding-left:1.5em">
+                        <li role="presentation"><a href="javascript:" onclick="javascript:AuditTool.ShowInboxView()"><span class="glyphicon glyphicon-certificate"></span> New <span data-counter="NEW" class="badge">0</span></a></li>
+                        <li role="presentation"><a href="javascript:" onclick="javascript:AuditTool.ShowAlertView()"><span class="glyphicon glyphicon-bell"></span> Alerts <span data-counter="IsAlert" class="badge">0</span></a></li>
+                        <li role="presentation"><a href="javascript:" onclick="javascript:AuditTool.ShowActiveView()"><span class="glyphicon glyphicon-eye-open"></span> Reviewed <span data-counter="ACTIVE" class="badge">0</span></a></li>
+                        <li role="presentation"><a href="javascript:" onclick="javascript:AuditTool.ShowPinnedView()"><span class="glyphicon glyphicon-star-empty"></span> Starred <span data-counter="HELD" class="badge">0</span></a></li>
+                        <li role="presentation"><a href="javascript:" onclick="javascript:AuditTool.ShowArchiveView()"><span class="glyphicon glyphicon-briefcase"></span> Archived <span data-counter="ARCHIVED" class="badge">0</span></a></li>
+                        <li role="presentation"><a href="javascript:" onclick="javascript:AuditTool.ShowDeletedView()"><span class="glyphicon glyphicon-trash"></span> Deleted <span data-counter="OBSOLETE" class="badge">0</span></a></li>
+                        <li role="presentation"><a href="javascript:" onclick="javascript:AuditTool.ShowAuditView()"><span class="glyphicon glyphicon-cog"></span> System Audits <span data-counter="SYSTEM" class="badge">0</span></a></li>
                     </ul>
                 </li>
-                <li><a href="javascript:" onclick="javascript:AuditTool.ShowAdvancedSearchView()"><span class="glyphicon glyphicon-search"></span> Advanced Search</a></li>
-                <li><a href="javascript:" onclick="javascript:AuditTool.ShowStatsView()"><span class="glyphicon glyphicon-stats"></span> Statistics</a></li>
+                <li role="presentation"><a href="javascript:" onclick="javascript:AuditTool.ShowAdvancedSearchView()"><span class="glyphicon glyphicon-search"></span> Advanced Search</a></li>
+                <li role="presentation"><a href="javascript:" onclick="javascript:AuditTool.ShowStatsView()"><span class="glyphicon glyphicon-stats"></span> Statistics</a></li>
             </ul>
     </div>
     <div class="col-md-9 panel panel-default" style="overflow:auto;" >
@@ -550,7 +550,7 @@
                             }
                             else if (this.ViewFilter["IsAlert"]) {
                                 $("#viewTitle").html("Alerts");
-                                $("#viewSub").html("Contains audits which the MyST system has tagged as an alert.");
+                                $("#viewSub").html("Contains audits which the AVIVA system has tagged as an alert.");
                             }
                             else {
                                 $("#viewTitle").html("All");
