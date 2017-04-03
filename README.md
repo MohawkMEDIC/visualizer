@@ -1,4 +1,11 @@
-# visualizer
+# MEDIC Visualizer
+
+<div class="wikidoc">
+<p>The MARC-HI Visualizer is a utility that visualizes a series of RFC3881 (ATNA) messages by interpreting the audit messages and broadcasting events to clients who represent the traffic in XAML diagrams.
+</p>
+<p>The architecture of the Visualizer is as follows: </p>
+<p><img src="http://te.marc-hi.ca/projects/VIS/architecture.png"></p>
+</div><div class="ClearBoth"></div>
 
 # Configuring the Visualizer
 
