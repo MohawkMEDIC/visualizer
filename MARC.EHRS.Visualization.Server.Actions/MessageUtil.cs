@@ -68,6 +68,8 @@ namespace MARC.EHRS.VisualizationServer.Actions
                 else
                 {
                     string payload = message.Body;
+                    if (message.TypeId.Contains("DICOM")) // Dicom
+                        payload = AtnaApi.Transport.AuditTransportUtil.ConvertAuditToRFC3881(payload);
                     XmlSerializer xmlSerializer = new XmlSerializer(typeof(AuditMessage));
                     StringReader strReader = new StringReader(payload.Substring(payload.IndexOf("<Audit")));
                     StringWriter strWriter = new StringWriter();
