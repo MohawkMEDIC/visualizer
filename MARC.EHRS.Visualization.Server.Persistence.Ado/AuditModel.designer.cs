@@ -80,10 +80,10 @@ namespace MARC.EHRS.Visualization.Server.Persistence.Ado
     partial void DeleteNodeVersion(NodeVersion instance);
     #endregion
 		
-		public AuditModelDataContext() : 
-				base(global::MARC.EHRS.Visualization.Server.Persistence.Ado.Properties.Settings.Default.VisualizerDbConnectionString, mappingSource)
-		{
-			OnCreated();
+		public AuditModelDataContext() :
+                base(global::System.Configuration.ConfigurationManager.ConnectionStrings["VisualizerDbConnectionString"].ConnectionString, mappingSource)
+        {
+            OnCreated();
 		}
 		
 		public AuditModelDataContext(string connection) : 
