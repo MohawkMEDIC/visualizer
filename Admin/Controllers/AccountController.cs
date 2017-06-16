@@ -1,10 +1,29 @@
-﻿using System;
+﻿/*
+ * Copyright 2015-2017 Mohawk College of Applied Arts and Technology
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License"); you 
+ * may not use this file except in compliance with the License. You may 
+ * obtain a copy of the License at 
+ * 
+ * http://www.apache.org/licenses/LICENSE-2.0 
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
+ * License for the specific language governing permissions and limitations under 
+ * the License.
+ * 
+ * User: khannan
+ * Date: 2017-6-15
+ */
+using System;
 using System.Globalization;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using Admin.Attributes;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
@@ -14,7 +33,7 @@ using AtnaApi.Model;
 
 namespace Admin.Controllers
 {
-    [Authorize]
+    [TokenAuthorize]
     public class AccountController : Controller
     {
         private ApplicationSignInManager _signInManager;
@@ -80,11 +99,12 @@ namespace Admin.Controllers
             {
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, change to shouldLockout: true
-                var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+                var result = await SignInManager.PasswordSignInAsync(model.Username, model.Password, model.RememberMe, shouldLockout: false);
                 switch (result)
                 {
                     case SignInStatus.Success:
-                        return RedirectToLocal(returnUrl);
+	                    Response.Cookies.Add(new HttpCookie("access_token", SignInManager.AccessToken));
+						return RedirectToLocal(returnUrl);
                     case SignInStatus.LockedOut:
                         outcome = OutcomeIndicator.EpicFail;
                         return View("Lockout");
@@ -150,8 +170,11 @@ namespace Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult LogOff()
         {
+			// sign out the user and remove the access token cookie from the response
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-            AuditUtil.AuditUserEvent(this, OutcomeIndicator.Success, ActionType.Execute, EventIdentifierType.Logout, AuditableObjectLifecycle.Access, null);
+	        Response.Cookies.Remove("access_token");
+
+			AuditUtil.AuditUserEvent(this, OutcomeIndicator.Success, ActionType.Execute, EventIdentifierType.Logout, AuditableObjectLifecycle.Access, null);
             return RedirectToAction("Index", "Home");
         }
 

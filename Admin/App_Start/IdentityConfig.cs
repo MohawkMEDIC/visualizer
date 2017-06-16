@@ -1,8 +1,31 @@
-﻿using System;
+﻿/*
+ * Copyright 2015-2017 Mohawk College of Applied Arts and Technology
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License"); you 
+ * may not use this file except in compliance with the License. You may 
+ * obtain a copy of the License at 
+ * 
+ * http://www.apache.org/licenses/LICENSE-2.0 
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
+ * License for the specific language governing permissions and limitations under 
+ * the License.
+ * 
+ * User: khannan
+ * Date: 2017-6-15
+ */
+using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data.Entity;
+using System.Diagnostics;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Net.Http;
 using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using Microsoft.AspNet.Identity;
@@ -11,6 +34,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
 using Admin.Models;
+using Newtonsoft.Json.Linq;
 
 namespace Admin
 {
@@ -88,22 +112,179 @@ namespace Admin
         }
     }
 
-    // Configure the application sign-in manager which is used in this application.
-    public class ApplicationSignInManager : SignInManager<ApplicationUser, string>
+	/// <summary>
+	/// Represents the application sign in manager for the application.
+	/// </summary>
+	public class ApplicationSignInManager : SignInManager<ApplicationUser, string>
     {
-        public ApplicationSignInManager(ApplicationUserManager userManager, IAuthenticationManager authenticationManager)
+		/// <summary>
+		/// Initializes a new instance of the <see cref="ApplicationSignInManager"/> class.
+		/// </summary>
+		/// <param name="userManager">The user manager.</param>
+		/// <param name="authenticationManager">The authentication manager.</param>
+		public ApplicationSignInManager(ApplicationUserManager userManager, IAuthenticationManager authenticationManager)
             : base(userManager, authenticationManager)
         {
         }
 
-        public override Task<ClaimsIdentity> CreateUserIdentityAsync(ApplicationUser user)
+	    /// <summary>
+	    /// Gets the access token.
+	    /// </summary>
+	    public string AccessToken { get; private set; }
+
+		/// <summary>
+		/// Called to generate the ClaimsIdentity for the user, override to add additional claims before SignIn
+		/// </summary>
+		/// <param name="user">The user.</param>
+		/// <returns>Task&lt;ClaimsIdentity&gt;.</returns>
+		public override Task<ClaimsIdentity> CreateUserIdentityAsync(ApplicationUser user)
         {
             return user.GenerateUserIdentityAsync((ApplicationUserManager)UserManager);
         }
 
-        public static ApplicationSignInManager Create(IdentityFactoryOptions<ApplicationSignInManager> options, IOwinContext context)
+		/// <summary>
+		/// Creates the specified options.
+		/// </summary>
+		/// <param name="options">The options.</param>
+		/// <param name="context">The context.</param>
+		/// <returns>ApplicationSignInManager.</returns>
+		public static ApplicationSignInManager Create(IdentityFactoryOptions<ApplicationSignInManager> options, IOwinContext context)
         {
             return new ApplicationSignInManager(context.GetUserManager<ApplicationUserManager>(), context.Authentication);
         }
-    }
+
+		/// <summary>
+		/// password sign in as an asynchronous operation.
+		/// </summary>
+		/// <param name="userName">Name of the user.</param>
+		/// <param name="password">The password.</param>
+		/// <param name="isPersistent">if set to <c>true</c> [is persistent].</param>
+		/// <param name="shouldLockout">if set to <c>true</c> [should lockout].</param>
+		/// <returns>Returns the sign in status of the process.</returns>
+		/// <exception cref="InvalidOperationException">Domain to connect to was not found. Is there an &lt;add key='userDomain' value='' &gt; setup in the &lt;appSettings&gt; section?</exception>
+		public override async Task<SignInStatus> PasswordSignInAsync(string userName, string password, bool isPersistent, bool shouldLockout)
+	    {
+		    var address = ConfigurationManager.AppSettings["userDomain"];
+
+		    if (address == null)
+		    {
+			    throw new InvalidOperationException("Domain to connect to was not found. Is there an <add key='userDomain' value='' /> setup in the <appSettings> section?");
+		    }
+
+		    var applicationId = ConfigurationManager.AppSettings["userDomainApplicationId"];
+		    var applicationSecret = ConfigurationManager.AppSettings["userDomainApplicationSecret"];
+
+		    using (var client = new HttpClient())
+		    {
+			    client.DefaultRequestHeaders.Add("Authorization", "BASIC " + Convert.ToBase64String(Encoding.UTF8.GetBytes(applicationId + ":" + applicationSecret)));
+
+			    var content = new StringContent($"grant_type=password&username={userName}&password={password}&scope={address}/imsi");
+
+			    // HACK: have to remove the headers before adding them...
+			    content.Headers.Remove("Content-Type");
+			    content.Headers.Add("Content-Type", "application/x-www-form-urlencoded");
+
+			    var result = await client.PostAsync($"{address}/auth/oauth2_token", content);
+
+			    if (result.IsSuccessStatusCode)
+			    {
+				    return await this.SignInAsync(result, userName);
+			    }
+
+			    return SignInStatus.Failure;
+		    }
+	    }
+
+		/// <summary>
+		/// sign in as an asynchronous operation.
+		/// </summary>
+		/// <param name="result">The result.</param>
+		/// <param name="username">The username.</param>
+		/// <returns>Task&lt;SignInStatus&gt;.</returns>
+		private async Task<SignInStatus> SignInAsync(HttpResponseMessage result, string username)
+	    {
+		    var responseAsString = await result.Content.ReadAsStringAsync();
+
+		    var response = JObject.Parse(responseAsString);
+
+		    var accessToken = response.GetValue("access_token").ToString();
+		    var expiresIn = response.GetValue("expires_in").ToString();
+		    var tokenType = response.GetValue("token_type").ToString();
+#if DEBUG
+		    Trace.TraceInformation("Access token: {0}", accessToken);
+		    Trace.TraceInformation("Expires in: {0}", expiresIn);
+		    Trace.TraceInformation("Token type {0}", tokenType);
+#endif
+		    var authenticationDictionary = new Dictionary<string, string>
+		    {
+			    {"username", username},
+				{ "access_token", accessToken},
+				{ "token_type", tokenType}
+		    };
+
+
+		    var properties = new AuthenticationProperties(authenticationDictionary)
+		    {
+			    IsPersistent = false
+		    };
+
+		    var securityToken = new JwtSecurityToken(accessToken);
+
+		    var user = await this.UserManager.FindByIdAsync(securityToken.Claims.First(c => c.Type == "sub").Value);
+
+		    if (user == null)
+		    {
+			    user = new ApplicationUser
+			    {
+				    Id = securityToken.Claims.First(c => c.Type == "sub").Value,
+				    UserName = securityToken.Claims.First(c => c.Type == "unique_name").Value
+			    };
+
+			    string email = securityToken.Claims.FirstOrDefault(c => c.Type == "email")?.Value;
+
+			    if (email != null)
+			    {
+				    if (email.StartsWith("mailto:"))
+				    {
+					    email = email.Substring(7, email.Length - 7);
+				    }
+
+				    user.Email = email;
+			    }
+
+			    foreach (var claim in securityToken.Claims)
+			    {
+				    var identityUserClaim = new IdentityUserClaim
+				    {
+					    ClaimType = claim.Type,
+					    ClaimValue = claim.Value,
+					    UserId = securityToken.Claims.First(c => c.Type == "sub").Value
+				    };
+
+				    user.Claims.Add(identityUserClaim);
+			    }
+
+			    var identityResult = await this.UserManager.CreateAsync(user);
+
+			    if (!identityResult.Succeeded)
+			    {
+				    return SignInStatus.Failure;
+			    }
+
+			    var userIdentity = await this.CreateUserIdentityAsync(user);
+
+			    this.AuthenticationManager.SignIn(properties, userIdentity);
+			    this.AccessToken = accessToken;
+		    }
+		    else
+		    {
+			    var userIdentity = await this.CreateUserIdentityAsync(user);
+
+			    this.AuthenticationManager.SignIn(properties, userIdentity);
+			    this.AccessToken = accessToken;
+		    }
+
+		    return SignInStatus.Success;
+	    }
+	}
 }

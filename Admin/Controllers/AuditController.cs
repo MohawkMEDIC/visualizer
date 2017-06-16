@@ -1,4 +1,22 @@
-﻿using System;
+﻿/*
+ * Copyright 2015-2017 Mohawk College of Applied Arts and Technology
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License"); you 
+ * may not use this file except in compliance with the License. You may 
+ * obtain a copy of the License at 
+ * 
+ * http://www.apache.org/licenses/LICENSE-2.0 
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
+ * License for the specific language governing permissions and limitations under 
+ * the License.
+ * 
+ * User: khannan
+ * Date: 2017-6-15
+ */
+using System;
 using System.Linq.Dynamic;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,15 +32,13 @@ using Admin.Models;
 using System.Globalization;
 using Admin.DataAccess;
 using Admin.Util;
+using Admin.Attributes;
 
 namespace Admin.Controllers
 {
-    [HandleError]
-	[Authorize(Roles = "Administrator")]
-    public class AuditController : Controller
-    {
-
-        
+    [TokenAuthorize]
+	public class AuditController : Controller
+    {        
         //
         // GET: /Audit/
         public ActionResult Index()
@@ -300,8 +316,8 @@ namespace Admin.Controllers
                 ViewBag.OutcomeCode = this.GetAttributeValues("OutcomeCode", null);
                 ViewBag.EventType = this.GetAttributeValues("EventType", null);
 
-                AuditUtil.AuditAuditLogUsed(this, AtnaApi.Model.OutcomeIndicator.Success, AtnaApi.Model.ActionType.Read, AtnaApi.Model.EventIdentifierType.Query, AtnaApi.Model.AuditableObjectLifecycle.Disclosure, records.Skip(pageId * resultsPerPage).Take(resultsPerPage).ToArray());
-                return PartialView(records);
+				AuditUtil.AuditAuditLogUsed(this, AtnaApi.Model.OutcomeIndicator.Success, AtnaApi.Model.ActionType.Read, AtnaApi.Model.EventIdentifierType.Query, AtnaApi.Model.AuditableObjectLifecycle.Disclosure, records.Skip(pageId * resultsPerPage).Take(resultsPerPage).ToArray());
+                return PartialView(new AuditSummaryCollectionViewModel(records));
                 
             }
             catch(Exception e)
@@ -396,7 +412,7 @@ namespace Admin.Controllers
                 if (results.Count() > 0)
                     AuditUtil.AuditAuditLogUsed(this, AtnaApi.Model.OutcomeIndicator.Success, AtnaApi.Model.ActionType.Read, AtnaApi.Model.EventIdentifierType.Query, AtnaApi.Model.AuditableObjectLifecycle.Disclosure, results.Skip(pageId * resultsPerPage).Take(resultsPerPage).ToArray());
 
-                return PartialView(results);
+                return PartialView(new AuditSummaryCollectionViewModel(results));
             }
             catch (Exception e)
             {
