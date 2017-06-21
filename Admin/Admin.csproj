@@ -357,6 +357,7 @@
     </Content>
     <Content Include="Admin.licenseheader" />
     <None Include="Properties\PublishProfiles\Default.pubxml" />
+    <None Include="Properties\PublishProfiles\MARC_HI_khannan_TImR_AVIC.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
