@@ -230,41 +230,13 @@ namespace Admin
 
 		    var securityToken = new JwtSecurityToken(accessToken);
 
-		    var user = await this.UserManager.FindByIdAsync(securityToken.Claims.First(c => c.Type == "sub").Value);
+		    var user = await this.UserManager.FindByNameAsync(securityToken.Claims.First(c => c.Type == "unique_name").Value);
 
 		    if (user == null)
 		    {
-			    user = new ApplicationUser
-			    {
-				    Id = securityToken.Claims.First(c => c.Type == "sub").Value,
-				    UserName = securityToken.Claims.First(c => c.Type == "unique_name").Value
-			    };
+			    user = this.CreateUser(securityToken);
 
-			    string email = securityToken.Claims.FirstOrDefault(c => c.Type == "email")?.Value;
-
-			    if (email != null)
-			    {
-				    if (email.StartsWith("mailto:"))
-				    {
-					    email = email.Substring(7, email.Length - 7);
-				    }
-
-				    user.Email = email;
-			    }
-
-			    foreach (var claim in securityToken.Claims)
-			    {
-				    var identityUserClaim = new IdentityUserClaim
-				    {
-					    ClaimType = claim.Type,
-					    ClaimValue = claim.Value,
-					    UserId = securityToken.Claims.First(c => c.Type == "sub").Value
-				    };
-
-				    user.Claims.Add(identityUserClaim);
-			    }
-
-			    var identityResult = await this.UserManager.CreateAsync(user);
+				var identityResult = await this.UserManager.CreateAsync(user);
 
 			    if (!identityResult.Succeeded)
 			    {
@@ -278,13 +250,66 @@ namespace Admin
 		    }
 		    else
 		    {
+				// delete the user, to avoid conflicts
+				// this is safe, because we don't have any user created tables which depend on the users table
+			    await this.UserManager.DeleteAsync(user);
+
+			    user = this.CreateUser(securityToken);
+
+				var identityResult = await this.UserManager.CreateAsync(user);
+
+			    if (!identityResult.Succeeded)
+			    {
+				    return SignInStatus.Failure;
+			    }
+
 			    var userIdentity = await this.CreateUserIdentityAsync(user);
 
 			    this.AuthenticationManager.SignIn(properties, userIdentity);
 			    this.AccessToken = accessToken;
-		    }
+			}
 
 		    return SignInStatus.Success;
+	    }
+
+		/// <summary>
+		/// Creates the user.
+		/// </summary>
+		/// <param name="securityToken">The security token.</param>
+		/// <returns>ApplicationUser.</returns>
+		private ApplicationUser CreateUser(JwtSecurityToken securityToken)
+	    {
+			var user = new ApplicationUser
+		    {
+			    Id = securityToken.Claims.First(c => c.Type == "sub").Value,
+			    UserName = securityToken.Claims.First(c => c.Type == "unique_name").Value
+		    };
+
+		    string email = securityToken.Claims.FirstOrDefault(c => c.Type == "email")?.Value;
+
+		    if (email != null)
+		    {
+			    if (email.StartsWith("mailto:"))
+			    {
+				    email = email.Substring(7, email.Length - 7);
+			    }
+
+			    user.Email = email;
+		    }
+
+		    foreach (var claim in securityToken.Claims)
+		    {
+			    var identityUserClaim = new IdentityUserClaim
+			    {
+				    ClaimType = claim.Type,
+				    ClaimValue = claim.Value,
+				    UserId = securityToken.Claims.First(c => c.Type == "sub").Value
+			    };
+
+			    user.Claims.Add(identityUserClaim);
+		    }
+
+		    return user;
 	    }
 	}
 }
