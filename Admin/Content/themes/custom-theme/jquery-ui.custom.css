@@ -78,13 +78,11 @@
 	z-index: 100;
 }
 
-
 /* Interaction Cues
 ----------------------------------*/
 .ui-state-disabled {
 	cursor: default !important;
 }
-
 
 /* Icons
 ----------------------------------*/
@@ -96,7 +94,6 @@
 	overflow: hidden;
 	background-repeat: no-repeat;
 }
-
 
 /* Misc visuals
 ----------------------------------*/
@@ -110,7 +107,6 @@
 	width: 100%;
 	height: 100%;
 }
-
 
 /*
  * jQuery UI Resizable 1.10.3
@@ -218,7 +214,6 @@
 	border: 1px dotted black;
 }
 
-
 /*
  * jQuery UI CSS Framework 1.10.3
  *
@@ -226,7 +221,7 @@
  * Dual licensed under the MIT or GPL Version 2 licenses.
  * http://jquery.org/license
  *
- * 
+ *
  *
  * To view and modify this theme, visit http://jqueryui.com/themeroller/
  */
@@ -262,7 +257,6 @@
     background-color: #F5F5F5;
     border-color: #DDDDDD;
     color: #333333;
-
 }
 
 .ui-widget-header a {
@@ -763,7 +757,6 @@
 	display: block;
 }
 
-
 /*
  * jQuery UI Autocomplete 1.10.3
  *
@@ -780,7 +773,6 @@
 	left: 0;
 	cursor: default;
 }
-
 
 /*
  * jQuery UI Button 1.10.3
@@ -881,7 +873,7 @@ input[type="button"].ui-btn-block {
   width: 100%;
 }
 
-.ui-button-text-icon-primary 
+.ui-button-text-icon-primary
 .ui-button-icon-primary {
     float:left;
 }
@@ -934,7 +926,7 @@ input[type="button"].ui-btn-block {
 .ui-button-primary:hover,
 .ui-button-success:hover,
 .ui-button-info:hover,
-.ui-button-danger:hover, 
+.ui-button-danger:hover,
 .ui-button-warning:hover,
 .ui-button-inverse:hover{
 	color: #ffffff;
@@ -1091,8 +1083,7 @@ input.ui-button {
 button.ui-button::-moz-focus-inner {
 	border: 0;
 	padding: 0;
-} 
-
+}
 
 /*
  * jQuery UI Menu 1.10.3
@@ -1129,7 +1120,7 @@ button.ui-button::-moz-focus-inner {
 	  line-height: 0;
 	}
 
-	li.ui-menu-item { 
+	li.ui-menu-item {
 	  /* This fixes the IE10 issue (jQuery UI Issue #8844)*/
 	  list-style-type: none;
 	}
@@ -1221,7 +1212,6 @@ button.ui-button::-moz-focus-inner {
 	width: 200px;
 	margin-bottom: 2em;
 }
-
 
 /*
  * jQuery UI spinner 1.10.3
@@ -1390,7 +1380,7 @@ button.ui-button::-moz-focus-inner {
 	padding: 1px;
 	filter:alpha(opacity=90);
 	-moz-opacity: 0.90;
-	opacity: 0.90;	 
+	opacity: 0.90;
 }
 
 .ui-dialog .ui-dialog-content {
@@ -1416,7 +1406,6 @@ button.ui-button::-moz-focus-inner {
 	-moz-box-shadow: inset 0 1px 0 #ffffff; /* Firefox 3.6 */
 	box-shadow: inset 0 1px 0 #ffffff;
 	margin-bottom: 0;
-
 }
 
 .ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset {
@@ -2117,7 +2106,6 @@ body .ui-tooltip {
 .ui-datepicker-today a:hover {
 	background-color: #808080;
 	color: #ffffff;
-
 }
 .ui-datepicker-today a {
 	background-color: #BFBFBF;
@@ -2180,7 +2168,6 @@ body .ui-tooltip {
 	-moz-border-radius: 4px; /* Firefox 3.6 */
 	border-radius: 4px;
 }
-
 
 /*
  * jQuery UI Progressbar 1.10.3

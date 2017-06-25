@@ -75,16 +75,14 @@ namespace MARC.EHRS.Visualization.Client.Silverlight.Controls
 
         private void btnAccept_Click(object sender, RoutedEventArgs e)
         {
-            if (OnAccept != null)
-                OnAccept(this, EventArgs.Empty);
-            this.Visibility = System.Windows.Visibility.Collapsed;
+	        OnAccept?.Invoke(this, EventArgs.Empty);
+	        this.Visibility = System.Windows.Visibility.Collapsed;
         }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
-            if (OnCancel != null)
-                OnCancel(this, EventArgs.Empty);
-            this.Visibility = System.Windows.Visibility.Collapsed;
+			OnCancel?.Invoke(this, EventArgs.Empty);
+			this.Visibility = System.Windows.Visibility.Collapsed;
         }
     }
 }

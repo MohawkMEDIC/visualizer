@@ -115,7 +115,7 @@ namespace MARC.EHRS.VisualizationServer.Syslog
             {
                 this.m_protocol.Start(this.m_configuration);
             }
-            catch (ThreadAbortException ta)
+            catch (ThreadAbortException)
             {
                 this.m_protocol.Stop();
             }

@@ -574,7 +574,7 @@ namespace MARC.EHRS.Visualization.Server.Persistence.Ado
         public event EventHandler<Visualization.Core.Services.AuditPersistenceEventArgs> Persisted;
 
         /// <summary>
-        /// Fired when a message has been depersisted
+        /// Fired when a message has been de-persisted
         /// </summary>
         public event EventHandler<Visualization.Core.Services.AuditPersistenceEventArgs> DePersisted;
 

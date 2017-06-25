@@ -2,10 +2,10 @@
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns:msxsl="urn:schemas-microsoft-com:xslt" exclude-result-prefixes="msxsl"
 >
-    <xsl:output method="html" indent="no"/>
+    <xsl:output method="html" indent="no" />
 
     <xsl:template match="/AuditStatus">
-      <p>Audit <xsl:value-of select="//AuditId"/>'s status code was set to 
+      <p>Audit <xsl:value-of select="//AuditId" />'s status code was set to
       <span class="label label-primary">
         <xsl:choose>
           <xsl:when test="//StatusCodeId = 0">
@@ -29,7 +29,6 @@
           <xsl:when test="//StatusCodeId = 6">
             <span class="glyphicon glyphicon-cog"></span> SYSTEM
           </xsl:when>
-
         </xsl:choose>
       </span>
     </p>

@@ -2,14 +2,13 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-
 <div class="page-header">
     <h1>Audit Control Centre</h1>
 </div>
 <div id="fullHeight" class="container-fluid" style="height:auto;">
     <div id="side-nav" class="col-md-3">
             <ul class="nav nav-pills nav-stacked">
-                <li role="presentation"> 
+                <li role="presentation">
                     <a href="/Audit"><span class="glyphicon glyphicon-dashboard"></span> Dashboard</a>
                     <ul class="nav nav-pills nav-stacked" style="padding-left:1.5em">
                         <li role="presentation"><a href="javascript:" onclick="javascript:AuditTool.ShowInboxView()"><span class="glyphicon glyphicon-certificate"></span> New <span data-counter="NEW" class="badge">0</span></a></li>
@@ -25,15 +24,15 @@
                 <li role="presentation"><a href="javascript:" onclick="javascript:AuditTool.ShowStatsView()"><span class="glyphicon glyphicon-stats"></span> Statistics</a></li>
             </ul>
     </div>
-    <div class="col-md-9 panel panel-default" style="overflow:auto;" >
+    <div class="col-md-9 panel panel-default" style="overflow:auto;">
         <h4 id="viewTitle">@ViewBag.ViewTitle</h4>
         <small id="viewSub"></small>
-        
+
         @Html.AntiForgeryToken()
         @RenderSection("AuditView", true)
-            
+
         <div id="waitDiv" style="clear:both;display:none;width:100%; height:100%; position:absolute; top:0px; left:0px; z-index:1; background-color:rgba(0,0,0,0.5)">
-            
+
             <div style="width:50%; margin:auto auto; top:40%; left:25%; position:absolute">
                 <h4 style="color:white">Please Wait..</h4>
                 <div class="progress progress-striped active">
@@ -41,7 +40,6 @@
                 </div>
             </div>
         </div>
-
     </div>
 
     <div id="errorModal" class="modal fade" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
@@ -115,7 +113,6 @@
                                     break;
                             }
 
-
                             $("#errorModal").modal('show');
                             if (getMeOuttaHere)
                                 $("#errorModal").data(getMeOuttaHere);
@@ -131,7 +128,7 @@
                 var filterField = $(this).attr('data-filter-by');
                 var filterValue = $(this).val();
 
-                // Now data 
+                // Now data
                 // We clear when: Filter has no value, filter a checkbox and is not checked, or filter is multi and nothing selected
                 if (filterValue == "" || filterValue == null || ($(this).attr('type') == 'checkbox' && !this.checked))
                     delete AuditTool.ViewFilter[filterField];
@@ -234,7 +231,7 @@
             },
             // Refresh the current view
             SetView: function (url) {
-                
+
                 // Stop URL monitoring
                 this.StopUrlMonitor();
                 // Get the base URL
@@ -307,7 +304,7 @@
                 var strLocation = ""+location.href;
                 if (location.hash && (strLocation.indexOf("?") == -1 || strLocation.indexOf("#") < strLocation.indexOf("?"))) { // If we have a hash and the has comes before the query
                     var data = this.GetParameters(strLocation);
-                    
+
                     if (data.action && this.CreateRequestQueryString(data) != this.ViewQueryString) {
                         AuditTool.ShowModal();
                         $("#viewTitle").html("");
@@ -324,7 +321,7 @@
                 // Build the data string
                 this.ShowModal();
                 this.SetViewEx("@Url.Action("Search")", filter);
-                
+
             },
             // Pin the specified object
             Pin: function (sender, id) {
@@ -404,7 +401,7 @@
                 this.SetViewEx("@Url.Action("List")", {
                     StatusCode: 'ACTIVE'
                 });
- 
+
             },
             ShowDeletedView: function () {
                 this.SetViewEx("@Url.Action("List")", {
@@ -425,7 +422,6 @@
             },
             UpdateViewData: function () {
 
-                
                 // Update the titles
                 switch (this.ViewFilter["action"].toLowerCase()) {
                     case "view":
@@ -439,9 +435,9 @@
                     case "stats":
                         $("#viewTitle").html("Statistics");
                         $("#viewSub").html("Audit content charts");
-                        // Get stats data 
+                        // Get stats data
                         this.ShowModal();
-                        
+
                         $.ajax("@Url.Action("StatsData")", {
                             success: function (data) {
                                 AuditTool.HideModal();
@@ -469,7 +465,7 @@
                                                 }
                                                 graphData['data'].datasets[i].fillColor = "rgba(0,0,0,0)";
                                             }
-                                            
+
                                             new Chart($(e).get(0).getContext("2d")).Line(graphData['data'], { scaleOverlay: true });
                                             break;
                                         case "radar":
@@ -560,7 +556,7 @@
                         }
                 }
 
-                // Update any tooltip 
+                // Update any tooltip
                 $(this.ViewControlId + ' *[data-original-title]').tooltip();
                 $('#viewSub *[data-original-title]').tooltip();
 
@@ -597,7 +593,6 @@
                     escapeMarkup: function (html) { return html; }
                 });
 
-
                 // Setup the dynamic search boxes
                 $(this.ViewControlId + ' select[data-filter-by]').siblings('.select2-container').css('display', 'block');
                 $(this.ViewControlId + ' input[data-filter-by]').siblings('.select2-container').css('display', 'block');
@@ -608,7 +603,7 @@
                         dateFormat: $(e).attr('data-date-format') ? $(e).attr('data-date-format') : "yy-mm-dd"
                     });
                 });
-               
+
                 // Any summarization?
                 var alreadySummarized = [];
                 $(this.ViewControlId + ' *[data-filter-summarize]').each(function (i, e) {
@@ -619,7 +614,6 @@
                     }
                 });
 
-                
             },
             QueryParameterPretty: {
                 "," : " <span data-toggle='tooltip' data-original-title=\"Matches the previous expression or the next\" class='label label-primary'>OR</span> ",

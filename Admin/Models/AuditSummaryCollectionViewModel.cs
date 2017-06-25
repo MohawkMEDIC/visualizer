@@ -1,56 +1,52 @@
 ﻿/*
  * Copyright 2015-2017 Mohawk College of Applied Arts and Technology
- * 
- * Licensed under the Apache License, Version 2.0 (the "License"); you 
- * may not use this file except in compliance with the License. You may 
- * obtain a copy of the License at 
- * 
- * http://www.apache.org/licenses/LICENSE-2.0 
- * 
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you
+ * may not use this file except in compliance with the License. You may
+ * obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
- * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the 
- * License for the specific language governing permissions and limitations under 
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
  * the License.
- * 
+ *
  * User: khannan
  * Date: 2017-6-15
  */
+
 using Admin.DataAccess;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Admin.Models
 {
-    /// <summary>
-    /// Represents an audit summary collection view model.
-    /// </summary>
-    public class AuditSummaryCollectionViewModel 
-    {
-
+	/// <summary>
+	/// Represents an audit summary collection view model.
+	/// </summary>
+	public class AuditSummaryCollectionViewModel
+	{
 		/// <summary>
 		/// Initializes a new instance of the <see cref="AuditSummaryCollectionViewModel"/> class.
 		/// </summary>
 		public AuditSummaryCollectionViewModel()
-	    {
-	    }
+		{
+		}
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="AuditSummaryCollectionViewModel"/> class.
 		/// </summary>
 		/// <param name="results">The results.</param>
 		public AuditSummaryCollectionViewModel(IQueryable<AuditSummaryVw> results)
-	    {
-		    this.Results = results;
-	    }
+		{
+			this.Results = results;
+		}
 
 		/// <summary>
 		/// Gets or sets the results.
 		/// </summary>
 		/// <value>The results.</value>
 		public IQueryable<AuditSummaryVw> Results { get; set; }
-    }
+	}
 }

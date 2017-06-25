@@ -68,7 +68,7 @@ namespace MARC.EHRS.VisualizationServer.Syslog.TransportProtocol
             // Get the IP address
             IPEndPoint endpoint = null;
             if (config.Address.HostNameType == UriHostNameType.Dns)
-                endpoint = new IPEndPoint(Dns.Resolve(config.Address.Host).AddressList[0], config.Address.Port);
+                endpoint = new IPEndPoint(Dns.GetHostEntry(config.Address.Host).AddressList[0], config.Address.Port);
             else
                 endpoint = new IPEndPoint(IPAddress.Parse(config.Address.Host), config.Address.Port);
 
@@ -141,7 +141,7 @@ namespace MARC.EHRS.VisualizationServer.Syslog.TransportProtocol
                         nSessionMessages++;
                         messageData.Append(Encoding.UTF8.GetString(buffer, 0, br));
                     }
-                    catch (TimeoutException e)
+                    catch (TimeoutException)
                     {
                         Trace.TraceError("{0} : Timeout occurred! Killing connection", tcpClient.Client.RemoteEndPoint);
                         throw;
@@ -310,7 +310,7 @@ namespace MARC.EHRS.VisualizationServer.Syslog.TransportProtocol
             // Get the IP address
             IPEndPoint endpoint = null;
             if (config.Address.HostNameType == UriHostNameType.Dns)
-                endpoint = new IPEndPoint(Dns.Resolve(config.Address.Host).AddressList[0], config.Address.Port);
+                endpoint = new IPEndPoint(Dns.GetHostEntry(config.Address.Host).AddressList[0], config.Address.Port);
             else
                 endpoint = new IPEndPoint(IPAddress.Parse(config.Address.Host), config.Address.Port);
 

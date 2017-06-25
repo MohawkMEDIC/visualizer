@@ -122,7 +122,7 @@ namespace MARC.EHRS.VisualizationClient
                 if (eventData != null && EventReceived != null)
                     this.m_dispatcher.Invoke(EventReceived, new object[] { this, new VisualizationEventArgs() { Event = eventData } });
             }
-            catch (Exception ex)
+            catch (Exception)
             {
             }
             finally

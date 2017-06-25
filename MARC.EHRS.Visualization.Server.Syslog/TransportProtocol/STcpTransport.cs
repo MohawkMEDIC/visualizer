@@ -191,7 +191,7 @@ namespace MARC.EHRS.VisualizationServer.Syslog.TransportProtocol
             // Get the IP address
             IPEndPoint endpoint = null;
             if (config.Address.HostNameType == UriHostNameType.Dns)
-                endpoint = new IPEndPoint(Dns.Resolve(config.Address.Host).AddressList[0], config.Address.Port);
+                endpoint = new IPEndPoint(Dns.GetHostEntry(config.Address.Host).AddressList[0], config.Address.Port);
             else
                 endpoint = new IPEndPoint(IPAddress.Parse(config.Address.Host), config.Address.Port);
 

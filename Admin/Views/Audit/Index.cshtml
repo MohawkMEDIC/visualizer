@@ -8,7 +8,6 @@
 @section AuditView
 {
 <div id="view">
-
 </div>
 }
 
@@ -30,9 +29,7 @@
             else if(!AuditTool.HashNavigate())
                 AuditTool.SetViewEx("@Url.Action("List")", { StatusCode: ['NEW', 'HELD'], OutcomeCode: '!Success', EventType: '!Audit Log Used' });
 
-
         });
     </script>
-      
 
 }

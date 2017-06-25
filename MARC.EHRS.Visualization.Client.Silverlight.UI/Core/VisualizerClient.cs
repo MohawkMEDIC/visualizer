@@ -186,10 +186,9 @@ namespace MARC.EHRS.Visualization.Client.Silverlight.UI.Core
                 }
                 });
 
-            StringReader sr = null;
-            try
+	        try
             {
-                string packetData = Encoding.UTF8.GetString(e.Buffer, e.Offset, e.BytesTransferred);
+                var packetData = Encoding.UTF8.GetString(e.Buffer, e.Offset, e.BytesTransferred);
                 System.Diagnostics.Debug.WriteLine(packetData);
                 lock (this.m_syncRoot)
                 {
@@ -198,7 +197,7 @@ namespace MARC.EHRS.Visualization.Client.Silverlight.UI.Core
                 }
 
             }
-            catch (Exception ex)
+            catch (Exception)
             {
             }
             finally
