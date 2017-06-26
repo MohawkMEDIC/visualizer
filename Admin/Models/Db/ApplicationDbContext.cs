@@ -31,7 +31,7 @@ namespace Admin.Models.Db
 		/// Initializes a new instance of the <see cref="ApplicationDbContext" /> class.
 		/// </summary>
 		public ApplicationDbContext()
-			: base("VisualizerConnection", throwIfV1Schema: false)
+			: base("VisualizerDbConnectionString", throwIfV1Schema: false)
 		{
 		}
 
