@@ -108,6 +108,9 @@
   <ItemGroup>
     <Resource Include="button_cancel.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Visualizer.licenseheader" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <ProjectExtensions>
     <VisualStudio>

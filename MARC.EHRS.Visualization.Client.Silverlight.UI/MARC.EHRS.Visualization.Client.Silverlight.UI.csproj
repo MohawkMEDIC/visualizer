@@ -117,6 +117,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\AppManifest.xml" />
+    <Content Include="Visualizer.licenseheader" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="logo.png" />
