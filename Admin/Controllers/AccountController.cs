@@ -30,22 +30,45 @@ using System.Web.Mvc;
 
 namespace Admin.Controllers
 {
+	/// <summary>
+	/// Represents an account controller.
+	/// </summary>
+	/// <seealso cref="System.Web.Mvc.Controller" />
 	[TokenAuthorize]
 	public class AccountController : Controller
 	{
+		/// <summary>
+		/// The sign in manager.
+		/// </summary>
 		private ApplicationSignInManager _signInManager;
+
+		/// <summary>
+		/// The user manager.
+		/// </summary>
 		private ApplicationUserManager _userManager;
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="AccountController"/> class.
+		/// </summary>
 		public AccountController()
 		{
 		}
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="AccountController"/> class.
+		/// </summary>
+		/// <param name="userManager">The user manager.</param>
+		/// <param name="signInManager">The sign in manager.</param>
 		public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
 		{
 			UserManager = userManager;
 			SignInManager = signInManager;
 		}
 
+		/// <summary>
+		/// Gets the sign in manager.
+		/// </summary>
+		/// <value>The sign in manager.</value>
 		public ApplicationSignInManager SignInManager
 		{
 			get
@@ -58,6 +81,10 @@ namespace Admin.Controllers
 			}
 		}
 
+		/// <summary>
+		/// Gets the user manager.
+		/// </summary>
+		/// <value>The user manager.</value>
 		public ApplicationUserManager UserManager
 		{
 			get
@@ -68,14 +95,6 @@ namespace Admin.Controllers
 			{
 				_userManager = value;
 			}
-		}
-
-		//
-		// GET: /Account/ExternalLoginFailure
-		[AllowAnonymous]
-		public ActionResult ExternalLoginFailure()
-		{
-			return View();
 		}
 
 		//
@@ -92,7 +111,7 @@ namespace Admin.Controllers
 		[HttpPost]
 		[AllowAnonymous]
 		[ValidateAntiForgeryToken]
-		public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
+		public async Task<ActionResult> Login(LoginModel model, string returnUrl)
 		{
 			if (!ModelState.IsValid)
 			{
@@ -114,10 +133,6 @@ namespace Admin.Controllers
 					case SignInStatus.LockedOut:
 						outcome = OutcomeIndicator.EpicFail;
 						return View("Lockout");
-
-					case SignInStatus.RequiresVerification:
-						outcome = OutcomeIndicator.MinorFail;
-						return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
 
 					case SignInStatus.Failure:
 					default:
@@ -144,44 +159,6 @@ namespace Admin.Controllers
 
 			AuditUtil.AuditUserEvent(this, OutcomeIndicator.Success, ActionType.Execute, EventIdentifierType.Logout, AuditableObjectLifecycle.Access, null);
 			return RedirectToAction("Index", "Home");
-		}
-
-		//
-		// GET: /Account/Register
-		[AllowAnonymous]
-		public ActionResult Register()
-		{
-			return View();
-		}
-
-		//
-		// POST: /Account/Register
-		[HttpPost]
-		[AllowAnonymous]
-		[ValidateAntiForgeryToken]
-		public async Task<ActionResult> Register(RegisterViewModel model)
-		{
-			if (ModelState.IsValid)
-			{
-				var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
-				var result = await UserManager.CreateAsync(user, model.Password);
-				if (result.Succeeded)
-				{
-					await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-
-					// For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
-					// Send an email with this link
-					// string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-					// var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-					// await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
-
-					return RedirectToAction("Index", "Home");
-				}
-				AddErrors(result);
-			}
-
-			// If we got this far, something failed, redisplay form
-			return View(model);
 		}
 
 		protected override void Dispose(bool disposing)

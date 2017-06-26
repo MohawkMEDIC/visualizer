@@ -24,9 +24,13 @@ using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
 using Owin;
 using System;
+using Admin.Models.Db;
 
 namespace Admin
 {
+	/// <summary>
+	/// Represents startup configuration for the application.
+	/// </summary>
 	public partial class Startup
 	{
 		// For more information on configuring authentication, please visit http://go.microsoft.com/fwlink/?LinkId=301864
@@ -62,25 +66,6 @@ namespace Admin
 			// Once you check this option, your second step of verification during the login process will be remembered on the device where you logged in from.
 			// This is similar to the RememberMe option when you log in.
 			app.UseTwoFactorRememberBrowserCookie(DefaultAuthenticationTypes.TwoFactorRememberBrowserCookie);
-
-			// Uncomment the following lines to enable logging in with third party login providers
-			//app.UseMicrosoftAccountAuthentication(
-			//    clientId: "",
-			//    clientSecret: "");
-
-			//app.UseTwitterAuthentication(
-			//   consumerKey: "",
-			//   consumerSecret: "");
-
-			//app.UseFacebookAuthentication(
-			//   appId: "",
-			//   appSecret: "");
-
-			//app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
-			//{
-			//    ClientId = "",
-			//    ClientSecret = ""
-			//});
 		}
 	}
 }

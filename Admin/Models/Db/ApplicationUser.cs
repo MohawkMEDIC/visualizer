@@ -14,7 +14,7 @@
  * the License.
  *
  * User: khannan
- * Date: 2017-6-15
+ * Date: 2017-6-26
  */
 
 using Microsoft.AspNet.Identity;
@@ -22,22 +22,12 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
-namespace Admin.Models
+namespace Admin.Models.Db
 {
-	public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
-	{
-		public ApplicationDbContext()
-			: base("DefaultConnection", throwIfV1Schema: false)
-		{
-		}
-
-		public static ApplicationDbContext Create()
-		{
-			return new ApplicationDbContext();
-		}
-	}
-
-	// You can add profile data for the user by adding more properties to your ApplicationUser class, please visit http://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
+	/// <summary>
+	/// Represnts an application user.
+	/// </summary>
+	/// <seealso cref="Microsoft.AspNet.Identity.EntityFramework.IdentityUser" />
 	public class ApplicationUser : IdentityUser
 	{
 		public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)

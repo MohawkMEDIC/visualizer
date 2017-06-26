@@ -33,6 +33,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Web;
 using System.Web.Mvc;
 using System.Xml;
+using Admin.Models.Db;
 
 namespace Admin.Util
 {

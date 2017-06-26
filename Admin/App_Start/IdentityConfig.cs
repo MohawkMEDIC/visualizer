@@ -17,7 +17,7 @@
  * Date: 2017-6-15
  */
 
-using Admin.Models;
+using Admin.Models.Db;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
@@ -37,80 +37,6 @@ using System.Threading.Tasks;
 
 namespace Admin
 {
-	public class EmailService : IIdentityMessageService
-	{
-		public Task SendAsync(IdentityMessage message)
-		{
-			// Plug in your email service here to send an email.
-			return Task.FromResult(0);
-		}
-	}
-
-	public class SmsService : IIdentityMessageService
-	{
-		public Task SendAsync(IdentityMessage message)
-		{
-			// Plug in your SMS service here to send a text message.
-			return Task.FromResult(0);
-		}
-	}
-
-	// Configure the application user manager used in this application. UserManager is defined in ASP.NET Identity and is used by the application.
-	public class ApplicationUserManager : UserManager<ApplicationUser>
-	{
-		public ApplicationUserManager(IUserStore<ApplicationUser> store)
-			: base(store)
-		{
-		}
-
-		public static ApplicationUserManager Create(IdentityFactoryOptions<ApplicationUserManager> options, IOwinContext context)
-		{
-			var manager = new ApplicationUserManager(new UserStore<ApplicationUser>(context.Get<ApplicationDbContext>()));
-			// Configure validation logic for usernames
-			manager.UserValidator = new UserValidator<ApplicationUser>(manager)
-			{
-				AllowOnlyAlphanumericUserNames = false,
-				RequireUniqueEmail = true
-			};
-
-			// Configure validation logic for passwords
-			manager.PasswordValidator = new PasswordValidator
-			{
-				RequiredLength = 6,
-				RequireNonLetterOrDigit = true,
-				RequireDigit = true,
-				RequireLowercase = true,
-				RequireUppercase = true,
-			};
-
-			// Configure user lockout defaults
-			manager.UserLockoutEnabledByDefault = true;
-			manager.DefaultAccountLockoutTimeSpan = TimeSpan.FromMinutes(5);
-			manager.MaxFailedAccessAttemptsBeforeLockout = 5;
-
-			// Register two factor authentication providers. This application uses Phone and Emails as a step of receiving a code for verifying the user
-			// You can write your own provider and plug it in here.
-			manager.RegisterTwoFactorProvider("Phone Code", new PhoneNumberTokenProvider<ApplicationUser>
-			{
-				MessageFormat = "Your security code is {0}"
-			});
-			manager.RegisterTwoFactorProvider("Email Code", new EmailTokenProvider<ApplicationUser>
-			{
-				Subject = "Security Code",
-				BodyFormat = "Your security code is {0}"
-			});
-			manager.EmailService = new EmailService();
-			manager.SmsService = new SmsService();
-			var dataProtectionProvider = options.DataProtectionProvider;
-			if (dataProtectionProvider != null)
-			{
-				manager.UserTokenProvider =
-					new DataProtectorTokenProvider<ApplicationUser>(dataProtectionProvider.Create("ASP.NET Identity"));
-			}
-			return manager;
-		}
-	}
-
 	/// <summary>
 	/// Represents the application sign in manager for the application.
 	/// </summary>
@@ -132,16 +58,6 @@ namespace Admin
 		public string AccessToken { get; private set; }
 
 		/// <summary>
-		/// Called to generate the ClaimsIdentity for the user, override to add additional claims before SignIn
-		/// </summary>
-		/// <param name="user">The user.</param>
-		/// <returns>Task&lt;ClaimsIdentity&gt;.</returns>
-		public override Task<ClaimsIdentity> CreateUserIdentityAsync(ApplicationUser user)
-		{
-			return user.GenerateUserIdentityAsync((ApplicationUserManager)UserManager);
-		}
-
-		/// <summary>
 		/// Creates the specified options.
 		/// </summary>
 		/// <param name="options">The options.</param>
@@ -150,6 +66,16 @@ namespace Admin
 		public static ApplicationSignInManager Create(IdentityFactoryOptions<ApplicationSignInManager> options, IOwinContext context)
 		{
 			return new ApplicationSignInManager(context.GetUserManager<ApplicationUserManager>(), context.Authentication);
+		}
+
+		/// <summary>
+		/// Called to generate the ClaimsIdentity for the user, override to add additional claims before SignIn
+		/// </summary>
+		/// <param name="user">The user.</param>
+		/// <returns>Task&lt;ClaimsIdentity&gt;.</returns>
+		public override Task<ClaimsIdentity> CreateUserIdentityAsync(ApplicationUser user)
+		{
+			return user.GenerateUserIdentityAsync((ApplicationUserManager)UserManager);
 		}
 
 		/// <summary>
@@ -192,6 +118,46 @@ namespace Admin
 
 				return SignInStatus.Failure;
 			}
+		}
+
+		/// <summary>
+		/// Creates the user.
+		/// </summary>
+		/// <param name="securityToken">The security token.</param>
+		/// <returns>ApplicationUser.</returns>
+		private ApplicationUser CreateUser(JwtSecurityToken securityToken)
+		{
+			var user = new ApplicationUser
+			{
+				Id = securityToken.Claims.First(c => c.Type == "sub").Value,
+				UserName = securityToken.Claims.First(c => c.Type == "unique_name").Value
+			};
+
+			string email = securityToken.Claims.FirstOrDefault(c => c.Type == "email")?.Value;
+
+			if (email != null)
+			{
+				if (email.StartsWith("mailto:"))
+				{
+					email = email.Substring(7, email.Length - 7);
+				}
+
+				user.Email = email;
+			}
+
+			foreach (var claim in securityToken.Claims)
+			{
+				var identityUserClaim = new IdentityUserClaim
+				{
+					ClaimType = claim.Type,
+					ClaimValue = claim.Value,
+					UserId = securityToken.Claims.First(c => c.Type == "sub").Value
+				};
+
+				user.Claims.Add(identityUserClaim);
+			}
+
+			return user;
 		}
 
 		/// <summary>
@@ -269,45 +235,60 @@ namespace Admin
 
 			return SignInStatus.Success;
 		}
+	}
 
-		/// <summary>
-		/// Creates the user.
-		/// </summary>
-		/// <param name="securityToken">The security token.</param>
-		/// <returns>ApplicationUser.</returns>
-		private ApplicationUser CreateUser(JwtSecurityToken securityToken)
+	// Configure the application user manager used in this application. UserManager is defined in ASP.NET Identity and is used by the application.
+	public class ApplicationUserManager : UserManager<ApplicationUser>
+	{
+		public ApplicationUserManager(IUserStore<ApplicationUser> store)
+			: base(store)
 		{
-			var user = new ApplicationUser
+		}
+
+		public static ApplicationUserManager Create(IdentityFactoryOptions<ApplicationUserManager> options, IOwinContext context)
+		{
+			var manager = new ApplicationUserManager(new UserStore<ApplicationUser>(context.Get<ApplicationDbContext>()));
+			// Configure validation logic for usernames
+			manager.UserValidator = new UserValidator<ApplicationUser>(manager)
 			{
-				Id = securityToken.Claims.First(c => c.Type == "sub").Value,
-				UserName = securityToken.Claims.First(c => c.Type == "unique_name").Value
+				AllowOnlyAlphanumericUserNames = false,
+				RequireUniqueEmail = true
 			};
 
-			string email = securityToken.Claims.FirstOrDefault(c => c.Type == "email")?.Value;
-
-			if (email != null)
+			// Configure validation logic for passwords
+			manager.PasswordValidator = new PasswordValidator
 			{
-				if (email.StartsWith("mailto:"))
-				{
-					email = email.Substring(7, email.Length - 7);
-				}
+				RequiredLength = 6,
+				RequireNonLetterOrDigit = true,
+				RequireDigit = true,
+				RequireLowercase = true,
+				RequireUppercase = true,
+			};
 
-				user.Email = email;
-			}
+			// Configure user lockout defaults
+			manager.UserLockoutEnabledByDefault = true;
+			manager.DefaultAccountLockoutTimeSpan = TimeSpan.FromMinutes(5);
+			manager.MaxFailedAccessAttemptsBeforeLockout = 5;
 
-			foreach (var claim in securityToken.Claims)
+			// Register two factor authentication providers. This application uses Phone and Emails as a step of receiving a code for verifying the user
+			// You can write your own provider and plug it in here.
+			manager.RegisterTwoFactorProvider("Phone Code", new PhoneNumberTokenProvider<ApplicationUser>
 			{
-				var identityUserClaim = new IdentityUserClaim
-				{
-					ClaimType = claim.Type,
-					ClaimValue = claim.Value,
-					UserId = securityToken.Claims.First(c => c.Type == "sub").Value
-				};
+				MessageFormat = "Your security code is {0}"
+			});
 
-				user.Claims.Add(identityUserClaim);
+			manager.RegisterTwoFactorProvider("Email Code", new EmailTokenProvider<ApplicationUser>
+			{
+				Subject = "Security Code",
+				BodyFormat = "Your security code is {0}"
+			});
+
+			var dataProtectionProvider = options.DataProtectionProvider;
+			if (dataProtectionProvider != null)
+			{
+				manager.UserTokenProvider = new DataProtectorTokenProvider<ApplicationUser>(dataProtectionProvider.Create("ASP.NET Identity"));
 			}
-
-			return user;
+			return manager;
 		}
 	}
 }
