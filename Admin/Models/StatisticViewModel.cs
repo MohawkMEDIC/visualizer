@@ -19,6 +19,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Dynamic;
 using System.Runtime.Serialization;
 using System.Text.RegularExpressions;
 
@@ -162,9 +164,18 @@ namespace Admin.Models
 		/// </summary>
 		public void AddData(String legendName, int value)
 		{
-			string color = null;
+			if (legendName == null)
+			{
+				return;
+			}
+
+			string color;
+
 			if (!this.m_chart.legend.TryGetValue(legendName, out color))
+			{
 				throw new InvalidOperationException("Must link this dataset to a legend item");
+			}
+
 			this.m_list.Add(new PieDataSet(color, value));
 		}
 
@@ -265,12 +276,13 @@ namespace Admin.Models
 		/// <summary>
 		/// Add a legend item
 		/// </summary>
-		public void AddLegendItems(params String[] names)
+		public void AddLegendItems(params string[] names)
 		{
-			foreach (var name in names)
+			foreach (var name in names.Where(n => n != null))
 			{
 				var color = System.Drawing.ColorTranslator.FromHtml(String.Format("#{0}", CHART_AUTO_COLORS[this.legend.Count % CHART_AUTO_COLORS.Length]));
-				string colorHtml = string.Format("rgba({0},{1},{2},0.5)", color.R, color.G, color.B);
+				var colorHtml = $"rgba({color.R},{color.G},{color.B},0.5)";
+
 				this.legend.Add(name, colorHtml);
 			}
 		}

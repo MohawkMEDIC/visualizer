@@ -123,18 +123,7 @@ namespace Admin.Controllers
 				byDateChart.data = new BarPlotData(byDateChart);
 				var labels = new List<string>(Enum.GetNames(typeof(DayOfWeek)));
 				(byDateChart.data as BarPlotData).labels = labels;
-				//foreach (var typ in resultsByType)
-				//{
-				//    ////var matchingType =
-				//    //var tData = labels.Select(d =>
-				//    //    {
-				//    //        var dow = (DayOfWeek)Enum.Parse(typeof(DayOfWeek), d);
-				//    //        var dayGroup = resultsByDay.Where(k => k.Key.Week == dow).FirstOrDefault();
-				//    //        if (dayGroup == null) return 0;
-				//    //        return dayGroup.Where(p => p.EventType == typ.Key).Select(p => p.AuditId).Distinct().Count();
-				//    //    }
-				//    //);
-				//    var
+
 				(byDateChart.data as BarPlotData).AddDataset("Total", labels.Select(d =>
 				{
 					var dow = (DayOfWeek)Enum.Parse(typeof(DayOfWeek), d);
