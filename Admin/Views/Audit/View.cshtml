@@ -459,7 +459,17 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         <h4>Request Query</h4>
-                                        <pre class="pre-scrollable">@System.Text.Encoding.UTF8.GetString(Convert.FromBase64String(ao.ObjectSpec))</pre>
+                                        <pre class="pre-scrollable">@{
+                                                                        string result = null;
+                                                                        try
+                                                                        {
+                                                                            result = System.Text.Encoding.UTF8.GetString(Convert.FromBase64String(ao.ObjectSpec));
+                                                                        }
+                                                                        catch
+                                                                        {
+                                                                            // ignored
+                                                                        }
+                                                                    }@result</pre>
                                     </div>
                                 </div>
                             }
