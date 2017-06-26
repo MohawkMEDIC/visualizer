@@ -67,10 +67,6 @@ namespace Admin.Controllers
 		}
 
 		// GET: /Audit/StatsData
-#if !DEBUG
-        [RequireHttps]
-#endif
-
 		public ActionResult StatsData()
 		{
 			try
@@ -263,10 +259,6 @@ namespace Admin.Controllers
 
 		//
 		// GET: /Audit/AuditView
-#if !DEBUG
-        [RequireHttps]
-#endif
-
 		public ActionResult List()
 		{
 			try
@@ -308,10 +300,6 @@ namespace Admin.Controllers
 		/// Search
 		/// </summary>
 		// GET /Audit/Search
-#if !DEBUG
-        [RequireHttps]
-#endif
-
 		public ActionResult Search()
 		{
 			try
@@ -555,10 +543,6 @@ namespace Admin.Controllers
 		}
 
 		// GET: /Audit/View/{id}
-#if !DEBUG
-        [RequireHttps]
-#endif
-
 		public ActionResult View(Int32 id)
 		{
 			using (var context = new AuditModelDataContext())
@@ -597,11 +581,8 @@ namespace Admin.Controllers
 		}
 
 		// POST: /Audit/ArchiveAll
-		[ValidateAntiForgeryToken]
-#if !DEBUG
-        [RequireHttps]
-#endif
 		[HttpPost]
+		[ValidateAntiForgeryToken]
 		public ActionResult ArchiveAll()
 		{
 			using (var entityContext = new AuditModelDataContext())
@@ -641,11 +622,8 @@ namespace Admin.Controllers
 		}
 
 		// POST: /Audit/DeleteAll
-		[ValidateAntiForgeryToken]
-#if !DEBUG
-        [RequireHttps]
-#endif
 		[HttpPost]
+		[ValidateAntiForgeryToken]
 		public ActionResult DeleteAll()
 		{
 			using (var entityContext = new AuditModelDataContext())
@@ -685,11 +663,8 @@ namespace Admin.Controllers
 		}
 
 		// POST: /Audit/Hold/{id}
-		[ValidateAntiForgeryToken]
-#if !DEBUG
-        [RequireHttps]
-#endif
 		[HttpPost]
+		[ValidateAntiForgeryToken]
 		public ActionResult Hold(Int32 id)
 		{
 			using (var entityContext = new AuditModelDataContext())
@@ -712,11 +687,8 @@ namespace Admin.Controllers
 		}
 
 		// POST: /Audit/Delete/{id}
-		[ValidateAntiForgeryToken]
-#if !DEBUG
-        [RequireHttps]
-#endif
 		[HttpPost]
+		[ValidateAntiForgeryToken]
 		public ActionResult Delete(Int32 id)
 		{
 			using (var entityContext = new AuditModelDataContext())
@@ -738,11 +710,8 @@ namespace Admin.Controllers
 		}
 
 		// POST: /Audit/Archive/{id}
-		[ValidateAntiForgeryToken]
-#if !DEBUG
-        [RequireHttps]
-#endif
 		[HttpPost]
+		[ValidateAntiForgeryToken]
 		public ActionResult Archive(Int32 id)
 		{
 			using (var entityContext = new AuditModelDataContext())
@@ -791,10 +760,6 @@ namespace Admin.Controllers
 		}
 
 		// GET: /Audit/Count
-#if !DEBUG
-        [RequireHttps]
-#endif
-
 		[HttpGet]
 		public ActionResult Count()
 		{
