@@ -111,6 +111,7 @@
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
+    <Content Include="Visualizer.licenseheader" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="ClientAccessPolicy.xml">

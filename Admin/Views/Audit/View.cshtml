@@ -33,7 +33,6 @@
                     @Html.Raw(Admin.Util.HtmlDisplayUtils.BuildAuditAlertColumnStyle(Model.DalModel))
                 </span>
             }
-
         </div>
         <div class="col-md-4">
             <div style="float: right">
@@ -123,11 +122,8 @@
                 <span class="label label-danger" data-toggle="tooltip" data-placement="left" data-original-title="This event id indicates that some use of a security function">@Html.Raw(Model.Audit.Event.EventIdentification.EventId.DisplayName) (AUTHENTICATE)</span>
                         break;
 
-
-
                 }
             }
-
         </div>
     </div>
 
@@ -154,7 +150,6 @@
             </div>
         </div>
     </div>
-
 
     @if (Model.Audit.Event.SourceIdentification != null)
     {
@@ -196,7 +191,7 @@
             <div class="flow-layout">
                 <div class="row">
                     <div class="col-md-3">
-                        <span class="glyphicon-large glyphicon-user glyphicon"></span><br/>
+                        <span class="glyphicon-large glyphicon-user glyphicon"></span><br />
                         @if (Model.SourceUser != null)
                         {
                             <small>
@@ -233,10 +228,9 @@
                             <span class="glyphicon glyphicon-retweet glyphicon-large"></span>
                                 break;
                         }
-
                     </div>
                     <div class="col-md-3">
-                        <span class="glyphicon glyphicon-phone glyphicon-large"></span><br/>
+                        <span class="glyphicon glyphicon-phone glyphicon-large"></span><br />
 
                         <small>
 
@@ -257,7 +251,6 @@
                                 <br />@rol.Code <span>(</span>@rol.DisplayName<span>)</span>
                             }
                         </small>
-
                     </div>
                     <div class="col-md-1">
                         @switch (Model.Audit.Event.EventIdentification.ActionCode)
@@ -276,7 +269,6 @@
                         }
 
                         <small>(@Model.Audit.Event.EventIdentification.ActionCode)</small>
-
                     </div>
                     <div class="col-md-1"></div>
                     <div class="col-md-3">
@@ -305,7 +297,6 @@
                                 <br />@rol.Code <span>(</span>@rol.DisplayName<span>)</span>
                             }
                         </small>
-
                     </div>
                 </div>
             </div>
@@ -369,7 +360,7 @@
                                                 break;
                                             case AtnaApi.Model.AuditableObjectIdType.Uri:
                                             <span class="glyphicon glyphicon-globe"></span>
-                                       
+
                                                 break;
 
                                         }
@@ -468,7 +459,17 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         <h4>Request Query</h4>
-                                        <pre class="pre-scrollable">@System.Text.Encoding.UTF8.GetString(Convert.FromBase64String(ao.ObjectSpec))</pre>
+                                        <pre class="pre-scrollable">@{
+                                                                        string result = null;
+                                                                        try
+                                                                        {
+                                                                            result = System.Text.Encoding.UTF8.GetString(Convert.FromBase64String(ao.ObjectSpec));
+                                                                        }
+                                                                        catch
+                                                                        {
+                                                                            // ignored
+                                                                        }
+                                                                    }@result</pre>
                                     </div>
                                 </div>
                             }
@@ -500,7 +501,6 @@
                                                                     <pre class="pre-scrollable" style="position: relative;">@Admin.Util.HtmlDisplayUtils.PrettyPrintBin(dtl.Value)</pre>
                                                                 </div>
                                                             </div>
-
                                                         </div>
                                                         <ul class="nav nav-tabs" style="border-bottom: none; border-top: solid 1px #ddd">
                                                             <li class="active"><a href="@String.Format("#htm{0}", dtl.GetHashCode())" data-toggle="tab">HTML</a></li>
@@ -522,7 +522,7 @@
     </div>
     @if (Model.Audit.Errors.Count > 0)
     {
-        
+
         <div class="row">
             <div class="col-md-12 col-xs-18">
                 <h4><span class="glyphicon glyphicon-exclamation-sign"></span> Alert Information</h4>

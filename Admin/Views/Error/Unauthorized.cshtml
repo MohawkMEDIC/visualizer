@@ -1,0 +1,12 @@
+﻿@{
+    ViewBag.Title = "Unauthorized";
+    ViewBag.ErrorTitle = "Unauthorized Access";
+    Layout = "~/Views/Error/_ErrorLayout.cshtml";
+}
+
+@section ErrorDetail
+{
+    <p>The resource you're attempting to access requires authorization</p>
+        <p><span class="label label-warning">Warning:</span> The system administrator has been alerted</p>
+
+}

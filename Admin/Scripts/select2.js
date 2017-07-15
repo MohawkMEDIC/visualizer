@@ -431,7 +431,6 @@ var requirejs, require, define;
     requirejs._defined = defined;
 
     define = function (name, deps, callback) {
-
         //This module may not have dependencies
         if (!deps.splice) {
             //deps is not an array, so probably means

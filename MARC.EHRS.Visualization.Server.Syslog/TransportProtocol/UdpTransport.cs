@@ -1,5 +1,5 @@
-﻿/**
- * Copyright 2012-2013 Mohawk College of Applied Arts and Technology
+﻿/*
+ * Copyright 2012-2017 Mohawk College of Applied Arts and Technology
  * 
  * Licensed under the Apache License, Version 2.0 (the "License"); you 
  * may not use this file except in compliance with the License. You may 
@@ -14,9 +14,8 @@
  * the License.
  * 
  * User: fyfej
- * Date: 13-8-2012
+ * Date: 2012-6-15
  */
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -71,7 +70,7 @@ namespace MARC.EHRS.VisualizationServer.Syslog.TransportProtocol
             // Get the IP address
             IPEndPoint endpoint = null;
             if (config.Address.HostNameType == UriHostNameType.Dns)
-                endpoint = new IPEndPoint(Dns.Resolve(config.Address.Host).AddressList[0], config.Address.Port);
+                endpoint = new IPEndPoint(Dns.GetHostEntry(config.Address.Host).AddressList[0], config.Address.Port);
             else
                 endpoint = new IPEndPoint(IPAddress.Parse(config.Address.Host), config.Address.Port);
 
@@ -155,7 +154,7 @@ namespace MARC.EHRS.VisualizationServer.Syslog.TransportProtocol
             // Get the IP address
             IPEndPoint endpoint = null;
             if (config.Address.HostNameType == UriHostNameType.Dns)
-                endpoint = new IPEndPoint(Dns.Resolve(config.Address.Host).AddressList[0], config.Address.Port);
+                endpoint = new IPEndPoint(Dns.GetHostEntry(config.Address.Host).AddressList[0], config.Address.Port);
             else
                 endpoint = new IPEndPoint(IPAddress.Parse(config.Address.Host), config.Address.Port);
 

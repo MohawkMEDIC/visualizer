@@ -188,3 +188,6 @@ GeneratedArtifacts/
 _Pvt_Extensions/
 ModelManifest.xml
 *.exe
+ModelManifest.xml
+.vs/
+Admin/Properties/PublishProfiles/

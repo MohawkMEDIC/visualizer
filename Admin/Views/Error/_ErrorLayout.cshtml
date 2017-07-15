@@ -1,0 +1,9 @@
+﻿@{
+    ViewBag.Title = "Error";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="centerstatus">
+    <h2>@ViewBag.ErrorTitle</h2>
+    @RenderSection("ErrorDetail", true)
+</div>

@@ -8,9 +8,7 @@
  * https://github.com/nnnick/Chart.js/blob/master/LICENSE.md
  */
 
-
 (function(){
-
 	"use strict";
 
 	//Declare root variable - window in the browser, global on the server
@@ -179,7 +177,6 @@
 
 			// Function - Will fire on animation completion.
 			onAnimationComplete: function(){}
-
 		}
 	};
 
@@ -343,7 +340,6 @@
 				distanceFromYCenter = anglePoint.y - centrePoint.y,
 				radialDistanceFromCenter = Math.sqrt( distanceFromXCenter * distanceFromXCenter + distanceFromYCenter * distanceFromYCenter);
 
-
 			var angle = Math.PI * 2 + Math.atan2(distanceFromYCenter, distanceFromXCenter);
 
 			//If the segment is in the top left quadrant, we need to add another rotation to the angle
@@ -381,7 +377,6 @@
 			return Math.floor(Math.log(val) / Math.LN10);
 		},
 		calculateScaleRange = helpers.calculateScaleRange = function(valuesArray, drawingSize, textSize, startFromZero, integersOnly){
-
 			//Set a minimum step of two - a point at the top of the graph, and a point at the base
 			var minSteps = 2,
 				maxSteps = Math.floor(drawingSize/(textSize * 1.5)),
@@ -441,7 +436,6 @@
 						stepValue /=2;
 						numberOfSteps = Math.round(graphRange/stepValue);
 					}
-
 				}
 			}
 
@@ -456,14 +450,12 @@
 				min : graphMin,
 				max	: graphMin + (numberOfSteps * stepValue)
 			};
-
 		},
 		/* jshint ignore:start */
 		// Blows up jshint errors based on the new Function constructor
 		//Templating methods
 		//Javascript micro templating by John Resig - source at http://ejohn.org/blog/javascript-micro-templating/
 		template = helpers.template = function(templateString, valuesObject){
-
 			// If templateString is function rather than string-template - call the function for valuesObject
 
 			if(templateString instanceof Function){
@@ -685,7 +677,6 @@
 				};
 		})(),
 		animationLoop = helpers.animationLoop = function(callback,totalSteps,easingString,onProgress,onComplete,chartInstance){
-
 			var currentStep = 0,
 				easingFunction = easingEffects[easingString] || easingEffects.linear;
 
@@ -714,7 +705,6 @@
 			if (e.touches){
 				mouseX = e.touches[0].clientX - boundingRect.left;
 				mouseY = e.touches[0].clientY - boundingRect.top;
-
 			}
 			else{
 				mouseX = e.clientX - boundingRect.left;
@@ -725,7 +715,6 @@
 				x : mouseX,
 				y : mouseY
 			};
-
 		},
 		addEvent = helpers.addEvent = function(node,eventType,method){
 			if (node.addEventListener){
@@ -814,7 +803,6 @@
 			ctx.quadraticCurveTo(x, y, x + radius, y);
 			ctx.closePath();
 		};
-
 
 	//Store a reference to each instance - allowing us to globally resize chart instances on window resize.
 	//Destroy method on the chart will remove the instance of the chart from this reference.
@@ -953,7 +941,6 @@
 					var tooltipLabels = [],
 						tooltipColors = [],
 						medianPosition = (function(index) {
-
 							// Get all the points at that particular index
 							var Elements = [],
 								dataCollection,
@@ -974,14 +961,12 @@
 								xPositions.push(element.x);
 								yPositions.push(element.y);
 
-
 								//Include any colour information about the element
 								tooltipLabels.push(helpers.template(this.options.multiTooltipTemplate, element));
 								tooltipColors.push({
 									fill: element._saved.fillColor || element.fillColor,
 									stroke: element._saved.strokeColor || element.strokeColor
 								});
-
 							}, this);
 
 							yMin = min(yPositions);
@@ -1020,7 +1005,6 @@
 						ctx: this.chart.ctx,
 						custom: this.options.customTooltips
 					}).draw();
-
 				} else {
 					each(ChartElements, function(Element) {
 						var tooltipPosition = Element.tooltipPosition();
@@ -1051,7 +1035,6 @@
 	});
 
 	Chart.Type.extend = function(extensions){
-
 		var parent = this;
 
 		var ChartType = function(){
@@ -1066,7 +1049,6 @@
 		ChartType.extend = Chart.Type.extend;
 
 		if (extensions.name || parent.prototype.name){
-
 			var chartName = extensions.name || parent.prototype.name;
 			//Assign any potential default values of the new chart type
 
@@ -1139,7 +1121,6 @@
 
 	Chart.Element.extend = inherits;
 
-
 	Chart.Point = Chart.Element.extend({
 		display: true,
 		inRange: function(chartX,chartY){
@@ -1163,7 +1144,6 @@
 				ctx.stroke();
 			}
 
-
 			//Quick debug for bezier curve splining
 			//Highlights control points and the line between them.
 			//Handy for dev - stripped in the min version.
@@ -1185,15 +1165,11 @@
 			// ctx.stroke();
 
 			// ctx.restore();
-
-
-
 		}
 	});
 
 	Chart.Arc = Chart.Element.extend({
 		inRange : function(chartX,chartY){
-
 			var pointRelativePosition = helpers.getAngleFromPoint(this, {
 				x: chartX,
 				y: chartY
@@ -1215,7 +1191,6 @@
 			};
 		},
 		draw : function(animationPercent){
-
 			var easingDecimal = animationPercent || 1;
 
 			var ctx = this.ctx;
@@ -1285,7 +1260,6 @@
 
 	Chart.Tooltip = Chart.Element.extend({
 		draw : function(){
-
 			var ctx = this.chart.ctx;
 
 			ctx.font = fontString(this.fontSize,this.fontStyle,this.fontFamily);
@@ -1309,7 +1283,6 @@
 			if (this.y - tooltipHeight < 0){
 				this.yAlign = "below";
 			}
-
 
 			var tooltipX = this.x - tooltipWidth/2,
 				tooltipY = this.y - tooltipHeight;
@@ -1383,7 +1356,6 @@
 
 			this.width = longestTextWidth + (this.xPadding*2);
 
-
 			var halfHeight = this.height/2;
 
 			//Check to ensure the height will fit on the canvas
@@ -1399,8 +1371,6 @@
 			} else {
 				this.x += this.xOffset;
 			}
-
-
 		},
 		getLineHeight : function(index){
 			var baseLineHeight = this.y - (this.height/2) + this.yPadding,
@@ -1412,7 +1382,6 @@
 			} else{
 				return baseLineHeight + ((this.fontSize*1.5*afterTitleIndex) + this.fontSize/2) + this.titleFontSize * 1.5;
 			}
-
 		},
 		draw : function(){
 			// Custom Tooltips
@@ -1447,8 +1416,6 @@
 
 					ctx.fillStyle = this.legendColors[index].fill;
 					ctx.fillRect(this.x + this.xPadding, this.getLineHeight(index + 1) - this.fontSize/2, this.fontSize, this.fontSize);
-
-
 				},this);
 			}
 		}
@@ -1524,7 +1491,6 @@
 					this.calculateXLabelRotation();
 				}
 			}
-
 		},
 		calculateXLabelRotation : function(){
 			//Get the width of each grid by calculating the difference
@@ -1536,7 +1502,6 @@
 				lastWidth = this.ctx.measureText(this.xLabels[this.xLabels.length - 1]).width,
 				firstRotated,
 				lastRotated;
-
 
 			this.xScalePaddingRight = lastWidth/2 + 3;
 			this.xScalePaddingLeft = (firstWidth/2 > this.yLabelWidth + 10) ? firstWidth/2 : this.yLabelWidth + 10;
@@ -1563,10 +1528,8 @@
 					}
 					this.xScalePaddingRight = this.fontSize/2;
 
-
 					this.xLabelRotation++;
 					this.xLabelWidth = cosRotation * originalLabelWidth;
-
 				}
 				if (this.xLabelRotation > 0){
 					this.endPoint -= Math.sin(toRadians(this.xLabelRotation))*originalLabelWidth + 3;
@@ -1577,7 +1540,6 @@
 				this.xScalePaddingRight = this.padding;
 				this.xScalePaddingLeft = this.padding;
 			}
-
 		},
 		// Needs to be overidden in each Chart type
 		// Otherwise we need to pass all the data into the scale class
@@ -1659,7 +1621,6 @@
 					ctx.lineTo(xStart, linePositionY);
 					ctx.stroke();
 					ctx.closePath();
-
 				},this);
 
 				each(this.xLabels,function(label,index){
@@ -1695,10 +1656,8 @@
 						ctx.closePath();
 					}
 
-
 					ctx.lineWidth = this.lineWidth;
 					ctx.strokeStyle = this.lineColor;
-
 
 					// Small lines at the bottom of the base grid line
 					ctx.beginPath();
@@ -1716,10 +1675,8 @@
 					ctx.fillText(label, 0, 0);
 					ctx.restore();
 				},this);
-
 			}
 		}
-
 	});
 
 	Chart.RadialScale = Chart.Element.extend({
@@ -1781,7 +1738,6 @@
 			 *
 			 * https://dl.dropboxusercontent.com/u/34601363/yeahscience.gif
 			 */
-
 
 			// Get maximum radius of the polygon. Either half the height (minus the text width) or half the width.
 			// Use this to calculate the offset + change. - Make sure L/R protrusion is at least 0 to stop issues with centre points
@@ -1856,10 +1812,8 @@
 
 			//this.drawingArea = min([maxWidthRadius, (this.height - (2 * (this.pointLabelFontSize + 5)))/2])
 			this.setCenterPoint(radiusReductionLeft, radiusReductionRight);
-
 		},
 		setCenterPoint: function(leftMovement, rightMovement){
-
 			var maxRight = this.width - rightMovement - this.drawingArea,
 				maxLeft = leftMovement + this.drawingArea;
 
@@ -2002,7 +1956,6 @@
 		};
 	})());
 
-
 	if (amd) {
 		define(function(){
 			return Chart;
@@ -2017,7 +1970,6 @@
 		root.Chart = previous;
 		return Chart;
 	};
-
 }).call(this);
 
 (function(){
@@ -2026,7 +1978,6 @@
 	var root = this,
 		Chart = root.Chart,
 		helpers = Chart.helpers;
-
 
 	var defaultConfig = {
 		//Boolean - Whether the scale should start at zero, or an order of magnitude down from the lowest value
@@ -2061,15 +2012,12 @@
 
 		//String - A legend template
 		legendTemplate : "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].fillColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>"
-
 	};
-
 
 	Chart.Type.extend({
 		name: "Bar",
 		defaults : defaultConfig,
 		initialize:  function(data){
-
 			//Expose options as a scope variable here so we can access it in the ScaleClass
 			var options = this.options;
 
@@ -2121,7 +2069,6 @@
 
 			//Iterate through each of the datasets, and build this into a property of the chart
 			helpers.each(data.datasets,function(dataset,datasetIndex){
-
 				var datasetObject = {
 					label : dataset.label || null,
 					fillColor : dataset.fillColor,
@@ -2143,7 +2090,6 @@
 						highlightStroke : dataset.highlightStroke || dataset.strokeColor
 					}));
 				},this);
-
 			},this);
 
 			this.buildScale(data.labels);
@@ -2315,12 +2261,9 @@
 						}, easingDecimal).draw();
 					}
 				},this);
-
 			},this);
 		}
 	});
-
-
 }).call(this);
 
 (function(){
@@ -2358,9 +2301,7 @@
 
 		//String - A legend template
 		legendTemplate : "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<segments.length; i++){%><li><span style=\"background-color:<%=segments[i].fillColor%>\"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>"
-
 	};
-
 
 	Chart.Type.extend({
 		//Passing in a name registers this chart in the Chart namespace
@@ -2370,7 +2311,6 @@
 		//Initialize is fired when the chart is initialized - Data is passed in as a parameter
 		//Config is automatically merged by the core of Chart.js, and is available at this.options
 		initialize:  function(data){
-
 			//Declare segments as a static property to prevent inheriting across the Chart type prototype
 			this.segments = [];
 			this.outerRadius = (helpers.min([this.chart.width,this.chart.height]) -	this.options.segmentStrokeWidth/2)/2;
@@ -2497,7 +2437,6 @@
 					this.segments[index+1].startAngle = segment.endAngle;
 				}
 			},this);
-
 		}
 	});
 
@@ -2505,7 +2444,6 @@
 		name : "Pie",
 		defaults : helpers.merge(defaultConfig,{percentageInnerCutout : 0})
 	});
-
 }).call(this);
 (function(){
 	"use strict";
@@ -2515,7 +2453,6 @@
 		helpers = Chart.helpers;
 
 	var defaultConfig = {
-
 		///Boolean - Whether grid lines are shown across the chart
 		scaleShowGridLines : true,
 
@@ -2560,9 +2497,7 @@
 
 		//String - A legend template
 		legendTemplate : "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].strokeColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>"
-
 	};
-
 
 	Chart.Type.extend({
 		name: "Line",
@@ -2599,7 +2534,6 @@
 
 			//Iterate through each of the datasets, and build this into a property of the chart
 			helpers.each(data.datasets,function(dataset){
-
 				var datasetObject = {
 					label : dataset.label || null,
 					fillColor : dataset.fillColor,
@@ -2610,7 +2544,6 @@
 				};
 
 				this.datasets.push(datasetObject);
-
 
 				helpers.each(dataset.data,function(dataPoint,index){
 					//Add a new point for each piece of data, passing any required data to draw.
@@ -2627,7 +2560,6 @@
 
 				this.buildScale(data.labels);
 
-
 				this.eachPoints(function(point, index){
 					helpers.extend(point, {
 						x: this.scale.calculateX(index),
@@ -2635,9 +2567,7 @@
 					});
 					point.save();
 				}, this);
-
 			},this);
-
 
 			this.render();
 		},
@@ -2724,7 +2654,6 @@
 				});
 			}
 
-
 			this.scale = new Chart.Scale(scaleOptions);
 		},
 		addData : function(valuesArray,label){
@@ -2780,7 +2709,6 @@
 
 			this.scale.draw(easingDecimal);
 
-
 			helpers.each(this.datasets,function(dataset){
 				var pointsWithValues = helpers.where(dataset.points, hasValue);
 
@@ -2795,7 +2723,6 @@
 						}, easingDecimal);
 					}
 				},this);
-
 
 				// Control points need to be calculated in a seperate loop, because we need to know the current x/y of the point
 				// This would cause issues when there is no animation, because the y of the next point would be 0, so beziers would be skewed
@@ -2828,7 +2755,6 @@
 						}
 					},this);
 				}
-
 
 				//Draw the line between all the points
 				ctx.lineWidth = this.options.datasetStrokeWidth;
@@ -2878,8 +2804,6 @@
 			},this);
 		}
 	});
-
-
 }).call(this);
 
 (function(){
@@ -2933,7 +2857,6 @@
 		//String - A legend template
 		legendTemplate : "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<segments.length; i++){%><li><span style=\"background-color:<%=segments[i].fillColor%>\"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>"
 	};
-
 
 	Chart.Type.extend({
 		//Passing in a name registers this chart in the Chart namespace
@@ -3071,7 +2994,6 @@
 					yCenter: this.chart.height/2
 				}
 			);
-
 		},
 		update : function(){
 			this.calculateTotal(this.segments);
@@ -3079,7 +3001,7 @@
 			helpers.each(this.segments,function(segment){
 				segment.save();
 			});
-			
+
 			this.reflow();
 			this.render();
 		},
@@ -3101,7 +3023,6 @@
 					outerRadius : this.scale.calculateCenterOffset(segment.value)
 				});
 			}, this);
-
 		},
 		draw : function(ease){
 			var easingDecimal = ease || 1;
@@ -3130,7 +3051,6 @@
 			this.scale.draw();
 		}
 	});
-
 }).call(this);
 (function(){
 	"use strict";
@@ -3138,8 +3058,6 @@
 	var root = this,
 		Chart = root.Chart,
 		helpers = Chart.helpers;
-
-
 
 	Chart.Type.extend({
 		name: "Radar",
@@ -3197,7 +3115,6 @@
 
 			//String - A legend template
 			legendTemplate : "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].strokeColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>"
-
 		},
 
 		initialize: function(data){
@@ -3232,7 +3149,6 @@
 
 			//Iterate through each of the datasets, and build this into a property of the chart
 			helpers.each(data.datasets,function(dataset){
-
 				var datasetObject = {
 					label: dataset.label || null,
 					fillColor : dataset.fillColor,
@@ -3262,7 +3178,6 @@
 						highlightStroke : dataset.pointHighlightStroke || dataset.pointStrokeColor
 					}));
 				},this);
-
 			},this);
 
 			this.render();
@@ -3349,7 +3264,6 @@
 				return totalDataArray;
 			})();
 
-
 			var scaleSizes = (this.options.scaleOverride) ?
 				{
 					steps: this.options.scaleSteps,
@@ -3369,7 +3283,6 @@
 				this.scale,
 				scaleSizes
 			);
-
 		},
 		addData : function(valuesArray,label){
 			//Map the values array for each of the datasets
@@ -3427,15 +3340,12 @@
 			this.scale.draw();
 
 			helpers.each(this.datasets,function(dataset){
-
 				//Transition each point first so that the line and point drawing isn't out of sync
 				helpers.each(dataset.points,function(point,index){
 					if (point.hasValue()){
 						point.transition(this.scale.getPointPosition(index, this.scale.calculateCenterOffset(point.value)), easeDecimal);
 					}
 				},this);
-
-
 
 				//Draw the line between all the points
 				ctx.lineWidth = this.options.datasetStrokeWidth;
@@ -3463,15 +3373,7 @@
 						point.draw();
 					}
 				});
-
 			},this);
-
 		}
-
 	});
-
-
-
-
-
 }).call(this);

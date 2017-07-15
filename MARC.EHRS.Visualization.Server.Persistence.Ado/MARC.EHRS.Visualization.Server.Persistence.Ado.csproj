@@ -68,12 +68,12 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
     <None Include="AuditModel.dbml">
       <Generator>MSLinqToSQLGenerator</Generator>
       <LastGenOutput>AuditModel.designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </None>
+    <Content Include="Visualizer.licenseheader" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
