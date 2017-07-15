@@ -3,8 +3,8 @@
 [Setup]
 AppId={{3BFA5A48-F91F-4db7-8405-AE431861D190}
 AppName=MARC-HI Visualizer
-AppVerName=MARC-HI Visualizer v4.0
-OutputBaseFilename=visualizer-setup-4.0
+AppVerName=MARC-HI Visualizer v4.1
+OutputBaseFilename=visualizer-setup-4.1
 LicenseFile=.\License.rtf
 AppPublisher=Mohawk College of Applied Arts and Technology
 AppPublisherURL=http://te.marc-hi.ca
@@ -20,18 +20,20 @@ AppCopyright=Copyright (C) 2009-2015, Mohawk College of Applied Arts and Technol
 RestartIfNeededByRun=yes
 WizardImageFile=.\install-logo.bmp
 [Files]
-Source: .\bin\Debug\AtnaApi.dll; DestDir: {app}; Flags: ignoreversion; Components: srv
-Source: .\bin\Debug\ClientAccessPolicy.xml; DestDir: {app}; Flags: ignoreversion; Components: srv
-Source: .\bin\Debug\MARC.EHRS.Visualization.Core.dll; DestDir: {app}; Flags: ignoreversion; Components: srv
-Source: .\bin\Debug\VisualizerServer.exe; DestDir: {app}; Flags: restartreplace ignoreversion; Components: srv
-Source: .\bin\Debug\VisualizerServer.exe.config; DestDir: {app}; Flags: ignoreversion; Components: srv
-Source: .\bin\Debug\MARC.EHRS.VisualizationServer.Notifier.dll; DestDir: {app}; Flags: ignoreversion; Components: srv
-Source: .\bin\Debug\MARC.EHRS.VisualizationServer.Syslog.dll; DestDir: {app}; Flags: ignoreversion; Components: srv
-Source: .\bin\Debug\MARC.HI.EHRS.SVC.Auditing.Atna.dll; DestDir: {app}; Flags: ignoreversion; Components: srv
-Source: .\bin\Debug\MARC.HI.EHRS.SVC.Auditing.dll; DestDir: {app}; Flags: ignoreversion; Components: srv
-Source: .\bin\Debug\MARC.HI.EHRS.SVC.Core.dll; DestDir: {app}; Flags: ignoreversion; Components: srv
-Source: .\bin\Debug\MARC.HI.EHRS.SVC.Messaging.Multi.dll; DestDir: {app}; Flags: ignoreversion; Components: srv
-Source: .\bin\Debug\MARC.EHRS.VisualizationServer.Actions.dll; DestDir: {app}; Flags: ignoreversion; Components: srv
+Source: .\bin\Release\AtnaApi.dll; DestDir: {app}; Flags: ignoreversion; Components: srv
+Source: .\bin\Release\ClientAccessPolicy.xml; DestDir: {app}; Flags: ignoreversion; Components: srv
+Source: .\bin\Release\MARC.EHRS.Visualization.Core.dll; DestDir: {app}; Flags: ignoreversion; Components: srv
+Source: .\bin\Release\VisualizerServer.exe; DestDir: {app}; Flags: restartreplace ignoreversion; Components: srv
+Source: .\bin\Release\VisualizerServer.exe.config; DestDir: {app}; Flags: ignoreversion; Components: srv
+Source: .\bin\Release\MARC.EHRS.VisualizationServer.Actions.dll; DestDir: {app}; Flags: ignoreversion; Components: srv
+Source: .\bin\Release\MARC.EHRS.VisualizationServer.Notifier.dll; DestDir: {app}; Flags: ignoreversion; Components: srv
+Source: .\bin\Release\MARC.EHRS.Visualization.Server.Persistence.Ado.dll; DestDir: {app}; Flags: ignoreversion; Components: srv
+Source: .\bin\Release\MARC.EHRS.VisualizationServer.Syslog.dll; DestDir: {app}; Flags: ignoreversion; Components: srv
+Source: .\bin\Release\MARC.HI.EHRS.SVC.Auditing.Atna.dll; DestDir: {app}; Flags: ignoreversion; Components: srv
+Source: .\bin\Release\MARC.HI.EHRS.SVC.Auditing.dll; DestDir: {app}; Flags: ignoreversion; Components: srv
+Source: .\bin\Release\MARC.HI.EHRS.SVC.Core.dll; DestDir: {app}; Flags: ignoreversion; Components: srv
+Source: .\bin\Release\MARC.HI.EHRS.SVC.Messaging.Multi.dll; DestDir: {app}; Flags: ignoreversion; Components: srv
+Source: .\bin\Release\MARC.EHRS.VisualizationServer.Actions.dll; DestDir: {app}; Flags: ignoreversion; Components: srv
 Source: .\Solution Items\Npgsql.dll; DestDir: {app}; Flags: ignoreversion; Components: srv
 Source: .\Solution Items\Mono.Security.dll; DestDir: {app}; Flags: ignoreversion; Components: srv
 Source: .\Solution Items\MARC.HI.EHRS.SVC.Core.Timer.dll; DestDir: {app}; Flags: ignoreversion; Components: srv

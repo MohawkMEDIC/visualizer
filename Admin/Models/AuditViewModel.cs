@@ -70,7 +70,7 @@ namespace Admin.Models
         {
             get
             {
-                return this.Audit.Event.Actors.FirstOrDefault(a => a.UserIsRequestor && a.ActorRoleCode.Count(r => r.Code == "110153") > 0);
+                return this.Audit.Event.Actors.FirstOrDefault(a => a.ActorRoleCode.Count(r => r.Code == "110153") > 0);
                 
             }
         }
@@ -82,7 +82,7 @@ namespace Admin.Models
         {
             get
             {
-                return this.Audit.Event.Actors.FirstOrDefault(a => !a.UserIsRequestor && a.ActorRoleCode.Count(r => r.Code == "110152") > 0);
+                return this.Audit.Event.Actors.FirstOrDefault(a => a.ActorRoleCode.Count(r => r.Code == "110152") > 0);
             }
         }
 
