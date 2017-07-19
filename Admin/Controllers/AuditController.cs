@@ -312,19 +312,10 @@ namespace Admin.Controllers
 
 					pageId = Int32.Parse(Request.QueryString["count"]);
 				// View bag stuff for codes
-				ViewBag.EventCode = this.GetAttributeValues("EventCode", null);
-				ViewBag.ActionCode = this.GetAttributeValues("ActionCode", null);
-				ViewBag.OutcomeCode = this.GetAttributeValues("OutcomeCode", null);
-				ViewBag.EventType = this.GetAttributeValues("EventType", null);
-				ViewBag.UserId = this.GetAttributeValues("PtcptUserId", null);
-				ViewBag.ParticipantRoleCode = this.GetAttributeValues("PtcptObjectRoleCodeDisplay", null);
-				ViewBag.ObjectTypeCode = this.GetAttributeValues("ObjTypeCode", null);
-				ViewBag.ObjectLifecycle = this.GetAttributeValues("ObjLifecycle", null);
-				ViewBag.ObjectRoleCode = this.GetAttributeValues("ObjRoleCode", null);
-				ViewBag.ObjectIdTypeCode = this.GetAttributeValues("ObjIdTypeCode", null);
 				ViewBag.ShowObjectParms = false;
 				ViewBag.ShowParticipantParms = false;
 				ViewBag.ShowRootParms = true;
+				ViewBag.ShowSourceParams = false;
 
 				Response.CacheControl = "no-cache";
 				Response.AddHeader("Pragma", "no-cache");
@@ -370,10 +361,27 @@ namespace Admin.Controllers
 				}
 
 				// Audit
-				if (results.Count() > 0)
+				if (results.Any())
 					AuditUtil.AuditAuditLogUsed(this, AtnaApi.Model.OutcomeIndicator.Success, AtnaApi.Model.ActionType.Read, AtnaApi.Model.EventIdentifierType.Query, AtnaApi.Model.AuditableObjectLifecycle.Disclosure, results.Skip(pageId * resultsPerPage).Take(resultsPerPage).ToArray());
 
-				return PartialView(new AuditSummaryCollectionViewModel(results));
+				var model = new AuditSummaryCollectionViewModel(results)
+				{
+					AuditSourceNames = this.GetAttributeValues("AuditSourceName", null).ToList(),
+					AuditSourceTypes = this.GetAttributeValues("AuditSourceType", null).ToList(),
+					EnterpriseSiteNames = this.GetAttributeValues("EnterpriseSiteName", null).ToList(),
+					EventCodes = this.GetAttributeValues("EventCode", null).ToList(),
+					ActionCodes = this.GetAttributeValues("ActionCode", null).ToList(),
+					OutcomeCodes = this.GetAttributeValues("OutcomeCode", null).ToList(),
+					EventTypes = this.GetAttributeValues("EventType", null).ToList(),
+					UserIds = this.GetAttributeValues("PtcptUserId", null).ToList(),
+					ParticipationRoleCodes = this.GetAttributeValues("PtcptObjectRoleCodeDisplay", null).ToList(),
+					ObjectTypeCodes = this.GetAttributeValues("ObjTypeCode", null).ToList(),
+					ObjectLifecycleCodes = this.GetAttributeValues("ObjLifecycle", null).ToList(),
+					ObjectRoleCodes = this.GetAttributeValues("ObjRoleCode", null).ToList(),
+					ObjectIdTypeCodes = this.GetAttributeValues("ObjIdTypeCode", null).ToList()
+				};
+
+				return PartialView(model);
 			}
 			catch (Exception e)
 			{
