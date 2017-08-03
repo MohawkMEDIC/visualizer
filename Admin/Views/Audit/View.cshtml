@@ -15,7 +15,7 @@
                 Event occurring on @Model.Audit.Event.EventIdentification.EventDateTime.ToString("dddd MMM dd, yyyy @ HH:mm:ss")  .
                 @if (Model.SourceSystem != null)
                 {
-                    <span>You can view <a href="javascript:" onclick="javascript:AuditTool.SetViewEx('@Url.Action("Search")', { 'Participant::RawUserId':'@Model.SourceSystem.UserIdentifier.Replace("\\", "\\\\")', 'CreationTimestamp':'>@Model.DalModel.CreationTimestamp.Subtract(new TimeSpan(0, 2, 30))', '@Html.Raw("@CreationTimestamp")' : '<@Model.DalModel.CreationTimestamp.AddMinutes(2).AddSeconds(30)' });">Related Audits</a> (same user created within 5 minutes of this audit)</span>
+                    <span>You can view <a href="javascript:" onclick="javascript:AuditTool.SetViewEx('@Url.Action("Search")', { 'Participant::RawUserId':'@(Model.SourceSystem?.UserIdentifier?.Replace("\\", "\\\\"))', 'CreationTimestamp':'>@Model.DalModel.CreationTimestamp.Subtract(new TimeSpan(0, 2, 30))', '@Html.Raw("@CreationTimestamp")' : '<@Model.DalModel.CreationTimestamp.AddMinutes(2).AddSeconds(30)' });">Related Audits</a> (same user created within 5 minutes of this audit)</span>
                 }
             </small>
         </div>
@@ -119,7 +119,8 @@
                         break;
                     case AtnaApi.Model.EventIdentifierType.UseOfRestrictedFunction:
                     case AtnaApi.Model.EventIdentifierType.UserAuthentication:
-                <span class="label label-danger" data-toggle="tooltip" data-placement="left" data-original-title="This event id indicates that some use of a security function">@Html.Raw(Model.Audit.Event.EventIdentification.EventId.DisplayName) (AUTHENTICATE)</span>
+                        case AtnaApi.Model.EventIdentifierType.SecurityAlert:
+                <span class="label label-danger" data-toggle="tooltip" data-placement="left" data-original-title="This event id indicates that some use of a security function">@Html.Raw(Model.Audit.Event.EventIdentification.EventId.DisplayName) (SECURITY)</span>
                         break;
 
                 }
@@ -365,7 +366,7 @@
 
                                         }
 
-                                        @ao.IDTypeCode.DisplayName</span>
+                                        @(ao.IDTypeCode?.DisplayName)</span>
                                     @Admin.Util.HtmlDisplayUtils.BuildItemLink(ao)
                                 </div>
                             </div>
