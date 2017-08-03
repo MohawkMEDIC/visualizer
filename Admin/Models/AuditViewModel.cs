@@ -58,8 +58,9 @@ namespace Admin.Models
 		}
 
 		/// <summary>
-		/// ID of the audit
+		/// Gets or sets the identifier.
 		/// </summary>
+		/// <value>The identifier.</value>
 		public int Id { get; set; }
 
 		/// <summary>
@@ -73,57 +74,30 @@ namespace Admin.Models
 			}
 		}
 
-        /// <summary>
-        /// Get the source system(s)
-        /// </summary>
-        public ActorInfo SourceUser
-        {
-            get
-            {
-                var ret = this.Audit.Event.Actors.FirstOrDefault(a => a.UserIsRequestor && a.ActorRoleCode.Count(r => r.Code == "110153") == 0);
-                if (ret is ActorInfo)
-                    return ret as ActorInfo;
-                else if (ret != null)
-                    return new ActorInfo()
-                    {
-                        ActorRoleCode = ret.ActorRoleCode,
-                        AlternativeUserId = ret.AlternativeUserId,
-                        NetworkAccessPointId = ret.NetworkAccessPointId,
-                        NetworkAccessPointType = ret.NetworkAccessPointType,
-                        UserIdentifier = ret.UserIdentifier,
-                        UserIsRequestor = ret.UserIsRequestor,
-                        UserName = ret.UserName
-                    };
-                else
-                    return null;
-
-            }
-        }
-        
-        /// <summary>
-        /// Get the source users system(s)
-        /// </summary>
-        public AuditActorData SourceSystem
-        {
-            get
-            {
-                return this.Audit.Event.Actors.FirstOrDefault(a => a.UserIsRequestor && a.ActorRoleCode.Count(r => r.Code == "110153") > 0);
-                
-            }
-        }
-
-        /// <summary>
-        /// Get the source users system(s)
-        /// </summary>
-        public AuditActorData DestinationSystem
-        {
-            get
-            {
-                return this.Audit.Event.Actors.FirstOrDefault(a => !a.UserIsRequestor && a.ActorRoleCode.Count(r => r.Code == "110152") > 0);
-            }
-        }
-
-
-        public AuditSummaryVw DalModel { get; set; }
-    }
+		/// <summary>
+		/// Get the source system(s)
+		/// </summary>
+		public ActorInfo SourceUser
+		{
+			get
+			{
+				var ret = this.Audit.Event.Actors.FirstOrDefault(a => a.UserIsRequestor && a.ActorRoleCode.Count(r => r.Code == "110153") == 0);
+				if (ret is ActorInfo)
+					return ret as ActorInfo;
+				else if (ret != null)
+					return new ActorInfo()
+					{
+						ActorRoleCode = ret.ActorRoleCode,
+						AlternativeUserId = ret.AlternativeUserId,
+						NetworkAccessPointId = ret.NetworkAccessPointId,
+						NetworkAccessPointType = ret.NetworkAccessPointType,
+						UserIdentifier = ret.UserIdentifier,
+						UserIsRequestor = ret.UserIsRequestor,
+						UserName = ret.UserName
+					};
+				else
+					return null;
+			}
+		}
+	}
 }
