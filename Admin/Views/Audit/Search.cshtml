@@ -21,7 +21,7 @@
                     <div class="panel-body panel-collapse collapse @String.Format("{0}", ViewBag.ShowRootParms?"in":"")" id="eventSearchParms">
                         <table class="table">
                             <tr>
-                                <th style="width: 20%">Status <span class="label label-info" data-toggle="tooltip" data-original-title="When you select multiple the filter will match ANY of the selected items">(OR)</span></th>
+                                <th style="width: 20%">Status <span class="label label-info" data-toggle="tooltip" data-container="body" data-original-title="When you select multiple the filter will match ANY of the selected items">(OR)</span></th>
                                 <td style="width: 80%">
                                     <select data-filter-by="StatusCode" data-filter-summarize="#querySummary" style="width: 100%; display: none" multiple="multiple">
                                         @*<option value="">Any</option>*@
@@ -53,7 +53,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <th>Classification <span class="label label-info" data-toggle="tooltip" data-original-title="When you select multiple the filter will match ANY of the selected items">(OR)</span></th>
+                                <th>Classification <span class="label label-info" data-toggle="tooltip" data-container="body" data-original-title="When you select multiple the filter will match ANY of the selected items">(OR)</span></th>
                                 <td>
                                     <select data-filter-by="EventCode" data-filter-summarize="#querySummary" style="width: 100%; display: none" multiple="multiple">
                                         @foreach (var n in Model.EventCodes)
@@ -64,7 +64,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <th>Action <span class="label label-info" data-toggle="tooltip" data-original-title="When you select multiple the filter will match ANY of the selected items">(OR)</span></th>
+                                <th>Action <span class="label label-info" data-toggle="tooltip" data-container="body" data-original-title="When you select multiple the filter will match ANY of the selected items">(OR)</span></th>
                                 <td>
                                     <select data-filter-by="ActionCode" data-filter-summarize="#querySummary" style="width: 100%; display: none" multiple="multiple">
                                         @foreach (var n in Model.ActionCodes)
@@ -75,7 +75,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <th>Outcome <span class="label label-info" data-toggle="tooltip" data-original-title="When you select multiple the filter will match ANY of the selected items">(OR)</span></th>
+                                <th>Outcome <span class="label label-info" data-toggle="tooltip" data-container="body" data-original-title="When you select multiple the filter will match ANY of the selected items">(OR)</span></th>
                                 <td>
                                     <select data-filter-by="OutcomeCode" data-filter-summarize="#querySummary" style="width: 100%; display: none" multiple="multiple">
                                         @foreach (var n in Model.OutcomeCodes)
@@ -86,7 +86,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <th>Event Type <span class="label label-info" data-toggle="tooltip" data-original-title="When you select multiple the filter will match ANY of the selected items">(OR)</span></th>
+                                <th>Event Type <span class="label label-info" data-toggle="tooltip" data-container="body" data-original-title="When you select multiple the filter will match ANY of the selected items">(OR)</span></th>
                                 <td>
                                     <select data-filter-by="EventType" data-filter-summarize="#querySummary" style="width: 100%; display: none" multiple="multiple">
                                         @foreach (var n in Model.EventTypes)
@@ -118,7 +118,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <th>Source Name <span class="label label-info" data-toggle="tooltip" data-original-title="When you select multiple the filter will match ANY of the selected items">(OR)</span></th>
+                                <th>Source Name <span class="label label-info" data-toggle="tooltip" data-container="body" data-original-title="When you select multiple the filter will match ANY of the selected items">(OR)</span></th>
                                 <td>
                                     <select data-filter-by="Source::AuditSourceName" data-filter-summarize="#querySummary" style="width: 100%; display: none" multiple="multiple">
                                         @foreach (var n in Model.AuditSourceNames)
@@ -129,7 +129,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <th>Enterprise Site <span class="label label-info" data-toggle="tooltip" data-original-title="When you select multiple the filter will match ANY of the selected items">(OR)</span></th>
+                                <th>Enterprise Site <span class="label label-info" data-toggle="tooltip" data-container="body" data-original-title="When you select multiple the filter will match ANY of the selected items">(OR)</span></th>
                                 <td>
                                     <select data-filter-by="Source::EnterpriseSiteName" data-filter-summarize="#querySummary" style="width: 100%; display: none" multiple="multiple">
                                         @foreach (var n in Model.EnterpriseSiteNames)
@@ -161,13 +161,13 @@
                                 </td>
                             </tr>
                             <tr>
-                                <th style="width: 20%">On Access Pt. <span class="label label-info" data-toggle="tooltip" data-original-title="You can select on text semantics: ! = NOT, ~ = LIKE, ',' = OR. For example: 'Tim,~Jim,!Bob' = Tim OR LIKE Jim OR NOT Bob ">(TEXT)</span></th>
+                                <th style="width: 20%">On Access Pt. <span class="label label-info" data-toggle="tooltip" data-container="body" data-original-title="You can select on text semantics: ! = NOT, ~ = LIKE, ',' = OR. For example: 'Tim,~Jim,!Bob' = Tim OR LIKE Jim OR NOT Bob ">(TEXT)</span></th>
                                 <td style="width: 80%">
                                     <input type="text" class="form-control" data-filter-by="Participant::NetworkAccessPoint" data-filter-summarize="#querySummary" />
                                 </td>
                             </tr>
                             <tr>
-                                <th>Identifier <span class="label label-info" data-toggle="tooltip" data-original-title="When you select multiple the filter will match ANY of the selected items">(OR)</span></th>
+                                <th>Identifier <span class="label label-info" data-toggle="tooltip" data-container="body" data-original-title="When you select multiple the filter will match ANY of the selected items">(OR)</span></th>
                                 <td>
                                     <select data-filter-by="Participant::RawUserId" data-filter-summarize="#querySummary" style="width: 100%; display: none" multiple="multiple">
                                         @foreach (var n in Model.UserIds)
@@ -188,7 +188,7 @@
                     <div class="panel-body panel-collapse collapse  @String.Format("{0}", ViewBag.ShowObjectParms?"in":"")" id="objectSearchParms">
                         <table class="table">
                             <tr>
-                                <th style="width: 20%">Identifier <span class="label label-info" data-toggle="tooltip" data-original-title="You can select on text semantics: ! = NOT, ~ = LIKE, ',' = OR. For example: 'Tim,~Jim,!Bob' = Tim OR LIKE Jim OR NOT Bob ">(TEXT)</span></th>
+                                <th style="width: 20%">Identifier <span class="label label-info" data-container="body" data-toggle="tooltip" data-original-title="You can select on text semantics: ! = NOT, ~ = LIKE, ',' = OR. For example: 'Tim,~Jim,!Bob' = Tim OR LIKE Jim OR NOT Bob ">(TEXT)</span></th>
                                 <td style="width: 30%">
                                     <input class="form-control" type="text" style="width: 100%" data-filter-by="Object::ExternalIdentifier" data-filter-summarize="#querySummary" />
                                 </td>
@@ -204,7 +204,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <th>Role <span class="label label-info" data-toggle="tooltip" data-original-title="When you select multiple the filter will match ANY of the selected items">(OR)</span></th>
+                                <th>Role <span class="label label-info" data-toggle="tooltip" data-container="body" data-original-title="When you select multiple the filter will match ANY of the selected items">(OR)</span></th>
                                 <td colspan="3">
                                     <select data-filter-by="Object::RoleCode" data-filter-summarize="#querySummary" style="width: 100%; display: none" multiple="multiple">
                                         @foreach (var n in Model.ObjectRoleCodes)
@@ -215,7 +215,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <th>Type Code <span class="label label-info" data-toggle="tooltip" data-original-title="When you select multiple the filter will match ANY of the selected items">(OR)</span></th>
+                                <th>Type Code <span class="label label-info" data-toggle="tooltip" data-container="body" data-original-title="When you select multiple the filter will match ANY of the selected items">(OR)</span></th>
                                 <td colspan="3">
                                     <select data-filter-by="Object::TypeCode" data-filter-summarize="#querySummary" style="width: 100%; display: none" multiple="multiple">
                                         @foreach (var n in Model.ObjectTypeCodes)
@@ -226,7 +226,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <th>Lifecycle <span class="label label-info" data-toggle="tooltip" data-original-title="When you select multiple the filter will match ANY of the selected items">(OR)</span></th>
+                                <th>Lifecycle <span class="label label-info" data-toggle="tooltip" data-container="body" data-original-title="When you select multiple the filter will match ANY of the selected items">(OR)</span></th>
                                 <td colspan="3">
                                     <select data-filter-by="Object::LifecycleCode" data-filter-summarize="#querySummary" style="width: 100%; display: none" multiple="multiple">
                                         @foreach (var n in Model.ObjectLifecycleCodes)
@@ -252,8 +252,8 @@
     <div class="row">
         <div class="col-md-12">
 
-            <button class="btn btn-primary" style="float:right" data-original-title="Submit the query to the repository" data-toggle="tooltip" onclick="javascript:AuditTool.AdvancedSearch(this, AuditTool.ViewFilter);"><span class="glyphicon glyphicon-search"></span> Search</button>
-            <button class="btn btn-info" style="float:right" data-original-title="Submit the query and send to chart view" data-toggle="tooltip" onclick="javascript:AuditTool.ShowStatsView(AuditTool.ViewFilter);"><span class="glyphicon glyphicon-stats"></span> Chart</button>
+            <button class="btn btn-primary" style="float:right" data-original-title="Submit the query to the repository" data-toggle="tooltip" data-container="body" onclick="javascript:AuditTool.AdvancedSearch(this, AuditTool.ViewFilter);"><span class="glyphicon glyphicon-search"></span> Search</button>
+            <button class="btn btn-info" style="float:right" data-original-title="Submit the query and send to chart view" data-toggle="tooltip" data-container="body" onclick="javascript:AuditTool.ShowStatsView(AuditTool.ViewFilter);"><span class="glyphicon glyphicon-stats"></span> Chart</button>
             <div style="clear:both" ></div>
         </div>
     </div>

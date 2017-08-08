@@ -13,9 +13,9 @@
         <div class="col-md-12">
             <div style="float: right">
                 <a href="#filterBody" data-toggle="collapse" data-parent="filterControls" data-original-title="Filter this result set"><span class="glyphicon glyphicon-filter"></span></a>|
-                <a href="javascript:" data-toggle="tooltip"  data-original-title="View this list as a chart" onclick="javascript:AuditTool.ShowStatsView(AuditTool.ViewFilter)"><span class="glyphicon glyphicon-stats"></span><sup><span class="glyphicon glyphicon-asterisk"></span></sup></a>|
-                <a href="javascript:" data-toggle="tooltip"  data-original-title="Archive all audits matching this query" onclick="javascript:AuditTool.ArchiveAll(AuditTool.ViewFilter)"><span class="glyphicon glyphicon-briefcase"></span><sup><span class="glyphicon glyphicon-asterisk"></span></sup></a>|
-                <a href="javascript:" data-toggle="tooltip"  data-original-title="Delete all audits matching this query" onclick="javascript:AuditTool.DeleteAll(AuditTool.ViewFilter)"><span class="glyphicon glyphicon-trash"></span><sup><span class="glyphicon glyphicon-asterisk"></span></sup></a>
+                <a href="javascript:" data-toggle="tooltip" data-container="body" data-original-title="View this list as a chart" onclick="javascript:AuditTool.ShowStatsView(AuditTool.ViewFilter)"><span class="glyphicon glyphicon-stats"></span><sup><span class="glyphicon glyphicon-asterisk"></span></sup></a>|
+                <a href="javascript:" data-toggle="tooltip" data-container="body" data-original-title="Archive all audits matching this query" onclick="javascript:AuditTool.ArchiveAll(AuditTool.ViewFilter)"><span class="glyphicon glyphicon-briefcase"></span><sup><span class="glyphicon glyphicon-asterisk"></span></sup></a>|
+                <a href="javascript:" data-toggle="tooltip" data-container="body" data-original-title="Delete all audits matching this query" onclick="javascript:AuditTool.DeleteAll(AuditTool.ViewFilter)"><span class="glyphicon glyphicon-trash"></span><sup><span class="glyphicon glyphicon-asterisk"></span></sup></a>
             </div>
             <div style="clear: both" />
         </div>
@@ -26,7 +26,7 @@
                 <div class="panel panel-default panel-body panel-collapse collapse @String.Format("{0}", Request.Url.ToString().Contains("showFilterBar=true")?"in":"")" id="filterBody">
                         <table class="table">
                             <tr>
-                                <th style="width:20%">Status <span class="label label-info" data-toggle="tooltip"  data-original-title="When you select multiple the filter will match ANY of the selected items">(OR)</span></th>
+                                <th style="width:20%">Status <span class="label label-info" data-toggle="tooltip" data-container="body" data-original-title="When you select multiple the filter will match ANY of the selected items">(OR)</span></th>
                                 <td  style="width:80%">
                                     <select data-filter-autosubmit="true" data-filter-by="StatusCode" style="width:100%; display:none" multiple="multiple">
                                         @*<option value="">Any</option>*@
@@ -52,7 +52,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <th>Classification <span class="label label-info" data-toggle="tooltip"  data-original-title="When you select multiple the filter will match ANY of the selected items">(OR)</span></th>
+                                <th>Classification <span class="label label-info" data-toggle="tooltip" data-container="body" data-original-title="When you select multiple the filter will match ANY of the selected items">(OR)</span></th>
                                 <td>
                                     <select data-filter-autosubmit="true" data-filter-by="EventCode"  style="width:100%; display:none" multiple="multiple">
                                         @foreach (var n in ViewBag.EventCode)
@@ -63,7 +63,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <th>Action <span class="label label-info" data-toggle="tooltip"  data-original-title="When you select multiple the filter will match ANY of the selected items">(OR)</span></th>
+                                <th>Action <span class="label label-info" data-toggle="tooltip" data-container="body" data-original-title="When you select multiple the filter will match ANY of the selected items">(OR)</span></th>
                                 <td>
                                     <select data-filter-autosubmit="true" data-filter-by="ActionCode" style="width:100%; display:none"  multiple="multiple">
                                         @foreach (var n in ViewBag.ActionCode)
@@ -74,7 +74,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <th>Outcome <span class="label label-info" data-toggle="tooltip"  data-original-title="When you select multiple the filter will match ANY of the selected items">(OR)</span></th>
+                                <th>Outcome <span class="label label-info" data-toggle="tooltip" data-container="body" data-original-title="When you select multiple the filter will match ANY of the selected items">(OR)</span></th>
                                 <td>
                                     <select data-filter-autosubmit="true" data-filter-by="OutcomeCode" style="width:100%; display:none" multiple="multiple">
                                         @foreach (var n in ViewBag.OutcomeCode)
@@ -85,7 +85,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <th>Event Type <span class="label label-info" data-toggle="tooltip"   data-original-title="You can select on text semantics: ! = NOT, ~ = LIKE, ',' = OR. For example: 'Tim,~Jim,!Bob' = Tim OR LIKE Jim OR NOT Bob ">(TEXT)</span></th>
+                                <th>Event Type <span class="label label-info" data-toggle="tooltip" data-container="body" data-original-title="You can select on text semantics: ! = NOT, ~ = LIKE, ',' = OR. For example: 'Tim,~Jim,!Bob' = Tim OR LIKE Jim OR NOT Bob ">(TEXT)</span></th>
                                 <td>
                                     <select data-filter-autosubmit="true" data-filter-by="EventType" style="width:100%; display:none" multiple="multiple">
                                         @foreach (var n in ViewBag.EventType)

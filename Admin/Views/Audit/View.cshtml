@@ -77,13 +77,13 @@
                 <span class="label label-success"><span class="glyphicon glyphicon-ok-sign"></span>Success</span>
                         break;
                     case AtnaApi.Model.OutcomeIndicator.MinorFail:
-                <span class="label label-warning" data-toggle="tooltip" data-placement="left" data-original-title="An error occurred, however appropriate safety measures were taken"><span class="glyphicon glyphicon-info-sign"></span>Minor Failure</span>
+                <span class="label label-warning" data-toggle="tooltip" data-container="body" data-placement="left" data-original-title="An error occurred, however appropriate safety measures were taken"><span class="glyphicon glyphicon-info-sign"></span>Minor Failure</span>
                         break;
                     case AtnaApi.Model.OutcomeIndicator.SeriousFail:
-                <span class="label label-warning" data-toggle="tooltip" data-placement="left" data-original-title="An error occurred and action was taken, more investigation should be performed"><span class="glyphicon glyphicon-warning-sign"></span>Serious Failure</span>
+                <span class="label label-warning" data-toggle="tooltip" data-container="body" data-placement="left" data-original-title="An error occurred and action was taken, more investigation should be performed"><span class="glyphicon glyphicon-warning-sign"></span>Serious Failure</span>
                         break;
                     case AtnaApi.Model.OutcomeIndicator.EpicFail:
-                <span class="label label-danger" data-toggle="tooltip" data-placement="left" data-original-title="An error occurred and action was taken, however this represents a potential security and/or privacy breech"><span class="glyphicon glyphicon-exclamation-sign"></span>Major Failure</span>
+                <span class="label label-danger" data-toggle="tooltip" data-container="body" data-placement="left" data-original-title="An error occurred and action was taken, however this represents a potential security and/or privacy breech"><span class="glyphicon glyphicon-exclamation-sign"></span>Major Failure</span>
                         break;
 
                     default:
@@ -99,12 +99,12 @@
                 {
                     case AtnaApi.Model.EventIdentifierType.ApplicationActivity:
                     case AtnaApi.Model.EventIdentifierType.NetowrkActivity:
-                <span class="label label-info" data-toggle="tooltip" data-placement="left" data-original-title="This event is generated as part of regularily occuring application function">@Html.Raw(Model.Audit.Event.EventIdentification.EventId.DisplayName) (APP)</span>
+                <span class="label label-info" data-toggle="tooltip" data-container="body" data-placement="left" data-original-title="This event is generated as part of regularily occuring application function">@Html.Raw(Model.Audit.Event.EventIdentification.EventId.DisplayName) (APP)</span>
                         break;
                     case AtnaApi.Model.EventIdentifierType.Disclosure:
                     case AtnaApi.Model.EventIdentifierType.Export:
                     case AtnaApi.Model.EventIdentifierType.Query:
-                <span class="label label-warning" data-toggle="tooltip" data-placement="left" data-original-title="This event id indicates that some data was obtained or sent to a remote host">@Html.Raw(Model.Audit.Event.EventIdentification.EventId.DisplayName) (READ)</span>
+                <span class="label label-warning" data-toggle="tooltip" data-container="body" data-placement="left" data-original-title="This event id indicates that some data was obtained or sent to a remote host">@Html.Raw(Model.Audit.Event.EventIdentification.EventId.DisplayName) (READ)</span>
                         break;
                     case AtnaApi.Model.EventIdentifierType.CareEpisode:
                     case AtnaApi.Model.EventIdentifierType.CareProtocol:
@@ -115,12 +115,12 @@
                     case AtnaApi.Model.EventIdentifierType.ProcedureRecord:
                     case AtnaApi.Model.EventIdentifierType.ProvisioningEvent:
                     case AtnaApi.Model.EventIdentifierType.ResourceAssignment:
-                <span class="label label-danger" data-toggle="tooltip" data-placement="left" data-original-title="This event id indicates that some data was created, updated, deleted, or otherwise modified by a remote system">@Html.Raw(Model.Audit.Event.EventIdentification.EventId.DisplayName) (WRITE)</span>
+                <span class="label label-danger" data-toggle="tooltip" data-container="body" data-placement="left" data-original-title="This event id indicates that some data was created, updated, deleted, or otherwise modified by a remote system">@Html.Raw(Model.Audit.Event.EventIdentification.EventId.DisplayName) (WRITE)</span>
                         break;
                     case AtnaApi.Model.EventIdentifierType.UseOfRestrictedFunction:
                     case AtnaApi.Model.EventIdentifierType.UserAuthentication:
                         case AtnaApi.Model.EventIdentifierType.SecurityAlert:
-                <span class="label label-danger" data-toggle="tooltip" data-placement="left" data-original-title="This event id indicates that some use of a security function">@Html.Raw(Model.Audit.Event.EventIdentification.EventId.DisplayName) (SECURITY)</span>
+                <span class="label label-danger" data-toggle="tooltip" data-container="body" data-placement="left" data-original-title="This event id indicates that some use of a security function">@Html.Raw(Model.Audit.Event.EventIdentification.EventId.DisplayName) (SECURITY)</span>
                         break;
 
                 }
@@ -415,7 +415,7 @@
                                         case AtnaApi.Model.AuditableObjectRole.SecurityGroup:
                                         case AtnaApi.Model.AuditableObjectRole.SecurityResource:
                                         case AtnaApi.Model.AuditableObjectRole.SecurityUser:
-                                        <span class="label label-danger" data-toggle="tooltip" data-placement="left" data-original-title="This object is related to application security"><span class="glyphicon glyphicon-lock"></span>@ao.Role</span>
+                                        <span class="label label-danger" data-toggle="tooltip" data-container="body" data-placement="left" data-original-title="This object is related to application security"><span class="glyphicon glyphicon-lock"></span>@ao.Role</span>
                                             break;
                                         case AtnaApi.Model.AuditableObjectRole.Customer:
                                         case AtnaApi.Model.AuditableObjectRole.Doctor:
@@ -423,31 +423,31 @@
                                         case AtnaApi.Model.AuditableObjectRole.Patient:
                                         case AtnaApi.Model.AuditableObjectRole.Provider:
                                         case AtnaApi.Model.AuditableObjectRole.User:
-                                        <span class="label label-info" data-toggle="tooltip" data-placement="left" data-original-title="This object is represents a person"><span class="glyphicon glyphicon-user"></span>@ao.Role</span>
+                                        <span class="label label-info" data-toggle="tooltip" data-container="body" data-placement="left" data-original-title="This object is represents a person"><span class="glyphicon glyphicon-user"></span>@ao.Role</span>
                                             break;
                                         case AtnaApi.Model.AuditableObjectRole.Location:
-                                        <span class="label label-info" data-toggle="tooltip" data-placement="left" data-original-title="This object is represents a physical location"><span class="glyphicon glyphicon-globe"></span>@ao.Role</span>
+                                        <span class="label label-info" data-toggle="tooltip" data-container="body" data-placement="left" data-original-title="This object is represents a physical location"><span class="glyphicon glyphicon-globe"></span>@ao.Role</span>
                                             break;
                                         case AtnaApi.Model.AuditableObjectRole.DataDestination:
                                         case AtnaApi.Model.AuditableObjectRole.DataRepository:
                                         case AtnaApi.Model.AuditableObjectRole.Table:
-                                        <span class="label label-info" data-toggle="tooltip" data-placement="left" data-original-title="This object is represents a data repository"><span class="glyphicon glyphicon-folder"></span>@ao.Role</span>
+                                        <span class="label label-info" data-toggle="tooltip" data-container="body" data-placement="left" data-original-title="This object is represents a data repository"><span class="glyphicon glyphicon-folder"></span>@ao.Role</span>
                                             break;
                                         case AtnaApi.Model.AuditableObjectRole.Job:
-                                        <span class="label label-info" data-toggle="tooltip" data-placement="left" data-original-title="This object is represents a job that the server executed"><span class="glyphicon glyphicon-retweet"></span>@ao.Role</span>
+                                        <span class="label label-info" data-toggle="tooltip" data-container="body" data-placement="left" data-original-title="This object is represents a job that the server executed"><span class="glyphicon glyphicon-retweet"></span>@ao.Role</span>
                                             break;
                                         case AtnaApi.Model.AuditableObjectRole.JobStream:
-                                        <span class="label label-info" data-toggle="tooltip" data-placement="left" data-original-title="This object is represents an export or attachment containing the results of an operation"><span class="glyphicon glyphicon-paperclip"></span>@ao.Role</span>
+                                        <span class="label label-info" data-toggle="tooltip" data-container="body" data-placement="left" data-original-title="This object is represents an export or attachment containing the results of an operation"><span class="glyphicon glyphicon-paperclip"></span>@ao.Role</span>
                                             break;
                                         case AtnaApi.Model.AuditableObjectRole.List:
                                         case AtnaApi.Model.AuditableObjectRole.MasterFile:
-                                        <span class="label label-info" data-toggle="tooltip" data-placement="left" data-original-title="This object is represents a list of items"><span class="glyphicon glyphicon-list-alt"></span>@ao.Role</span>
+                                        <span class="label label-info" data-toggle="tooltip" data-container="body" data-placement="left" data-original-title="This object is represents a list of items"><span class="glyphicon glyphicon-list-alt"></span>@ao.Role</span>
                                             break;
                                         case AtnaApi.Model.AuditableObjectRole.Schedule:
-                                        <span class="label label-info" data-toggle="tooltip" data-placement="left" data-original-title="This object represents a schedule"><span class="glyphicon glyphicon-schedule">@ao.Role</span></span>
+                                        <span class="label label-info" data-toggle="tooltip" data-container="body" data-placement="left" data-original-title="This object represents a schedule"><span class="glyphicon glyphicon-schedule">@ao.Role</span></span>
                                             break;
                                         case AtnaApi.Model.AuditableObjectRole.Query:
-                                        <span class="label label-info" data-toggle="tooltip" data-placement="left" data-original-title="This object is represents a search or inquiry"><span class="glyphicon glyphicon-search"></span>@ao.Role</span>
+                                        <span class="label label-info" data-toggle="tooltip" data-container="body" data-placement="left" data-original-title="This object is represents a search or inquiry"><span class="glyphicon glyphicon-search"></span>@ao.Role</span>
                                             break;
                                         default:
                                         <span class="label label-info"><span class="glyphicon glyphicon-question-sign"></span>@ao.Role</span>
