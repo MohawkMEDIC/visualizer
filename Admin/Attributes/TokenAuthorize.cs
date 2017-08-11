@@ -128,11 +128,13 @@ namespace Admin.Attributes
 				parsedToken = new JwtSecurityToken(token);
 				status = true;
 			}
-			catch
+			catch (Exception e)
 			{
+                Trace.TraceError("Cannot parse token: {0}", e);
 				// unable to parse token.
 				status = false;
 				parsedToken = null;
+
 			}
 
 			return status;

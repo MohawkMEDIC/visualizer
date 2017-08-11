@@ -789,5 +789,12 @@ namespace Admin.Controllers
 				return new HttpStatusCodeResult(System.Net.HttpStatusCode.InternalServerError, "Internal Server Error");
 			}
 		}
-	}
+
+
+        protected override void OnException(ExceptionContext filterContext)
+        {
+            Trace.TraceError("Error on controller: {0}", filterContext.Exception);
+            base.OnException(filterContext);
+        }
+    }
 }

@@ -24,6 +24,7 @@ using AtnaApi.Model;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -240,6 +241,12 @@ namespace Admin.Controllers
 			}
 		}
 
-		#endregion Helpers
-	}
+        #endregion Helpers
+
+        protected override void OnException(ExceptionContext filterContext)
+        {
+            Trace.TraceError("Error on controller: {0}", filterContext.Exception);
+            base.OnException(filterContext);
+        }
+    }
 }
