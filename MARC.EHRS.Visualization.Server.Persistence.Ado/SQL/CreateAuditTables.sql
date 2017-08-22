@@ -91,7 +91,7 @@ INSERT INTO AuditCode (Mnemonic, Domain, DisplayName) VALUES ('6','RFC-3881','Ac
 INSERT INTO AuditCode (Mnemonic, Domain, DisplayName) VALUES ('7','RFC-3881','Guarantor Number');
 INSERT INTO AuditCode (Mnemonic, Domain, DisplayName) VALUES ('8','RFC-3881','Report Name');
 INSERT INTO AuditCode (Mnemonic, Domain, DisplayName) VALUES ('9','RFC-3881','Report Number');
-INSERT INTO AuditCode (Mnemonic, Domain, DisplayName) VALUES ('10','RFC-3881','Search Critereon');
+INSERT INTO AuditCode (Mnemonic, Domain, DisplayName) VALUES ('10','RFC-3881','Search Criterion');
 INSERT INTO AuditCode (Mnemonic, Domain, DisplayName) VALUES ('11','RFC-3881','User Identifier');
 INSERT INTO AuditCode (Mnemonic, Domain, DisplayName) VALUES ('12','RFC-3881','Uri');
 
