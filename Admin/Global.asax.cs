@@ -17,6 +17,7 @@
  * Date: 2017-6-15
  */
 
+using System;
 using Admin.Util;
 using System.Web.Mvc;
 using System.Web.Optimization;
@@ -24,9 +25,18 @@ using System.Web.Routing;
 
 namespace Admin
 {
+	/// <summary>
+	/// Represents global configuration for the application.
+	/// </summary>
+	/// <seealso cref="System.Web.HttpApplication" />
 	public class MvcApplication : System.Web.HttpApplication
 	{
-		protected void Application_Start()
+		/// <summary>
+		/// Called when the application starts.
+		/// </summary>
+		/// <param name="sender">The source of the event.</param>
+		/// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+		protected void Application_Start(object sender, EventArgs e)
 		{
 			AreaRegistration.RegisterAllAreas();
 			FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
@@ -35,8 +45,10 @@ namespace Admin
 		}
 
 		/// <summary>
-		/// Application has rendered page, we want to audit if anything funky went on
+		/// Handles the EndRequest event of the Application control.
 		/// </summary>
+		/// <param name="sender">The source of the event.</param>
+		/// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
 		private void Application_EndRequest(object sender, System.EventArgs e)
 		{
 			string aspxerrorpath = Request.RawUrl;

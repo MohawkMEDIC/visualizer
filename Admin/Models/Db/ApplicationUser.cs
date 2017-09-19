@@ -25,7 +25,7 @@ using System.Threading.Tasks;
 namespace Admin.Models.Db
 {
 	/// <summary>
-	/// Represnts an application user.
+	/// Represents an application user.
 	/// </summary>
 	/// <seealso cref="Microsoft.AspNet.Identity.EntityFramework.IdentityUser" />
 	public class ApplicationUser : IdentityUser

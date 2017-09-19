@@ -360,9 +360,7 @@
     </Content>
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Visualizer.licenseheader" />
-    <None Include="Properties\PublishProfiles\Default.pubxml" />
-    <None Include="Properties\PublishProfiles\MARC_HI_khannan_TImRAVICDev.pubxml" />
-    <None Include="Properties\PublishProfiles\MARC_HI_khannan_TImR_AVIC.pubxml" />
+    <None Include="Properties\PublishProfiles\Disk.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />

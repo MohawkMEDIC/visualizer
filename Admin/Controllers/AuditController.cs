@@ -37,6 +37,181 @@ namespace Admin.Controllers
 	[TokenAuthorize]
 	public class AuditController : Controller
 	{
+		// POST: /Audit/Archive/{id}
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public ActionResult Archive(Int32 id)
+		{
+			using (var entityContext = new AuditModelDataContext())
+			{
+				try
+				{
+					int? auditVersion = 0;
+					entityContext.sp_SetAuditStatus(id, "ARCHIVED", false, User.Identity.Name, ref auditVersion);
+					entityContext.SubmitChanges();
+					AuditUtil.AuditAuditLogUsed(this, AtnaApi.Model.OutcomeIndicator.Success, AtnaApi.Model.ActionType.Update, AtnaApi.Model.EventIdentifierType.ResourceAssignment, AtnaApi.Model.AuditableObjectLifecycle.Archiving, new List<Object>() { entityContext.Audits.First(a => a.AuditId == id), entityContext.AuditStatus.First(s => s.AuditVersionId == auditVersion) });
+					return Json("Ok");
+				}
+				catch
+				{
+					AuditUtil.AuditAuditLogUsed(this, AtnaApi.Model.OutcomeIndicator.SeriousFail, AtnaApi.Model.ActionType.Update, AtnaApi.Model.EventIdentifierType.ResourceAssignment, AtnaApi.Model.AuditableObjectLifecycle.Archiving, new List<Object>() { entityContext.Audits.First(a => a.AuditId == id) });
+					return new HttpStatusCodeResult(System.Net.HttpStatusCode.InternalServerError, "Internal Server Error");
+				}
+			}
+		}
+
+		// POST: /Audit/ArchiveAll
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public ActionResult ArchiveAll()
+		{
+			using (var entityContext = new AuditModelDataContext())
+			{
+				List<Object> auditObject = new List<object>();
+
+				try
+				{
+					var records = this.DoQuery(entityContext.AuditSummaryVws, Request.Form);
+					int c = 0;
+					var fixedRecords = records.ToList();
+					foreach (var rec in fixedRecords)
+					{
+						auditObject.Add(rec);
+						Int32? auditVersion = null;
+						entityContext.sp_SetAuditStatus(rec.AuditId, "ARCHIVED", null, User.Identity.Name, ref auditVersion);
+						auditObject.Add(entityContext.AuditStatus.First(p => p.AuditVersionId == auditVersion));
+
+						if (++c % 20 == 0)
+						{
+							entityContext.SubmitChanges();
+							AuditUtil.AuditAuditLogUsed(this, AtnaApi.Model.OutcomeIndicator.Success, AtnaApi.Model.ActionType.Update, AtnaApi.Model.EventIdentifierType.ResourceAssignment, AtnaApi.Model.AuditableObjectLifecycle.Amendment, auditObject);
+							auditObject.Clear();
+						}
+					}
+					entityContext.SubmitChanges();
+					AuditUtil.AuditAuditLogUsed(this, AtnaApi.Model.OutcomeIndicator.Success, AtnaApi.Model.ActionType.Update, AtnaApi.Model.EventIdentifierType.ResourceAssignment, AtnaApi.Model.AuditableObjectLifecycle.Amendment, auditObject);
+
+					return Json("Ok");
+				}
+				catch
+				{
+					AuditUtil.AuditAuditLogUsed(this, AtnaApi.Model.OutcomeIndicator.SeriousFail, AtnaApi.Model.ActionType.Update, AtnaApi.Model.EventIdentifierType.ResourceAssignment, AtnaApi.Model.AuditableObjectLifecycle.Amendment, auditObject);
+					return new HttpStatusCodeResult(System.Net.HttpStatusCode.InternalServerError, "Internal Server Error");
+				}
+			}
+		}
+
+		// GET: /Audit/Count
+		[HttpGet]
+		public ActionResult Count()
+		{
+			try
+			{
+				Dictionary<String, Int32> counts = new Dictionary<string, int>();
+				using (var entityContext = new AuditModelDataContext())
+				{
+					foreach (var cd in entityContext.AuditStatusCodeSummaryVws)
+						counts.Add(cd.Name, cd.nAudits.Value);
+					counts.Add("IsAlert", entityContext.AuditStatus.Count(s => s.IsAlert == true && !s.ObsoletionTimestamp.HasValue));
+				}
+
+				return Json(counts, JsonRequestBehavior.AllowGet);
+			}
+			catch (Exception e)
+			{
+				AuditUtil.AuditGenericError(this, AtnaApi.Model.OutcomeIndicator.MinorFail, AtnaApi.Model.EventIdentifierType.Query, new AtnaApi.Model.CodeValue<string>("110101", "DCM", "Audit Log Used"), Url.Action("Count"), e);
+				return new HttpStatusCodeResult(System.Net.HttpStatusCode.InternalServerError, "Internal Server Error");
+			}
+		}
+
+		// POST: /Audit/Delete/{id}
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public ActionResult Delete(Int32 id)
+		{
+			using (var entityContext = new AuditModelDataContext())
+			{
+				try
+				{
+					int? auditVersion = 0;
+					entityContext.sp_SetAuditStatus(id, "OBSOLETE", false, User.Identity.Name, ref auditVersion);
+					entityContext.SubmitChanges();
+					AuditUtil.AuditAuditLogUsed(this, AtnaApi.Model.OutcomeIndicator.Success, AtnaApi.Model.ActionType.Delete, AtnaApi.Model.EventIdentifierType.ResourceAssignment, AtnaApi.Model.AuditableObjectLifecycle.LogicalDeletion, new List<Object>() { entityContext.Audits.First(a => a.AuditId == id), entityContext.AuditStatus.First(s => s.AuditVersionId == auditVersion) });
+					return Json("Ok");
+				}
+				catch
+				{
+					AuditUtil.AuditAuditLogUsed(this, AtnaApi.Model.OutcomeIndicator.SeriousFail, AtnaApi.Model.ActionType.Delete, AtnaApi.Model.EventIdentifierType.ResourceAssignment, AtnaApi.Model.AuditableObjectLifecycle.LogicalDeletion, new List<Object>() { entityContext.Audits.First(a => a.AuditId == id) });
+					return new HttpStatusCodeResult(System.Net.HttpStatusCode.InternalServerError, "Internal Server Error");
+				}
+			}
+		}
+
+		// POST: /Audit/DeleteAll
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public ActionResult DeleteAll()
+		{
+			using (var entityContext = new AuditModelDataContext())
+			{
+				List<Object> auditObject = new List<object>();
+
+				try
+				{
+					var records = this.DoQuery(entityContext.AuditSummaryVws, Request.Form);
+					int c = 0;
+					var fixedRecords = records.ToList();
+					foreach (var rec in fixedRecords)
+					{
+						auditObject.Add(rec);
+						Int32? auditVersion = null;
+						entityContext.sp_SetAuditStatus(rec.AuditId, "OBSOLETE", false, User.Identity.Name, ref auditVersion);
+						auditObject.Add(entityContext.AuditStatus.First(p => p.AuditVersionId == auditVersion));
+
+						if (++c % 20 == 0)
+						{
+							entityContext.SubmitChanges();
+							AuditUtil.AuditAuditLogUsed(this, AtnaApi.Model.OutcomeIndicator.Success, AtnaApi.Model.ActionType.Delete, AtnaApi.Model.EventIdentifierType.ResourceAssignment, AtnaApi.Model.AuditableObjectLifecycle.LogicalDeletion, auditObject);
+							auditObject.Clear();
+						}
+					}
+					entityContext.SubmitChanges();
+					AuditUtil.AuditAuditLogUsed(this, AtnaApi.Model.OutcomeIndicator.Success, AtnaApi.Model.ActionType.Delete, AtnaApi.Model.EventIdentifierType.ResourceAssignment, AtnaApi.Model.AuditableObjectLifecycle.LogicalDeletion, auditObject);
+
+					return Json("Ok");
+				}
+				catch
+				{
+					AuditUtil.AuditAuditLogUsed(this, AtnaApi.Model.OutcomeIndicator.SeriousFail, AtnaApi.Model.ActionType.Delete, AtnaApi.Model.EventIdentifierType.ResourceAssignment, AtnaApi.Model.AuditableObjectLifecycle.LogicalDeletion, auditObject);
+					return new HttpStatusCodeResult(System.Net.HttpStatusCode.InternalServerError, "Internal Server Error");
+				}
+			}
+		}
+
+		// POST: /Audit/Hold/{id}
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public ActionResult Hold(Int32 id)
+		{
+			using (var entityContext = new AuditModelDataContext())
+			{
+				try
+				{
+					int? auditVersion = 0;
+
+					entityContext.sp_SetAuditStatus(id, "HELD", null, User.Identity.Name, ref auditVersion);
+					entityContext.SubmitChanges();
+					AuditUtil.AuditAuditLogUsed(this, AtnaApi.Model.OutcomeIndicator.Success, AtnaApi.Model.ActionType.Update, AtnaApi.Model.EventIdentifierType.ResourceAssignment, AtnaApi.Model.AuditableObjectLifecycle.Amendment, new List<Object>() { entityContext.Audits.First(a => a.AuditId == id), entityContext.AuditStatus.First(s => s.AuditVersionId == auditVersion) });
+					return Json("Ok");
+				}
+				catch
+				{
+					AuditUtil.AuditAuditLogUsed(this, AtnaApi.Model.OutcomeIndicator.SeriousFail, AtnaApi.Model.ActionType.Update, AtnaApi.Model.EventIdentifierType.ResourceAssignment, AtnaApi.Model.AuditableObjectLifecycle.Amendment, new List<Object>() { entityContext.Audits.First(a => a.AuditId == id) });
+					return new HttpStatusCodeResult(System.Net.HttpStatusCode.InternalServerError, "Internal Server Error");
+				}
+			}
+		}
+
 		//
 		// GET: /Audit/
 		public ActionResult Index()
@@ -44,16 +219,137 @@ namespace Admin.Controllers
 			return View();
 		}
 
-		private DateTime CalculateFirstDayOfWeek(int weekNumber, int year)
+		//
+		// GET: /Audit/AuditView
+		public ActionResult List()
 		{
-			DateTime jan1 = new DateTime(year, 1, 1);
-			int dayOffset = DayOfWeek.Monday - jan1.DayOfWeek;
-			DateTime firstMonday = jan1.AddDays(dayOffset);
-			var cal = CultureInfo.CurrentCulture.Calendar;
-			int firstWeek = cal.GetWeekOfYear(jan1, CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Sunday);
-			if (firstWeek <= 1)
-				weekNumber -= 1;
-			return firstMonday.AddDays(weekNumber * 7);
+			try
+			{
+				var entityContext = new AuditModelDataContext();
+				// Page?
+				int pageId = 0, resultsPerPage = 20;
+				if (Request.QueryString["page"] != null)
+					pageId = Int32.Parse(Request.QueryString["page"]);
+				if (Request.QueryString["count"] != null)
+					pageId = Int32.Parse(Request.QueryString["count"]);
+
+				var records = this.DoQuery(entityContext.AuditSummaryVws, Request.QueryString);
+
+				Response.CacheControl = "no-cache";
+				Response.AddHeader("Pragma", "no-cache");
+				Response.Expires = -1;
+
+				// View bag stuff for codes
+				ViewBag.EventCode = this.GetAttributeValues("EventCode", null);
+				ViewBag.ActionCode = this.GetAttributeValues("ActionCode", null);
+				ViewBag.OutcomeCode = this.GetAttributeValues("OutcomeCode", null);
+				ViewBag.EventType = this.GetAttributeValues("EventType", null);
+
+				AuditUtil.AuditAuditLogUsed(this, AtnaApi.Model.OutcomeIndicator.Success, AtnaApi.Model.ActionType.Read, AtnaApi.Model.EventIdentifierType.Query, AtnaApi.Model.AuditableObjectLifecycle.Disclosure, records.Skip(pageId * resultsPerPage).Take(resultsPerPage).ToArray());
+				return PartialView(new AuditSummaryCollectionViewModel(records));
+			}
+			catch (Exception e)
+			{
+				AuditUtil.AuditAuditLogUsed(this, AtnaApi.Model.OutcomeIndicator.MinorFail, AtnaApi.Model.ActionType.Read, AtnaApi.Model.EventIdentifierType.Query, AtnaApi.Model.AuditableObjectLifecycle.Disclosure, new List<Object>() { e });
+				return new HttpStatusCodeResult(System.Net.HttpStatusCode.InternalServerError);
+			}
+			finally
+			{
+			}
+		}
+
+		/// <summary>
+		/// Search
+		/// </summary>
+		// GET /Audit/Search
+		public ActionResult Search()
+		{
+			try
+			{
+				// Page?
+				int pageId = 0, resultsPerPage = 20;
+				if (Request.QueryString["page"] != null)
+					pageId = Int32.Parse(Request.QueryString["page"]);
+				if (Request.QueryString["count"] != null)
+
+					pageId = Int32.Parse(Request.QueryString["count"]);
+				// View bag stuff for codes
+				ViewBag.ShowObjectParms = false;
+				ViewBag.ShowParticipantParms = false;
+				ViewBag.ShowRootParms = true;
+				ViewBag.ShowSourceParams = false;
+
+				Response.CacheControl = "no-cache";
+				Response.AddHeader("Pragma", "no-cache");
+				Response.Expires = -1;
+
+				// Search Results
+				var entityContext = new AuditModelDataContext();
+				NameValueCollection rootNvc = new NameValueCollection(),
+					objectNvc = new NameValueCollection(),
+					ptcptNvc = new NameValueCollection();
+
+				foreach (String key in Request.QueryString.Keys)
+					if (key.StartsWith("Object::"))
+						objectNvc.Add(key.Substring(key.LastIndexOf(":") + 1), Request.QueryString[key]);
+					else if (key.StartsWith("Participant::"))
+						ptcptNvc.Add(key.Substring(key.LastIndexOf(":") + 1), Request.QueryString[key]);
+					else
+						rootNvc.Add(key, Request.QueryString[key]);
+
+				// TODO: Filter the Participants
+				// TODO: Filter the Audit Summary View
+
+				var results = this.DoQuery(entityContext.AuditSummaryVws, rootNvc);
+				// TODO: Filter the Objects
+				if (objectNvc.Count > 0)
+				{
+					ViewBag.ShowObjectParms = true;
+					var objectResults = this.DoQuery(entityContext.AuditObjectSummaryVws, objectNvc);
+					results = results.Where(a => objectResults.Count(o => o.AuditId == a.AuditId) > 0);
+				}
+				if (ptcptNvc.Count > 0)
+				{
+					ViewBag.ShowParticipantParms = true;
+					var participantResult = this.DoQuery(entityContext.AuditParticipantSummaryVws, ptcptNvc);
+					results = results.Where(a => participantResult.Count(p => p.AuditId == a.AuditId) > 0);
+				}
+
+				if (rootNvc.Count == 1)
+				{
+					ViewBag.ShowRootParms = false;
+					if (ptcptNvc.Count == 0 && objectNvc.Count == 0)
+						results = results.Take(0);
+				}
+
+				// Audit
+				if (results.Any())
+					AuditUtil.AuditAuditLogUsed(this, AtnaApi.Model.OutcomeIndicator.Success, AtnaApi.Model.ActionType.Read, AtnaApi.Model.EventIdentifierType.Query, AtnaApi.Model.AuditableObjectLifecycle.Disclosure, results.Skip(pageId * resultsPerPage).Take(resultsPerPage).ToArray());
+
+				var model = new AuditSummaryCollectionViewModel(results)
+				{
+					AuditSourceNames = this.GetAttributeValues("AuditSourceName", null).ToList(),
+					AuditSourceTypes = this.GetAttributeValues("AuditSourceType", null).ToList(),
+					EnterpriseSiteNames = this.GetAttributeValues("EnterpriseSiteName", null).ToList(),
+					EventCodes = this.GetAttributeValues("EventCode", null).ToList(),
+					ActionCodes = this.GetAttributeValues("ActionCode", null).ToList(),
+					OutcomeCodes = this.GetAttributeValues("OutcomeCode", null).ToList(),
+					EventTypes = this.GetAttributeValues("EventType", null).ToList(),
+					UserIds = this.GetAttributeValues("PtcptUserId", null).ToList(),
+					ParticipationRoleCodes = this.GetAttributeValues("PtcptObjectRoleCodeDisplay", null).ToList(),
+					ObjectTypeCodes = this.GetAttributeValues("ObjTypeCode", null).ToList(),
+					ObjectLifecycleCodes = this.GetAttributeValues("ObjLifecycle", null).ToList(),
+					ObjectRoleCodes = this.GetAttributeValues("ObjRoleCode", null).ToList(),
+					ObjectIdTypeCodes = this.GetAttributeValues("ObjIdTypeCode", null).ToList()
+				};
+
+				return PartialView(model);
+			}
+			catch (Exception e)
+			{
+				AuditUtil.AuditAuditLogUsed(this, AtnaApi.Model.OutcomeIndicator.MinorFail, AtnaApi.Model.ActionType.Read, AtnaApi.Model.EventIdentifierType.Query, AtnaApi.Model.AuditableObjectLifecycle.Disclosure, new List<Object>() { e });
+				return new HttpStatusCodeResult(System.Net.HttpStatusCode.InternalServerError);
+			}
 		}
 
 		// GET: /Audit/Stats
@@ -257,137 +553,105 @@ namespace Admin.Controllers
 			}
 		}
 
-		//
-		// GET: /Audit/AuditView
-		public ActionResult List()
+		// GET: /Audit/View/{id}
+		public ActionResult View(Int32 id)
 		{
-			try
+			using (var context = new AuditModelDataContext())
 			{
-				var entityContext = new AuditModelDataContext();
-				// Page?
-				int pageId = 0, resultsPerPage = 20;
-				if (Request.QueryString["page"] != null)
-					pageId = Int32.Parse(Request.QueryString["page"]);
-				if (Request.QueryString["count"] != null)
-					pageId = Int32.Parse(Request.QueryString["count"]);
+				try
+				{
+					var audit = context.AuditSummaryVws.FirstOrDefault(a => a.AuditId == id);
+					if (audit == null)
+						throw new FileNotFoundException();
 
-				var records = this.DoQuery(entityContext.AuditSummaryVws, Request.QueryString);
+					int? version = null;
+					if (audit.StatusCode == "NEW")
+					{
+						context.sp_SetAuditStatus(id, "ACTIVE", null, User.Identity.Name, ref version);
+						AuditUtil.AuditAuditLogUsed(this, AtnaApi.Model.OutcomeIndicator.Success, AtnaApi.Model.ActionType.Update, AtnaApi.Model.EventIdentifierType.ResourceAssignment, AtnaApi.Model.AuditableObjectLifecycle.Amendment, new List<Object>() { audit, context.AuditStatus.First(s => s.AuditVersionId == version) });
+					}
+					AuditUtil.AuditAuditLogUsed(this, AtnaApi.Model.OutcomeIndicator.Success, AtnaApi.Model.ActionType.Read, AtnaApi.Model.EventIdentifierType.Disclosure, AtnaApi.Model.AuditableObjectLifecycle.Disclosure, new List<Object>() { audit });
+					Response.CacheControl = "no-cache";
+					Response.AddHeader("Pragma", "no-cache");
+					Response.Expires = -1;
 
-				Response.CacheControl = "no-cache";
-				Response.AddHeader("Pragma", "no-cache");
-				Response.Expires = -1;
-
-				// View bag stuff for codes
-				ViewBag.EventCode = this.GetAttributeValues("EventCode", null);
-				ViewBag.ActionCode = this.GetAttributeValues("ActionCode", null);
-				ViewBag.OutcomeCode = this.GetAttributeValues("OutcomeCode", null);
-				ViewBag.EventType = this.GetAttributeValues("EventType", null);
-
-				AuditUtil.AuditAuditLogUsed(this, AtnaApi.Model.OutcomeIndicator.Success, AtnaApi.Model.ActionType.Read, AtnaApi.Model.EventIdentifierType.Query, AtnaApi.Model.AuditableObjectLifecycle.Disclosure, records.Skip(pageId * resultsPerPage).Take(resultsPerPage).ToArray());
-				return PartialView(new AuditSummaryCollectionViewModel(records));
-			}
-			catch (Exception e)
-			{
-				AuditUtil.AuditAuditLogUsed(this, AtnaApi.Model.OutcomeIndicator.MinorFail, AtnaApi.Model.ActionType.Read, AtnaApi.Model.EventIdentifierType.Query, AtnaApi.Model.AuditableObjectLifecycle.Disclosure, new List<Object>() { e });
-				return new HttpStatusCodeResult(System.Net.HttpStatusCode.InternalServerError);
-			}
-			finally
-			{
+					// Show the audit
+					return PartialView(new AuditViewModel(id, audit, AuditUtil.LoadAudit(audit.GlobalId)));
+				}
+				catch (FileNotFoundException)
+				{
+					AuditUtil.AuditAuditLogUsed(this, AtnaApi.Model.OutcomeIndicator.EpicFail, AtnaApi.Model.ActionType.Read, AtnaApi.Model.EventIdentifierType.Disclosure, AtnaApi.Model.AuditableObjectLifecycle.Disclosure, new List<Object>());
+					return HttpNotFound();
+				}
+				catch (Exception)
+				{
+					AuditUtil.AuditAuditLogUsed(this, AtnaApi.Model.OutcomeIndicator.EpicFail, AtnaApi.Model.ActionType.Read, AtnaApi.Model.EventIdentifierType.Disclosure, AtnaApi.Model.AuditableObjectLifecycle.Disclosure, new List<Object>());
+					return new HttpStatusCodeResult(System.Net.HttpStatusCode.InternalServerError);
+				}
 			}
 		}
 
-		/// <summary>
-		/// Search
-		/// </summary>
-		// GET /Audit/Search
-		public ActionResult Search()
+		protected override void OnException(ExceptionContext filterContext)
 		{
-			try
+			Trace.TraceError("Error on controller: {0}", filterContext.Exception);
+			base.OnException(filterContext);
+		}
+
+		/// <summary>
+		/// Build expression for a key
+		/// </summary>
+		/// <param name="keyValue"></param>
+		/// <param name="keyProperty"></param>
+		/// <param name="parameter"></param>
+		/// <returns></returns>
+		private Expression BuildExpression<T>(string keyValue, System.Reflection.PropertyInfo keyProperty, ParameterExpression parameter)
+		{
+			// Prepare query parameters
+			Dictionary<char, string> mods = new Dictionary<char, string>() {
+					{ '!', "NotEqual" },
+					{ '~', "Contains" },
+					{ '<', "LessThan" },
+					{ '>', "GreaterThan" }
+					 };
+
+			String value = keyValue;
+			if (value.Length == 0) return null;
+			String methodName = "";
+			if (mods.TryGetValue(value[0], out methodName))
+				value = value.Substring(1);
+			else
+				methodName = "Equal";
+			Expression left = Expression.Property(parameter, keyProperty.Name);
+
+			// Convert type?
+			object rValue = value;
+			Expression right = null;
+			if (MARC.Everest.Connectors.Util.TryFromWireFormat(value, keyProperty.PropertyType, out rValue))
+				right = Expression.Constant(rValue, keyProperty.PropertyType);
+
+			// Invoke the appropriate method
+			var mi = typeof(Expression).GetMethod(methodName, new Type[] { typeof(Expression), typeof(Expression) });
+			if (mi == null)
 			{
-				// Page?
-				int pageId = 0, resultsPerPage = 20;
-				if (Request.QueryString["page"] != null)
-					pageId = Int32.Parse(Request.QueryString["page"]);
-				if (Request.QueryString["count"] != null)
-
-					pageId = Int32.Parse(Request.QueryString["count"]);
-				// View bag stuff for codes
-				ViewBag.ShowObjectParms = false;
-				ViewBag.ShowParticipantParms = false;
-				ViewBag.ShowRootParms = true;
-				ViewBag.ShowSourceParams = false;
-
-				Response.CacheControl = "no-cache";
-				Response.AddHeader("Pragma", "no-cache");
-				Response.Expires = -1;
-
-				// Search Results
-				var entityContext = new AuditModelDataContext();
-				NameValueCollection rootNvc = new NameValueCollection(),
-					objectNvc = new NameValueCollection(),
-					ptcptNvc = new NameValueCollection();
-
-				foreach (String key in Request.QueryString.Keys)
-					if (key.StartsWith("Object::"))
-						objectNvc.Add(key.Substring(key.LastIndexOf(":") + 1), Request.QueryString[key]);
-					else if (key.StartsWith("Participant::"))
-						ptcptNvc.Add(key.Substring(key.LastIndexOf(":") + 1), Request.QueryString[key]);
-					else
-						rootNvc.Add(key, Request.QueryString[key]);
-
-				// TODO: Filter the Participants
-				// TODO: Filter the Audit Summary View
-
-				var results = this.DoQuery(entityContext.AuditSummaryVws, rootNvc);
-				// TODO: Filter the Objects
-				if (objectNvc.Count > 0)
-				{
-					ViewBag.ShowObjectParms = true;
-					var objectResults = this.DoQuery(entityContext.AuditObjectSummaryVws, objectNvc);
-					results = results.Where(a => objectResults.Count(o => o.AuditId == a.AuditId) > 0);
-				}
-				if (ptcptNvc.Count > 0)
-				{
-					ViewBag.ShowParticipantParms = true;
-					var participantResult = this.DoQuery(entityContext.AuditParticipantSummaryVws, ptcptNvc);
-					results = results.Where(a => participantResult.Count(p => p.AuditId == a.AuditId) > 0);
-				}
-
-				if (rootNvc.Count == 1)
-				{
-					ViewBag.ShowRootParms = false;
-					if (ptcptNvc.Count == 0 && objectNvc.Count == 0)
-						results = results.Take(0);
-				}
-
-				// Audit
-				if (results.Any())
-					AuditUtil.AuditAuditLogUsed(this, AtnaApi.Model.OutcomeIndicator.Success, AtnaApi.Model.ActionType.Read, AtnaApi.Model.EventIdentifierType.Query, AtnaApi.Model.AuditableObjectLifecycle.Disclosure, results.Skip(pageId * resultsPerPage).Take(resultsPerPage).ToArray());
-
-				var model = new AuditSummaryCollectionViewModel(results)
-				{
-					AuditSourceNames = this.GetAttributeValues("AuditSourceName", null).ToList(),
-					AuditSourceTypes = this.GetAttributeValues("AuditSourceType", null).ToList(),
-					EnterpriseSiteNames = this.GetAttributeValues("EnterpriseSiteName", null).ToList(),
-					EventCodes = this.GetAttributeValues("EventCode", null).ToList(),
-					ActionCodes = this.GetAttributeValues("ActionCode", null).ToList(),
-					OutcomeCodes = this.GetAttributeValues("OutcomeCode", null).ToList(),
-					EventTypes = this.GetAttributeValues("EventType", null).ToList(),
-					UserIds = this.GetAttributeValues("PtcptUserId", null).ToList(),
-					ParticipationRoleCodes = this.GetAttributeValues("PtcptObjectRoleCodeDisplay", null).ToList(),
-					ObjectTypeCodes = this.GetAttributeValues("ObjTypeCode", null).ToList(),
-					ObjectLifecycleCodes = this.GetAttributeValues("ObjLifecycle", null).ToList(),
-					ObjectRoleCodes = this.GetAttributeValues("ObjRoleCode", null).ToList(),
-					ObjectIdTypeCodes = this.GetAttributeValues("ObjIdTypeCode", null).ToList()
-				};
-
-				return PartialView(model);
+				mi = keyProperty.PropertyType.GetMethod(methodName, new Type[] { keyProperty.PropertyType });
+				if (mi == null)
+					return null;
+				return Expression.Call(left, mi, right);
 			}
-			catch (Exception e)
-			{
-				AuditUtil.AuditAuditLogUsed(this, AtnaApi.Model.OutcomeIndicator.MinorFail, AtnaApi.Model.ActionType.Read, AtnaApi.Model.EventIdentifierType.Query, AtnaApi.Model.AuditableObjectLifecycle.Disclosure, new List<Object>() { e });
-				return new HttpStatusCodeResult(System.Net.HttpStatusCode.InternalServerError);
-			}
+			else
+				return mi.Invoke(null, new object[] { left, right }) as Expression;
+		}
+
+		private DateTime CalculateFirstDayOfWeek(int weekNumber, int year)
+		{
+			DateTime jan1 = new DateTime(year, 1, 1);
+			int dayOffset = DayOfWeek.Monday - jan1.DayOfWeek;
+			DateTime firstMonday = jan1.AddDays(dayOffset);
+			var cal = CultureInfo.CurrentCulture.Calendar;
+			int firstWeek = cal.GetWeekOfYear(jan1, CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Sunday);
+			if (firstWeek <= 1)
+				weekNumber -= 1;
+			return firstMonday.AddDays(weekNumber * 7);
 		}
 
 		/// <summary>
@@ -506,241 +770,6 @@ namespace Admin.Controllers
 		}
 
 		/// <summary>
-		/// Build expression for a key
-		/// </summary>
-		/// <param name="keyValue"></param>
-		/// <param name="keyProperty"></param>
-		/// <param name="parameter"></param>
-		/// <returns></returns>
-		private Expression BuildExpression<T>(string keyValue, System.Reflection.PropertyInfo keyProperty, ParameterExpression parameter)
-		{
-			// Prepare query parameters
-			Dictionary<char, string> mods = new Dictionary<char, string>() {
-					{ '!', "NotEqual" },
-					{ '~', "Contains" },
-					{ '<', "LessThan" },
-					{ '>', "GreaterThan" }
-					 };
-
-			String value = keyValue;
-			if (value.Length == 0) return null;
-			String methodName = "";
-			if (mods.TryGetValue(value[0], out methodName))
-				value = value.Substring(1);
-			else
-				methodName = "Equal";
-			Expression left = Expression.Property(parameter, keyProperty.Name);
-
-			// Convert type?
-			object rValue = value;
-			Expression right = null;
-			if (MARC.Everest.Connectors.Util.TryFromWireFormat(value, keyProperty.PropertyType, out rValue))
-				right = Expression.Constant(rValue, keyProperty.PropertyType);
-
-			// Invoke the appropriate method
-			var mi = typeof(Expression).GetMethod(methodName, new Type[] { typeof(Expression), typeof(Expression) });
-			if (mi == null)
-			{
-				mi = keyProperty.PropertyType.GetMethod(methodName, new Type[] { keyProperty.PropertyType });
-				if (mi == null)
-					return null;
-				return Expression.Call(left, mi, right);
-			}
-			else
-				return mi.Invoke(null, new object[] { left, right }) as Expression;
-		}
-
-		// GET: /Audit/View/{id}
-		public ActionResult View(Int32 id)
-		{
-			using (var context = new AuditModelDataContext())
-			{
-				try
-				{
-					var audit = context.AuditSummaryVws.FirstOrDefault(a => a.AuditId == id);
-					if (audit == null)
-						throw new FileNotFoundException();
-
-					int? version = null;
-					if (audit.StatusCode == "NEW")
-					{
-						context.sp_SetAuditStatus(id, "ACTIVE", null, User.Identity.Name, ref version);
-						AuditUtil.AuditAuditLogUsed(this, AtnaApi.Model.OutcomeIndicator.Success, AtnaApi.Model.ActionType.Update, AtnaApi.Model.EventIdentifierType.ResourceAssignment, AtnaApi.Model.AuditableObjectLifecycle.Amendment, new List<Object>() { audit, context.AuditStatus.First(s => s.AuditVersionId == version) });
-					}
-					AuditUtil.AuditAuditLogUsed(this, AtnaApi.Model.OutcomeIndicator.Success, AtnaApi.Model.ActionType.Read, AtnaApi.Model.EventIdentifierType.Disclosure, AtnaApi.Model.AuditableObjectLifecycle.Disclosure, new List<Object>() { audit });
-					Response.CacheControl = "no-cache";
-					Response.AddHeader("Pragma", "no-cache");
-					Response.Expires = -1;
-
-					// Show the audit
-					return PartialView(new AuditViewModel(id, audit, AuditUtil.LoadAudit(audit.GlobalId)));
-				}
-				catch (FileNotFoundException)
-				{
-					AuditUtil.AuditAuditLogUsed(this, AtnaApi.Model.OutcomeIndicator.EpicFail, AtnaApi.Model.ActionType.Read, AtnaApi.Model.EventIdentifierType.Disclosure, AtnaApi.Model.AuditableObjectLifecycle.Disclosure, new List<Object>());
-					return HttpNotFound();
-				}
-				catch (Exception)
-				{
-					AuditUtil.AuditAuditLogUsed(this, AtnaApi.Model.OutcomeIndicator.EpicFail, AtnaApi.Model.ActionType.Read, AtnaApi.Model.EventIdentifierType.Disclosure, AtnaApi.Model.AuditableObjectLifecycle.Disclosure, new List<Object>());
-					return new HttpStatusCodeResult(System.Net.HttpStatusCode.InternalServerError);
-				}
-			}
-		}
-
-		// POST: /Audit/ArchiveAll
-		[HttpPost]
-		[ValidateAntiForgeryToken]
-		public ActionResult ArchiveAll()
-		{
-			using (var entityContext = new AuditModelDataContext())
-			{
-				List<Object> auditObject = new List<object>();
-
-				try
-				{
-					var records = this.DoQuery(entityContext.AuditSummaryVws, Request.Form);
-					int c = 0;
-					var fixedRecords = records.ToList();
-					foreach (var rec in fixedRecords)
-					{
-						auditObject.Add(rec);
-						Int32? auditVersion = null;
-						entityContext.sp_SetAuditStatus(rec.AuditId, "ARCHIVED", null, User.Identity.Name, ref auditVersion);
-						auditObject.Add(entityContext.AuditStatus.First(p => p.AuditVersionId == auditVersion));
-
-						if (++c % 20 == 0)
-						{
-							entityContext.SubmitChanges();
-							AuditUtil.AuditAuditLogUsed(this, AtnaApi.Model.OutcomeIndicator.Success, AtnaApi.Model.ActionType.Update, AtnaApi.Model.EventIdentifierType.ResourceAssignment, AtnaApi.Model.AuditableObjectLifecycle.Amendment, auditObject);
-							auditObject.Clear();
-						}
-					}
-					entityContext.SubmitChanges();
-					AuditUtil.AuditAuditLogUsed(this, AtnaApi.Model.OutcomeIndicator.Success, AtnaApi.Model.ActionType.Update, AtnaApi.Model.EventIdentifierType.ResourceAssignment, AtnaApi.Model.AuditableObjectLifecycle.Amendment, auditObject);
-
-					return Json("Ok");
-				}
-				catch
-				{
-					AuditUtil.AuditAuditLogUsed(this, AtnaApi.Model.OutcomeIndicator.SeriousFail, AtnaApi.Model.ActionType.Update, AtnaApi.Model.EventIdentifierType.ResourceAssignment, AtnaApi.Model.AuditableObjectLifecycle.Amendment, auditObject);
-					return new HttpStatusCodeResult(System.Net.HttpStatusCode.InternalServerError, "Internal Server Error");
-				}
-			}
-		}
-
-		// POST: /Audit/DeleteAll
-		[HttpPost]
-		[ValidateAntiForgeryToken]
-		public ActionResult DeleteAll()
-		{
-			using (var entityContext = new AuditModelDataContext())
-			{
-				List<Object> auditObject = new List<object>();
-
-				try
-				{
-					var records = this.DoQuery(entityContext.AuditSummaryVws, Request.Form);
-					int c = 0;
-					var fixedRecords = records.ToList();
-					foreach (var rec in fixedRecords)
-					{
-						auditObject.Add(rec);
-						Int32? auditVersion = null;
-						entityContext.sp_SetAuditStatus(rec.AuditId, "OBSOLETE", false, User.Identity.Name, ref auditVersion);
-						auditObject.Add(entityContext.AuditStatus.First(p => p.AuditVersionId == auditVersion));
-
-						if (++c % 20 == 0)
-						{
-							entityContext.SubmitChanges();
-							AuditUtil.AuditAuditLogUsed(this, AtnaApi.Model.OutcomeIndicator.Success, AtnaApi.Model.ActionType.Delete, AtnaApi.Model.EventIdentifierType.ResourceAssignment, AtnaApi.Model.AuditableObjectLifecycle.LogicalDeletion, auditObject);
-							auditObject.Clear();
-						}
-					}
-					entityContext.SubmitChanges();
-					AuditUtil.AuditAuditLogUsed(this, AtnaApi.Model.OutcomeIndicator.Success, AtnaApi.Model.ActionType.Delete, AtnaApi.Model.EventIdentifierType.ResourceAssignment, AtnaApi.Model.AuditableObjectLifecycle.LogicalDeletion, auditObject);
-
-					return Json("Ok");
-				}
-				catch
-				{
-					AuditUtil.AuditAuditLogUsed(this, AtnaApi.Model.OutcomeIndicator.SeriousFail, AtnaApi.Model.ActionType.Delete, AtnaApi.Model.EventIdentifierType.ResourceAssignment, AtnaApi.Model.AuditableObjectLifecycle.LogicalDeletion, auditObject);
-					return new HttpStatusCodeResult(System.Net.HttpStatusCode.InternalServerError, "Internal Server Error");
-				}
-			}
-		}
-
-		// POST: /Audit/Hold/{id}
-		[HttpPost]
-		[ValidateAntiForgeryToken]
-		public ActionResult Hold(Int32 id)
-		{
-			using (var entityContext = new AuditModelDataContext())
-			{
-				try
-				{
-					int? auditVersion = 0;
-
-					entityContext.sp_SetAuditStatus(id, "HELD", null, User.Identity.Name, ref auditVersion);
-					entityContext.SubmitChanges();
-					AuditUtil.AuditAuditLogUsed(this, AtnaApi.Model.OutcomeIndicator.Success, AtnaApi.Model.ActionType.Update, AtnaApi.Model.EventIdentifierType.ResourceAssignment, AtnaApi.Model.AuditableObjectLifecycle.Amendment, new List<Object>() { entityContext.Audits.First(a => a.AuditId == id), entityContext.AuditStatus.First(s => s.AuditVersionId == auditVersion) });
-					return Json("Ok");
-				}
-				catch
-				{
-					AuditUtil.AuditAuditLogUsed(this, AtnaApi.Model.OutcomeIndicator.SeriousFail, AtnaApi.Model.ActionType.Update, AtnaApi.Model.EventIdentifierType.ResourceAssignment, AtnaApi.Model.AuditableObjectLifecycle.Amendment, new List<Object>() { entityContext.Audits.First(a => a.AuditId == id) });
-					return new HttpStatusCodeResult(System.Net.HttpStatusCode.InternalServerError, "Internal Server Error");
-				}
-			}
-		}
-
-		// POST: /Audit/Delete/{id}
-		[HttpPost]
-		[ValidateAntiForgeryToken]
-		public ActionResult Delete(Int32 id)
-		{
-			using (var entityContext = new AuditModelDataContext())
-			{
-				try
-				{
-					int? auditVersion = 0;
-					entityContext.sp_SetAuditStatus(id, "OBSOLETE", false, User.Identity.Name, ref auditVersion);
-					entityContext.SubmitChanges();
-					AuditUtil.AuditAuditLogUsed(this, AtnaApi.Model.OutcomeIndicator.Success, AtnaApi.Model.ActionType.Delete, AtnaApi.Model.EventIdentifierType.ResourceAssignment, AtnaApi.Model.AuditableObjectLifecycle.LogicalDeletion, new List<Object>() { entityContext.Audits.First(a => a.AuditId == id), entityContext.AuditStatus.First(s => s.AuditVersionId == auditVersion) });
-					return Json("Ok");
-				}
-				catch
-				{
-					AuditUtil.AuditAuditLogUsed(this, AtnaApi.Model.OutcomeIndicator.SeriousFail, AtnaApi.Model.ActionType.Delete, AtnaApi.Model.EventIdentifierType.ResourceAssignment, AtnaApi.Model.AuditableObjectLifecycle.LogicalDeletion, new List<Object>() { entityContext.Audits.First(a => a.AuditId == id) });
-					return new HttpStatusCodeResult(System.Net.HttpStatusCode.InternalServerError, "Internal Server Error");
-				}
-			}
-		}
-
-		// POST: /Audit/Archive/{id}
-		[HttpPost]
-		[ValidateAntiForgeryToken]
-		public ActionResult Archive(Int32 id)
-		{
-			using (var entityContext = new AuditModelDataContext())
-			{
-				try
-				{
-					int? auditVersion = 0;
-					entityContext.sp_SetAuditStatus(id, "ARCHIVED", false, User.Identity.Name, ref auditVersion);
-					entityContext.SubmitChanges();
-					AuditUtil.AuditAuditLogUsed(this, AtnaApi.Model.OutcomeIndicator.Success, AtnaApi.Model.ActionType.Update, AtnaApi.Model.EventIdentifierType.ResourceAssignment, AtnaApi.Model.AuditableObjectLifecycle.Archiving, new List<Object>() { entityContext.Audits.First(a => a.AuditId == id), entityContext.AuditStatus.First(s => s.AuditVersionId == auditVersion) });
-					return Json("Ok");
-				}
-				catch
-				{
-					AuditUtil.AuditAuditLogUsed(this, AtnaApi.Model.OutcomeIndicator.SeriousFail, AtnaApi.Model.ActionType.Update, AtnaApi.Model.EventIdentifierType.ResourceAssignment, AtnaApi.Model.AuditableObjectLifecycle.Archiving, new List<Object>() { entityContext.Audits.First(a => a.AuditId == id) });
-					return new HttpStatusCodeResult(System.Net.HttpStatusCode.InternalServerError, "Internal Server Error");
-				}
-			}
-		}
-
-		/// <summary>
 		/// Get attribute values
 		/// </summary>
 		private String[] GetAttributeValues(string propertyName, string term)
@@ -766,35 +795,5 @@ namespace Admin.Controllers
 				return values.ToArray();
 			}
 		}
-
-		// GET: /Audit/Count
-		[HttpGet]
-		public ActionResult Count()
-		{
-			try
-			{
-				Dictionary<String, Int32> counts = new Dictionary<string, int>();
-				using (var entityContext = new AuditModelDataContext())
-				{
-					foreach (var cd in entityContext.AuditStatusCodeSummaryVws)
-						counts.Add(cd.Name, cd.nAudits.Value);
-					counts.Add("IsAlert", entityContext.AuditStatus.Count(s => s.IsAlert == true && !s.ObsoletionTimestamp.HasValue));
-				}
-
-				return Json(counts, JsonRequestBehavior.AllowGet);
-			}
-			catch (Exception e)
-			{
-				AuditUtil.AuditGenericError(this, AtnaApi.Model.OutcomeIndicator.MinorFail, AtnaApi.Model.EventIdentifierType.Query, new AtnaApi.Model.CodeValue<string>("110101", "DCM", "Audit Log Used"), Url.Action("Count"), e);
-				return new HttpStatusCodeResult(System.Net.HttpStatusCode.InternalServerError, "Internal Server Error");
-			}
-		}
-
-
-        protected override void OnException(ExceptionContext filterContext)
-        {
-            Trace.TraceError("Error on controller: {0}", filterContext.Exception);
-            base.OnException(filterContext);
-        }
-    }
+	}
 }

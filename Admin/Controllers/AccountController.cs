@@ -241,12 +241,12 @@ namespace Admin.Controllers
 			}
 		}
 
-        #endregion Helpers
+		#endregion Helpers
 
-        protected override void OnException(ExceptionContext filterContext)
-        {
-            Trace.TraceError("Error on controller: {0}", filterContext.Exception);
-            base.OnException(filterContext);
-        }
-    }
+		protected override void OnException(ExceptionContext filterContext)
+		{
+			Trace.TraceError("Error on controller: {0}", filterContext.Exception);
+			base.OnException(filterContext);
+		}
+	}
 }
